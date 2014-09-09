@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{295BF964-5939-4DFD-9E4F-15725C3A0876}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Hx.Components</RootNamespace>
+    <AssemblyName>Hx.Components</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\Hx.Tools\Lib\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Admins.cs" />
+    <Compile Include="Banks.cs" />
+    <Compile Include="BasePage\AdminPage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BasePage\PageBase.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Cache\MangaCache.cs" />
+    <Compile Include="Config\CommConfig.cs" />
+    <Compile Include="DailyReports.cs" />
+    <Compile Include="DataProvider.cs" />
+    <Compile Include="Data\CommandInfo.cs" />
+    <Compile Include="Data\CommonPageSql.cs" />
+    <Compile Include="Data\CommonSelectSql.cs" />
+    <Compile Include="Data\SqlHelper.cs" />
+    <Compile Include="Data\SqlHelperParameterCache.cs" />
+    <Compile Include="DayReportModules.cs" />
+    <Compile Include="DayReportUsers.cs" />
+    <Compile Include="Entity\AdminInfo.cs" />
+    <Compile Include="Entity\BankInfo.cs" />
+    <Compile Include="Entity\CustomerInfo.cs" />
+    <Compile Include="Entity\DailyReportHistoryInfo.cs" />
+    <Compile Include="Entity\DailyReportInfo.cs" />
+    <Compile Include="Entity\DailyReportModuleInfo.cs" />
+    <Compile Include="Entity\DayReportUserInfo.cs" />
+    <Compile Include="Entity\EventLogEntry.cs" />
+    <Compile Include="Entity\GlobalSettingInfo.cs" />
+    <Compile Include="Entity\Job.cs" />
+    <Compile Include="Entity\JobOfferInfo.cs" />
+    <Compile Include="Entity\MonthlyTargetInfo.cs" />
+    <Compile Include="Entity\ShowUrl.cs" />
+    <Compile Include="Entity\WeixinActInfo.cs" />
+    <Compile Include="Enumerations\ApplicationType.cs" />
+    <Compile Include="Enumerations\DayReportDep.cs" />
+    <Compile Include="Enumerations\UrlRuleType.cs" />
+    <Compile Include="Enumerations\UserRoleType.cs" />
+    <Compile Include="EventLogs.cs" />
+    <Compile Include="GlobalKey.cs" />
+    <Compile Include="GlobalSettings.cs" />
+    <Compile Include="HttpHandler\CheckAdminUserNameHandler.cs" />
+    <Compile Include="HttpHandler\CheckCodeHandler.cs" />
+    <Compile Include="HttpHandler\NewCutImageHandler.cs" />
+    <Compile Include="HttpHandler\RemoteConnection.cs" />
+    <Compile Include="Interface\IJob.cs" />
+    <Compile Include="Interface\IQuery.cs" />
+    <Compile Include="JobOffers.cs" />
+    <Compile Include="Jobs.cs" />
+    <Compile Include="Logs.cs" />
+    <Compile Include="MonthlyTargets.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Providers\CommonDataProvider.cs" />
+    <Compile Include="Query\DailyReportHistoryQuery.cs" />
+    <Compile Include="Query\DailyReportQuery.cs" />
+    <Compile Include="Query\EventLogQuery.cs" />
+    <Compile Include="Query\MonthTargetQuery.cs" />
+    <Compile Include="Query\WeixinActQuery.cs" />
+    <Compile Include="Web\HXContext.cs" />
+    <Compile Include="WeixinActs.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Hx.Tools\Hx.Tools.csproj">
+      <Project>{5057EE9C-D7BC-436D-A748-6CCEDDEF5F78}</Project>
+      <Name>Hx.Tools</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

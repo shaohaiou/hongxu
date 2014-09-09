@@ -1,0 +1,28 @@
+﻿2014/5/21 13:41:05        e:\work\projects\HongXu\Hx.BackAdmin\global\corporationmg.aspx(104): error CS1061: 'ASP.global_corporationmg_aspx' does not contain a definition for 'rptCorporation_ItemDataBound' and no extension method 'rptCorporation_ItemDataBound' accepting a first argument of type 'ASP.global_corporationmg_aspx' could be found (are you missing a using directive or an assembly reference?)
+Source:System.Web
+TargetSite:System.Web.Compilation.BuildResult PostProcessFoundBuildResult(System.Web.Compilation.BuildResult, Boolean, System.Web.VirtualPath)
+
+---- Stack Trace ----
+   System.Web.Compilation.BuildManager.PostProcessFoundBuildResult(result As BuildResultkeyFromVPP As BooleanvirtualPath As VirtualPath)
+       (unknown file): N 12634681
+   System.Web.Compilation.BuildManager.GetBuildResultFromCacheInternal(cacheKey As StringkeyFromVPP As BooleanvirtualPath As VirtualPathhashCode As Int64ensureIsUpToDate As Boolean)
+       (unknown file): N 00162
+   System.Web.Compilation.BuildManager.GetVPathBuildResultFromCacheInternal(virtualPath As VirtualPathensureIsUpToDate As Boolean)
+       (unknown file): N 00132
+   System.Web.Compilation.BuildManager.GetVPathBuildResultInternal(virtualPath As VirtualPathnoBuild As BooleanallowCrossApp As BooleanallowBuildInPrecompile As BooleanthrowIfNotFound As BooleanensureIsUpToDate As Boolean)
+       (unknown file): N 00091
+   System.Web.Compilation.BuildManager.GetVPathBuildResultWithNoAssert(context As HttpContextvirtualPath As VirtualPathnoBuild As BooleanallowCrossApp As BooleanallowBuildInPrecompile As BooleanthrowIfNotFound As BooleanensureIsUpToDate As Boolean)
+       (unknown file): N 00203
+   System.Web.Compilation.BuildManager.GetVirtualPathObjectFactory(virtualPath As VirtualPathcontext As HttpContextallowCrossApp As BooleanthrowIfNotFound As Boolean)
+       (unknown file): N 00249
+   System.Web.Compilation.BuildManager.CreateInstanceFromVirtualPath(virtualPath As VirtualPathrequiredBaseType As Typecontext As HttpContextallowCrossApp As Boolean)
+       (unknown file): N 00056
+   System.Web.UI.PageHandlerFactory.GetHandlerHelper(context As HttpContextrequestType As StringvirtualPath As VirtualPathphysicalPath As String)
+       (unknown file): N 00042
+   System.Web.MaterializeHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+       (unknown file): N 00516
+   System.Web.HttpApplication.ExecuteStep(step As IExecutionStepcompletedSynchronously As Boolean&)
+       (unknown file): N 00288
+
+
+====================================

@@ -1,0 +1,26 @@
+@charset "utf-8";
+/* CSS Document */
+
+/*小弹框*/
+.tk{width:360px; border:1px solid #6dbfe9; background:#fff; margin:0 auto 22px;}
+	.tk_01{width:96px; height:150px; overflow:hidden; float:left; margin:8px 8px 2px 9px;}
+		.ydfm{width:90px; height:120px; border:1px solid #ccc; padding:2px; margin-bottom:5px;}
+	.tk_02{width:232px; height:150px; overflow:hidden; float:left; margin:8px 0 2px 0;}
+		.tk_02_bt{border-bottom:1px dashed #ccc; height:27px; overflow:hidden; line-height:27px;}
+			.tk_02_bt h1{font-size:14px; color:#07519a; display:inline;}.tk_02_bt h2{font-size:12px; font-weight:100; color:#888; display:inline;}
+		.tk_02_nr{margin:3px 0 0 0; color:#222;overflow:inherit!important;height:auto!important;line-height:normal!important;}
+			.tk_02_nr li{height:20px; line-height:20px; overflow:hidden;float:none!important;}
+	.tk_03{height:20px; background:url(../img/xx.png) repeat-x; clear:both;}
+	.tk_04{line-height:18px; color:#555; padding:5px 8px; border-bottom:1px solid #eee;}
+	.tk_05{line-height:20px!important; padding:5px 8px!important;overflow:inherit!important;height:auto!important;}
+		.tk_05 li{height:20px; overflow:hidden; color:#090!important;}
+.tk2{border:10px solid #b2d0ea; background:#fff; padding:10px; width:550px; height:400px;/* position:fixed; top:200px; left:50%; margin-left:-286px;*/}
+	.tk21{font-weight:700; font-size:14px; line-height:24px;}
+	.tk22{margin:20px auto;}
+	.tk23{overflow:hidden; padding:6px 0 0 0;}
+		.tk23 li{width:135px; height:185px; float:left; line-height:18px; text-align:center; margin:5px 1px; color:#888; overflow:hidden;}
+		.tk23 li img{width:100px; height:133px; border:1px solid #ccc; padding:4px; background:#fff; margin-bottom:4px;}
+		.tk23 li a:hover img{border:2px solid #f40; padding:3px; margin-bottom:4px;}
+	.tk24{margin:0;}
+		.tk24 li{width:160px; background:url(../img/xg.gif) no-repeat 0 6px; padding:0 8px 0 15px;}
+.y{float:right;}

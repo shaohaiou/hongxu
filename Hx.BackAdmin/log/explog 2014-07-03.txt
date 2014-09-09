@@ -1,0 +1,82 @@
+﻿2014/7/3 9:42:12        System.Web.UI.HtmlControls.HtmlTableCellCollection 必须具有类型为“System.Web.UI.HtmlControls.HtmlTableCell”的项。“tr”的类型为“System.Web.UI.HtmlControls.HtmlTableRow”。
+Source:System.Web
+TargetSite:Void ParseString(System.String, System.Web.VirtualPath, System.Text.Encoding)
+
+---- Stack Trace ----
+   System.Web.UI.TemplateParser.ParseString(text As StringvirtualPath As VirtualPathfileEncoding As Encoding)
+       (unknown file): N 00573
+   System.Web.UI.TemplateParser.ParseFile(physicalPath As StringvirtualPath As VirtualPath)
+       (unknown file): N 00268
+   System.Web.UI.TemplateParser.ParseInternal()
+       (unknown file): N 00084
+   System.Web.UI.TemplateParser.Parse()
+       (unknown file): N 00154
+   System.Web.Compilation.BaseTemplateBuildProvider.get_CodeCompilerType()
+       (unknown file): N 00110
+   System.Web.Compilation.BuildProvider.GetCompilerTypeFromBuildProvider(buildProvider As BuildProvider)
+       (unknown file): N 00059
+   System.Web.Compilation.BuildProvidersCompiler.ProcessBuildProviders()
+       (unknown file): N 00209
+   System.Web.Compilation.BuildProvidersCompiler.PerformBuild()
+       (unknown file): N 00030
+   System.Web.Compilation.BuildManager.CompileWebFile(virtualPath As VirtualPath)
+       (unknown file): N 9881909
+   System.Web.Compilation.BuildManager.GetVPathBuildResultInternal(virtualPath As VirtualPathnoBuild As BooleanallowCrossApp As BooleanallowBuildInPrecompile As BooleanthrowIfNotFound As BooleanensureIsUpToDate As Boolean)
+       (unknown file): N 00299
+   System.Web.Compilation.BuildManager.GetVPathBuildResultWithNoAssert(context As HttpContextvirtualPath As VirtualPathnoBuild As BooleanallowCrossApp As BooleanallowBuildInPrecompile As BooleanthrowIfNotFound As BooleanensureIsUpToDate As Boolean)
+       (unknown file): N 00103
+   System.Web.Compilation.BuildManager.GetVirtualPathObjectFactory(virtualPath As VirtualPathcontext As HttpContextallowCrossApp As BooleanthrowIfNotFound As Boolean)
+       (unknown file): N 00165
+   System.Web.Compilation.BuildManager.CreateInstanceFromVirtualPath(virtualPath As VirtualPathrequiredBaseType As Typecontext As HttpContextallowCrossApp As Boolean)
+       (unknown file): N 00043
+   System.Web.UI.PageHandlerFactory.GetHandlerHelper(context As HttpContextrequestType As StringvirtualPath As VirtualPathphysicalPath As String)
+       (unknown file): N 00031
+   System.Web.UI.PageHandlerFactory.GetHandler(context As HttpContextrequestType As StringvirtualPath As Stringpath As String)
+       (unknown file): N 00037
+   System.Web.MaterializeHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+       (unknown file): N 00346
+   System.Web.HttpApplication.ExecuteStep(step As IExecutionStepcompletedSynchronously As Boolean&)
+       (unknown file): N 00155
+
+
+====================================
+2014/7/3 16:08:51        未能加载文件或程序集“System.Web.Mobile, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a”或它的某一个依赖项。句柄无效。 (异常来自 HRESULT:0x80070006 (E_HANDLE)) (D:\Windows\Microsoft.NET\Framework\v4.0.30319\Config\web.config line 76)
+Source:System.Configuration
+TargetSite:System.Object EvaluateOne(System.String[], System.Configuration.SectionInput, Boolean, System.Configuration.FactoryRecord, System.Configuration.SectionRecord, System.Object)
+
+---- Stack Trace ----
+   System.Configuration.BaseConfigurationRecord.EvaluateOne(keys As String[]input As SectionInputisTrusted As BooleanfactoryRecord As FactoryRecordsectionRecord As SectionRecordparentResult As Object)
+       (unknown file): N 00181
+   System.Configuration.BaseConfigurationRecord.Evaluate(factoryRecord As FactoryRecordsectionRecord As SectionRecordparentResult As ObjectgetLkg As BooleangetRuntimeObject As Booleanresult As Object&resultRuntimeObject As Object&)
+       (unknown file): N 01187
+   System.Configuration.BaseConfigurationRecord.GetSectionRecursive(configKey As StringgetLkg As BooleancheckPermission As BooleangetRuntimeObject As BooleanrequestIsHere As Booleanresult As Object&resultRuntimeObject As Object&)
+       (unknown file): N 01543
+   System.Configuration.BaseConfigurationRecord.GetSectionRecursive(configKey As StringgetLkg As BooleancheckPermission As BooleangetRuntimeObject As BooleanrequestIsHere As Booleanresult As Object&resultRuntimeObject As Object&)
+       (unknown file): N 01543
+   System.Configuration.BaseConfigurationRecord.GetSection(configKey As String)
+       (unknown file): N 00041
+   System.Web.Configuration.RuntimeConfig.GetSectionObject(sectionName As String)
+       (unknown file): N 00038
+   System.Web.Configuration.RuntimeConfig.GetHandlerSection(sectionName As Stringtype As Typeindex As ResultsIndex)
+       (unknown file): N 00073
+   System.Web.Configuration.RuntimeConfig.get_BrowserCaps()
+       (unknown file): N 00033
+   System.Web.Configuration.HttpCapabilitiesBase.GetBrowserCapabilities(request As HttpRequest)
+       (unknown file): N 00026
+   System.Web.HttpRequest.get_Browser()
+       (unknown file): N 00175
+   System.Web.Security.CookielessHelperClass.UseCookieless(context As HttpContextdoRedirect As BooleancookieMode As HttpCookieMode)
+       (unknown file): N 00071
+   System.Web.Security.FormsAuthenticationModule.ExtractTicketFromCookie(context As HttpContextname As StringcookielessTicket As Boolean&)
+       (unknown file): N 01776
+   System.Web.Security.FormsAuthenticationModule.OnAuthenticate(e As FormsAuthenticationEventArgs)
+       (unknown file): N 00107
+   System.Web.Security.FormsAuthenticationModule.OnEnter(source As ObjecteventArgs As EventArgs)
+       (unknown file): N 00080
+   System.Web.SyncEventExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+       (unknown file): N 00136
+   System.Web.HttpApplication.ExecuteStep(step As IExecutionStepcompletedSynchronously As Boolean&)
+       (unknown file): N 00069
+
+
+====================================

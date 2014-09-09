@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cardt", "Cardt.csproj", "{A10A7C30-1279-4B99-84AD-8C0C72C5318E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A10A7C30-1279-4B99-84AD-8C0C72C5318E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A10A7C30-1279-4B99-84AD-8C0C72C5318E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A10A7C30-1279-4B99-84AD-8C0C72C5318E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A10A7C30-1279-4B99-84AD-8C0C72C5318E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

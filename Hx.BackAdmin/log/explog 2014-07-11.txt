@@ -1,0 +1,356 @@
+﻿2014/7/11 8:19:14        未能加载类型“Hx.BackAdmin.biz.job”。
+Source:System.Web
+TargetSite:Void ParseString(System.String, System.Web.VirtualPath, System.Text.Encoding)
+
+---- Stack Trace ----
+   System.Web.UI.TemplateParser.ParseString(text As StringvirtualPath As VirtualPathfileEncoding As Encoding)
+       (unknown file): N 00573
+   System.Web.UI.TemplateParser.ParseFile(physicalPath As StringvirtualPath As VirtualPath)
+       (unknown file): N 00268
+   System.Web.UI.TemplateParser.ParseInternal()
+       (unknown file): N 00084
+   System.Web.UI.TemplateParser.Parse()
+       (unknown file): N 00154
+   System.Web.Compilation.BaseTemplateBuildProvider.get_CodeCompilerType()
+       (unknown file): N 00110
+   System.Web.Compilation.BuildProvider.GetCompilerTypeFromBuildProvider(buildProvider As BuildProvider)
+       (unknown file): N 00059
+   System.Web.Compilation.BuildProvidersCompiler.ProcessBuildProviders()
+       (unknown file): N 00209
+   System.Web.Compilation.BuildProvidersCompiler.PerformBuild()
+       (unknown file): N 00030
+   System.Web.Compilation.BuildManager.CompileWebFile(virtualPath As VirtualPath)
+       (unknown file): N 9881909
+   System.Web.Compilation.BuildManager.GetVPathBuildResultInternal(virtualPath As VirtualPathnoBuild As BooleanallowCrossApp As BooleanallowBuildInPrecompile As BooleanthrowIfNotFound As BooleanensureIsUpToDate As Boolean)
+       (unknown file): N 00299
+   System.Web.Compilation.BuildManager.GetVPathBuildResultWithNoAssert(context As HttpContextvirtualPath As VirtualPathnoBuild As BooleanallowCrossApp As BooleanallowBuildInPrecompile As BooleanthrowIfNotFound As BooleanensureIsUpToDate As Boolean)
+       (unknown file): N 00103
+   System.Web.Compilation.BuildManager.GetVirtualPathObjectFactory(virtualPath As VirtualPathcontext As HttpContextallowCrossApp As BooleanthrowIfNotFound As Boolean)
+       (unknown file): N 00165
+   System.Web.Compilation.BuildManager.CreateInstanceFromVirtualPath(virtualPath As VirtualPathrequiredBaseType As Typecontext As HttpContextallowCrossApp As Boolean)
+       (unknown file): N 00043
+   System.Web.UI.PageHandlerFactory.GetHandlerHelper(context As HttpContextrequestType As StringvirtualPath As VirtualPathphysicalPath As String)
+       (unknown file): N 00031
+   System.Web.UI.PageHandlerFactory.GetHandler(context As HttpContextrequestType As StringvirtualPath As Stringpath As String)
+       (unknown file): N 00037
+   System.Web.MaterializeHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+       (unknown file): N 00346
+   System.Web.HttpApplication.ExecuteStep(step As IExecutionStepcompletedSynchronously As Boolean&)
+       (unknown file): N 00155
+
+
+====================================
+2014/7/11 9:30:02        未能加载类型“Hx.BackAdmin.biz.jobinfo”。
+Source:System.Web
+TargetSite:Void ParseString(System.String, System.Web.VirtualPath, System.Text.Encoding)
+
+---- Stack Trace ----
+   System.Web.UI.TemplateParser.ParseString(text As StringvirtualPath As VirtualPathfileEncoding As Encoding)
+       (unknown file): N 00573
+   System.Web.UI.TemplateParser.ParseFile(physicalPath As StringvirtualPath As VirtualPath)
+       (unknown file): N 00268
+   System.Web.UI.TemplateParser.ParseInternal()
+       (unknown file): N 00084
+   System.Web.UI.TemplateParser.Parse()
+       (unknown file): N 00154
+   System.Web.Compilation.BaseTemplateBuildProvider.get_CodeCompilerType()
+       (unknown file): N 00110
+   System.Web.Compilation.BuildProvider.GetCompilerTypeFromBuildProvider(buildProvider As BuildProvider)
+       (unknown file): N 00059
+   System.Web.Compilation.BuildProvidersCompiler.ProcessBuildProviders()
+       (unknown file): N 00209
+   System.Web.Compilation.BuildProvidersCompiler.PerformBuild()
+       (unknown file): N 00030
+   System.Web.Compilation.BuildManager.CompileWebFile(virtualPath As VirtualPath)
+       (unknown file): N 9881909
+   System.Web.Compilation.BuildManager.GetVPathBuildResultInternal(virtualPath As VirtualPathnoBuild As BooleanallowCrossApp As BooleanallowBuildInPrecompile As BooleanthrowIfNotFound As BooleanensureIsUpToDate As Boolean)
+       (unknown file): N 00299
+   System.Web.Compilation.BuildManager.GetVPathBuildResultWithNoAssert(context As HttpContextvirtualPath As VirtualPathnoBuild As BooleanallowCrossApp As BooleanallowBuildInPrecompile As BooleanthrowIfNotFound As BooleanensureIsUpToDate As Boolean)
+       (unknown file): N 00103
+   System.Web.Compilation.BuildManager.GetVirtualPathObjectFactory(virtualPath As VirtualPathcontext As HttpContextallowCrossApp As BooleanthrowIfNotFound As Boolean)
+       (unknown file): N 00165
+   System.Web.Compilation.BuildManager.CreateInstanceFromVirtualPath(virtualPath As VirtualPathrequiredBaseType As Typecontext As HttpContextallowCrossApp As Boolean)
+       (unknown file): N 00043
+   System.Web.UI.PageHandlerFactory.GetHandlerHelper(context As HttpContextrequestType As StringvirtualPath As VirtualPathphysicalPath As String)
+       (unknown file): N 00031
+   System.Web.UI.PageHandlerFactory.GetHandler(context As HttpContextrequestType As StringvirtualPath As Stringpath As String)
+       (unknown file): N 00037
+   System.Web.MaterializeHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+       (unknown file): N 00346
+   System.Web.HttpApplication.ExecuteStep(step As IExecutionStepcompletedSynchronously As Boolean&)
+       (unknown file): N 00155
+
+
+====================================
+2014/7/11 11:15:23        引发类型为“System.Web.HttpUnhandledException”的异常。
+Source:System.Web
+TargetSite:Boolean HandleError(System.Exception)
+
+---- Stack Trace ----
+   System.Web.UI.Page.HandleError(e As Exception)
+       (unknown file): N 00436
+   System.Web.UI.Page.ProcessRequestMain(includeStagesBeforeAsyncPoint As BooleanincludeStagesAfterAsyncPoint As Boolean)
+       (unknown file): N 06695
+   System.Web.UI.Page.ProcessRequest(includeStagesBeforeAsyncPoint As BooleanincludeStagesAfterAsyncPoint As Boolean)
+       (unknown file): N 00245
+   System.Web.UI.Page.ProcessRequest()
+       (unknown file): N 00072
+   System.Web.UI.Page.ProcessRequestWithNoAssert(context As HttpContext)
+       (unknown file): N 00021
+   System.Web.UI.Page.ProcessRequest(context As HttpContext)
+       (unknown file): N 00058
+   ASP.index_aspx.ProcessRequest(context As HttpContext)
+       App_Web_1cywihqd.4.cs: line 0000, col 00, IL 0001
+   System.Web.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+       (unknown file): N 00341
+   System.Web.HttpApplication.ExecuteStep(step As IExecutionStepcompletedSynchronously As Boolean&)
+       (unknown file): N 00069
+
+
+====================================
+2014/7/11 11:16:36        “Hx.BackAdmin.biz.jobinfo”不扩展类“System.Web.UI.Page”，因此此处不允许。
+Source:System.Web
+TargetSite:Void ParseString(System.String, System.Web.VirtualPath, System.Text.Encoding)
+
+---- Stack Trace ----
+   System.Web.UI.TemplateParser.ParseString(text As StringvirtualPath As VirtualPathfileEncoding As Encoding)
+       (unknown file): N 00573
+   System.Web.UI.TemplateParser.ParseFile(physicalPath As StringvirtualPath As VirtualPath)
+       (unknown file): N 00268
+   System.Web.UI.TemplateParser.ParseInternal()
+       (unknown file): N 00084
+   System.Web.UI.TemplateParser.Parse()
+       (unknown file): N 00154
+   System.Web.Compilation.BaseTemplateBuildProvider.get_CodeCompilerType()
+       (unknown file): N 00110
+   System.Web.Compilation.BuildProvider.GetCompilerTypeFromBuildProvider(buildProvider As BuildProvider)
+       (unknown file): N 00059
+   System.Web.Compilation.BuildProvidersCompiler.ProcessBuildProviders()
+       (unknown file): N 00209
+   System.Web.Compilation.BuildProvidersCompiler.PerformBuild()
+       (unknown file): N 00030
+   System.Web.Compilation.BuildManager.CompileWebFile(virtualPath As VirtualPath)
+       (unknown file): N 9881909
+   System.Web.Compilation.BuildManager.GetVPathBuildResultInternal(virtualPath As VirtualPathnoBuild As BooleanallowCrossApp As BooleanallowBuildInPrecompile As BooleanthrowIfNotFound As BooleanensureIsUpToDate As Boolean)
+       (unknown file): N 00299
+   System.Web.Compilation.BuildManager.GetVPathBuildResultWithNoAssert(context As HttpContextvirtualPath As VirtualPathnoBuild As BooleanallowCrossApp As BooleanallowBuildInPrecompile As BooleanthrowIfNotFound As BooleanensureIsUpToDate As Boolean)
+       (unknown file): N 00103
+   System.Web.Compilation.BuildManager.GetVirtualPathObjectFactory(virtualPath As VirtualPathcontext As HttpContextallowCrossApp As BooleanthrowIfNotFound As Boolean)
+       (unknown file): N 00165
+   System.Web.Compilation.BuildManager.CreateInstanceFromVirtualPath(virtualPath As VirtualPathrequiredBaseType As Typecontext As HttpContextallowCrossApp As Boolean)
+       (unknown file): N 00043
+   System.Web.UI.PageHandlerFactory.GetHandlerHelper(context As HttpContextrequestType As StringvirtualPath As VirtualPathphysicalPath As String)
+       (unknown file): N 00031
+   System.Web.UI.PageHandlerFactory.GetHandler(context As HttpContextrequestType As StringvirtualPath As Stringpath As String)
+       (unknown file): N 00037
+   System.Web.MaterializeHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+       (unknown file): N 00346
+   System.Web.HttpApplication.ExecuteStep(step As IExecutionStepcompletedSynchronously As Boolean&)
+       (unknown file): N 00155
+
+
+====================================
+2014/7/11 13:57:03        “Hx.BackAdmin.biz.jobinfo”不扩展类“System.Web.UI.Page”，因此此处不允许。
+Source:System.Web
+TargetSite:Void ParseString(System.String, System.Web.VirtualPath, System.Text.Encoding)
+
+---- Stack Trace ----
+   System.Web.UI.TemplateParser.ParseString(text As StringvirtualPath As VirtualPathfileEncoding As Encoding)
+       (unknown file): N 00573
+   System.Web.UI.TemplateParser.ParseFile(physicalPath As StringvirtualPath As VirtualPath)
+       (unknown file): N 00268
+   System.Web.UI.TemplateParser.ParseInternal()
+       (unknown file): N 00084
+   System.Web.UI.TemplateParser.Parse()
+       (unknown file): N 00154
+   System.Web.Compilation.BaseTemplateBuildProvider.get_CodeCompilerType()
+       (unknown file): N 00110
+   System.Web.Compilation.BuildProvider.GetCompilerTypeFromBuildProvider(buildProvider As BuildProvider)
+       (unknown file): N 00059
+   System.Web.Compilation.BuildProvidersCompiler.ProcessBuildProviders()
+       (unknown file): N 00209
+   System.Web.Compilation.BuildProvidersCompiler.PerformBuild()
+       (unknown file): N 00030
+   System.Web.Compilation.BuildManager.CompileWebFile(virtualPath As VirtualPath)
+       (unknown file): N 9881909
+   System.Web.Compilation.BuildManager.GetVPathBuildResultInternal(virtualPath As VirtualPathnoBuild As BooleanallowCrossApp As BooleanallowBuildInPrecompile As BooleanthrowIfNotFound As BooleanensureIsUpToDate As Boolean)
+       (unknown file): N 00299
+   System.Web.Compilation.BuildManager.GetVPathBuildResultWithNoAssert(context As HttpContextvirtualPath As VirtualPathnoBuild As BooleanallowCrossApp As BooleanallowBuildInPrecompile As BooleanthrowIfNotFound As BooleanensureIsUpToDate As Boolean)
+       (unknown file): N 00103
+   System.Web.Compilation.BuildManager.GetVirtualPathObjectFactory(virtualPath As VirtualPathcontext As HttpContextallowCrossApp As BooleanthrowIfNotFound As Boolean)
+       (unknown file): N 00165
+   System.Web.Compilation.BuildManager.CreateInstanceFromVirtualPath(virtualPath As VirtualPathrequiredBaseType As Typecontext As HttpContextallowCrossApp As Boolean)
+       (unknown file): N 00043
+   System.Web.UI.PageHandlerFactory.GetHandlerHelper(context As HttpContextrequestType As StringvirtualPath As VirtualPathphysicalPath As String)
+       (unknown file): N 00031
+   System.Web.UI.PageHandlerFactory.GetHandler(context As HttpContextrequestType As StringvirtualPath As Stringpath As String)
+       (unknown file): N 00037
+   System.Web.MaterializeHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+       (unknown file): N 00346
+   System.Web.HttpApplication.ExecuteStep(step As IExecutionStepcompletedSynchronously As Boolean&)
+       (unknown file): N 00155
+
+
+====================================
+2014/7/11 14:14:47        “Hx.BackAdmin.biz.jobinfo”不扩展类“System.Web.UI.Page”，因此此处不允许。
+Source:System.Web
+TargetSite:Void ParseString(System.String, System.Web.VirtualPath, System.Text.Encoding)
+
+---- Stack Trace ----
+   System.Web.UI.TemplateParser.ParseString(text As StringvirtualPath As VirtualPathfileEncoding As Encoding)
+       (unknown file): N 00573
+   System.Web.UI.TemplateParser.ParseFile(physicalPath As StringvirtualPath As VirtualPath)
+       (unknown file): N 00268
+   System.Web.UI.TemplateParser.ParseInternal()
+       (unknown file): N 00084
+   System.Web.UI.TemplateParser.Parse()
+       (unknown file): N 00154
+   System.Web.Compilation.BaseTemplateBuildProvider.get_CodeCompilerType()
+       (unknown file): N 00110
+   System.Web.Compilation.BuildProvider.GetCompilerTypeFromBuildProvider(buildProvider As BuildProvider)
+       (unknown file): N 00059
+   System.Web.Compilation.BuildProvidersCompiler.ProcessBuildProviders()
+       (unknown file): N 00209
+   System.Web.Compilation.BuildProvidersCompiler.PerformBuild()
+       (unknown file): N 00030
+   System.Web.Compilation.BuildManager.CompileWebFile(virtualPath As VirtualPath)
+       (unknown file): N 9881909
+   System.Web.Compilation.BuildManager.GetVPathBuildResultInternal(virtualPath As VirtualPathnoBuild As BooleanallowCrossApp As BooleanallowBuildInPrecompile As BooleanthrowIfNotFound As BooleanensureIsUpToDate As Boolean)
+       (unknown file): N 00299
+   System.Web.Compilation.BuildManager.GetVPathBuildResultWithNoAssert(context As HttpContextvirtualPath As VirtualPathnoBuild As BooleanallowCrossApp As BooleanallowBuildInPrecompile As BooleanthrowIfNotFound As BooleanensureIsUpToDate As Boolean)
+       (unknown file): N 00103
+   System.Web.Compilation.BuildManager.GetVirtualPathObjectFactory(virtualPath As VirtualPathcontext As HttpContextallowCrossApp As BooleanthrowIfNotFound As Boolean)
+       (unknown file): N 00165
+   System.Web.Compilation.BuildManager.CreateInstanceFromVirtualPath(virtualPath As VirtualPathrequiredBaseType As Typecontext As HttpContextallowCrossApp As Boolean)
+       (unknown file): N 00043
+   System.Web.UI.PageHandlerFactory.GetHandlerHelper(context As HttpContextrequestType As StringvirtualPath As VirtualPathphysicalPath As String)
+       (unknown file): N 00031
+   System.Web.UI.PageHandlerFactory.GetHandler(context As HttpContextrequestType As StringvirtualPath As Stringpath As String)
+       (unknown file): N 00037
+   System.Web.MaterializeHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+       (unknown file): N 00346
+   System.Web.HttpApplication.ExecuteStep(step As IExecutionStepcompletedSynchronously As Boolean&)
+       (unknown file): N 00155
+
+
+====================================
+2014/7/11 15:17:23        引发类型为“System.Web.HttpUnhandledException”的异常。
+Source:System.Web
+TargetSite:Boolean HandleError(System.Exception)
+
+---- Stack Trace ----
+   System.Web.UI.Page.HandleError(e As Exception)
+       (unknown file): N 00436
+   System.Web.UI.Page.ProcessRequestMain(includeStagesBeforeAsyncPoint As BooleanincludeStagesAfterAsyncPoint As Boolean)
+       (unknown file): N 06695
+   System.Web.UI.Page.ProcessRequest(includeStagesBeforeAsyncPoint As BooleanincludeStagesAfterAsyncPoint As Boolean)
+       (unknown file): N 00245
+   System.Web.UI.Page.ProcessRequest()
+       (unknown file): N 00072
+   System.Web.UI.Page.ProcessRequestWithNoAssert(context As HttpContext)
+       (unknown file): N 00021
+   System.Web.UI.Page.ProcessRequest(context As HttpContext)
+       (unknown file): N 00058
+   ASP.user_userlist_aspx.ProcessRequest(context As HttpContext)
+       App_Web_ex1kjhqm.1.cs: line 0000, col 00, IL 0001
+   System.Web.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+       (unknown file): N 00341
+   System.Web.HttpApplication.ExecuteStep(step As IExecutionStepcompletedSynchronously As Boolean&)
+       (unknown file): N 00069
+
+
+====================================
+2014/7/11 15:31:56        引发类型为“System.Web.HttpUnhandledException”的异常。
+Source:System.Web
+TargetSite:Boolean HandleError(System.Exception)
+
+---- Stack Trace ----
+   System.Web.UI.Page.HandleError(e As Exception)
+       (unknown file): N 00436
+   System.Web.UI.Page.ProcessRequestMain(includeStagesBeforeAsyncPoint As BooleanincludeStagesAfterAsyncPoint As Boolean)
+       (unknown file): N 06695
+   System.Web.UI.Page.ProcessRequest(includeStagesBeforeAsyncPoint As BooleanincludeStagesAfterAsyncPoint As Boolean)
+       (unknown file): N 00245
+   System.Web.UI.Page.ProcessRequest()
+       (unknown file): N 00072
+   System.Web.UI.Page.ProcessRequestWithNoAssert(context As HttpContext)
+       (unknown file): N 00021
+   System.Web.UI.Page.ProcessRequest(context As HttpContext)
+       (unknown file): N 00058
+   ASP.user_admins_aspx.ProcessRequest(context As HttpContext)
+       App_Web_rdq5hbfo.1.cs: line 0000, col 00, IL 0001
+   System.Web.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+       (unknown file): N 00341
+   System.Web.HttpApplication.ExecuteStep(step As IExecutionStepcompletedSynchronously As Boolean&)
+       (unknown file): N 00069
+
+
+====================================
+2014/7/11 15:33:05        引发类型为“System.Web.HttpUnhandledException”的异常。
+Source:System.Web
+TargetSite:Boolean HandleError(System.Exception)
+
+---- Stack Trace ----
+   System.Web.UI.Page.HandleError(e As Exception)
+       (unknown file): N 00436
+   System.Web.UI.Page.ProcessRequestMain(includeStagesBeforeAsyncPoint As BooleanincludeStagesAfterAsyncPoint As Boolean)
+       (unknown file): N 06695
+   System.Web.UI.Page.ProcessRequest(includeStagesBeforeAsyncPoint As BooleanincludeStagesAfterAsyncPoint As Boolean)
+       (unknown file): N 00245
+   System.Web.UI.Page.ProcessRequest()
+       (unknown file): N 00072
+   System.Web.UI.Page.ProcessRequestWithNoAssert(context As HttpContext)
+       (unknown file): N 00021
+   System.Web.UI.Page.ProcessRequest(context As HttpContext)
+       (unknown file): N 00058
+   ASP.user_admins_aspx.ProcessRequest(context As HttpContext)
+       App_Web_0qy3thsd.6.cs: line 0000, col 00, IL 0001
+   System.Web.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+       (unknown file): N 00341
+   System.Web.HttpApplication.ExecuteStep(step As IExecutionStepcompletedSynchronously As Boolean&)
+       (unknown file): N 00069
+
+
+====================================
+2014/7/11 17:19:47        “Hx.BackAdmin.biz.jobinfo”不扩展类“System.Web.UI.Page”，因此此处不允许。
+Source:System.Web
+TargetSite:Void ParseString(System.String, System.Web.VirtualPath, System.Text.Encoding)
+
+---- Stack Trace ----
+   System.Web.UI.TemplateParser.ParseString(text As StringvirtualPath As VirtualPathfileEncoding As Encoding)
+       (unknown file): N 00573
+   System.Web.UI.TemplateParser.ParseFile(physicalPath As StringvirtualPath As VirtualPath)
+       (unknown file): N 00268
+   System.Web.UI.TemplateParser.ParseInternal()
+       (unknown file): N 00084
+   System.Web.UI.TemplateParser.Parse()
+       (unknown file): N 00154
+   System.Web.Compilation.BaseTemplateBuildProvider.get_CodeCompilerType()
+       (unknown file): N 00110
+   System.Web.Compilation.BuildProvider.GetCompilerTypeFromBuildProvider(buildProvider As BuildProvider)
+       (unknown file): N 00059
+   System.Web.Compilation.BuildProvidersCompiler.ProcessBuildProviders()
+       (unknown file): N 00209
+   System.Web.Compilation.BuildProvidersCompiler.PerformBuild()
+       (unknown file): N 00030
+   System.Web.Compilation.BuildManager.CompileWebFile(virtualPath As VirtualPath)
+       (unknown file): N 9881909
+   System.Web.Compilation.BuildManager.GetVPathBuildResultInternal(virtualPath As VirtualPathnoBuild As BooleanallowCrossApp As BooleanallowBuildInPrecompile As BooleanthrowIfNotFound As BooleanensureIsUpToDate As Boolean)
+       (unknown file): N 00299
+   System.Web.Compilation.BuildManager.GetVPathBuildResultWithNoAssert(context As HttpContextvirtualPath As VirtualPathnoBuild As BooleanallowCrossApp As BooleanallowBuildInPrecompile As BooleanthrowIfNotFound As BooleanensureIsUpToDate As Boolean)
+       (unknown file): N 00103
+   System.Web.Compilation.BuildManager.GetVirtualPathObjectFactory(virtualPath As VirtualPathcontext As HttpContextallowCrossApp As BooleanthrowIfNotFound As Boolean)
+       (unknown file): N 00165
+   System.Web.Compilation.BuildManager.CreateInstanceFromVirtualPath(virtualPath As VirtualPathrequiredBaseType As Typecontext As HttpContextallowCrossApp As Boolean)
+       (unknown file): N 00043
+   System.Web.UI.PageHandlerFactory.GetHandlerHelper(context As HttpContextrequestType As StringvirtualPath As VirtualPathphysicalPath As String)
+       (unknown file): N 00031
+   System.Web.UI.PageHandlerFactory.GetHandler(context As HttpContextrequestType As StringvirtualPath As Stringpath As String)
+       (unknown file): N 00037
+   System.Web.MaterializeHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+       (unknown file): N 00346
+   System.Web.HttpApplication.ExecuteStep(step As IExecutionStepcompletedSynchronously As Boolean&)
+       (unknown file): N 00155
+
+
+====================================

@@ -46,7 +46,7 @@ namespace Hx.BackAdmin.dayreport
         protected string CurrentQuery
         {
             get
-            {
+            { 
                 if (string.IsNullOrEmpty(currentquery))
                 {
                     foreach (string q in Request.QueryString.AllKeys)

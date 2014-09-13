@@ -1405,8 +1405,8 @@ namespace Hx.BackAdmin.dayreport
             else if (dep == DayReportDep.财务部)
             {
                 tbl.Columns["目标值"].ColumnName = "期初余额";
-                DataRow[] rows = new DataRow[rlist.Count + 4];
-                string[] listignore = { "集团内部资金借出", "其他支出", "POS未到帐", "银行帐户余额", "其中农行", "中行", "工行", "建行", "交行", "民生", "平安", "中信", "华夏", "浙商", "泰隆", "其他银行", "现金合计", "留存现金", "本日预计支付合计数", "其中：购车（配件）款", "工资", "税款", "其他大额款项" };
+                DataRow[] rows = new DataRow[rlist.Count + 5];
+                string[] listignore = { "集团内部资金借出", "其他支出", "POS未到帐", "银行帐户余额", "其中农行", "中行", "工行", "建行", "交行", "民生", "平安", "中信", "华夏", "浙商", "泰隆", "其他银行", "现金合计", "留存现金","资金余额与现金校对数", "本日预计支付合计数", "其中：购车（配件）款", "工资", "税款", "其他大额款项" };
 
                 int midxssr = rlist.Find(l => l.Department == CurrentDep && l.Name == "销售收入").ID;
                 int midajfkyj = rlist.Find(l => l.Department == CurrentDep && l.Name == "按揭放款、押金").ID;
@@ -1590,6 +1590,16 @@ namespace Hx.BackAdmin.dayreport
                 rows[index]["合计"] = string.Empty;
                 rows[index]["期初余额"] = monthtarget == null ? string.Empty : monthtarget.CWlcxj;
                 index++;
+                decimal qczjye = DataConvert.SafeDecimal(monthtarget == null ? string.Empty : monthtarget.CWzjye);
+                decimal qcpos = DataConvert.SafeDecimal(monthtarget == null ? string.Empty : monthtarget.CWposwdz);
+                decimal qcyhzhye = DataConvert.SafeDecimal(ycyhzhye);
+                decimal qcxjhj = DataConvert.SafeDecimal(monthtarget == null ? string.Empty : monthtarget.CWxjczhj);
+                decimal qclcxj = DataConvert.SafeDecimal(monthtarget == null ? string.Empty : monthtarget.CWlcxj);
+                rows[index] = tbl.NewRow();
+                rows[index]["项目"] = "资金余额与现金校对数";
+                rows[index]["合计"] = string.Empty;
+                rows[index]["期初余额"] = qczjye - qcpos - qcyhzhye - qcxjhj - qclcxj;
+                index++;
                 rows[index] = tbl.NewRow();
                 rows[index]["项目"] = "本日预计支付合计数";
                 rows[index]["合计"] = string.Empty;
@@ -1714,15 +1724,25 @@ namespace Hx.BackAdmin.dayreport
 
                             decimal hjdrzjzsr = hjdrxssr + hjdrajfkyj + hjdrwxsr + hjdryhfd + hjdrjtnbzjjr + hjdrqtsr;
                             decimal hjdrzjzzc = hjdrzczc + hjdrbjzc + hjdryhdkdq + hjdrjtnbzjjc + hjdrqtzc;
-                            rows[index][i] = Math.Round(DataConvert.SafeDecimal(monthtarget == null ? string.Empty : monthtarget.CWzjye) + hjdrzjzsr - hjdrzjzzc, 2);
+                            decimal drzjye = Math.Round(DataConvert.SafeDecimal(monthtarget == null ? string.Empty : monthtarget.CWzjye) + hjdrzjzsr - hjdrzjzzc, 2);
+                            rows[index][i] = drzjye;
                             index++;
 
                             //POS未到帐、银行帐户余额、农行、中行、民生、交行、其他银行、现金合计、留存现金 每日数据
                             for (int k = 0; k < listignore.Length; k++)
                             {
-                                if (listignore[k] != "集团内部资金借出" && listignore[k] != "其他支出")
+                                if (listignore[k] != "集团内部资金借出" && listignore[k] != "其他支出" && listignore[k] != "资金余额与现金校对数")
                                 {
-                                    rows[index][i] = reportdate.ContainsKey(rlist.Find(l => l.Name == listignore[k]).ID.ToString()) ? reportdate[rlist.Find(l => l.Name == listignore[k]).ID.ToString()] : string.Empty; ;
+                                    rows[index][i] = reportdate.ContainsKey(rlist.Find(l => l.Name == listignore[k]).ID.ToString()) ? reportdate[rlist.Find(l => l.Name == listignore[k]).ID.ToString()] : string.Empty;
+                                    index++;
+                                }
+                                else if (listignore[k] == "资金余额与现金校对数")
+                                {
+                                    decimal drpos = DataConvert.SafeDecimal(reportdate.ContainsKey(rlist.Find(l => l.Name == "POS未到帐").ID.ToString()) ? reportdate[rlist.Find(l => l.Name == "POS未到帐").ID.ToString()] : string.Empty);
+                                    decimal dryhzhye = DataConvert.SafeDecimal(reportdate.ContainsKey(rlist.Find(l => l.Name == "银行帐户余额").ID.ToString()) ? reportdate[rlist.Find(l => l.Name == "银行帐户余额").ID.ToString()] : string.Empty);
+                                    decimal drxjhj = DataConvert.SafeDecimal(reportdate.ContainsKey(rlist.Find(l => l.Name == "现金合计").ID.ToString()) ? reportdate[rlist.Find(l => l.Name == "现金合计").ID.ToString()] : string.Empty);
+                                    decimal drlcxj = DataConvert.SafeDecimal(reportdate.ContainsKey(rlist.Find(l => l.Name == "留存现金").ID.ToString()) ? reportdate[rlist.Find(l => l.Name == "留存现金").ID.ToString()] : string.Empty);
+                                    rows[index][i] = drzjye - drpos - dryhzhye - drxjhj - drlcxj;
                                     index++;
                                 }
                             }

@@ -494,7 +494,7 @@ namespace Hx.BackAdmin.dayreport
             }
             if (ddlCorp.SelectedIndex > 0 && DateTime.TryParse(txtDate.Text + "-07", out day))
             {
-                if (DateTime.Today > day && CurrentUser.AllowModify != "1")
+                if (DateTime.Today > day && CurrentUser.AllowModify != "1" && DateTime.Today > DateTime.Parse("2014-10-11"))
                 {
                     allowmodify = false;
                 }

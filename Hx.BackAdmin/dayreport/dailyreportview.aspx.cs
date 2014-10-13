@@ -2257,7 +2257,7 @@ namespace Hx.BackAdmin.dayreport
                 decimal mbewbxfl = DataConvert.SafeDecimal(data.DefaultView[0]["目标值"]);
                 data.DefaultView.RowFilter = "项目='外流销售台次'";
                 decimal hjwlxstc = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
-                data.DefaultView.RowFilter = "项目='介绍二手车评估数'";
+                data.DefaultView.RowFilter = "项目='推荐二手车评估数'";
                 decimal hjjsescpgs = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
                 data.DefaultView.RowFilter = "项目='销售置换数'";
                 decimal mbxszhs = DataConvert.SafeDecimal(data.DefaultView[0]["目标值"]);
@@ -2280,9 +2280,9 @@ namespace Hx.BackAdmin.dayreport
                 decimal mbbxfl = DataConvert.SafeDecimal(data.DefaultView[0]["目标值"]);
                 data.DefaultView.RowFilter = "项目='入库台次'";
                 decimal hjrktc = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
-                data.DefaultView.RowFilter = "项目='免费保养台次（含赠送）'";
+                data.DefaultView.RowFilter = "项目='终身免费保养台次（含赠送）'";
                 decimal hjmfbytc = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
-                data.DefaultView.RowFilter = "项目='免费保养总金额'";
+                data.DefaultView.RowFilter = "项目='终身免费保养总金额'";
                 decimal hjmfbyzje = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
 
                 rows[0] = tbl.NewRow();

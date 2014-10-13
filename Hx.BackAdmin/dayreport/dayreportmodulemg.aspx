@@ -85,7 +85,7 @@
 <body>
     <form id="form1" runat="server">
     <div class="ht_main">
-        <table width="500" border="0" cellspacing="0" cellpadding="0" class="biaoge4" style="background-color: #f4f8fc;">
+        <table width="820" border="0" cellspacing="0" cellpadding="0" class="biaoge4" style="background-color: #f4f8fc;">
             <tr>
                 <td class="w40 bold">
                     查询：

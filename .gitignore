@@ -1,3 +1,7 @@
 */bin/*
 _*
+*/[Rr]elease/*
 */obj/*
+*/[Dd]ebug/*
+*.dll
+*.pdb

@@ -40,7 +40,9 @@ namespace Hx.Components
             if (!fromCache)
                 return CommonDataProvider.Instance().GetDailyReportList(query);
 
-            string key = GlobalKey.DAILYREPORT_LIST + "_" + query.CorporationID.Value + "_" + ((int)query.DayReportDep).ToString() + "_" + query.DayUnique + "_" + query.DayUniqueStart + "_" + query.DayUniqueEnd;
+            string key = GlobalKey.DAILYREPORT_LIST + "_" + query.CorporationID.Value + "_" + ((int)query.DayReportDep).ToString() + "_" + query.DayUnique;
+            if(!string.IsNullOrEmpty(query.DayUniqueStart))
+                key = GlobalKey.DAILYREPORT_LIST + "_" + query.CorporationID.Value + "_" + ((int)query.DayReportDep).ToString() + "_r_" + query.DayUniqueStart + "_" + query.DayUniqueEnd;
             List<DailyReportInfo> list = MangaCache.Get(key) as List<DailyReportInfo>;
             if (list == null)
             {
@@ -52,8 +54,10 @@ namespace Hx.Components
 
         public void ReloadDailyReportListCache(DailyReportQuery query)
         {
-            string key = GlobalKey.DAILYREPORT_LIST + "_" + query.CorporationID.Value + "_" + ((int)query.DayReportDep).ToString() + "_" + query.DayUnique + "_" + query.DayUniqueStart + "_" + query.DayUniqueEnd;
+            string key = GlobalKey.DAILYREPORT_LIST + "_" + query.CorporationID.Value + "_" + ((int)query.DayReportDep).ToString() + "_" + query.DayUnique;
             MangaCache.Remove(key);
+            string rkey = GlobalKey.DAILYREPORT_LIST + "_" + query.CorporationID.Value + "_" + ((int)query.DayReportDep).ToString() + "_r_";
+            MangaCache.RemoveByPattern(rkey);
             GetList(query, true);
         }
 

@@ -312,7 +312,7 @@ namespace Hx.BackAdmin.dayreport
                         if (!string.IsNullOrEmpty(monthtarget.XSajpjdt))
                             sheet.GetRow(12).Cells[41].SetCellValue(DataConvert.SafeFloat(monthtarget.XSajpjdt));
                         if (!string.IsNullOrEmpty(monthtarget.XSmfbystl))
-                            sheet.GetRow(12).Cells[42].SetCellValue(DataConvert.SafeFloat(monthtarget.XSmfbystl));
+                            sheet.GetRow(12).Cells[42].SetCellValue(DataConvert.SafeFloat(monthtarget.XSmfbystl) / 100);
                         if (!string.IsNullOrEmpty(monthtarget.XSmfbypjdt))
                             sheet.GetRow(12).Cells[43].SetCellValue(DataConvert.SafeFloat(monthtarget.XSmfbypjdt));
 

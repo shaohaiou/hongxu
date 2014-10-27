@@ -151,119 +151,16 @@ namespace Hx.BackAdmin.dayreport
 
             if (target != null)
             {
-                if (CurrentDep == DayReportDep.销售部)
+                if (CurrentDep == DayReportDep.市场部)
                 {
                     #region 绑定数据
 
                     #region 关键指标
 
-                    txtXSztldl.Text = target.XSztldl;
-                    txtXSztcjl.Text = target.XSztcjl;
-                    txtXSztzb.Text = target.XSztzb;
-                    txtXSspl.Text = target.XSspl;
-                    txtXSspdt.Text = target.XSspdt;
-                    txtXSbxl.Text = target.XSbxl;
-                    txtXSbxdt.Text = target.XSbxdt;
-                    txtXSmrjcl.Text = target.XSmrjcl;
-                    txtXSmrdt.Text = target.XSmrdt;
-                    txtXSybstl.Text = target.XSybstl;
-                    txtXSztjpqzl.Text = target.XSztjpqzl;
-                    txtXSztjpdt.Text = target.XSztjpdt;
-                    txtXSewjpdt.Text = target.XSewjpdt;
-                    txtXSescpgl.Text = target.XSescpgl;
-                    txtXSajl.Text = target.XSajl;
-                    txtXSajpjdt.Text = target.XSajpjdt;
-                    txtXSmfbystl.Text = target.XSmfbystl;
-                    txtXSmfbypjdt.Text = target.XSmfbypjdt;
-
-                    #endregion
-
-                    #endregion
-                }
-                else if (CurrentDep == DayReportDep.售后部)
-                {
-                    #region 绑定数据
-
-                    #region 关键指标
-
-                    txtSHlctc.Text = target.SHlctc;
-                    txtSHyyl.Text = target.SHyyl;
-                    txtSHczdc.Text = target.SHczdc;
-                    txtSHsgczl.Text = target.SHsgczl;
-                    txtSHyhbl.Text = target.SHyhbl;
-                    txtSHsgsccgl.Text = target.SHsgsccgl;
-                    txtSHsgcdxcgl.Text = target.SHsgcdxcgl;
-                    txtSHmrbl.Text = target.SHmrbl;
-                    txtSHspcgl.Text = target.SHspcgl;
-                    txtSHnfl.Text = target.SHnfl;
-                    txtSHghjsl.Text = target.SHghjsl;
-                    txtSHsgzccgl.Text = target.SHsgzccgl;
-                    txtSHdtcz.Text = target.SHdtcz;
-                    txtSHbydtcz.Text = target.SHbydtcz;
-                    txtSHbytczb.Text = target.SHbytczb;
-                    txtSHmrdtcz.Text = target.SHmrdtcz;
-                    txtSHcctc.Text = target.SHcctc;
-                    txtSHybdcl.Text = target.SHybdcl;
-
-                    #endregion
-
-                    #endregion
-                }
-                else if (CurrentDep == DayReportDep.市场部)
-                {
-                    #region 绑定数据
-
-                    #region 关键指标
-
-                    txtSCxsdcl.Text = target.SCxsdcl;
                     txtSCscdfdcl.Text = target.SCscdfdcl;
-                    txtSCsfjdl.Text = target.SCsfjdl;
-                    txtSCwlhtxsdcl.Text = target.SCwlhtxsdcl;
-                    txtSCwlxsjdl.Text = target.SCwlxsjdl;
-                    txtSChrdhdcl.Text = target.SChrdhdcl;
-                    txtSChrdhjdl.Text = target.SChrdhjdl;
-                    txtSCcdqkdcl.Text = target.SCcdqkdcl;
-                    txtSChdjkdcl.Text = target.SChdjkdcl;
+                    txtSCsyfsl.Text = target.SCsyfsl;
 
                     #endregion
-
-                    txtSCxzyxxsl.Text = target.SCxzyxxsl;
-
-                    #endregion
-                }
-                else if (CurrentDep == DayReportDep.DCC部)
-                {
-                    #region 绑定数据
-
-                    #region 关键指标
-
-                    txtDCCztzb.Text = target.DCCztzb;
-                    txtDCCsdjdl.Text = target.DCCsdjdl;
-                    txtDCCwlhtjdl.Text = target.DCCwlhtjdl;
-                    txtDCCwlhrjdl.Text = target.DCCwlhrjdl;
-                    txtDCCyxhcl.Text = target.DCCyxhcl;
-                    txtDCChrhcyyddl.Text = target.DCChrhcyyddl;
-                    txtDCCzcyyl.Text = target.DCCzcyyl;
-                    txtDCCcjl.Text = target.DCCcjl;
-
-                    #endregion
-
-                    #endregion
-                }
-                else if (CurrentDep == DayReportDep.二手车部)
-                {
-                    #region 关键指标
-
-                    txtESCxsyxtjl.Text = target.ESCxsyxtjl;
-                    txtESCxhyxtjl.Text = target.ESCshyxtjl;
-                    txtESCpgcjl.Text = target.ESCpgcjl;
-                    txtESCxscjl.Text = target.ESCxscjl;
-                    txtESCpjdtml.Text = target.ESCpjdtml;
-                    txtESCzzhl.Text = target.ESCzzhl;
-                    txtESCzyxpgl.Text = target.ESCzyxpgl;
-                    txtESCzsgl.Text = target.ESCzsgl;
-                    txtESCzxsl.Text = target.ESCzxsl;
-                    txtESCzml.Text = target.ESCzml;
 
                     #endregion
                 }
@@ -303,108 +200,33 @@ namespace Hx.BackAdmin.dayreport
                         kvp.Add(m.ID.ToString(), GetString("txtmodule" + m.ID));
                 }
             }
+            if (CurrentDep == DayReportDep.售后部)
+            { 
+                int idjsescpgs = 0;
+                int idlctc = 0;
+                if (list.Exists(l => l.Department == CurrentDep && l.Name == "介绍二手车评估数"))
+                    idjsescpgs = list.Find(l => l.Department == CurrentDep && l.Name == "介绍二手车评估数").ID;
+                if(list.Exists(l => l.Department == CurrentDep && l.Name == "来厂台次"))
+                    idlctc = list.Find(l => l.Department == CurrentDep && l.Name == "来厂台次").ID;
+                if (idjsescpgs > 0 && idlctc > 0 && kvp.Keys.Contains(idlctc.ToString()))
+                {
+                    if (kvp.Keys.Contains(idjsescpgs.ToString()))
+                        kvp[idjsescpgs.ToString()] = Math.Round(DataConvert.SafeDecimal(DataConvert.SafeDouble(kvp[idlctc.ToString()]) * 0.05), 0).ToString();
+                    else
+                        kvp.Add(idjsescpgs.ToString(), Math.Round(DataConvert.SafeDecimal(DataConvert.SafeDouble(kvp[idlctc.ToString()]) * 0.05), 0).ToString());
+                }
+            }
 
             target.SCReport = json.Serialize(kvp);
 
             #endregion
 
-            if (CurrentDep == DayReportDep.销售部)
+            if (CurrentDep == DayReportDep.市场部)
             {
                 #region 关键指标
 
-                target.XSztldl = txtXSztldl.Text;
-                target.XSztcjl = txtXSztcjl.Text;
-                target.XSztzb = txtXSztzb.Text;
-                target.XSspl = txtXSspl.Text;
-                target.XSspdt = txtXSspdt.Text;
-                target.XSbxl = txtXSbxl.Text;
-                target.XSbxdt = txtXSbxdt.Text;
-                target.XSmrjcl = txtXSmrjcl.Text;
-                target.XSmrdt = txtXSmrdt.Text;
-                target.XSybstl = txtXSybstl.Text;
-                target.XSztjpqzl = txtXSztjpqzl.Text;
-                target.XSztjpdt = txtXSztjpdt.Text;
-                target.XSewjpdt = txtXSewjpdt.Text;
-                target.XSescpgl = txtXSescpgl.Text;
-                target.XSajl = txtXSajl.Text;
-                target.XSajpjdt = txtXSajpjdt.Text;
-                target.XSmfbystl = txtXSmfbystl.Text;
-                target.XSmfbypjdt = txtXSmfbypjdt.Text;
-
-                #endregion
-            }
-            else if (CurrentDep == DayReportDep.售后部)
-            {
-                #region 关键指标
-
-                target.SHlctc = txtSHlctc.Text;
-                target.SHyyl = txtSHyyl.Text;
-                target.SHczdc = txtSHczdc.Text;
-                target.SHsgczl = txtSHsgczl.Text;
-                target.SHyhbl = txtSHyhbl.Text;
-                target.SHsgsccgl = txtSHsgsccgl.Text;
-                target.SHsgcdxcgl = txtSHsgcdxcgl.Text;
-                target.SHmrbl = txtSHmrbl.Text;
-                target.SHspcgl = txtSHspcgl.Text;
-                target.SHnfl = txtSHnfl.Text;
-                target.SHghjsl = txtSHghjsl.Text;
-                target.SHsgzccgl = txtSHsgzccgl.Text;
-                target.SHdtcz = txtSHdtcz.Text;
-                target.SHbydtcz = txtSHbydtcz.Text;
-                target.SHbytczb = txtSHbytczb.Text;
-                target.SHmrdtcz = txtSHmrdtcz.Text;
-                target.SHcctc = txtSHcctc.Text;
-                target.SHybdcl = txtSHybdcl.Text;
-
-                #endregion
-            }
-            else if (CurrentDep == DayReportDep.市场部)
-            {
-                target.SCxzyxxsl = txtSCxzyxxsl.Text;
-
-                #region 关键指标
-
-                target.SCxsdcl = txtSCxsdcl.Text;
                 target.SCscdfdcl = txtSCscdfdcl.Text;
-                target.SCsfjdl = txtSCsfjdl.Text;
-                target.SCwlhtxsdcl = txtSCwlhtxsdcl.Text;
-                target.SCwlxsjdl = txtSCwlxsjdl.Text;
-                target.SChrdhdcl = txtSChrdhdcl.Text;
-                target.SChrdhjdl = txtSChrdhjdl.Text;
-                target.SCcdqkdcl = txtSCcdqkdcl.Text;
-                target.SChdjkdcl = txtSChdjkdcl.Text;
-
-                #endregion
-            }
-            else if (CurrentDep == DayReportDep.DCC部)
-            {
-                #region 关键指标
-
-                target.DCCztzb = txtDCCztzb.Text;
-                target.DCCsdjdl = txtDCCsdjdl.Text;
-                target.DCCwlhtjdl = txtDCCwlhtjdl.Text;
-                target.DCCwlhrjdl = txtDCCwlhrjdl.Text;
-                target.DCCyxhcl = txtDCCyxhcl.Text;
-                target.DCChrhcyyddl = txtDCChrhcyyddl.Text;
-                target.DCCzcyyl = txtDCCzcyyl.Text;
-                target.DCCcjl = txtDCCcjl.Text;
-
-                #endregion
-            }
-            else if (CurrentDep == DayReportDep.二手车部)
-            {
-                #region 关键指标
-
-                target.ESCxsyxtjl = txtESCxsyxtjl.Text;
-                target.ESCshyxtjl = txtESCxhyxtjl.Text;
-                target.ESCpgcjl = txtESCpgcjl.Text;
-                target.ESCxscjl = txtESCxscjl.Text;
-                target.ESCpjdtml = txtESCpjdtml.Text;
-                target.ESCzzhl = txtESCzzhl.Text;
-                target.ESCzyxpgl = txtESCzyxpgl.Text;
-                target.ESCzsgl = txtESCzsgl.Text;
-                target.ESCzxsl = txtESCzxsl.Text;
-                target.ESCzml = txtESCzml.Text;
+                target.SCsyfsl = txtSCsyfsl.Text;
 
                 #endregion
             }

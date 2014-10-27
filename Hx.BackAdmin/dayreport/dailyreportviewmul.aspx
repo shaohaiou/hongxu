@@ -41,6 +41,16 @@
             $(".cbxDayReportCorp").click(function () {
                 setdayreportcorp();
             });
+
+            $("#btnDCCQdzhl").click(function () {
+                $("#hdnKeyReportType").val("dccqdzhl");
+            });
+            $("#btnDCCCjqdzb").click(function () {
+                $("#hdnKeyReportType").val("dccjqdzb");
+            });
+            $("#btnKeyTarget").click(function () {
+                $("#hdnKeyReportType").val("");
+            });
         });
         function exportExcel() {
             post("<%=CurrentUrl %>", { act: "tabletoexcel", html: $("#tdData").html(), fn: $("#spTitle").text() });
@@ -97,7 +107,7 @@
         #flay
         {
             position: absolute;
-            width: 242px;
+            width: 122px;
             overflow: hidden;
             background-color: white;
         }
@@ -223,7 +233,7 @@
                         <ul>
                             <li class="nh">
                                 <label>
-                                    <input type="checkbox" id="cbxAllDayReportCorp" runat="server" class="fll"/>全选</label></li>
+                                    <input type="checkbox" id="cbxAllDayReportCorp" runat="server" class="fll" />全选</label></li>
                         </ul>
                     </td>
                 </tr>
@@ -253,6 +263,13 @@
                             Text="月报汇总" />
                         <asp:Button runat="server" ID="btnKeyTarget" CssClass="an1" OnClick="btnKeyTarget_Click"
                             Text="指标汇总" />
+                        <%if (CurrentDep == DayReportDep.DCC部)
+                          { %>
+                        <asp:Button runat="server" ID="btnDCCQdzhl" CssClass="an1" OnClick="btnKeyTarget_Click"
+                            Text="渠道汇总" />
+                        <asp:Button runat="server" ID="btnDCCCjqdzb" CssClass="an1" OnClick="btnKeyTarget_Click"
+                            Text="渠道占比汇总" />
+                        <%} %>
                         <input type="button" name="btnExportExcel" id="btnExportExcel" value="导出Excel" onclick="exportExcel()"
                             class="an1" />
                     </td>
@@ -267,6 +284,7 @@
             </tbody>
         </table>
         <input type="hidden" runat="server" id="hdnDayReportCorp" />
+        <input type="hidden" runat="server" id="hdnKeyReportType" />
         </form>
         <table border="0" cellspacing="0" cellpadding="0" id="tblView" runat="server" enableviewstate="false"
             style="display: none;">

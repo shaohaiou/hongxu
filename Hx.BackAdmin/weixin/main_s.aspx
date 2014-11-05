@@ -15,11 +15,12 @@
 
 <body style="background:url(../images/xdd.gif) repeat-x;">
 <div class="right_nav">
-     <a href="weixinactmg.aspx" target="ztk" id="weixinactmg" runat="server" class="current">参与用户</a>
+     <a href="weixinactmg.aspx" target="ztk" id="weixinactmg" runat="server" class="current">测试活动</a>
+     <a href="benzvotemg.aspx" target="ztk" id="benzvotemg" runat="server">奔驰投票</a>
 </div>
 
 <div class="r_sy" id="daohan">
-	当前位置：微信活动 &gt;&gt; <span id="daohan_sp">参与用户 </span>
+	当前位置：微信活动 &gt;&gt; <span id="daohan_sp">测试活动 </span>
 </div>
 </body>
 <script language="javascript" type="text/javascript">

@@ -94,6 +94,7 @@ a:hover{text-decoration:underline;}a:focus {outline:0;}
 .an1dis{border:0; background:url(../images/bt2.gif) repeat-x; text-align:center; font-size:12px; height:24px; font-weight:700; text-align:center; color:#fff;}
 .an2{border-left:0;border-top:0;border-right:1px solid #888;border-bottom:1px solid #888; background:#e8e8e8; font-size:12px; color:#000; padding:4px 8px 1px 8px; margin:0 2px;}
 .an3{border:0; background:url(../images/nt.jpg) no-repeat; font-size:12px; width:75px; height:22px; color:#fff; margin-bottom:5px;}
+.an4{border:0; background:url(../images/and.gif) repeat-x; text-decoration:none!important;font-size:12px;line-height:24px;display:inline-block;*display:inline;*zoom:1;padding:0 5px; height:24px; font-weight:700;color:White!important;}
 
 #search_fy{margin:10px 0px; clear:both;width:1000px;}
 	#search_fy a:link,#search_fy a:visited{border:1px solid #e8e8e8; font-size:12px; padding:4px 7px; *line-height:28px!important; margin:5px 3px; color:#333; text-decoration:none;display: inline-block;}

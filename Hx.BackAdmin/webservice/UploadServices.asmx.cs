@@ -35,7 +35,47 @@ namespace Hx.BackAdmin.webservice
                 {
                     System.IO.Directory.CreateDirectory(uploadPath);
                 }
-                string newfileName = fileName;
+                string extension = Path.GetExtension(fileName);
+                string newfileName = Path.GetFileNameWithoutExtension(fileName) + "_" + time.ToString("yyyyMMddHHmmss") + extension;
+                string fullFileName = string.Format(@"{0}\{1}", uploadPath, newfileName);
+                while (System.IO.File.Exists(fullFileName))
+                {
+                    File.Delete(fullFileName);
+                }
+                FileStream f = new FileStream(fullFileName, FileMode.Create);
+                ///把内内存里的数据写入物理文件
+                m.WriteTo(f);
+                m.Close();
+                f.Close();
+                f = null;
+                m = null;
+                string url = string.Format("{0}/{1}", _path, newfileName.Replace(@"\", "/"));
+                return url;
+            }
+            catch (Exception ex)
+            {
+                //return string.Empty;
+                return ex.ToString();
+            }
+        }
+        [WebMethod(Description = "Web 服务提供的方法，文件上载")]
+        public string WeixinUploadImage(byte[] fs, string fileName)
+        {
+            try
+            {
+                string _path = "/upload/weixin/benzvote";
+                string path = Server.MapPath(_path);
+                DateTime time = DateTime.Now;
+                ///定义并实例化一个内存流，以存放提交上来的字节数组。
+                MemoryStream m = new MemoryStream(fs);
+                ///定义实际文件对象，保存上载的文件。
+                string uploadPath = string.Format(@"{0}", path);
+                if (!System.IO.Directory.Exists(uploadPath))
+                {
+                    System.IO.Directory.CreateDirectory(uploadPath);
+                }
+                string extension = Path.GetExtension(fileName);
+                string newfileName = Path.GetFileNameWithoutExtension(fileName) + "_" + time.ToString("yyyyMMddHHmmss") + extension;
                 string fullFileName = string.Format(@"{0}\{1}", uploadPath, newfileName);
                 while (System.IO.File.Exists(fullFileName))
                 {

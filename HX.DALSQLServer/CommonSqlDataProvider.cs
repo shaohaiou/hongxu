@@ -844,6 +844,8 @@ namespace HX.DALSQLServer
 
         #region 微信活动
 
+        #region 测试活动
+
         public override List<WeixinActInfo> GetWeixinActList(int pageindex, int pagesize, WeixinActQuery query, ref int recordcount)
         {
             List<WeixinActInfo> list = new List<WeixinActInfo>();
@@ -939,6 +941,170 @@ namespace HX.DALSQLServer
             };
             return DataConvert.SafeInt(SqlHelper.ExecuteScalar(_con, CommandType.Text, sql, p));
         }
+
+        #endregion
+
+        #region 奔驰投票活动
+
+        /// <summary>
+        /// 添加/编辑参赛选手
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public override bool AddBenzvotePothunterInfo(BenzvotePothunterInfo entity)
+        {
+            SerializerData data = entity.GetSerializerData();
+            string sql = @"
+            IF EXISTS(SELECT * FROM HX_BenzvotePothunter WHERE @ID > 0)
+            BEGIN
+                UPDATE HX_BenzvotePothunter SET
+                    [PropertyNames] = @PropertyNames
+                    ,[PropertyValues] = @PropertyValues
+                WHERE ID = @ID
+            END
+            ELSE
+            BEGIN
+                INSERT INTO HX_BenzvotePothunter(
+                    [PropertyNames]
+                    ,[PropertyValues]
+                )VALUES(
+                    @PropertyNames
+                    ,@PropertyValues)
+            END
+            ";
+            SqlParameter[] p = 
+            {
+                new SqlParameter("@PropertyNames",data.Keys),
+                new SqlParameter("@PropertyValues",data.Values),
+                new SqlParameter("@ID",entity.ID)
+            };
+            int result = SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql, p);
+            if (result > 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public override void DelBenzvotePothunterInfo(string ids)
+        {
+            string sql = "DELETE FROM HX_BenzvotePothunter WHERE ID IN (" + ids + ")";
+            SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql);
+        }
+
+        public override List<BenzvotePothunterInfo> GetBenzvotePothunterList()
+        {
+            List<BenzvotePothunterInfo> list = new List<BenzvotePothunterInfo>();
+            string sql = "SELECT * FROM HX_BenzvotePothunter";
+            using (IDataReader reader = SqlHelper.ExecuteReader(_con, CommandType.Text, sql))
+            {
+                while (reader.Read())
+                {
+                    list.Add(PopulateBenzvotePothunterInfo(reader));
+                }
+            }
+
+            return list;
+        }
+
+        public override List<BenzvoteInfo> GetBenzvoteList(int pageindex, int pagesize, BenzvoteQuery query, ref int recordcount)
+        {
+            List<BenzvoteInfo> list = new List<BenzvoteInfo>();
+            SqlParameter p;
+            using (IDataReader reader = CommonPageSql.GetDataReaderByPager(_con, pageindex, pagesize, query, out p))
+            {
+                while (reader.Read())
+                {
+                    list.Add(PopulateBenzvote(reader));
+                }
+            }
+            recordcount = DataConvert.SafeInt(p.Value);
+
+            return list;
+        }
+
+        public override bool AddBenzvoteInfo(BenzvoteInfo entity)
+        {
+            SerializerData data = entity.GetSerializerData();
+            string sql = @"
+                INSERT INTO HX_Benzvote(
+                    [AthleteID]
+                    ,[AthleteName]
+                    ,[SerialNumber]
+                    ,[Voter]
+                    ,[AddTime]
+                    ,[PropertyNames]
+                    ,[PropertyValues]
+                )VALUES(
+                    @AthleteID
+                    ,@AthleteName
+                    ,@SerialNumber
+                    ,@Voter
+                    ,@AddTime
+                    ,@PropertyNames
+                    ,@PropertyValues)
+            ";
+            SqlParameter[] p = 
+            {
+                new SqlParameter("@AthleteID",entity.AthleteID),
+                new SqlParameter("@AthleteName",entity.AthleteName),
+                new SqlParameter("@SerialNumber",entity.SerialNumber),
+                new SqlParameter("@Voter",entity.Voter),
+                new SqlParameter("@AddTime",entity.AddTime),
+                new SqlParameter("@PropertyNames",data.Keys),
+                new SqlParameter("@PropertyValues",data.Values),
+            };
+            int result = SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql, p);
+            if (result > 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public override void AddBenzvoteSetting(BenzvoteSettingInfo entity)
+        {
+            SerializerData data = entity.GetSerializerData();
+            string sql = @"
+            IF EXISTS(SELECT * FROM HX_BenzvoteSetting)
+            BEGIN
+                UPDATE HX_BenzvoteSetting SET
+                    [PropertyNames] = @PropertyNames
+                    ,[PropertyValues] = @PropertyValues
+            END
+            ELSE
+            BEGIN
+                INSERT INTO HX_BenzvoteSetting(
+                    [PropertyNames]
+                    ,[PropertyValues]
+                )VALUES(
+                    @PropertyNames
+                    ,@PropertyValues)
+            END
+            ";
+            SqlParameter[] p = 
+            {
+                new SqlParameter("@PropertyNames",data.Keys),
+                new SqlParameter("@PropertyValues",data.Values)
+            };
+            SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql, p);
+        }
+
+        public override BenzvoteSettingInfo GetBenzvoteSetting()
+        {
+            string sql = "SELECT * FROM HX_BenzvoteSetting";
+            BenzvoteSettingInfo entity = null;
+            using (IDataReader reader = SqlHelper.ExecuteReader(_con, CommandType.Text, sql))
+            {
+                if (reader.Read())
+                {
+                    entity = PopulateBenzvoteSetting(reader);
+                }
+            }
+            return entity;
+        }
+
+        #endregion
 
         #endregion
 

@@ -10,6 +10,7 @@ namespace Hx.Components.Enumerations
         NoSet = 0,
         销售经理 = 1,
         销售员 = 2,
-        人事专员 = 4
+        人事专员 = 4,
+        微信活动管理员 = 8
     }
 }

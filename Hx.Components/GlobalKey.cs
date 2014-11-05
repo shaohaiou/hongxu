@@ -43,5 +43,11 @@ namespace Hx.Components
         public static readonly string WEIXINSECRET = "f6e1f096a7e847e9775b1cc64e713a33";    //微信密钥
         public static readonly string WEIXINACCESS_TOKEN_KEY = "access_token"; //微信access_token 键值
 
+        public static readonly string WEIXINOPENID_SESSIONKEY = "session-weixinopenid";   //微信openid的session键值
+
+        public static readonly string BENZVOTEPOTHUNTER_LIST = "cache-benzvotepothunter-list";   //奔驰投票活动选手列表缓存键值
+        public static readonly string BENZVOTE_LIST = "cache-benzvote-list";   //奔驰投票活动所有投票信息缓存键值
+        public static readonly string BENZVOTESETTING = "cache-benzvotesetting"; //奔驰投票活动设置缓存键值
+
     }
 }

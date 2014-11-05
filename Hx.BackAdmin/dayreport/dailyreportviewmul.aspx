@@ -42,6 +42,9 @@
                 setdayreportcorp();
             });
 
+            $("#btnDCCZhhz").click(function () {
+                $("#hdnKeyReportType").val("dcczhhz");
+            });
             $("#btnDCCQdzhl").click(function () {
                 $("#hdnKeyReportType").val("dccqdzhl");
             });
@@ -265,10 +268,12 @@
                             Text="指标汇总" />
                         <%if (CurrentDep == DayReportDep.DCC部)
                           { %>
+                        <asp:Button runat="server" ID="btnDCCZhhz" CssClass="an1" OnClick="btnKeyTarget_Click"
+                            Text="综合汇总" />
                         <asp:Button runat="server" ID="btnDCCQdzhl" CssClass="an1" OnClick="btnKeyTarget_Click"
                             Text="渠道汇总" />
                         <asp:Button runat="server" ID="btnDCCCjqdzb" CssClass="an1" OnClick="btnKeyTarget_Click"
-                            Text="渠道占比汇总" />
+                            Text="网络汇总" />
                         <%} %>
                         <input type="button" name="btnExportExcel" id="btnExportExcel" value="导出Excel" onclick="exportExcel()"
                             class="an1" />

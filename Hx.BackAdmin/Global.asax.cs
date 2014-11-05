@@ -8,6 +8,7 @@ using Hx.Components;
 using Hx.Car;
 using Hx.TaskAndJob.Job;
 using Hx.Tools;
+using Hx.Components.Entity;
 
 namespace Hx.BackAdmin
 {
@@ -77,6 +78,14 @@ namespace Hx.BackAdmin
                 DayReportUsers.Instance.ReloadDayReportUserListCache();
                 DayReportModules.Instance.ReloadDailyReportModuleListCache();
                 JobOffers.Instance.ReloadJobOfferListCache();
+
+                BenzvoteSettingInfo benzvotesetting = WeixinActs.Instance.GetBenzvoteSetting();
+                if (benzvotesetting != null && benzvotesetting.Switch == 1)
+                {
+                    WeixinActs.Instance.ReloadBenzvoteSetting();
+                    WeixinActs.Instance.ReloadAllBenzvote();
+                    WeixinActs.Instance.ReloadBenzvotePothunterListCache();
+                }
             }
             catch { }
         }

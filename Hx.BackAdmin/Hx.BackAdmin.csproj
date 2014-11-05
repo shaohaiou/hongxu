@@ -83,6 +83,7 @@
     <Content Include="car\main_s.aspx" />
     <Content Include="car\quotation.aspx" />
     <Content Include="css\admin.css" />
+    <Content Include="css\benzvote.css" />
     <Content Include="css\calculator\calculator.css" />
     <Content Include="css\style.css" />
     <Content Include="dayreport\dailyreportviewmul.aspx" />
@@ -112,6 +113,17 @@
     <Content Include="global\main_s.aspx" />
     <Content Include="global\main_x.aspx" />
     <Content Include="images\and.gif" />
+    <Content Include="images\benzvote\adtest.png" />
+    <Content Include="images\benzvote\cansaixuanyan.png" />
+    <Content Include="images\benzvote\fengcaizhanshi.png" />
+    <Content Include="images\benzvote\flay.png" />
+    <Content Include="images\benzvote\gerenjieshao.png" />
+    <Content Include="images\benzvote\next.png" />
+    <Content Include="images\benzvote\prev.png" />
+    <Content Include="images\benzvote\toupiao.png" />
+    <Content Include="images\benzvote\weitalapiao.png" />
+    <Content Include="images\benzvote\weitatoupiao.png" />
+    <Content Include="images\benzvote\xiangqing.png" />
     <Content Include="images\bt2.gif" />
     <Content Include="images\btn_block_2.gif" />
     <Content Include="images\btn_block_3.gif" />
@@ -152,6 +164,7 @@
     <Content Include="images\yan.gif" />
     <Content Include="images\zhaopin.jpg" />
     <Content Include="index.aspx" />
+    <Content Include="js\ajaxupload.js" />
     <Content Include="js\calculator.js" />
     <Content Include="js\calendar.js" />
     <Content Include="js\ckeditor\adapters\jquery.js" />
@@ -326,7 +339,7 @@
     <Content Include="js\skin\whyGreen\datepicker.css" />
     <Content Include="js\skin\whyGreen\img.gif" />
     <Content Include="js\WdatePicker.js" />
-    <Content Include="js\weixinapi.js" />
+    <Content Include="js\weixinapi2.js" />
     <Content Include="left.aspx" />
     <Content Include="login.aspx" />
     <Content Include="logout.aspx" />
@@ -352,6 +365,12 @@
     </Content>
     <Content Include="webservice\UploadServices.asmx" />
     <Content Include="weixin\act.aspx" />
+    <Content Include="weixin\benzvotedetail.aspx" />
+    <Content Include="weixin\benzvotelist.aspx" />
+    <Content Include="weixin\benzvotemg.aspx" />
+    <Content Include="weixin\benzvotepage.aspx" />
+    <Content Include="weixin\benzvotepothunteredit.aspx" />
+    <Content Include="weixin\benzvotesetting.aspx" />
     <Content Include="weixin\dianzan.aspx" />
     <Content Include="weixin\main.aspx" />
     <Content Include="weixin\main_s.aspx" />
@@ -759,6 +778,48 @@
     </Compile>
     <Compile Include="weixin\act.aspx.designer.cs">
       <DependentUpon>act.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="weixin\benzvotedetail.aspx.cs">
+      <DependentUpon>benzvotedetail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="weixin\benzvotedetail.aspx.designer.cs">
+      <DependentUpon>benzvotedetail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="weixin\benzvotelist.aspx.cs">
+      <DependentUpon>benzvotelist.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="weixin\benzvotelist.aspx.designer.cs">
+      <DependentUpon>benzvotelist.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="weixin\benzvotemg.aspx.cs">
+      <DependentUpon>benzvotemg.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="weixin\benzvotemg.aspx.designer.cs">
+      <DependentUpon>benzvotemg.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="weixin\benzvotepage.aspx.cs">
+      <DependentUpon>benzvotepage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="weixin\benzvotepage.aspx.designer.cs">
+      <DependentUpon>benzvotepage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="weixin\benzvotepothunteredit.aspx.cs">
+      <DependentUpon>benzvotepothunteredit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="weixin\benzvotepothunteredit.aspx.designer.cs">
+      <DependentUpon>benzvotepothunteredit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="weixin\benzvotesetting.aspx.cs">
+      <DependentUpon>benzvotesetting.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="weixin\benzvotesetting.aspx.designer.cs">
+      <DependentUpon>benzvotesetting.aspx</DependentUpon>
     </Compile>
     <Compile Include="weixin\dianzan.aspx.cs">
       <DependentUpon>dianzan.aspx</DependentUpon>

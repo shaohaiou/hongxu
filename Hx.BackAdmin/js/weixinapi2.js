@@ -228,13 +228,13 @@ var WeixinApi = (function () {
     * @param {String} curSrc 当前播放的图片地址
     * @param {Array} srcList 图片地址列表
     */
-    function imagePreview(curSrc, srcList) {
+    function imagePreview( srcList,curSrc) {
         if (!curSrc || !srcList || srcList.length == 0) {
             return;
         }
         WeixinJSBridge.invoke('imagePreview', {
-            'current': curSrc,
-            'urls': srcList
+            'urls': srcList,
+            'current': curSrc
         });
     }
 
@@ -265,6 +265,13 @@ var WeixinApi = (function () {
     */
     function hideToolbar() {
         WeixinJSBridge.call('hideToolbar');
+    }
+
+    /**
+    * 判断当前网页是否在微信内置浏览器中打开
+    */
+    function openInWeixin() {
+        return /MicroMessenger/i.test(navigator.userAgent);
     }
 
     /**
@@ -334,6 +341,7 @@ var WeixinApi = (function () {
         hideOptionMenu: hideOptionMenu,
         showToolbar: showToolbar,
         hideToolbar: hideToolbar,
+        openInWeixin:openInWeixin,
         getNetworkType: getNetworkType,
         imagePreview: imagePreview,
         closeWindow: closeWindow

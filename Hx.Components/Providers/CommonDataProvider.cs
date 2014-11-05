@@ -415,6 +415,8 @@ namespace Hx.Components.Providers
 
         #region 微信活动
 
+        #region 测试活动
+
         public abstract WeixinActInfo GetWeixinActInfo(string openid);
 
         public abstract bool AddWeixinAct(WeixinActInfo entity);
@@ -446,6 +448,72 @@ namespace Hx.Components.Providers
 
             return entity;
         }
+
+        #endregion
+
+        #region 奔驰投票活动
+        
+        public abstract bool AddBenzvotePothunterInfo(BenzvotePothunterInfo entity);
+
+        public abstract void DelBenzvotePothunterInfo(string ids);
+
+        public abstract List<BenzvotePothunterInfo> GetBenzvotePothunterList();
+
+        protected BenzvotePothunterInfo PopulateBenzvotePothunterInfo(IDataReader reader)
+        {
+            BenzvotePothunterInfo entity = new BenzvotePothunterInfo
+            {
+                ID = DataConvert.SafeInt(reader["ID"])
+            };
+
+            SerializerData data = new SerializerData();
+            data.Keys = reader["PropertyNames"] as string;
+            data.Values = reader["PropertyValues"] as string;
+            entity.SetSerializerData(data);
+
+            return entity;
+        }
+
+        public abstract List<BenzvoteInfo> GetBenzvoteList(int pageindex, int pagesize, BenzvoteQuery query, ref int recordcount);
+
+        public abstract bool AddBenzvoteInfo(BenzvoteInfo entity);
+
+        protected BenzvoteInfo PopulateBenzvote(IDataReader reader)
+        {
+            BenzvoteInfo entity = new BenzvoteInfo
+            {
+                ID = DataConvert.SafeInt(reader["ID"]),
+                AthleteID = DataConvert.SafeInt(reader["AthleteID"]),
+                AthleteName = reader["AthleteName"] as string,
+                SerialNumber = DataConvert.SafeInt(reader["SerialNumber"]),
+                Voter = reader["Voter"] as string,
+                AddTime = DataConvert.SafeDate(reader["AddTime"])
+            };
+
+            SerializerData data = new SerializerData();
+            data.Keys = reader["PropertyNames"] as string;
+            data.Values = reader["PropertyValues"] as string;
+            entity.SetSerializerData(data);
+
+            return entity;
+        }
+
+        public abstract void AddBenzvoteSetting(BenzvoteSettingInfo entity);
+
+        public abstract BenzvoteSettingInfo GetBenzvoteSetting();
+
+        protected BenzvoteSettingInfo PopulateBenzvoteSetting(IDataReader reader)
+        {
+            BenzvoteSettingInfo entity = new BenzvoteSettingInfo ();
+            SerializerData data = new SerializerData();
+            data.Keys = reader["PropertyNames"] as string;
+            data.Values = reader["PropertyValues"] as string;
+            entity.SetSerializerData(data);
+
+            return entity;
+        }
+
+        #endregion
 
         #endregion
 

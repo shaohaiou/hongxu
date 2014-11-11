@@ -16,6 +16,9 @@
 </head>
 <body>
     <div class="dwrap">
+        <div class="nav">
+            <a href="<%= FromUrl %>"><img src="../images/benzvote/back.png" /></a>
+        </div>
         <div class="dcontent">
             <div class="c1">
                 <div class="d-pic1">
@@ -59,6 +62,9 @@
                 </dt>
             </div>
         </div>
+        <div class="dflay">
+            <img src="../images/benzvote/ysj.png" />
+        </div>
     </div>
 </body>
 <script type="text/javascript">
@@ -92,14 +98,17 @@
     $(function () {
 
         //检查微信内置浏览器
-        var flag = WeixinApi.openInWeixin();
-        if (!flag) {
-            alert("请在微信内打开此页面");
-            location.href = "http://www.hongxu.cn/";
-        }
+//        var flag = WeixinApi.openInWeixin();
+//        if (!flag) {
+//            alert("请在微信内打开此页面");
+//            location.href = "http://m.hongxu.cn/";
+//        }
 
         $("#btnshare").click(function () {
-            alert("请点击右上角的分享按钮进行分享。");
+            $(".dflay").show();
+            setTimeout(function () {
+                $(".dflay").hide();
+            }, 2000);
         });
 
         // 所有功能必须包含在 WeixinApi.ready 中进行

@@ -1237,6 +1237,20 @@ namespace Hx.BackAdmin.dayreport
                             for (int j = 0; j < rlist.Count; j++)
                             {
                                 rows[j + domun][i] = reportdate.ContainsKey(rlist[j].ID.ToString()) ? reportdate[rlist[j].ID.ToString()] : string.Empty;
+                                if (rlist[j].Name == "CRM下达线索数")
+                                {
+                                    int idztdrzr = rlist.Find(l => l.Name == "展厅当日转入").ID;
+                                    decimal drztdrzr = DataConvert.SafeDecimal(reportdate.ContainsKey(idztdrzr.ToString()) ? reportdate[idztdrzr.ToString()] : string.Empty);
+                                    int idztsydrzr = rlist.Find(l => l.Name == "展厅上月当日转入").ID;
+                                    decimal drztsydrzr = DataConvert.SafeDecimal(reportdate.ContainsKey(idztsydrzr.ToString()) ? reportdate[idztsydrzr.ToString()] : string.Empty);
+                                    int idztshydrzr = rlist.Find(l => l.Name == "展厅双月当日转入").ID;
+                                    decimal drztshydrzr = DataConvert.SafeDecimal(reportdate.ContainsKey(idztshydrzr.ToString()) ? reportdate[idztshydrzr.ToString()] : string.Empty);
+                                    int idztsyyqzzr = rlist.Find(l => l.Name == "展厅三月有强制转入").ID;
+                                    decimal drztsyyqzzr = DataConvert.SafeDecimal(reportdate.ContainsKey(idztsyyqzzr.ToString()) ? reportdate[idztsyyqzzr.ToString()] : string.Empty);
+
+                                    domun++;
+                                    rows[j + domun][i] = drztdrzr + drztsydrzr + drztshydrzr + drztsyyqzzr;
+                                }
                                 if (rlist[j].Name == "首次邀约到店客户总数")
                                 {
                                     int idqczjyydd = rlist.Find(l => l.Name == "汽车之家邀约到店").ID;
@@ -1275,7 +1289,7 @@ namespace Hx.BackAdmin.dayreport
                         if (!string.IsNullOrEmpty(r.SCReport))
                         {
                             Dictionary<string, string> reportdate = json.Deserialize<Dictionary<string, string>>(r.SCReport);
-                            rows[rlist.Count + 2][i] = reportdate.ContainsKey(m.ID.ToString()) ? reportdate[m.ID.ToString()] : string.Empty;
+                            rows[rlist.Count + 3][i] = reportdate.ContainsKey(m.ID.ToString()) ? reportdate[m.ID.ToString()] : string.Empty;
                         }
                     }
                 }

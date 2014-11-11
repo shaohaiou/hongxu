@@ -91,7 +91,7 @@
             ShowDisabledButtons="False" PagingButtonSpacing="">
         </webdiyer:AspNetPager>
         <div class="lan5x" style="padding-top: 10px;">
-            <a href="benzvotepothunteredit.aspx?from=<%=UrlEncode(CurrentUrl) %>" class="an4">新 增</a>
+            <a href="benzvotepothunteredit.aspx?from=<%=CurrentUrl %>" class="an4">新 增</a>
         </div>
     </div>
     </form>

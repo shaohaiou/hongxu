@@ -39,7 +39,12 @@ namespace Hx.Components
             get
             {
                 if (benzvotes == null)
-                    benzvotes = GetAllBenzvote();
+                {
+                    lock (sync_benzvote)
+                    {
+                        benzvotes = GetAllBenzvote();
+                    }
+                }
                 return benzvotes;
             }
             set
@@ -257,25 +262,10 @@ namespace Hx.Components
         {
             try
             {
-                if (Benzvotes != null && Benzvotes.Keys.Contains(vote.AthleteID + "_" + vote.Openid))
-                    return "您已经为她投过票了，不能重复投哦。";
-                if (Benzvotes != null && Benzvotes.Keys.Any(k => k.EndsWith("_" + vote.Openid)))
-                {
-                    List<string> keys = Benzvotes.Keys.TakeWhile(k => k.EndsWith("_" + vote.Openid)).ToList();
-                    DateTime ftime = Benzvotes.TakeWhile(b => keys.Contains(b.Key)).ToList().Min(b => b.Value);
-                    BenzvoteSettingInfo setting = GetBenzvoteSetting(true);
-                    int minutes = setting == null ? 30 : setting.OverdueMinutes;
-                    if (vote.AddTime.AddMinutes(-1 * minutes) > ftime)
-                        return "您的投票期已过";
-                    if (setting != null && keys.Count == setting.VoteTimes)
-                        return "您已经投过" + setting.VoteTimes + "次票，不能再投了";
-                }
-
-                if (Benzvotes == null) Benzvotes = new Dictionary<string, DateTime>();
-                Benzvotes.Add(vote.AthleteID + "_" + vote.Openid, vote.AddTime);
-
                 lock (sync_benzvote)
                 {
+                    if (Benzvotes == null) Benzvotes = new Dictionary<string, DateTime>();
+                    Benzvotes.Add(vote.AthleteID + "_" + vote.Openid, vote.AddTime);
                     BenzvotesCache.Add(vote);
                 }
 
@@ -286,6 +276,43 @@ namespace Hx.Components
                 ExpLog.Write(ex);
                 return "发生错误";
             }
+        }
+
+        public string CheckVote(string openid, string id)
+        {
+            BenzvoteSettingInfo setting = GetBenzvoteSetting(true);
+            if (setting != null && setting.Switch == 0)
+            {
+                return "该活动已结束";
+            }
+
+            lock (sync_benzvote)
+            {
+                if (Benzvotes != null)
+                {
+                    if (Benzvotes.Keys.Contains(id + "_" + openid))
+                    {
+                        return "您已经为她投过票了，不能重复投哦。";
+                    }
+                    List<KeyValuePair<string, DateTime>> votes = WeixinActs.Instance.Benzvotes.TakeWhile(b => b.Key.EndsWith("_" + openid)).ToList();
+                    if (votes.Count > 0)
+                    {
+                        DateTime ftime = votes.Min(b => b.Value);
+                        int minutes = setting == null ? 30 : setting.OverdueMinutes;
+                        if (DateTime.Now.AddMinutes(-1 * minutes) > ftime)
+                        {
+                            return "您的投票期已过。";
+                        }
+                        if (setting != null && setting.VoteTimes > 0 && votes.Count == setting.VoteTimes)
+                        {
+                            return "您已经投过" + setting.VoteTimes + "次票，不能再投了。";
+                        }
+                    }
+
+                }
+            }
+
+            return string.Empty;
         }
 
         public void BenzvoteAccount()

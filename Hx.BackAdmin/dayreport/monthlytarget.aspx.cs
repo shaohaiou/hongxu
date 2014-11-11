@@ -246,7 +246,7 @@ namespace Hx.BackAdmin.dayreport
         {
             if (CurrentDep == DayReportDep.财务部 || CurrentDep == DayReportDep.行政部)
             {
-                WriteSuccessMessage("保存成功！", "数据已经成功保存！", string.IsNullOrEmpty(FromUrl) ? CurrentUrl : FromUrl);
+                WriteSuccessMessage("保存成功！", "数据已经成功保存！", string.IsNullOrEmpty(FromUrl) ? UrlDecode(CurrentUrl) : FromUrl);
                 return;
             }
 
@@ -275,7 +275,7 @@ namespace Hx.BackAdmin.dayreport
 
                 MonthlyTargets.Instance.CreateAndUpdate(target);
 
-                WriteSuccessMessage("保存成功！", "数据已经成功保存！", string.IsNullOrEmpty(FromUrl) ? CurrentUrl : FromUrl);
+                WriteSuccessMessage("保存成功！", "数据已经成功保存！", string.IsNullOrEmpty(FromUrl) ? UrlDecode(CurrentUrl) : FromUrl);
             }
         }
 

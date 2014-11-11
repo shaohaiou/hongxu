@@ -69,7 +69,7 @@
                                 class="viewautomotivetype" style="padding: 0 10px;">查看</a>
                         </td>
                         <td>
-                            <a href="automotivetypeedit.aspx?id=<%#Eval("ID") %>&from=<%=UrlEncode(CurrentUrl) %>">
+                            <a href="automotivetypeedit.aspx?id=<%#Eval("ID") %>&from=<%=CurrentUrl %>">
                                 编辑</a>
                         </td>
                     </tr>

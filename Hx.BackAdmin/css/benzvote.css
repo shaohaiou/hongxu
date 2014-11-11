@@ -1,6 +1,7 @@
-﻿body{margin:0; padding:0; font-size:12px;background-color:#282828;font-size:100%;}
+﻿body{margin:0; padding:0; font-size:12px;background-color:#282828;font-size:100%;font-family: inherit;}
 ul{margin:0; padding:0; list-style:none;}li{margin:0; padding:0; list-style:none;}
-
+.fl{float:left;}
+.fr{float:right;}
 
 
 .wrap{max-width: 640px;min-width: 320px;margin: 0 auto;overflow: hidden;position: relative;background-color:#474747;}
@@ -20,16 +21,16 @@ ul{margin:0; padding:0; list-style:none;}li{margin:0; padding:0; list-style:none
 
 .content ul li{margin:3% 0 0 6%;}
 
-.pager{text-align: center;margin:6% 0 0 0;}
-    .pager dt{width:9.4%;display:inline-block;}
+.pager{text-align: center;margin:0 auto;line-height: 3em;height:3em;width:40%;color: white;}
+    .pager dt{width:3em;}
     .pager dt img{width:100%;}
     .pager dd{display:inline-block;color:White;margin:0;line-height: 200%;vertical-align: top;}
     
 
 
 .dwrap{max-width: 640px;min-width: 320px;margin: 0 auto;overflow: hidden;position: relative;background-color:#f5f6e6;}
-.c1{padding-top:6%;width:93%;margin:0 auto;}
-.d-pic1{width:33%;display: inline-block;position: relative;background: #fff;padding: 1%;}
+.c1{width:93%;margin:0 auto;}
+.d-pic1{width:33%;display: inline-block;positi  on: relative;background: #fff;padding: 1%;}
 .d-pic1 img{width:100%;display:block;}
 .detailinfo{width:60%;display: inline-block;vertical-align: top;padding: 2% 0 0 0;}
     .weitalapiao{width:50%;display:inline-block;}.weitalapiao img{width:90%;}
@@ -43,3 +44,8 @@ ul{margin:0; padding:0; list-style:none;}li{margin:0; padding:0; list-style:none
     
 .dad{width:100%;} .dad img{width:100%;display:block;}
 .xuzhi{width:96%;margin:1% auto;font-size: 0.8em;color:#aaa;}
+
+.dflay{display:none;width:100%;height:100%;position:absolute;left:0;top:0;background:#000;filter:alpha(opacity=50); -moz-opacity:0.5; -khtml-opacity: 0.5; opacity: 0.5;z-index:9999;}
+.dflay img{width:100%;}
+.nav{width: 93%;margin: 0 auto;padding: 1% 0;}
+.nav img{width:10%}

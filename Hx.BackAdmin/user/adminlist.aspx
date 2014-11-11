@@ -61,8 +61,8 @@
                             <%# (bool)Eval("Administrator") ? "是" : "否"%>
                         </td>
                         <td class="lan5x">
-                            <a class="btndel" href="adminlist.aspx?id=<%#Eval("ID") %>&action=del&from=<%=UrlEncode(CurrentUrl) %>">
-                                删除</a><a href="admins.aspx?id=<%#Eval("ID") %>&action=update&from=<%=UrlEncode(CurrentUrl) %>">编辑</a>
+                            <a class="btndel" href="adminlist.aspx?id=<%#Eval("ID") %>&action=del&from=<%=CurrentUrl %>">
+                                删除</a><a href="admins.aspx?id=<%#Eval("ID") %>&action=update&from=<%=CurrentUrl %>">编辑</a>
                         </td>
                     </tr>
                 </ItemTemplate>
@@ -74,7 +74,7 @@
             ShowDisabledButtons="False" PagingButtonSpacing="">
         </webdiyer:AspNetPager>
         <div style="text-align: center; width: 700px;" class="lan5x">
-            <a href="admins.aspx?from=<%=UrlEncode(CurrentUrl) %>">添加管理员</a></div>
+            <a href="admins.aspx?from=<%=CurrentUrl %>">添加管理员</a></div>
     </div>
     </form>
 </body>

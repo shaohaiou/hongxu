@@ -153,7 +153,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="bg1">
+                    <td class="bg1 vt">
                         <span class="red">*</span>风采展示：
                     </td>
                     <td>

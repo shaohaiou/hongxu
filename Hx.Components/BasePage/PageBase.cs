@@ -33,7 +33,7 @@ namespace Hx.Components.BasePage
         {
             get
             {
-                return HttpContext.Current.Request.RawUrl;
+                return System.Web.HttpUtility.UrlEncode(System.Web.HttpUtility.UrlDecode(HttpContext.Current.Request.RawUrl));
             }
         }
 

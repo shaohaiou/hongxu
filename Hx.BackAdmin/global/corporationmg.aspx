@@ -140,7 +140,7 @@
                         </td>
                         <td>
                             <a href="javascript:void(0);" class="btnDel pl10" val="<%#Eval("ID") %>">删除</a>
-                            <a href="corporationedit.aspx?id=<%#Eval("ID") %>&from=<%=UrlEncode(CurrentUrl) %>">
+                            <a href="corporationedit.aspx?id=<%#Eval("ID") %>&from=<%=CurrentUrl %>">
                                 编辑</a>
                         </td>
                     </tr>

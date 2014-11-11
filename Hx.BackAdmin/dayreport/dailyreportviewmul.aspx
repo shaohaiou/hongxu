@@ -56,7 +56,7 @@
             });
         });
         function exportExcel() {
-            post("<%=CurrentUrl %>", { act: "tabletoexcel", html: $("#tdData").html(), fn: $("#spTitle").text() });
+            post("<%=UrlDecode(CurrentUrl) %>", { act: "tabletoexcel", html: $("#tdData").html(), fn: $("#spTitle").text() });
         }
         function post(URL, PARAMS) {
             var temp = document.createElement("form");

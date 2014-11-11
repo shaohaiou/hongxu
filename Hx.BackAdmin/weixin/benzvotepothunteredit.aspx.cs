@@ -133,7 +133,7 @@ namespace Hx.BackAdmin.weixin
                 }
 
                 WeixinActs.Instance.ReloadBenzvotePothunterListCache();
-                WriteSuccessMessage("保存成功！", "数据已经成功保存！", string.IsNullOrEmpty(FromUrl) ? CurrentUrl : FromUrl);
+                WriteSuccessMessage("保存成功！", "数据已经成功保存！", string.IsNullOrEmpty(FromUrl) ? UrlDecode(CurrentUrl) : FromUrl);
             }
         }
 

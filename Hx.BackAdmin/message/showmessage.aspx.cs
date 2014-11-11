@@ -16,10 +16,10 @@ namespace Hx.BackAdmin.message
         {
             if (!Page.IsPostBack)
             {
-                ReUrl = HXContext.Current.ReturnUrl;
+                ReUrl = System.Web.HttpUtility.UrlDecode( HXContext.Current.ReturnUrl);
                 lTitle.Text = HXContext.Current.MessageTitle;
                 lContent.Text = HXContext.Current.Message;
-                hyreturn.NavigateUrl = HXContext.Current.ReturnUrl;
+                hyreturn.NavigateUrl = System.Web.HttpUtility.UrlDecode( HXContext.Current.ReturnUrl);
             }
         }
 

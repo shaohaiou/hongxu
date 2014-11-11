@@ -54,7 +54,7 @@ namespace Hx.BackAdmin.HttpHandler
         }
 
         #region 微信测试
-        
+
         private void Doweixinact()
         {
             try
@@ -179,18 +179,18 @@ namespace Hx.BackAdmin.HttpHandler
         {
             try
             {
-                BenzvoteSettingInfo setting = WeixinActs.Instance.GetBenzvoteSetting(true);
-                if (setting != null && setting.Switch == 0)
-                { 
-                    result = string.Format(result, "fail", "该活动已结束"); 
-                    return;
-                }
-
                 string openid = WebHelper.GetString("openid");
                 string id = WebHelper.GetString("id");
 
                 if (!string.IsNullOrEmpty(openid) && !string.IsNullOrEmpty(id))
                 {
+                    string votecheckresult = WeixinActs.Instance.CheckVote(openid,id);
+                    if (!string.IsNullOrEmpty(votecheckresult))
+                    {
+                        result = string.Format(result, "fail", votecheckresult);
+                        return;
+                    }
+
                     string access_token = MangaCache.Get(GlobalKey.WEIXINACCESS_TOKEN_KEY) as string;
                     if (string.IsNullOrEmpty(access_token))
                     {
@@ -229,7 +229,7 @@ namespace Hx.BackAdmin.HttpHandler
                         if (!dic_openinfo.ContainsKey("errcode"))
                         {
                             int pid = DataConvert.SafeInt(id);
-                            BenzvotePothunterInfo pinfo = WeixinActs.Instance.GetBenzvotePothunterInfo(pid,true);
+                            BenzvotePothunterInfo pinfo = WeixinActs.Instance.GetBenzvotePothunterInfo(pid, true);
                             if (pinfo == null)
                                 result = string.Format(result, "fail", "不存在此选手");
                             else
@@ -271,7 +271,11 @@ namespace Hx.BackAdmin.HttpHandler
                     result = string.Format(result, "fail", "openid,vopenid为空");
                 }
             }
-            catch { result = string.Format(result, "fail", "执行失败"); }
+            catch (Exception ex)
+            {
+                ExpLog.Write(ex);
+                result = string.Format(result, "fail", "执行失败");
+            }
         }
 
         #endregion

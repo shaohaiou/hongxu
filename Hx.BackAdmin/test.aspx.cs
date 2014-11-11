@@ -25,6 +25,7 @@ namespace Hx.BackAdmin
             //List<DayReportUserInfo> userlist = DayReportUsers.Instance.GetList(true);
             //Response.Write(string.Join("<br>",userlist.FindAll(u=>u.AllowModify == "1" && u.DayReportDep != Components.Enumerations.DayReportDep.财务部).Select(u=>u.UserName)));
 
+
         }
         private string FormatNum(string num)
         {

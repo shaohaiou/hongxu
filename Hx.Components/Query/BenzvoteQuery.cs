@@ -77,7 +77,7 @@ namespace Hx.Components.Query
             }
             if (!string.IsNullOrEmpty(AthleteName))
             {
-                query.Add(string.Format("[AthleteName] = {0}", AthleteName));
+                query.Add(string.Format("[AthleteName] LIKE '%{0}%'", AthleteName));
             }
 
             return string.Join(" AND ", query);

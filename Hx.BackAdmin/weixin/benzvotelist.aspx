@@ -2,7 +2,6 @@
 
 <%@ Register Assembly="AspNetPager" Namespace="Wuqi.Webdiyer" TagPrefix="webdiyer" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>投票记录</title>
@@ -64,6 +63,12 @@
                         <td class="w60 tc">
                             投票人
                         </td>
+                        <td class="w40 tc">
+                            性别
+                        </td>
+                        <td class="w160">
+                            地区
+                        </td>
                         <td class="w160 tc">
                             投票时间
                         </td>
@@ -81,7 +86,15 @@
                             <%#Eval("Voter") %>
                         </td>
                         <td>
-                            <%#Eval("AddTime") %>
+                            <%# Eval("Sex").ToString() == "0" ? "未知" : (Eval("Sex").ToString() == "1" ? "男" : "女")%>
+                        </td>
+                        <td>
+                            <%# Eval("Country")%> -
+                            <%# Eval("Province")%> -
+                            <%# Eval("City")%>
+                        </td>
+                        <td>
+                            <%#Eval("AddTime","{0:yyyy-MM-dd HH:mm:ss}") %>
                         </td>
                     </tr>
                 </ItemTemplate>

@@ -74,8 +74,8 @@
                             <%#Eval("LastLoginIP")%>
                         </td>
                         <td class="lan5x">
-                            <a class="btndel" href="userlist.aspx?id=<%#Eval("ID") %>&action=del&from=<%=UrlEncode(CurrentUrl) %>">
-                                删除</a><a href="useredit.aspx?id=<%#Eval("ID") %>&action=update&from=<%=UrlEncode(CurrentUrl) %>">编辑</a>
+                            <a class="btndel" href="userlist.aspx?id=<%#Eval("ID") %>&action=del&from=<%=CurrentUrl %>">
+                                删除</a><a href="useredit.aspx?id=<%#Eval("ID") %>&action=update&from=<%=CurrentUrl %>">编辑</a>
                         </td>
                     </tr>
                 </ItemTemplate>
@@ -87,7 +87,7 @@
             ShowDisabledButtons="False" PagingButtonSpacing="">
         </webdiyer:AspNetPager>
         <div style="text-align: center; width: 600px;" class="lan5x">
-            <a href="useredit.aspx?from=<%=UrlEncode(CurrentUrl) %>">添加用户</a></div>
+            <a href="useredit.aspx?from=<%=CurrentUrl %>">添加用户</a></div>
     </div>
     </form>
 </body>

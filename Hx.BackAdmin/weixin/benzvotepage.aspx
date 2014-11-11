@@ -55,14 +55,15 @@
                     </ul></FooterTemplate>
             </asp:Repeater>
         </div>
-        <div class="pager">
-            <dt><a href="<%=PrevUrl %>">
-                <img src="../images/benzvote/prev.png" alt="上一页" /></a></dt>
-            <dd>
-                <%=PageIndex %> / <%=PageCount %></dd>
-            <dt><a href="<%=NextUrl %>">
-                <img src="../images/benzvote/next.png" alt="下一页" /></a></dt>
-        </div>
+        <table style="width:100%;">
+            <tr>
+                <td style="width: 45%;text-align: right;"><a href="<%=PrevUrl %>">
+                <img src="../images/benzvote/prev.png" alt="上一页" /></a></td>
+                <td style="width: 10%;text-align: center;color:White;"><%=PageIndex %> / <%=PageCount %></td>
+                <td><a href="<%=NextUrl %>">
+                <img src="../images/benzvote/next.png" alt="下一页" /></a></td>
+            </tr>
+        </table>
     </div>
     </form>
 </body>
@@ -105,7 +106,7 @@
         var flag = WeixinApi.openInWeixin();
         if (!flag) {
             alert("请在微信内打开此页面");
-            location.href = "http://www.hongxu.cn/";
+            location.href = "http://m.hongxu.cn/";
         }
 
 

@@ -56,9 +56,9 @@
                         <img src="../images/benzvote/fengcaizhanshi.png" />
                     </dl>
                     <br />
-                    <dr style="width: 100%!important; text-align: center;"><img src="http://bj.hongxu.cn<%= CurrentPothunterInfo.IntroducePic1%>" class="picpreview"  /><br />
-                    <img src="http://bj.hongxu.cn<%= CurrentPothunterInfo.IntroducePic2%>" class="picpreview"  /><br />
-                    <img src="http://bj.hongxu.cn<%= CurrentPothunterInfo.IntroducePic3%>" class="picpreview"  /></dr>
+                    <dr style="width: 100%!important; text-align: center;"><img src="http://<%= CurrentDomain %><%= CurrentPothunterInfo.IntroducePic1%>" class="picpreview"  /><br />
+                    <img src="http://<%= CurrentDomain %><%= CurrentPothunterInfo.IntroducePic2%>" class="picpreview"  /><br />
+                    <img src="http://<%= CurrentDomain %><%= CurrentPothunterInfo.IntroducePic3%>" class="picpreview"  /></dr>
                 </dt>
             </div>
         </div>
@@ -98,11 +98,11 @@
     $(function () {
 
         //检查微信内置浏览器
-//        var flag = WeixinApi.openInWeixin();
-//        if (!flag) {
-//            alert("请在微信内打开此页面");
-//            location.href = "http://m.hongxu.cn/";
-//        }
+        var flag = WeixinApi.openInWeixin();
+        if (!flag) {
+            alert("请在微信内打开此页面");
+            location.href = "http://m.hongxu.cn/";
+        }
 
         $("#btnshare").click(function () {
             $(".dflay").show();
@@ -126,7 +126,7 @@
 
             // 微信分享的数据
             var wxData = {
-                "imgUrl": 'http://bj.hongxu.cn<%=CurrentSetting == null ? string.Empty : CurrentSetting.ShareImgUrl %>',
+                "imgUrl": 'http://<%= CurrentDomain %><%=CurrentSetting == null ? string.Empty : CurrentSetting.ShareImgUrl %>',
                 "link": "<%=CurrentSetting == null ? string.Empty : CurrentSetting.ShareLinkUrl %>",
                 "desc": '<%=CurrentSetting == null ? string.Empty : CurrentSetting.ShareDesc %>',
                 "title": "<%=CurrentSetting == null ? string.Empty : CurrentSetting.ShareTitle %>"

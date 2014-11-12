@@ -81,6 +81,9 @@
     <Compile Include="Entity\MonthlyTargetInfo.cs" />
     <Compile Include="Entity\ShowUrl.cs" />
     <Compile Include="Entity\WeixinActInfo.cs" />
+    <Compile Include="Entity\JituanvotePothunterInfo.cs" />
+    <Compile Include="Entity\JituanvoteSettingInfo.cs" />
+    <Compile Include="Entity\JituanvoteInfo.cs" />
     <Compile Include="Enumerations\ApplicationType.cs" />
     <Compile Include="Enumerations\DayReportDep.cs" />
     <Compile Include="Enumerations\UrlRuleType.cs" />
@@ -106,6 +109,7 @@
     <Compile Include="Query\EventLogQuery.cs" />
     <Compile Include="Query\MonthTargetQuery.cs" />
     <Compile Include="Query\WeixinActQuery.cs" />
+    <Compile Include="Query\JituanvoteQuery.cs" />
     <Compile Include="Web\HXContext.cs" />
     <Compile Include="WeixinActs.cs" />
   </ItemGroup>

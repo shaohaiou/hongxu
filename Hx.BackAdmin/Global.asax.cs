@@ -86,6 +86,13 @@ namespace Hx.BackAdmin
                     WeixinActs.Instance.ReloadAllBenzvote();
                     WeixinActs.Instance.ReloadBenzvotePothunterListCache();
                 }
+                JituanvoteSettingInfo jituanvotesetting = WeixinActs.Instance.GetJituanvoteSetting();
+                if (jituanvotesetting != null && jituanvotesetting.Switch == 1)
+                {
+                    WeixinActs.Instance.ReloadJituanvoteSetting();
+                    WeixinActs.Instance.ReloadAllJituanvote();
+                    WeixinActs.Instance.ReloadJituanvotePothunterListCache();
+                }
             }
             catch { }
         }

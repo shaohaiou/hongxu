@@ -515,6 +515,70 @@ namespace Hx.Components.Providers
 
         #endregion
 
+        #region 集团投票活动
+
+        public abstract bool AddJituanvotePothunterInfo(JituanvotePothunterInfo entity);
+
+        public abstract void DelJituanvotePothunterInfo(string ids);
+
+        public abstract List<JituanvotePothunterInfo> GetJituanvotePothunterList();
+
+        protected JituanvotePothunterInfo PopulateJituanvotePothunterInfo(IDataReader reader)
+        {
+            JituanvotePothunterInfo entity = new JituanvotePothunterInfo
+            {
+                ID = DataConvert.SafeInt(reader["ID"])
+            };
+
+            SerializerData data = new SerializerData();
+            data.Keys = reader["PropertyNames"] as string;
+            data.Values = reader["PropertyValues"] as string;
+            entity.SetSerializerData(data);
+
+            return entity;
+        }
+
+        public abstract List<JituanvoteInfo> GetJituanvoteList(int pageindex, int pagesize, JituanvoteQuery query, ref int recordcount);
+
+        public abstract bool AddJituanvoteInfo(JituanvoteInfo entity);
+
+        protected JituanvoteInfo PopulateJituanvote(IDataReader reader)
+        {
+            JituanvoteInfo entity = new JituanvoteInfo
+            {
+                ID = DataConvert.SafeInt(reader["ID"]),
+                AthleteID = DataConvert.SafeInt(reader["AthleteID"]),
+                AthleteName = reader["AthleteName"] as string,
+                SerialNumber = DataConvert.SafeInt(reader["SerialNumber"]),
+                Voter = reader["Voter"] as string,
+                AddTime = DataConvert.SafeDate(reader["AddTime"])
+            };
+
+            SerializerData data = new SerializerData();
+            data.Keys = reader["PropertyNames"] as string;
+            data.Values = reader["PropertyValues"] as string;
+            entity.SetSerializerData(data);
+
+            return entity;
+        }
+
+        public abstract void AddJituanvoteSetting(JituanvoteSettingInfo entity);
+
+        public abstract JituanvoteSettingInfo GetJituanvoteSetting();
+
+        protected JituanvoteSettingInfo PopulateJituanvoteSetting(IDataReader reader)
+        {
+            JituanvoteSettingInfo entity = new JituanvoteSettingInfo();
+            SerializerData data = new SerializerData();
+            data.Keys = reader["PropertyNames"] as string;
+            data.Values = reader["PropertyValues"] as string;
+            entity.SetSerializerData(data);
+
+            return entity;
+        }
+
+        #endregion
+
         #endregion
 
         #region 招聘管理

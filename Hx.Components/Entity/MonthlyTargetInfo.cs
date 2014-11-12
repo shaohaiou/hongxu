@@ -79,6 +79,196 @@ namespace Hx.Components.Entity
             set { SetExtendedAttribute("XSzzts", value); }
         }
 
+        /// <summary>
+        /// 展厅占比
+        /// </summary>
+        [JsonIgnore]
+        public string XSztzb
+        {
+            get { return GetString("XSztzb", ""); }
+            set { SetExtendedAttribute("XSztzb", value); }
+        }
+
+        /// <summary>
+        /// 展厅留档率
+        /// </summary>
+        [JsonIgnore]
+        public string XSztldl
+        {
+            get { return GetString("XSztldl", ""); }
+            set { SetExtendedAttribute("XSztldl", value); }
+        }
+
+        /// <summary>
+        /// 展厅成交率
+        /// </summary>
+        [JsonIgnore]
+        public string XSztcjl
+        {
+            get { return GetString("XSztcjl", ""); }
+            set { SetExtendedAttribute("XSztcjl", value); }
+        }
+
+        /// <summary>
+        /// 上牌率
+        /// </summary>
+        [JsonIgnore]
+        public string XSspl
+        {
+            get { return GetString("XSspl", ""); }
+            set { SetExtendedAttribute("XSspl", value); }
+        }
+
+        /// <summary>
+        /// 展厅保险率
+        /// </summary>
+        [JsonIgnore]
+        public string XSztbxl
+        {
+            get { return GetString("XSztbxl", ""); }
+            set { SetExtendedAttribute("XSztbxl", value); }
+        }
+
+        /// <summary>
+        /// 美容交车率
+        /// </summary>
+        [JsonIgnore]
+        public string XSmrjcl
+        {
+            get { return GetString("XSmrjcl", ""); }
+            set { SetExtendedAttribute("XSmrjcl", value); }
+        }
+
+        /// <summary>
+        /// 延保渗透率
+        /// </summary>
+        [JsonIgnore]
+        public string XSybstl
+        {
+            get { return GetString("XSybstl", ""); }
+            set { SetExtendedAttribute("XSybstl", value); }
+        }
+
+        /// <summary>
+        /// 展厅精品前装率
+        /// </summary>
+        [JsonIgnore]
+        public string XSztjpqzl
+        {
+            get { return GetString("XSztjpqzl", ""); }
+            set { SetExtendedAttribute("XSztjpqzl", value); }
+        }
+
+        /// <summary>
+        /// 按揭率
+        /// </summary>
+        [JsonIgnore]
+        public string XSajl
+        {
+            get { return GetString("XSajl", ""); }
+            set { SetExtendedAttribute("XSajl", value); }
+        }
+
+        /// <summary>
+        /// 免费保养渗透率
+        /// </summary>
+        [JsonIgnore]
+        public string XSmfbystl
+        {
+            get { return GetString("XSmfbystl", ""); }
+            set { SetExtendedAttribute("XSmfbystl", value); }
+        }
+
+        /// <summary>
+        /// 总销售台次
+        /// </summary>
+        [JsonIgnore]
+        public string XSzxstc
+        {
+            get { return GetString("XSzxstc", ""); }
+            set { SetExtendedAttribute("XSzxstc", value); }
+        }
+
+        /// <summary>
+        /// 上牌单台
+        /// </summary>
+        [JsonIgnore]
+        public string XSspdt
+        {
+            get { return GetString("XSspdt", ""); }
+            set { SetExtendedAttribute("XSspdt", value); }
+        }
+
+        /// <summary>
+        /// 展厅保险单台
+        /// </summary>
+        [JsonIgnore]
+        public string XSztbxdt
+        {
+            get { return GetString("XSztbxdt", ""); }
+            set { SetExtendedAttribute("XSztbxdt", value); }
+        }
+
+        /// <summary>
+        /// 美容单台
+        /// </summary>
+        [JsonIgnore]
+        public string XSmrdt
+        {
+            get { return GetString("XSmrdt", ""); }
+            set { SetExtendedAttribute("XSmrdt", value); }
+        }
+
+        /// <summary>
+        /// 展厅精品平均单台
+        /// </summary>
+        [JsonIgnore]
+        public string XSztjppjdt
+        {
+            get { return GetString("XSztjppjdt", ""); }
+            set { SetExtendedAttribute("XSztjppjdt", value); }
+        }
+
+        /// <summary>
+        /// 二网精品平均单台
+        /// </summary>
+        [JsonIgnore]
+        public string XSewjppjdt
+        {
+            get { return GetString("XSewjppjdt", ""); }
+            set { SetExtendedAttribute("XSewjppjdt", value); }
+        }
+
+        /// <summary>
+        /// 销售置换台次
+        /// </summary>
+        [JsonIgnore]
+        public string XSxszhtc
+        {
+            get { return GetString("XSxszhtc", ""); }
+            set { SetExtendedAttribute("XSxszhtc", value); }
+        }
+
+        /// <summary>
+        /// 按揭平均单台
+        /// </summary>
+        [JsonIgnore]
+        public string XSajpjdt
+        {
+            get { return GetString("XSajpjdt", ""); }
+            set { SetExtendedAttribute("XSajpjdt", value); }
+        }
+
+        /// <summary>
+        /// 免费保养单台
+        /// </summary>
+        [JsonIgnore]
+        public string XSmfbydt
+        {
+            get { return GetString("XSmfbydt", ""); }
+            set { SetExtendedAttribute("XSmfbydt", value); }
+        }
+
         #endregion
 
         #endregion

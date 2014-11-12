@@ -1106,6 +1106,168 @@ namespace HX.DALSQLServer
 
         #endregion
 
+        #region 集团投票活动
+
+        /// <summary>
+        /// 添加/编辑参赛选手
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public override bool AddJituanvotePothunterInfo(JituanvotePothunterInfo entity)
+        {
+            SerializerData data = entity.GetSerializerData();
+            string sql = @"
+            IF EXISTS(SELECT * FROM HX_JituanvotePothunter WHERE @ID > 0)
+            BEGIN
+                UPDATE HX_JituanvotePothunter SET
+                    [PropertyNames] = @PropertyNames
+                    ,[PropertyValues] = @PropertyValues
+                WHERE ID = @ID
+            END
+            ELSE
+            BEGIN
+                INSERT INTO HX_JituanvotePothunter(
+                    [PropertyNames]
+                    ,[PropertyValues]
+                )VALUES(
+                    @PropertyNames
+                    ,@PropertyValues)
+            END
+            ";
+            SqlParameter[] p = 
+            {
+                new SqlParameter("@PropertyNames",data.Keys),
+                new SqlParameter("@PropertyValues",data.Values),
+                new SqlParameter("@ID",entity.ID)
+            };
+            int result = SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql, p);
+            if (result > 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public override void DelJituanvotePothunterInfo(string ids)
+        {
+            string sql = "DELETE FROM HX_JituanvotePothunter WHERE ID IN (" + ids + ")";
+            SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql);
+        }
+
+        public override List<JituanvotePothunterInfo> GetJituanvotePothunterList()
+        {
+            List<JituanvotePothunterInfo> list = new List<JituanvotePothunterInfo>();
+            string sql = "SELECT * FROM HX_JituanvotePothunter";
+            using (IDataReader reader = SqlHelper.ExecuteReader(_con, CommandType.Text, sql))
+            {
+                while (reader.Read())
+                {
+                    list.Add(PopulateJituanvotePothunterInfo(reader));
+                }
+            }
+
+            return list;
+        }
+
+        public override List<JituanvoteInfo> GetJituanvoteList(int pageindex, int pagesize, JituanvoteQuery query, ref int recordcount)
+        {
+            List<JituanvoteInfo> list = new List<JituanvoteInfo>();
+            SqlParameter p;
+            using (IDataReader reader = CommonPageSql.GetDataReaderByPager(_con, pageindex, pagesize, query, out p))
+            {
+                while (reader.Read())
+                {
+                    list.Add(PopulateJituanvote(reader));
+                }
+            }
+            recordcount = DataConvert.SafeInt(p.Value);
+
+            return list;
+        }
+
+        public override bool AddJituanvoteInfo(JituanvoteInfo entity)
+        {
+            SerializerData data = entity.GetSerializerData();
+            string sql = @"
+                INSERT INTO HX_Jituanvote(
+                    [AthleteID]
+                    ,[AthleteName]
+                    ,[SerialNumber]
+                    ,[Voter]
+                    ,[AddTime]
+                    ,[PropertyNames]
+                    ,[PropertyValues]
+                )VALUES(
+                    @AthleteID
+                    ,@AthleteName
+                    ,@SerialNumber
+                    ,@Voter
+                    ,@AddTime
+                    ,@PropertyNames
+                    ,@PropertyValues)
+            ";
+            SqlParameter[] p = 
+            {
+                new SqlParameter("@AthleteID",entity.AthleteID),
+                new SqlParameter("@AthleteName",entity.AthleteName),
+                new SqlParameter("@SerialNumber",entity.SerialNumber),
+                new SqlParameter("@Voter",entity.Voter),
+                new SqlParameter("@AddTime",entity.AddTime),
+                new SqlParameter("@PropertyNames",data.Keys),
+                new SqlParameter("@PropertyValues",data.Values),
+            };
+            int result = SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql, p);
+            if (result > 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public override void AddJituanvoteSetting(JituanvoteSettingInfo entity)
+        {
+            SerializerData data = entity.GetSerializerData();
+            string sql = @"
+            IF EXISTS(SELECT * FROM HX_JituanvoteSetting)
+            BEGIN
+                UPDATE HX_JituanvoteSetting SET
+                    [PropertyNames] = @PropertyNames
+                    ,[PropertyValues] = @PropertyValues
+            END
+            ELSE
+            BEGIN
+                INSERT INTO HX_JituanvoteSetting(
+                    [PropertyNames]
+                    ,[PropertyValues]
+                )VALUES(
+                    @PropertyNames
+                    ,@PropertyValues)
+            END
+            ";
+            SqlParameter[] p = 
+            {
+                new SqlParameter("@PropertyNames",data.Keys),
+                new SqlParameter("@PropertyValues",data.Values)
+            };
+            SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql, p);
+        }
+
+        public override JituanvoteSettingInfo GetJituanvoteSetting()
+        {
+            string sql = "SELECT * FROM HX_JituanvoteSetting";
+            JituanvoteSettingInfo entity = null;
+            using (IDataReader reader = SqlHelper.ExecuteReader(_con, CommandType.Text, sql))
+            {
+                if (reader.Read())
+                {
+                    entity = PopulateJituanvoteSetting(reader);
+                }
+            }
+            return entity;
+        }
+
+        #endregion
+
         #endregion
 
         #region 招聘管理

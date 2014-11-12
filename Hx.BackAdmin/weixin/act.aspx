@@ -42,7 +42,7 @@
         WeixinApi.ready(function (Api) {
             // 微信分享的数据
             var wxData = {
-                "imgUrl": 'http://bj.hongxu.cn/images/chabei.jpg',
+                "imgUrl": 'http://<%= CurrentDomain %>/images/chabei.jpg',
                 "link": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx0c9b37c9d5ddf8a8&redirect_uri=http%3a%2f%2fbj.hongxu.cn%2fweixin%2fdianzan.aspx&response_type=code&scope=snsapi_base&state=" + openid + "#wechat_redirect",
                 "desc": '参与红旭活动，得神秘奖品！',
                 "title": "红旭又送礼物啦"

@@ -17,6 +17,7 @@
 <div class="right_nav">
      <a href="weixinactmg.aspx" target="ztk" id="weixinactmg" runat="server" class="current">测试活动</a>
      <a href="benzvotemg.aspx" target="ztk" id="benzvotemg" runat="server">奔驰投票</a>
+     <a href="jituanvotemg.aspx" target="ztk" id="jituanvotemg" runat="server">集团投票</a>
 </div>
 
 <div class="r_sy" id="daohan">

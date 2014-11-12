@@ -86,6 +86,7 @@
     <Content Include="css\benzvote.css" />
     <Content Include="css\calculator\calculator.css" />
     <Content Include="css\style.css" />
+    <Content Include="css\jituanvote.css" />
     <Content Include="dayreport\dailyreportviewmul.aspx" />
     <Content Include="dayreport\dayreporthistorymg.aspx" />
     <Content Include="dayreport\main.aspx" />
@@ -114,6 +115,7 @@
     <Content Include="global\main_x.aspx" />
     <Content Include="images\and.gif" />
     <Content Include="images\benzvote\adtest.png" />
+    <Content Include="images\benzvote\back.png" />
     <Content Include="images\benzvote\cansaixuanyan.png" />
     <Content Include="images\benzvote\fengcaizhanshi.png" />
     <Content Include="images\benzvote\flay.png" />
@@ -124,6 +126,7 @@
     <Content Include="images\benzvote\weitalapiao.png" />
     <Content Include="images\benzvote\weitatoupiao.png" />
     <Content Include="images\benzvote\xiangqing.png" />
+    <Content Include="images\benzvote\ysj.png" />
     <Content Include="images\bt2.gif" />
     <Content Include="images\btn_block_2.gif" />
     <Content Include="images\btn_block_3.gif" />
@@ -134,6 +137,8 @@
     <Content Include="images\glk.gif" />
     <Content Include="images\hy.jpg" />
     <Content Include="images\ico1.jpg" />
+    <Content Include="images\jituanvote\back.png" />
+    <Content Include="images\jituanvote\ysj.png" />
     <Content Include="images\ldi.gif" />
     <Content Include="images\line.gif" />
     <Content Include="images\login\logo.jpg" />
@@ -163,6 +168,17 @@
     <Content Include="images\xz\medal9.gif" />
     <Content Include="images\yan.gif" />
     <Content Include="images\zhaopin.jpg" />
+    <Content Include="images\jituanvote\adtest.png" />
+    <Content Include="images\jituanvote\cansaixuanyan.png" />
+    <Content Include="images\jituanvote\fengcaizhanshi.png" />
+    <Content Include="images\jituanvote\flay.png" />
+    <Content Include="images\jituanvote\gerenjieshao.png" />
+    <Content Include="images\jituanvote\next.png" />
+    <Content Include="images\jituanvote\prev.png" />
+    <Content Include="images\jituanvote\toupiao.png" />
+    <Content Include="images\jituanvote\weitalapiao.png" />
+    <Content Include="images\jituanvote\weitatoupiao.png" />
+    <Content Include="images\jituanvote\xiangqing.png" />
     <Content Include="index.aspx" />
     <Content Include="js\ajaxupload.js" />
     <Content Include="js\calculator.js" />
@@ -372,9 +388,15 @@
     <Content Include="weixin\benzvotepothunteredit.aspx" />
     <Content Include="weixin\benzvotesetting.aspx" />
     <Content Include="weixin\dianzan.aspx" />
+    <Content Include="weixin\jituanvotemg.aspx" />
     <Content Include="weixin\main.aspx" />
     <Content Include="weixin\main_s.aspx" />
     <Content Include="weixin\weixinactmg.aspx" />
+    <Content Include="weixin\jituanvotepothunteredit.aspx" />
+    <Content Include="weixin\jituanvotelist.aspx" />
+    <Content Include="weixin\jituanvotesetting.aspx" />
+    <Content Include="weixin\jituanvotedetail.aspx" />
+    <Content Include="weixin\jituanvotepage.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="biz\job.aspx.cs">
@@ -828,6 +850,13 @@
     <Compile Include="weixin\dianzan.aspx.designer.cs">
       <DependentUpon>dianzan.aspx</DependentUpon>
     </Compile>
+    <Compile Include="weixin\jituanvotemg.aspx.cs">
+      <DependentUpon>jituanvotemg.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="weixin\jituanvotemg.aspx.designer.cs">
+      <DependentUpon>jituanvotemg.aspx</DependentUpon>
+    </Compile>
     <Compile Include="weixin\main.aspx.cs">
       <DependentUpon>main.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -848,6 +877,41 @@
     </Compile>
     <Compile Include="weixin\weixinactmg.aspx.designer.cs">
       <DependentUpon>weixinactmg.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="weixin\jituanvotepothunteredit.aspx.cs">
+      <DependentUpon>jituanvotepothunteredit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="weixin\jituanvotepothunteredit.aspx.designer.cs">
+      <DependentUpon>jituanvotepothunteredit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="weixin\jituanvotelist.aspx.cs">
+      <DependentUpon>jituanvotelist.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="weixin\jituanvotelist.aspx.designer.cs">
+      <DependentUpon>jituanvotelist.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="weixin\jituanvotesetting.aspx.cs">
+      <DependentUpon>jituanvotesetting.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="weixin\jituanvotesetting.aspx.designer.cs">
+      <DependentUpon>jituanvotesetting.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="weixin\jituanvotedetail.aspx.cs">
+      <DependentUpon>jituanvotedetail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="weixin\jituanvotedetail.aspx.designer.cs">
+      <DependentUpon>jituanvotedetail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="weixin\jituanvotepage.aspx.cs">
+      <DependentUpon>jituanvotepage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="weixin\jituanvotepage.aspx.designer.cs">
+      <DependentUpon>jituanvotepage.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

@@ -43,6 +43,10 @@ namespace Hx.BackAdmin.HttpHandler
             {
                 Benzvotetoupiao();
             }
+            else if (action == "jituanvotetoupiao")
+            {
+                Jituanvotetoupiao();
+            }
             else
             {
                 result = string.Format(result, "fail", "非法操作");
@@ -251,6 +255,113 @@ namespace Hx.BackAdmin.HttpHandler
                                 lock (sync_helper)
                                 {
                                     dianzancode = WeixinActs.Instance.Benzvote(entity);
+                                }
+                                if (string.IsNullOrEmpty(dianzancode))
+                                    result = string.Format(result, "success", "");
+                                else
+                                    result = string.Format(result, "fail", dianzancode);
+                            }
+                        }
+                        else
+                        {
+                            result = string.Format(result, "fail", "用户信息获取失败");
+                        }
+                    }
+                    else
+                        result = string.Format(result, "fail", "access_token获取失败");
+                }
+                else
+                {
+                    result = string.Format(result, "fail", "openid,vopenid为空");
+                }
+            }
+            catch (Exception ex)
+            {
+                ExpLog.Write(ex);
+                result = string.Format(result, "fail", "执行失败");
+            }
+        }
+
+        #endregion
+
+        #region 集团投票活动
+
+        private void Jituanvotetoupiao()
+        {
+            try
+            {
+                string openid = WebHelper.GetString("openid");
+                string id = WebHelper.GetString("id");
+
+                if (!string.IsNullOrEmpty(openid) && !string.IsNullOrEmpty(id))
+                {
+                    string votecheckresult = WeixinActs.Instance.CheckJituanVote(openid, id);
+                    if (!string.IsNullOrEmpty(votecheckresult))
+                    {
+                        result = string.Format(result, "fail", votecheckresult);
+                        return;
+                    }
+
+                    string access_token = MangaCache.Get(GlobalKey.WEIXINACCESS_TOKEN_KEY) as string;
+                    if (string.IsNullOrEmpty(access_token))
+                    {
+                        string url_access_token = string.Format("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={0}&secret={1}"
+                            , GlobalKey.WEIXINAPPID
+                            , GlobalKey.WEIXINSECRET);
+                        string str_access_token = Http.GetPageByWebClientDefault(url_access_token);
+                        Dictionary<string, string> dic_access_token = new Dictionary<string, string>();
+                        try
+                        {
+                            dic_access_token = json.Deserialize<Dictionary<string, string>>(str_access_token);
+                        }
+                        catch { }
+                        if (dic_access_token.ContainsKey("access_token"))
+                        {
+                            access_token = dic_access_token["access_token"];
+                            int expires_in = 7200;
+                            if (dic_access_token.ContainsKey("expires_in"))
+                                expires_in = DataConvert.SafeInt(dic_access_token["expires_in"], 7200);
+                            MangaCache.Add(GlobalKey.WEIXINACCESS_TOKEN_KEY, access_token, expires_in);
+                        }
+                    }
+
+                    if (!string.IsNullOrEmpty(access_token))
+                    {
+                        string url_openinfo = string.Format("https://api.weixin.qq.com/cgi-bin/user/info?access_token={0}&openid={1}&lang=zh_CN"
+                            , access_token
+                            , openid);
+                        string str_openinfo = Http.GetPageByWebClientUTF8(url_openinfo);
+                        Dictionary<string, string> dic_openinfo = new Dictionary<string, string>();
+                        try
+                        {
+                            dic_openinfo = json.Deserialize<Dictionary<string, string>>(str_openinfo);
+                        }
+                        catch { }
+                        if (!dic_openinfo.ContainsKey("errcode"))
+                        {
+                            int pid = DataConvert.SafeInt(id);
+                            JituanvotePothunterInfo pinfo = WeixinActs.Instance.GetJituanvotePothunterInfo(pid, true);
+                            if (pinfo == null)
+                                result = string.Format(result, "fail", "不存在此选手");
+                            else
+                            {
+                                JituanvoteInfo entity = new JituanvoteInfo();
+                                entity.AthleteID = pid;
+                                entity.AthleteName = pinfo.Name;
+                                entity.SerialNumber = pinfo.SerialNumber;
+                                entity.Voter = dic_openinfo.ContainsKey("nickname") ? dic_openinfo["nickname"] : string.Empty;
+                                entity.AddTime = DateTime.Now;
+                                entity.Openid = openid;
+                                entity.Nickname = entity.Voter;
+                                entity.Sex = dic_openinfo.ContainsKey("sex") ? DataConvert.SafeInt(dic_openinfo["sex"]) : 0;
+                                entity.City = dic_openinfo.ContainsKey("city") ? dic_openinfo["city"] : string.Empty;
+                                entity.Country = dic_openinfo.ContainsKey("country") ? dic_openinfo["country"] : string.Empty;
+                                entity.Province = dic_openinfo.ContainsKey("province") ? dic_openinfo["province"] : string.Empty;
+
+                                string dianzancode = string.Empty;
+                                lock (sync_helper)
+                                {
+                                    dianzancode = WeixinActs.Instance.Jituanvote(entity);
                                 }
                                 if (string.IsNullOrEmpty(dianzancode))
                                     result = string.Format(result, "success", "");

@@ -46,7 +46,7 @@ namespace Hx.BackAdmin.weixin
             int id = GetInt("id");
             if (id > 0)
             {
-                Header.Title = "编辑信息信息";
+                Header.Title = "编辑选手信息";
                 pothunter = WeixinActs.Instance.GetBenzvotePothunterInfo(id);
                 if (pothunter != null)
                 {

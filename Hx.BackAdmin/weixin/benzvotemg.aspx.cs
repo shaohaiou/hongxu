@@ -36,7 +36,7 @@ namespace Hx.BackAdmin.weixin
         {
             if (WebHelper.GetString("action") == "del")
             {
-                Admins.Instance.DeleteAdmin(WebHelper.GetInt("id"));
+                WeixinActs.Instance.DelBenzvotePothunterInfo(WebHelper.GetString("id"));
                 ResponseRedirect(FromUrl);
             }
             else

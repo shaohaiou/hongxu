@@ -45,9 +45,22 @@ namespace Hx.Components.BasePage
             {
                 if (string.IsNullOrEmpty(_currentpath))
                 {
-                    _currentpath = CurrentUrl.Split(new char[] { '?' })[0];
+                    _currentpath = System.Web.HttpUtility.UrlDecode(CurrentUrl).Split(new char[] { '?' })[0];
                 }
                 return _currentpath;
+            }
+        }
+
+        private string _currentdomain = string.Empty;
+        protected virtual string CurrentDomain
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_currentdomain))
+                {
+                    _currentdomain = HttpContext.Current.Request.Url.Host;
+                }
+                return _currentdomain;
             }
         }
 

@@ -139,6 +139,169 @@
                           {%><%}
                           else if (CurrentDep == DayReportDep.行政部)
                           {%><%}
+                          else if (CurrentDep == DayReportDep.销售部)
+                          {%>
+                          <tr>
+                            <td colspan="4" style="background-color: #ccc; color: Black; font-weight: bold;">
+                                关键指标
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="tr">
+                                总销售台次：
+                            </td>
+                            <td class="dq1">
+                                <asp:TextBox runat="server" ID="txtXSzxstc" CssClass="srk6"></asp:TextBox>
+                            </td>
+                            <td class="tr w160">
+                                展厅占比：
+                            </td>
+                            <td>
+                                <asp:TextBox runat="server" ID="txtXSztzb" CssClass="srk4 tr"></asp:TextBox>
+                                %
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="tr">
+                                展厅留档率：
+                            </td>
+                            <td>
+                                <asp:TextBox runat="server" ID="txtXSztldl" CssClass="srk4"></asp:TextBox>
+                                %
+                            </td>
+                            <td class="tr">
+                                展厅成交率：
+                            </td>
+                            <td>
+                                <asp:TextBox runat="server" ID="txtXSztcjl" CssClass="srk4 tr"></asp:TextBox>
+                                %
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="tr">
+                                上牌率：
+                            </td>
+                            <td>
+                                <asp:TextBox runat="server" ID="txtXSspl" CssClass="srk4"></asp:TextBox>
+                                %
+                            </td>
+                            <td class="tr">
+                                上牌单台：
+                            </td>
+                            <td>
+                                <asp:TextBox runat="server" ID="txtXSspdt" CssClass="srk6"></asp:TextBox>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="tr">
+                                展厅保险率：
+                            </td>
+                            <td>
+                                <asp:TextBox runat="server" ID="txtXSztbxl" CssClass="srk4 tr"></asp:TextBox>
+                                %
+                            </td>
+                            <td class="tr">
+                                展厅保险单台：
+                            </td>
+                            <td>
+                                <asp:TextBox runat="server" ID="txtXSztbxdt" CssClass="srk6"></asp:TextBox>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="tr">
+                                美容交车率：
+                            </td>
+                            <td>
+                                <asp:TextBox runat="server" ID="txtXSmrjcl" CssClass="srk4"></asp:TextBox>
+                                %
+                            </td>
+                            <td class="tr">
+                                美容单台：
+                            </td>
+                            <td>
+                                <asp:TextBox runat="server" ID="txtXSmrdt" CssClass="srk6"></asp:TextBox>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="tr">
+                                延保渗透率：
+                            </td>
+                            <td>
+                                <asp:TextBox runat="server" ID="txtXSybstl" CssClass="srk4 tr"></asp:TextBox>
+                                %
+                            </td>
+                            <td class="tr">
+                                展厅精品前装率：
+                            </td>
+                            <td>
+                                <asp:TextBox runat="server" ID="txtXSztjpqzl" CssClass="srk4"></asp:TextBox>
+                                %
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="tr">
+                                展厅精品平均单台：
+                            </td>
+                            <td>
+                                <asp:TextBox runat="server" ID="txtXSztjppjdt" CssClass="srk6"></asp:TextBox>
+                            </td>
+                            <td class="tr">
+                                二网精品平均单台：
+                            </td>
+                            <td>
+                                <asp:TextBox runat="server" ID="txtXSewjppjdt" CssClass="srk6"></asp:TextBox>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="tr">
+                                销售置换台次：
+                            </td>
+                            <td>
+                                <asp:TextBox runat="server" ID="txtXSxszhtc" CssClass="srk6"></asp:TextBox>
+                            </td>
+                            <td class="tr">
+                                按揭率：
+                            </td>
+                            <td>
+                                <asp:TextBox runat="server" ID="txtXSajl" CssClass="srk4 tr"></asp:TextBox>
+                                %
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="tr">
+                                按揭平均单台：
+                            </td>
+                            <td>
+                                <asp:TextBox runat="server" ID="txtXSajpjdt" CssClass="srk6"></asp:TextBox>
+                            </td>
+                            <td class="tr">
+                                免费保养渗透率：
+                            </td>
+                            <td>
+                                <asp:TextBox runat="server" ID="txtXSmfbystl" CssClass="srk4"></asp:TextBox>
+                                %
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="tr">
+                                免费保养单台：
+                            </td>
+                            <td>
+                                <asp:TextBox runat="server" ID="txtXSmfbydt" CssClass="srk6"></asp:TextBox>
+                            </td>
+                            <td class="tr">
+                                
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" style="background-color: #ccc; color: Black; font-weight: bold;">
+                                各项目标值
+                            </td>
+                        </tr>
+                        <%=GetTableStr()%>
+                          <%}
                           else
                           {%>
                         <tr>

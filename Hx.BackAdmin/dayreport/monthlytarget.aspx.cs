@@ -164,6 +164,37 @@ namespace Hx.BackAdmin.dayreport
 
                     #endregion
                 }
+                else if (CurrentDep == DayReportDep.销售部)
+                {
+                    #region 绑定数据
+
+                    #region 关键指标
+
+                    txtXSztzb.Text = target.XSztzb;
+                    txtXSztldl.Text = target.XSztldl;
+                    txtXSztcjl.Text = target.XSztcjl;
+                    txtXSspl.Text = target.XSspl;
+                    txtXSztbxl.Text = target.XSztbxl;
+                    txtXSmrjcl.Text = target.XSmrjcl;
+                    txtXSybstl.Text = target.XSybstl;
+                    txtXSztjpqzl.Text = target.XSztjpqzl;
+                    txtXSajl.Text = target.XSajl;
+                    txtXSmfbystl.Text = target.XSmfbystl;
+
+                    txtXSzxstc.Text = target.XSzxstc;
+                    txtXSspdt.Text = target.XSspdt;
+                    txtXSztbxdt.Text = target.XSztbxdt;
+                    txtXSmrdt.Text = target.XSmrdt;
+                    txtXSztjppjdt.Text = target.XSztjppjdt;
+                    txtXSewjppjdt.Text = target.XSewjppjdt;
+                    txtXSxszhtc.Text = target.XSxszhtc;
+                    txtXSajpjdt.Text = target.XSajpjdt;
+                    txtXSmfbydt.Text = target.XSmfbydt;
+
+                    #endregion
+
+                    #endregion
+                }
             }
             else
             {
@@ -229,6 +260,29 @@ namespace Hx.BackAdmin.dayreport
                 target.SCsyfsl = txtSCsyfsl.Text;
 
                 #endregion
+            }
+            else if (CurrentDep == DayReportDep.销售部)
+            {
+                target.XSztzb = txtXSztzb.Text;
+                target.XSztldl = txtXSztldl.Text;
+                target.XSztcjl = txtXSztcjl.Text;
+                target.XSspl = txtXSspl.Text;
+                target.XSztbxl = txtXSztbxl.Text;
+                target.XSmrjcl = txtXSmrjcl.Text;
+                target.XSybstl = txtXSybstl.Text;
+                target.XSztjpqzl = txtXSztjpqzl.Text;
+                target.XSajl = txtXSajl.Text;
+                target.XSmfbystl = txtXSmfbystl.Text;
+
+                target.XSzxstc = txtXSzxstc.Text;
+                target.XSspdt = txtXSspdt.Text;
+                target.XSztbxdt = txtXSztbxdt.Text;
+                target.XSmrdt = txtXSmrdt.Text;
+                target.XSztjppjdt = txtXSztjppjdt.Text;
+                target.XSewjppjdt = txtXSewjppjdt.Text;
+                target.XSxszhtc = txtXSxszhtc.Text;
+                target.XSajpjdt = txtXSajpjdt.Text;
+                target.XSmfbydt = txtXSmfbydt.Text;
             }
         }
 

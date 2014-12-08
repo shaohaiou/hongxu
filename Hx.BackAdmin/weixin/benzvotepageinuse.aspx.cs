@@ -19,6 +19,8 @@ namespace Hx.BackAdmin.weixin
         protected int PageIndex = 1;
         protected int PageSize = 10;
         protected int PageCount = 1;
+        private string subscribe = "0";
+        public string Subscribe { get { return subscribe; } }
         private BenzvoteSettingInfo currentsetting = null;
         protected BenzvoteSettingInfo CurrentSetting
         {
@@ -87,10 +89,22 @@ namespace Hx.BackAdmin.weixin
                     if (dic_openid.ContainsKey("openid"))
                     {
                         Openid = dic_openid["openid"];
-                        Response.Redirect("benzvotepage.aspx?openid=" + Openid + "&code=" + Code);
+                        Response.Redirect("benzvotepageinuse.aspx?openid=" + Openid + "&code=" + Code);
                         Response.End();
                     }
                 }
+
+                #region 用户是否关注
+
+                //string accesstoken = WeixinActs.Instance.GetAccessToken();
+                //if (!string.IsNullOrEmpty(accesstoken))
+                //{
+                //    Dictionary<string, string> openinfo = WeixinActs.Instance.GetOpeninfo(accesstoken, Openid);
+                //    if(openinfo.ContainsKey("subscribe"))
+                //        subscribe = openinfo["subscribe"];
+                //}
+
+                #endregion
 
                 LoadData();
             }

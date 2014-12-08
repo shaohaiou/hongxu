@@ -79,12 +79,12 @@
                     </td>
                     <td>
                         <asp:TextBox ID="txtOverdueMinutes" runat="server" CssClass="w40"></asp:TextBox>
-                        分钟 <span class="gray">(用户从参与投票开始后限定时间内可以投票)</span>
+                        分钟 <span class="gray">(用户从参与投票开始后限定时间内可以投票，不填或填0表示不限制)</span>
                     </td>
                 </tr>
                 <tr>
                     <td class="bg1">
-                        投票次数限制：
+                        每日投票次数：
                     </td>
                     <td>
                         <asp:TextBox ID="txtVoteTimes" runat="server" CssClass="w40"></asp:TextBox>

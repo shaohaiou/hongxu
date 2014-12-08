@@ -15,6 +15,8 @@ namespace Hx.BackAdmin.weixin
     {
         private System.Web.Script.Serialization.JavaScriptSerializer json = new System.Web.Script.Serialization.JavaScriptSerializer();
         public string Openid { get; set; }
+        private string subscribe = "0";
+        public string Subscribe { get { return subscribe; } }
         protected BenzvotePothunterInfo CurrentPothunterInfo = null;
         private BenzvoteSettingInfo currentsetting = null;
         protected BenzvoteSettingInfo CurrentSetting 
@@ -32,6 +34,19 @@ namespace Hx.BackAdmin.weixin
             if (!IsPostBack)
             {
                 Openid = GetString("openid");
+
+                #region 用户是否关注
+
+                //string accesstoken = WeixinActs.Instance.GetAccessToken();
+                //if (!string.IsNullOrEmpty(accesstoken))
+                //{
+                //    Dictionary<string, string> openinfo = WeixinActs.Instance.GetOpeninfo(accesstoken, Openid);
+                //    if (openinfo.ContainsKey("subscribe"))
+                //        subscribe = openinfo["subscribe"];
+                //}
+
+                #endregion
+
                 LoadData();
             }
         }
@@ -42,7 +57,7 @@ namespace Hx.BackAdmin.weixin
             CurrentPothunterInfo = WeixinActs.Instance.GetBenzvotePothunterInfo(id,true);
             if (CurrentPothunterInfo == null)
             {
-                Response.Write("<script>alert(\"选手信息错误\");location.href=\"" + (string.IsNullOrEmpty(FromUrl) ? "benzvotepage.aspx" : FromUrl) + "\"</script>");
+                Response.Write("<script>alert(\"选手信息错误\");location.href=\"" + (string.IsNullOrEmpty(FromUrl) ? "benzvotepageinuse.aspx" : FromUrl) + "\"</script>");
                 Response.End();
             }
         }

@@ -6,6 +6,8 @@ using Hx.Components.Entity;
 using Hx.Components.Providers;
 using Hx.Components.Query;
 using Hx.Tools;
+using Hx.Tools.Web;
+using System.Web;
 
 namespace Hx.Components
 {
@@ -29,6 +31,84 @@ namespace Hx.Components
                 }
                 return _instance;
             }
+        }
+
+        #endregion
+
+        #region 公用方法
+
+        private System.Web.Script.Serialization.JavaScriptSerializer json = new System.Web.Script.Serialization.JavaScriptSerializer();
+
+        /// <summary>
+        /// 获取微信通信密钥
+        /// </summary>
+        /// <returns></returns>
+        public string GetAccessToken()
+        {
+            string access_token = MangaCache.Get(GlobalKey.WEIXINACCESS_TOKEN_KEY) as string;
+            if (string.IsNullOrEmpty(access_token))
+            {
+                lock (sync_creater)
+                {
+                    access_token = MangaCache.Get(GlobalKey.WEIXINACCESS_TOKEN_KEY) as string;
+                    if (string.IsNullOrEmpty(access_token))
+                    {
+                        string url_access_token = string.Format("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={0}&secret={1}"
+                            , GlobalKey.WEIXINAPPID
+                            , GlobalKey.WEIXINSECRET);
+                        string str_access_token = Http.GetPageByWebClientDefault(url_access_token);
+                        Dictionary<string, string> dic_access_token = new Dictionary<string, string>();
+                        try
+                        {
+                            dic_access_token = json.Deserialize<Dictionary<string, string>>(str_access_token);
+                        }
+                        catch { }
+                        if (dic_access_token.ContainsKey("access_token"))
+                        {
+                            access_token = dic_access_token["access_token"];
+                            int expires_in = 7200;
+                            if (dic_access_token.ContainsKey("expires_in"))
+                                expires_in = DataConvert.SafeInt(dic_access_token["expires_in"], 7200);
+                            MangaCache.Add(GlobalKey.WEIXINACCESS_TOKEN_KEY, access_token, expires_in);
+                        }
+                    }
+                }
+            }
+
+            return access_token;
+        }
+
+        /// <summary>
+        /// <para>获取微信用户信息（授权或者从公众号链接过来的用户才能获取全部）</para>
+        /// <para>返回数据：</para>
+        /// <para>subscribe       是否关注公众号 [0：代表此用户没有关注该公众号]</para>
+        /// <para>openid          用户的标识，对当前公众号唯一</para>
+        /// <para>nickname        用户的昵称</para>
+        /// <para>sex             用户的性别，值为1时是男性，值为2时是女性，值为0时是未知</para>
+        /// <para>city            用户所在城市</para>
+        /// <para>country         用户所在国家</para>
+        /// <para>province        用户所在省份</para>
+        /// <para>language        用户的语言，简体中文为zh_CN</para>
+        /// <para>headimgurl      用户头像，最后一个数值代表正方形头像大小（有0、46、64、96、132数值可选，0代表640*640正方形头像），用户没有头像时该项为空</para>
+        /// <para>subscribe_time  用户关注时间，为时间戳。如果用户曾多次关注，则取最后关注时间</para>
+        /// <para>unionid         只有在用户将公众号绑定到微信开放平台帐号后，才会出现该字段。</para>
+        /// </summary>
+        /// <param name="accesstoken">通信密钥</param>
+        /// <param name="openid">用户标识</param>
+        /// <returns></returns>
+        public Dictionary<string, string> GetOpeninfo(string accesstoken, string openid)
+        {
+            string url_openinfo = string.Format("https://api.weixin.qq.com/cgi-bin/user/info?access_token={0}&openid={1}&lang=zh_CN"
+                            , accesstoken
+                            , openid);
+            string str_openinfo = Http.GetPageByWebClientUTF8(url_openinfo);
+            Dictionary<string, string> dic_openinfo = new Dictionary<string, string>();
+            try
+            {
+                dic_openinfo = json.Deserialize<Dictionary<string, string>>(str_openinfo);
+            }
+            catch { }
+            return dic_openinfo;
         }
 
         #endregion
@@ -129,6 +209,7 @@ namespace Hx.Components
             {
                 lock (sync_creater)
                 {
+                    list = MangaCache.Get(key) as List<BenzvotePothunterInfo>;
                     if (list == null)
                     {
                         list = ReorderBenzvotePothunter(CommonDataProvider.Instance().GetBenzvotePothunterList());
@@ -195,8 +276,9 @@ namespace Hx.Components
             Dictionary<string, DateTime> result = MangaCache.Get(key) as Dictionary<string, DateTime>;
             if (result == null)
             {
-                lock (sync_creater)
+                lock (sync_benzvote)
                 {
+                    result = MangaCache.Get(key) as Dictionary<string, DateTime>;
                     if (result == null)
                     {
                         BenzvoteQuery query = new BenzvoteQuery();
@@ -205,7 +287,8 @@ namespace Hx.Components
                         result = new Dictionary<string, DateTime>();
                         foreach (BenzvoteInfo v in blist)
                         {
-                            result.Add(v.AthleteID + "_" + v.Openid, v.AddTime);
+                            if (!result.Keys.Contains(v.AthleteID + "_" + v.Openid))
+                                result.Add(v.AthleteID + "_" + v.Openid, v.AddTime);
                         }
                     }
                 }
@@ -219,7 +302,7 @@ namespace Hx.Components
         {
             string key = GlobalKey.BENZVOTE_LIST;
             MangaCache.Remove(key);
-            GetAllBenzvote();
+            benzvotes = GetAllBenzvote();
         }
 
         public void AddBenzvoteSetting(BenzvoteSettingInfo entity)
@@ -240,6 +323,7 @@ namespace Hx.Components
             {
                 lock (sync_creater)
                 {
+                    setting = MangaCache.Get(key) as BenzvoteSettingInfo;
                     if (setting == null)
                     {
                         setting = CommonDataProvider.Instance().GetBenzvoteSetting();
@@ -294,16 +378,16 @@ namespace Hx.Components
                     {
                         return "您已经为她投过票了，不能重复投哦。";
                     }
-                    List<KeyValuePair<string, DateTime>> votes = WeixinActs.Instance.Benzvotes.TakeWhile(b => b.Key.EndsWith("_" + openid)).ToList();
+                    List<KeyValuePair<string, DateTime>> votes = Benzvotes.Where(b => b.Key.EndsWith("_" + openid)).ToList();
                     if (votes.Count > 0)
                     {
                         DateTime ftime = votes.Min(b => b.Value);
                         int minutes = setting == null ? 30 : setting.OverdueMinutes;
-                        if (DateTime.Now.AddMinutes(-1 * minutes) > ftime)
+                        if (minutes > 0 && DateTime.Now.AddMinutes(-1 * minutes) > ftime)
                         {
                             return "您的投票期已过。";
                         }
-                        if (setting != null && setting.VoteTimes > 0 && votes.Count == setting.VoteTimes)
+                        if (setting != null && setting.VoteTimes > 0 && votes.Count >= setting.VoteTimes)
                         {
                             return "您已经投过" + setting.VoteTimes + "次票，不能再投了。";
                         }
@@ -413,6 +497,7 @@ namespace Hx.Components
             {
                 lock (sync_creater)
                 {
+                    list = MangaCache.Get(key) as List<JituanvotePothunterInfo>;
                     if (list == null)
                     {
                         list = ReorderJituanvotePothunter(CommonDataProvider.Instance().GetJituanvotePothunterList());
@@ -479,8 +564,9 @@ namespace Hx.Components
             Dictionary<string, DateTime> result = MangaCache.Get(key) as Dictionary<string, DateTime>;
             if (result == null)
             {
-                lock (sync_creater)
+                lock (sync_jituanvote)
                 {
+                    result = MangaCache.Get(key) as Dictionary<string, DateTime>;
                     if (result == null)
                     {
                         JituanvoteQuery query = new JituanvoteQuery();
@@ -489,7 +575,8 @@ namespace Hx.Components
                         result = new Dictionary<string, DateTime>();
                         foreach (JituanvoteInfo v in blist)
                         {
-                            result.Add(v.AthleteID + "_" + v.Openid, v.AddTime);
+                            if (!result.Keys.Contains(v.AthleteID + "_" + v.Openid))
+                                result.Add(v.AthleteID + "_" + v.Openid, v.AddTime);
                         }
                     }
                 }
@@ -503,7 +590,7 @@ namespace Hx.Components
         {
             string key = GlobalKey.JITUANVOTE_LIST;
             MangaCache.Remove(key);
-            GetAllJituanvote();
+            jituanvotes = GetAllJituanvote();
         }
 
         public void AddJituanvoteSetting(JituanvoteSettingInfo entity)
@@ -524,6 +611,7 @@ namespace Hx.Components
             {
                 lock (sync_creater)
                 {
+                    setting = MangaCache.Get(key) as JituanvoteSettingInfo;
                     if (setting == null)
                     {
                         setting = CommonDataProvider.Instance().GetJituanvoteSetting();
@@ -546,7 +634,7 @@ namespace Hx.Components
         {
             try
             {
-                lock (sync_benzvote)
+                lock (sync_jituanvote)
                 {
                     if (Jituanvotes == null) Jituanvotes = new Dictionary<string, DateTime>();
                     Jituanvotes.Add(vote.AthleteID + "_" + vote.Openid, vote.AddTime);
@@ -570,7 +658,7 @@ namespace Hx.Components
                 return "该活动已结束";
             }
 
-            lock (sync_benzvote)
+            lock (sync_jituanvote)
             {
                 if (Jituanvotes != null)
                 {
@@ -578,21 +666,20 @@ namespace Hx.Components
                     {
                         return "您已经为她投过票了，不能重复投哦。";
                     }
-                    List<KeyValuePair<string, DateTime>> votes = WeixinActs.Instance.Jituanvotes.TakeWhile(b => b.Key.EndsWith("_" + openid)).ToList();
+                    List<KeyValuePair<string, DateTime>> votes = Jituanvotes.Where(b => b.Key.EndsWith("_" + openid) && b.Value > DateTime.Today).ToList();
                     if (votes.Count > 0)
                     {
                         DateTime ftime = votes.Min(b => b.Value);
                         int minutes = setting == null ? 30 : setting.OverdueMinutes;
-                        if (DateTime.Now.AddMinutes(-1 * minutes) > ftime)
+                        if (minutes > 0 && DateTime.Now.AddMinutes(-1 * minutes) > ftime)
                         {
-                            return "您的投票期已过。";
+                            return "您今日的投票期已过，请明日再投。";
                         }
-                        if (setting != null && setting.VoteTimes > 0 && votes.Count == setting.VoteTimes)
+                        if (setting != null && setting.VoteTimes > 0 && votes.Count >= setting.VoteTimes)
                         {
-                            return "您已经投过" + setting.VoteTimes + "次票，不能再投了。";
+                            return "您今天的投票次数已经用完，记得明天再来投哦。";
                         }
                     }
-
                 }
             }
 

@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="benzvotedetail.aspx.cs"
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="benzvotedetailinuse.aspx.cs"
     Inherits="Hx.BackAdmin.weixin.benzvotedetail" EnableViewState="false" %>
 
 <!DOCTYPE html>
@@ -16,8 +16,12 @@
 </head>
 <body>
     <div class="dwrap">
+        <div class="dad">
+            <img src="../images/benzvote/smart.jpg" />
+        </div>
         <div class="nav">
-            <a href="<%= FromUrl %>"><img src="../images/benzvote/back.png" /></a>
+            <a href="<%= FromUrl %>">
+                <img src="../images/benzvote/back.png" /></a>
         </div>
         <div class="dcontent">
             <div class="c1">
@@ -62,6 +66,9 @@
                 </dt>
             </div>
         </div>
+        <div class="dad">
+            <img src="../images/benzvote/benz.jpg" />
+        </div>
         <div class="dflay">
             <img src="../images/benzvote/ysj.png" />
         </div>
@@ -69,10 +76,15 @@
 </body>
 <script type="text/javascript">
     var openid = "<%= Openid %>";
+    var subscribe = "<%=Subscribe %>";
 
     if (openid == "") {
         alert("网络异常");
     }
+    //    if (subscribe == "0") {
+    //        alert("请先关注 红旭集团 公众号再打开此页面");
+    //        location.href = "http://m-hxjt.app2biz.com/activity_12962.html";
+    //    }
 
     function toupiao(id) {
         $.ajax({
@@ -133,6 +145,8 @@
             };
             // 点击分享到朋友圈，会执行下面这个代码
             Api.shareToTimeline(wxData, null);
+            Api.shareToFriend(wxData, null);
+            Api.shareToWeibo(wxData, null);
         });
     })
 </script>

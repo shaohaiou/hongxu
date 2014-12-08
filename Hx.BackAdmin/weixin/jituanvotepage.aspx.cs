@@ -98,20 +98,9 @@ namespace Hx.BackAdmin.weixin
 
         private void LoadData()
         {
-            PageIndex = GetInt("page", 1);
-            if (PageIndex < 1)
-            {
-                PageIndex = 1;
-            }
-            int total = 0;
-
             List<JituanvotePothunterInfo> plist = WeixinActs.Instance.GetJituanvotePothunterList(true);
-            total = plist.Count();
-            plist = plist.Skip((PageIndex - 1) * PageSize).Take(PageSize).ToList<JituanvotePothunterInfo>();
             rptData.DataSource = plist;
             rptData.DataBind();
-
-            PageCount = (total % PageSize > 0 ? 1 : 0) + total / PageSize;
         }
 
         /// <summary>

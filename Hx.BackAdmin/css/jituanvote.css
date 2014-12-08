@@ -4,12 +4,12 @@ ul{margin:0; padding:0; list-style:none;}li{margin:0; padding:0; list-style:none
 .fr{float:right;}
 
 
-.wrap{max-width: 640px;min-width: 320px;margin: 0 auto;overflow: hidden;position: relative;background-color:#474747;}
-.content{border-top-style:dashed;border-top-width:1px;border-top-color:#fff;}
-.d-pic{width:35%;display: inline-block;position: relative;}
-    .d-pic img{width:100%;display:block;}
+.wrap{max-width: 640px;min-width: 320px;margin: 0 auto;overflow: hidden;position: relative;background-color:#fbf9e4;}
+.content{border-top-style:dashed;border-top-width:1px;border-top-color:#fff;margin: 0 0 3% 0;}
+.d-pic{width:30%;display: inline-block;position: relative;}
+    .d-pic img{width:80%;display:block;margin:0 auto;}
 .flay{position:absolute;width:100%;height:100%;top: 0;left: 0;} .flay img{width:100%;}
-.d-info{width:55%;display: inline-block;vertical-align: top;padding: 4% 0 0 3%;color:White;font-size: 1.0em;}
+.d-info{width:55%;display: inline-block;vertical-align: top;padding: 4% 0 0 3%;font-size: 1.0em;}
     .yellow{color:#ffb400;}
     .sn{width: 30%;display: inline-block;}
     .ballot{width: 60%;display: inline-block;line-height:200%;}

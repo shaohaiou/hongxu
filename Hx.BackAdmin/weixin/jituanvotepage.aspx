@@ -1,5 +1,5 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="jituanvotepage.aspx.cs" Inherits="Hx.BackAdmin.weixin.jituanvotepage"
-    EnableViewState="false" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="jituanvotepage.aspx.cs"
+    Inherits="Hx.BackAdmin.weixin.jituanvotepage" EnableViewState="false" %>
 
 <!DOCTYPE html>
 <html>
@@ -18,7 +18,7 @@
     <form id="form1" runat="server">
     <div class="wrap">
         <div class="dad">
-            <img src="../images/jituanvote/adtest.png" />
+            <img src="../images/jituanvote/1211.png" />
         </div>
         <% if (CurrentSetting != null)
            {%>
@@ -35,19 +35,16 @@
                     <li>
                         <div class="d-pic">
                             <img src="<%# Eval("PicPath") %>" alt="<%#Eval("Name") %>" />
-                            <div class="flay"><img src="../images/jituanvote/flay.png" /></div>
                         </div>
                         <div class="d-info">
-                            <span class="sn">NO.<span class="yellow"><%# Eval("SerialNumber")%></span></span>
-                            <span class="name">
+                            <span class="sn">NO.<%# Eval("SerialNumber")%></span> <span class="name">
                                 <%#Eval("Name") %></span><br />
-                            <span class="ballot">票数:<span class="fense txtBallot"><%# Eval("Ballot")%></span></span> <span class="paiming">
-                                排名:<span class="fense"><%#Eval("Order")%></span></span>
+                            <span class="ballot">票数:<%# Eval("Ballot")%></span> <span class="paiming">排名:<%#Eval("Order")%></span>
                             <div class="opt">
                                 <span class="xiangqing"><a href="jituanvotedetail.aspx?id=<%# Eval("ID") %>&openid=<%=Openid %>&from=<%=CurrentUrl %>">
-                                    <img src="../images/jituanvote/xiangqing.png" alt="详情" /></a></span><span class="toupiao"><a
+                                    <img src="../images/jituanvote/fczs.png" alt="详情" /></a></span><span class="toupiao"><a
                                         href="javascript:void(0);" onclick="javascript:toupiao(<%# Eval("ID") %>,this);"><img
-                                            src="../images/jituanvote/toupiao.png" alt="投票" /></a></span></div>
+                                            src="../images/jituanvote/weitatoupiao.png" alt="投票" /></a></span></div>
                         </div>
                     </li>
                 </ItemTemplate>
@@ -55,15 +52,11 @@
                     </ul></FooterTemplate>
             </asp:Repeater>
         </div>
-        <table style="width:100%;">
-            <tr>
-                <td style="width: 45%;text-align: right;"><a href="<%=PrevUrl %>">
-                <img src="../images/jituanvote/prev.png" alt="上一页" /></a></td>
-                <td style="width: 10%;text-align: center;color:White;"><%=PageIndex %> / <%=PageCount %></td>
-                <td><a href="<%=NextUrl %>">
-                <img src="../images/jituanvote/next.png" alt="下一页" /></a></td>
-            </tr>
-        </table>
+        <div style="width: 50%; margin: 0 auto; font-size: 90%;">
+            <img src="../images/jituanvote/erweima.jpg" style="width: 100%;" />
+            关注红旭集团官方微信，<br />
+            点击下方#走进红旭#可以“领取关注礼”
+        </div>
     </div>
     </form>
 </body>
@@ -71,14 +64,14 @@
     var code = "<%= Code%>";
     var openid = "<%= Openid %>";
 
-        if (code == "") {
-            alert("用户没有授权");
-        }
-        else if (openid == "") {
-            alert("网络异常");
-        }
+    if (code == "") {
+        alert("用户没有授权");
+    }
+    else if (openid == "") {
+        alert("网络异常");
+    }
 
-    function toupiao(id,o) {
+    function toupiao(id, o) {
         $.ajax({
             url: "weixinaction.axd",
             data: { action: "jituanvotetoupiao", openid: openid, id: id, d: new Date() },
@@ -103,11 +96,11 @@
 
     $(function () {
         //检查微信内置浏览器
-//        var flag = WeixinApi.openInWeixin();
-//        if (!flag) {
-//            alert("请在微信内打开此页面");
-//            location.href = "http://m.hongxu.cn/";
-//        }
+        var flag = WeixinApi.openInWeixin();
+        if (!flag) {
+            alert("请在微信内打开此页面");
+            location.href = "http://m.hongxu.cn/";
+        }
 
 
         // 所有功能必须包含在 WeixinApi.ready 中进行
@@ -132,6 +125,8 @@
             };
             // 点击分享到朋友圈，会执行下面这个代码
             Api.shareToTimeline(wxData, null);
+            Api.shareToFriend(wxData, null);
+            Api.shareToWeibo(wxData, null);
         });
     })
 </script>

@@ -78,8 +78,11 @@ namespace Hx.BackAdmin.weixin
             imgpic.Src = pothunter.PicPath;
             hdimage_pic.Value = pothunter.PicPath;
             imgpics1.Src = pothunter.IntroducePic1;
+            imgpics1.Attributes["val"] = pothunter.IntroducePic1;
             imgpics2.Src = pothunter.IntroducePic2;
+            imgpics2.Attributes["val"] = pothunter.IntroducePic2;
             imgpics3.Src = pothunter.IntroducePic3;
+            imgpics3.Attributes["val"] = pothunter.IntroducePic3;
             hdimage_pics.Value = string.Join("|",new string[] { pothunter.IntroducePic1, pothunter.IntroducePic2, pothunter.IntroducePic3 });
         }
 

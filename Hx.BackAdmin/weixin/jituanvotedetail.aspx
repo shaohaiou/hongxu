@@ -17,7 +17,8 @@
 <body>
     <div class="dwrap">
         <div class="nav">
-            <a href="<%= FromUrl %>"><img src="../images/jituanvote/back.png" /></a>
+            <a href="<%= FromUrl %>">
+                <img src="../images/jituanvote/back.png" /></a>
         </div>
         <div class="dcontent">
             <div class="c1">
@@ -60,6 +61,23 @@
                     <img src="http://<%= CurrentDomain %><%= CurrentPothunterInfo.IntroducePic2%>" class="picpreview"  /><br />
                     <img src="http://<%= CurrentDomain %><%= CurrentPothunterInfo.IntroducePic3%>" class="picpreview"  /></dr>
                 </dt>
+                <%--<dt>
+                    <dl>
+                        <img src="../images/jituanvote/geitaliuyan.png" />
+                    </dl>
+                    <dr>
+                        
+                    </dr>
+                </dt>
+                <dt>
+                    <dl>
+                    </dl>
+                    <dr>
+                        <textarea id="txtChat" rows="3" style="width:90%;resize:none;" ></textarea>
+                        <br />
+                        <a id="btnChat" href="javascript:void(0);" style="width:10%;display:block;color:#de0561;text-decoration:none;background-color:#eaaa3a;padding:1%;text-align:center;font-weight:bold;">提 交</a>
+                    </dr>
+                </dt>--%>
             </div>
         </div>
         <div class="dflay">
@@ -95,14 +113,41 @@
         });
     }
 
+    //    function chat() {
+    //        var t = $($("#txtChat")[i]);
+    //        if ($.trim(t.val()) == "") {
+    //            t.focus();
+    //            prompts(t, "请填写留言内容");
+    //            return;
+    //        }
+
+    //        $.ajax({
+    //            url: "weixinaction.axd",
+    //            data: { action: "jituanvotechat", openid: openid, chat: t.val(),id:<%= CurrentPothunterInfo.ID %>, d: new Date() },
+    //            type: 'GET',
+    //            dataType: "json",
+    //            error: function (msg) {
+    //                alert("发生错误");
+    //            },
+    //            success: function (data) {
+    //                if (data.Value == "success") {
+    //                    
+    //                }
+    //                else {
+    //                    alert(data.Msg);
+    //                }
+    //            }
+    //        });
+    //    }
+
     $(function () {
 
         //检查微信内置浏览器
-//        var flag = WeixinApi.openInWeixin();
-//        if (!flag) {
-//            alert("请在微信内打开此页面");
-//            location.href = "http://m.hongxu.cn/";
-//        }
+        var flag = WeixinApi.openInWeixin();
+        if (!flag) {
+            alert("请在微信内打开此页面");
+            location.href = "http://m.hongxu.cn/";
+        }
 
         $("#btnshare").click(function () {
             $(".dflay").show();
@@ -133,7 +178,13 @@
             };
             // 点击分享到朋友圈，会执行下面这个代码
             Api.shareToTimeline(wxData, null);
+            Api.shareToFriend(wxData, null);
+            Api.shareToWeibo(wxData, null);
         });
+
+        //        $("#btnChat").click(function () {
+        //            chat();
+        //        });
     })
 </script>
 </html>

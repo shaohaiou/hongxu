@@ -79,7 +79,7 @@
                         </td>
                         <td>
                             <a href="benzvotepothunteredit.aspx?id=<%#Eval("ID") %>&from=<%= CurrentUrl%>" class="pl10">编辑</a>
-                            <a href="benzvotemg.aspx?id=<%#Eval("ID") %>&from=<%= CurrentUrl%>" class="btnDel pl10">删除</a>
+                            <a href="benzvotemg.aspx?action=del&id=<%#Eval("ID") %>&from=<%= CurrentUrl%>" class="btnDel pl10">删除</a>
                         </td>
                     </tr>
                 </ItemTemplate>

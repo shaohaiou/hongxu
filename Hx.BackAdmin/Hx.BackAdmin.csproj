@@ -137,7 +137,11 @@
     <Content Include="images\glk.gif" />
     <Content Include="images\hy.jpg" />
     <Content Include="images\ico1.jpg" />
+    <Content Include="images\jituanvote\1211.png" />
     <Content Include="images\jituanvote\back.png" />
+    <Content Include="images\jituanvote\erweima.jpg" />
+    <Content Include="images\jituanvote\fczs.png" />
+    <Content Include="images\jituanvote\geitaliuyan.png" />
     <Content Include="images\jituanvote\ysj.png" />
     <Content Include="images\ldi.gif" />
     <Content Include="images\line.gif" />
@@ -381,10 +385,10 @@
     </Content>
     <Content Include="webservice\UploadServices.asmx" />
     <Content Include="weixin\act.aspx" />
-    <Content Include="weixin\benzvotedetail.aspx" />
+    <Content Include="weixin\benzvotedetailinuse.aspx" />
     <Content Include="weixin\benzvotelist.aspx" />
     <Content Include="weixin\benzvotemg.aspx" />
-    <Content Include="weixin\benzvotepage.aspx" />
+    <Content Include="weixin\benzvotepageinuse.aspx" />
     <Content Include="weixin\benzvotepothunteredit.aspx" />
     <Content Include="weixin\benzvotesetting.aspx" />
     <Content Include="weixin\dianzan.aspx" />
@@ -801,12 +805,12 @@
     <Compile Include="weixin\act.aspx.designer.cs">
       <DependentUpon>act.aspx</DependentUpon>
     </Compile>
-    <Compile Include="weixin\benzvotedetail.aspx.cs">
-      <DependentUpon>benzvotedetail.aspx</DependentUpon>
+    <Compile Include="weixin\benzvotedetailinuse.aspx.cs">
+      <DependentUpon>benzvotedetailinuse.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="weixin\benzvotedetail.aspx.designer.cs">
-      <DependentUpon>benzvotedetail.aspx</DependentUpon>
+    <Compile Include="weixin\benzvotedetailinuse.aspx.designer.cs">
+      <DependentUpon>benzvotedetailinuse.aspx</DependentUpon>
     </Compile>
     <Compile Include="weixin\benzvotelist.aspx.cs">
       <DependentUpon>benzvotelist.aspx</DependentUpon>
@@ -822,12 +826,12 @@
     <Compile Include="weixin\benzvotemg.aspx.designer.cs">
       <DependentUpon>benzvotemg.aspx</DependentUpon>
     </Compile>
-    <Compile Include="weixin\benzvotepage.aspx.cs">
-      <DependentUpon>benzvotepage.aspx</DependentUpon>
+    <Compile Include="weixin\benzvotepageinuse.aspx.cs">
+      <DependentUpon>benzvotepageinuse.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="weixin\benzvotepage.aspx.designer.cs">
-      <DependentUpon>benzvotepage.aspx</DependentUpon>
+    <Compile Include="weixin\benzvotepageinuse.aspx.designer.cs">
+      <DependentUpon>benzvotepageinuse.aspx</DependentUpon>
     </Compile>
     <Compile Include="weixin\benzvotepothunteredit.aspx.cs">
       <DependentUpon>benzvotepothunteredit.aspx</DependentUpon>

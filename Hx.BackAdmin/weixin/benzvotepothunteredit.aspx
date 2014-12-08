@@ -160,18 +160,18 @@
                         <ul>
                             <li style="padding-right: 10px;">
                                 <input type="button" value="上传图片" class="an3 uploadbtpics" /><br />
-                                <img src="../images/fm.jpg" alt="展示图片1" id="imgpics1" class="imgpics" style="width: 440px;
-                                    height: 320px;" val="" runat="server" />
+                                <img src="../images/fm.jpg" alt="展示图片1" id="imgpics1" class="imgpics" style="width: 440px;height:auto;"
+                                    val="" runat="server" />
                             </li>
                             <li style="padding-right: 10px;">
                                 <input type="button" value="上传图片" class="an3 uploadbtpics" /><br />
-                                <img src="../images/fm.jpg" alt="展示图片2" id="imgpics2" class="imgpics" style="width:440px;
-                                    height: 320px;" val="" runat="server" />
+                                <img src="../images/fm.jpg" alt="展示图片2" id="imgpics2" class="imgpics" style="width: 440px;height:auto;"
+                                    val="" runat="server" />
                             </li>
                             <li style="padding-right: 10px;">
                                 <input type="button" value="上传图片" class="an3 uploadbtpics" /><br />
-                                <img src="../images/fm.jpg" alt="展示图片3" id="imgpics3" class="imgpics" style="width: 440px;
-                                    height: 320px;" val="" runat="server" />
+                                <img src="../images/fm.jpg" alt="展示图片3" id="imgpics3" class="imgpics" style="width: 440px;height:auto;"
+                                    val="" runat="server" />
                             </li>
                         </ul>
                     </td>

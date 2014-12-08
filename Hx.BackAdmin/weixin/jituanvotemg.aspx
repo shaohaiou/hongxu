@@ -79,7 +79,7 @@
                         </td>
                         <td>
                             <a href="jituanvotepothunteredit.aspx?id=<%#Eval("ID") %>&from=<%= CurrentUrl%>" class="pl10">编辑</a>
-                            <a href="jituanvotemg.aspx?id=<%#Eval("ID") %>&from=<%= CurrentUrl%>" class="btnDel pl10">删除</a>
+                            <a href="jituanvotemg.aspx?action=del&id=<%#Eval("ID") %>&from=<%= CurrentUrl%>" class="btnDel pl10">删除</a>
                         </td>
                     </tr>
                 </ItemTemplate>

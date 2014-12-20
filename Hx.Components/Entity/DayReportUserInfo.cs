@@ -136,5 +136,25 @@ namespace Hx.Components.Entity
             get { return GetString("DayReportViewDepPowerSetting", ""); }
             set { SetExtendedAttribute("DayReportViewDepPowerSetting", value); }
         }
+
+        /// <summary>
+        /// CRM报表导出权限设置
+        /// </summary>
+        [JsonIgnore]
+        public string CRMReportExportPowerSetting
+        {
+            get { return GetString("CRMReportExportPowerSetting", ""); }
+            set { SetExtendedAttribute("CRMReportExportPowerSetting", value); }
+        }
+
+        /// <summary>
+        /// CRM报表录入权限设置
+        /// </summary>
+        [JsonIgnore]
+        public string CRMReportInputPowerSetting
+        {
+            get { return GetString("CRMReportInputPowerSetting", ""); }
+            set { SetExtendedAttribute("CRMReportInputPowerSetting", value); }
+        }
     }
 }

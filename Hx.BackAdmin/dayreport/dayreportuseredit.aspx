@@ -70,6 +70,13 @@
             $(".cbxDayReportViewDep").click(function () {
                 setdayreportviewdep();
             });
+            $("#cbxAllCRMReportInput").click(function () {
+                $(".cbxCRMReportInput").attr("checked", $(this).attr("checked"));
+                setcrmreportinput();
+            })
+            $(".cbxCRMReportInput").click(function () {
+                setcrmreportinput();
+            });
         });
 
         function setdayreportdep() {
@@ -133,6 +140,15 @@
             if (dayreportviewdep != '')
                 dayreportviewdep = '|' + dayreportviewdep + '|'
             $("#hdnDayReportViewDep").val(dayreportviewdep);
+        }
+
+        function setcrmreportinput() {
+            var crmreportinput = $(".cbxCRMReportInput:checked").map(function () {
+                return $(this).val();
+            }).get().join('|');
+            if (crmreportinput != '')
+                crmreportinput = '|' + crmreportinput + '|'
+            $("#hdnCRMReportInput").val(crmreportinput);
         }
     </script>
     <style type="text/css">
@@ -365,6 +381,46 @@
                     </td>
                 </tr>
                 <tr>
+                    <td class="tr">
+                        CRM报表导出权限：
+                    </td>
+                    <td>
+                        <asp:CheckBox runat="server" ID="cbxCRMReportExport" Checked="false" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bg4 tr vt">
+                        CRM报表录入权限：
+                    </td>
+                    <td class="clpp">
+                        <ul>
+                            <li class="nh">
+                                <label>
+                                    <input type="checkbox" id="cbxAllCRMReportInput" class="fll" />全选</label></li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                    </td>
+                    <td>
+                        <asp:Repeater runat="server" ID="rptCRMReportInput" EnableViewState="false">
+                            <HeaderTemplate>
+                                <ul>
+                            </HeaderTemplate>
+                            <ItemTemplate>
+                                <li class="blockinline">
+                                    <label>
+                                        <input type="checkbox" class="cbxCRMReportInput fll" value="<%# Eval("Value") %>"
+                                            <%#SetCRMReportInput(Eval("Value").ToString()) %> /><%# Eval("Text") %></label></li>
+                            </ItemTemplate>
+                            <FooterTemplate>
+                                </ul>
+                            </FooterTemplate>
+                        </asp:Repeater>
+                    </td>
+                </tr>
+                <tr>
                     <td>
                     </td>
                     <td>
@@ -375,6 +431,7 @@
                         <input type="hidden" runat="server" id="hdnTargetCorp" />
                         <input type="hidden" runat="server" id="hdnDayReportViewCorp" />
                         <input type="hidden" runat="server" id="hdnDayReportViewDep" />
+                        <input type="hidden" runat="server" id="hdnCRMReportInput" />
                         <asp:Button runat="server" ID="btnSubmit" Text="保存" CssClass="an1" OnClick="btnSubmit_Click" />
                     </td>
                 </tr>

@@ -34,6 +34,7 @@ namespace Hx.Components
         public static readonly string MONTHTARGET_LIST = "cache-monthtarget-list"; //月度目标列表缓存键值
         public static readonly string DAILYREPORTMODULE_LIST = "cache-dailyreportmodule-list"; //日报模块列表缓存键值
         public static readonly string JOBOFFER_LIST = "cache-joboffer-list"; //招聘信息列表缓存键值
+        public static readonly string CRMREPORT_LIST = "cache-crmreport-list"; //crm报表列表缓存键值
 
         public static readonly string QUOTATION_KEY = "cache-quotation"; //报价单缓存键值
 

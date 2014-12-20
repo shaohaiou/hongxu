@@ -27,6 +27,7 @@
         <a href="monthlytarget.aspx" target="ztk" id="monthlytarget" runat="server">月度目标</a> 
         <a href="dailyreportview.aspx" target="ztk" id="dailyreportview" runat="server">月报查询</a>
         <a href="dailyreportviewmul.aspx" target="ztk" id="dailyreportviewmul" runat="server">月报汇总</a>
+        <a href="crmreportcustomerflow.aspx" target="ztk" id="crmreportcustomerflow" runat="server">CRM报表</a>
     </div>
 </body>
 </html>

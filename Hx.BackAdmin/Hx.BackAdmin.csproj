@@ -87,6 +87,9 @@
     <Content Include="css\calculator\calculator.css" />
     <Content Include="css\style.css" />
     <Content Include="css\jituanvote.css" />
+    <Content Include="dayreport\crmreportcustomerflow.aspx" />
+    <Content Include="dayreport\crmreportexport.aspx" />
+    <Content Include="dayreport\crmreportoutwardvisit.aspx" />
     <Content Include="dayreport\dailyreportviewmul.aspx" />
     <Content Include="dayreport\dayreporthistorymg.aspx" />
     <Content Include="dayreport\main.aspx" />
@@ -500,6 +503,27 @@
     </Compile>
     <Compile Include="car\quotation.aspx.designer.cs">
       <DependentUpon>quotation.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="dayreport\crmreportcustomerflow.aspx.cs">
+      <DependentUpon>crmreportcustomerflow.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="dayreport\crmreportcustomerflow.aspx.designer.cs">
+      <DependentUpon>crmreportcustomerflow.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="dayreport\crmreportexport.aspx.cs">
+      <DependentUpon>crmreportexport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="dayreport\crmreportexport.aspx.designer.cs">
+      <DependentUpon>crmreportexport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="dayreport\crmreportoutwardvisit.aspx.cs">
+      <DependentUpon>crmreportoutwardvisit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="dayreport\crmreportoutwardvisit.aspx.designer.cs">
+      <DependentUpon>crmreportoutwardvisit.aspx</DependentUpon>
     </Compile>
     <Compile Include="dayreport\dailyreportviewmul.aspx.cs">
       <DependentUpon>dailyreportviewmul.aspx</DependentUpon>

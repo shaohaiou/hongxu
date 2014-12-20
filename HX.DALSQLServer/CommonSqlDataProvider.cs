@@ -768,6 +768,90 @@ namespace HX.DALSQLServer
 
         #endregion
 
+        #region crm报表
+
+        public override void CreateAndUpdateCRMReport(CRMReportInfo entity)
+        {
+            string sql = @"
+            IF NOT EXISTS(SELECT * FROM HX_CRMReport WHERE ID=@ID)
+            BEGIN
+                INSERT INTO HX_CRMReport(
+                    [PropertyNames]
+                    ,[PropertyValues]
+                    ,[CorporationID]
+                    ,[Creator]
+                    ,[CreateTime]
+                    ,[LastUpdateUser]
+                    ,[LastUpdateTime]
+                    ,[Date]
+                    ,[CRMReportType]
+                    ,[MonthStr]
+                )VALUES(
+                    @PropertyNames
+                    ,@PropertyValues
+                    ,@CorporationID
+                    ,@Creator
+                    ,GETDATE()
+                    ,@LastUpdateUser
+                    ,GETDATE()
+                    ,@Date
+                    ,@CRMReportType
+                    ,@MonthStr
+                )
+            END
+            ELSE 
+            BEGIN
+                UPDATE HX_CRMReport SET
+                    [PropertyNames] = @PropertyNames
+                    ,[PropertyValues] = @PropertyValues
+                    ,[LastUpdateUser] = @LastUpdateUser
+                    ,[LastUpdateTime] = GETDATE()
+                WHERE ID=@ID
+            END
+            ";
+            SerializerData data = entity.GetSerializerData();
+            SqlParameter[] p = 
+            { 
+                new SqlParameter("@ID",entity.ID),
+                new SqlParameter("@PropertyNames", data.Keys),
+				new SqlParameter("@PropertyValues", data.Values),
+                new SqlParameter("@CorporationID",entity.CorporationID),
+                new SqlParameter("@Creator",entity.Creator),
+                new SqlParameter("@LastUpdateUser",entity.LastUpdateUser),
+                new SqlParameter("@Date",entity.Date),
+                new SqlParameter("@CRMReportType",(int)entity.CRMReportType),
+                new SqlParameter("@MonthStr",entity.Date.ToString("yyyyMM")),
+            };
+
+            lock (sync_helper)
+            {
+                SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql, p);
+            }
+        }
+
+        public override List<CRMReportInfo> GetCRMReportList(CRMReportQuery query)
+        {
+            List<CRMReportInfo> list = new List<CRMReportInfo>();
+            SqlParameter p;
+            using (IDataReader reader = CommonPageSql.GetDataReaderByPager(_con, 1, int.MaxValue, query, out p))
+            {
+                while (reader.Read())
+                {
+                    list.Add(PopulateCRMReport(reader));
+                }
+            }
+
+            return list;
+        }
+
+        public override void DeleteCRMReport(string ids)
+        {
+            string sql = string.Format("DELETE FROM HX_CRMReport WHERE [ID] IN ({0})", ids);
+            SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql);
+        }
+
+        #endregion
+
         #region 月度目标
 
         public override List<MonthlyTargetInfo> GetMonthTargetList(MonthTargetQuery query)

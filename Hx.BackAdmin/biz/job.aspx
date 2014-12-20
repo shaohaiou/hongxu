@@ -8,19 +8,19 @@
     <style type="text/css">
         .content
         {
-            width: 480px;
-            height: 105px;
+            max-width: 480px;
+            height:160px;
             margin:0 auto;
             position:relative;
         }
         .cstatic
         {
-            padding:26px 0 0 150px;
+            padding:5.5% 0 0 31%;
             color: White;
             font-weight: bold;
             font-size: 20px;
             position:absolute;
-            width:330px;
+            width:69%;
             left:0px;
         }
         .jz
@@ -33,10 +33,10 @@
             font-weight: normal;
             font-size: 12px;
             overflow: hidden;
-            padding: 4px 0 0 22px;
+            padding:1.2% 0 0 7%;
             height:50px;
             cursor:pointer;
-            line-height:23px;
+            line-height:22px;
             word-spacing: 2px;
             word-spacing: 5px\9;
             *word-spacing: 5px;
@@ -45,13 +45,14 @@
         img
         {
             float: left;
-            width:474px;
+            width:98.5%;
             height:99px;
             border:1px solid #d7d7d7;
             padding: 2px;
         }
         p{margin:0;}
         a:hover{text-decoration:none; style="position:relative;display:block;"}
+        .space{display: inline-block;width: 2.5%;}
     </style>
 </head>
 <body>
@@ -60,7 +61,7 @@
             <img src="../images/zhaopin.jpg?t=<%=DateTime.Now.ToString("yyyyMMddHHmmss") %>" />
             <div class="cstatic">
                 <div class="nr">
-                    <%= CurrentJobOffer == null ? string.Empty : CurrentJobOffer.Title.Replace("\r","<br>").Replace(" ","&nbsp;")%>
+                    <%= CurrentJobOffer == null ? string.Empty : CurrentJobOffer.Title.Replace("\r","<br>").Replace(" ","<span class=\"space\"></span>")%>
                 </div>
             </div>
         </a>

@@ -68,6 +68,9 @@ namespace Hx.BackAdmin.dayreport
 
             rptDayReportViewDep.DataSource = DepartmentList;
             rptDayReportViewDep.DataBind();
+
+            rptCRMReportInput.DataSource = EnumExtensions.ToTable<CRMReportType>();
+            rptCRMReportInput.DataBind();
         }
 
         private void LoadData()
@@ -83,6 +86,8 @@ namespace Hx.BackAdmin.dayreport
                 hdnDayReportViewCorp.Value = CurrentUser.DayReportViewCorpPowerSetting;
                 hdnDayReportViewDep.Value = CurrentUser.DayReportViewDepPowerSetting;
                 hdnDayReportCorp.Value = CurrentUser.DayReportCorpPowerSetting;
+                cbxCRMReportExport.Checked = CurrentUser.CRMReportExportPowerSetting == "1";
+                hdnCRMReportInput.Value = CurrentUser.CRMReportInputPowerSetting;
             }
             else
             {
@@ -188,6 +193,20 @@ namespace Hx.BackAdmin.dayreport
             return result;
         }
 
+        protected string SetCRMReportInput(string v)
+        {
+            string result = string.Empty;
+
+            if (CurrentUser != null)
+            {
+                string[] p = CurrentUser.CRMReportInputPowerSetting.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
+                if (p.Contains(v))
+                    result = "checked=\"checked\"";
+            }
+
+            return result;
+        }
+
         protected void rptDepartment_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
             if (e.Item.ItemType == ListItemType.AlternatingItem || e.Item.ItemType == ListItemType.Item)
@@ -215,6 +234,8 @@ namespace Hx.BackAdmin.dayreport
             user.DayReportViewCorpPowerSetting = hdnDayReportViewCorp.Value;
             user.DayReportViewDepPowerSetting = hdnDayReportViewDep.Value;
             user.DayReportCorpPowerSetting = hdnDayReportCorp.Value;
+            user.CRMReportExportPowerSetting = cbxCRMReportExport.Checked ? "1" : "0";
+            user.CRMReportInputPowerSetting = hdnCRMReportInput.Value;
 
             DayReportUsers.Instance.Update(user);
 

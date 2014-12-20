@@ -384,6 +384,37 @@ namespace Hx.Components.Providers
 
         #endregion
 
+        #region crm报表
+
+        public abstract void CreateAndUpdateCRMReport(CRMReportInfo entity);
+
+        public abstract List<CRMReportInfo> GetCRMReportList(CRMReportQuery query);
+
+        public abstract void DeleteCRMReport(string ids);
+
+        protected CRMReportInfo PopulateCRMReport(IDataReader reader)
+        {
+            CRMReportInfo entity = new CRMReportInfo
+            {
+                ID = DataConvert.SafeInt(reader["ID"]),
+                CorporationID = DataConvert.SafeInt(reader["CorporationID"]),
+                Creator = reader["Creator"] as string,
+                CreateTime = DataConvert.SafeDate(reader["CreateTime"]),
+                LastUpdateUser = reader["LastUpdateUser"] as string,
+                LastUpdateTime = DataConvert.SafeDate(reader["LastUpdateTime"]),
+                Date = DataConvert.SafeDate(reader["Date"]),
+                CRMReportType = (CRMReportType)DataConvert.SafeInt(reader["CRMReportType"])
+            };
+            SerializerData data = new SerializerData();
+            data.Keys = reader["PropertyNames"] as string;
+            data.Values = reader["PropertyValues"] as string;
+            entity.SetSerializerData(data);
+
+            return entity;
+        }
+
+        #endregion
+
         #region 月度目标
 
         public abstract List<MonthlyTargetInfo> GetMonthTargetList(MonthTargetQuery query);

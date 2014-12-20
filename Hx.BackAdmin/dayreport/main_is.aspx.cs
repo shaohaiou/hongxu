@@ -7,6 +7,8 @@ using System.Web.UI.WebControls;
 using Hx.Components.BasePage;
 using Hx.Components.Entity;
 using Hx.Components;
+using Hx.Components.Enumerations;
+using Hx.Tools;
 
 namespace Hx.BackAdmin.dayreport
 {
@@ -14,10 +16,6 @@ namespace Hx.BackAdmin.dayreport
     {
         protected override void Check()
         {
-            string Nm = GetString("Nm");
-            int Id = GetInt("Id");
-            int Mm = GetInt("Mm");
-
             if (string.IsNullOrEmpty(Nm) || Id == 0 || Mm == 0 || CurrentUser == null || !CheckUser())
             {
                 Response.Clear();
@@ -34,6 +32,39 @@ namespace Hx.BackAdmin.dayreport
             }
         }
 
+        private string nm = string.Empty;
+        protected string Nm
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(nm))
+                    nm = GetString("Nm");
+                return nm;
+            }
+        }
+
+        private int id = 0;
+        protected int Id
+        {
+            get
+            {
+                if (id == 0)
+                    id = GetInt("Id");
+                return id;
+            }
+        }
+
+        private int mm = 0;
+        protected int Mm
+        {
+            get
+            {
+                if (mm == 0)
+                    mm = GetInt("Mm");
+                return mm;
+            }
+        }
+
         private DayReportUserInfo currentuser = null;
         protected DayReportUserInfo CurrentUser
         {
@@ -45,12 +76,33 @@ namespace Hx.BackAdmin.dayreport
             }
         }
 
+        private CRMReportType? currentcrmreport = null;
+        protected CRMReportType CurrentCRMReport
+        {
+            get
+            {
+                if (!currentcrmreport.HasValue)
+                {
+                    currentcrmreport = CRMReportType.客流量登记表;
+                    string[] crmrepotpowers = CurrentUser.CRMReportInputPowerSetting.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
+                    if (!crmrepotpowers.Contains(((int)currentcrmreport).ToString()) && crmrepotpowers.Length > 0)
+                        currentcrmreport = (CRMReportType)DataConvert.SafeInt(crmrepotpowers.First());
+                }
+                return currentcrmreport.Value;
+            }
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
-            dailyreport.Attributes["href"] = string.Format("dailyreport.aspx?Nm={0}&Id={1}&Mm={2}", GetString("Nm"), GetString("Id"), GetString("Mm"));
-            monthlytarget.Attributes["href"] = string.Format("monthlytarget.aspx?Nm={0}&Id={1}&Mm={2}", GetString("Nm"), GetString("Id"), GetString("Mm"));
-            dailyreportview.Attributes["href"] = string.Format("dailyreportview.aspx?Nm={0}&Id={1}&Mm={2}", GetString("Nm"), GetString("Id"), GetString("Mm"));
-            dailyreportviewmul.Attributes["href"] = string.Format("dailyreportviewmul.aspx?Nm={0}&Id={1}&Mm={2}", GetString("Nm"), GetString("Id"), GetString("Mm"));
+            dailyreport.Attributes["href"] = string.Format("dailyreport.aspx?Nm={0}&Id={1}&Mm={2}", Nm,Id,Mm);
+            monthlytarget.Attributes["href"] = string.Format("monthlytarget.aspx?Nm={0}&Id={1}&Mm={2}", Nm,Id,Mm);
+            dailyreportview.Attributes["href"] = string.Format("dailyreportview.aspx?Nm={0}&Id={1}&Mm={2}", Nm,Id,Mm);
+            dailyreportviewmul.Attributes["href"] = string.Format("dailyreportviewmul.aspx?Nm={0}&Id={1}&Mm={2}", Nm,Id,Mm);
+            crmreportcustomerflow.Attributes["href"] = string.Format("crmreportcustomerflow.aspx?Nm={0}&Id={1}&Mm={2}", Nm,Id,Mm);
+            if (CurrentUser.CRMReportExportPowerSetting == "1")
+                crmreportcustomerflow.Attributes["href"] = string.Format("crmreportexport.aspx?Nm={0}&Id={1}&Mm={2}", Nm,Id,Mm);
+            else
+                crmreportcustomerflow.Attributes["href"] = CRMReports.Instance.GetNavUrl(CurrentCRMReport,Nm,Id,Mm);
 
             if (!string.IsNullOrEmpty(CurrentUser.DayReportModulePowerSetting) || !string.IsNullOrEmpty(CurrentUser.DayReportDepPowerSetting))
                 dailyreport.Attributes["class"] = "current";
@@ -58,6 +110,8 @@ namespace Hx.BackAdmin.dayreport
                 dailyreportview.Attributes["class"] = "current";
             else if (!string.IsNullOrEmpty(CurrentUser.MonthlyTargetCorpPowerSetting) && !string.IsNullOrEmpty(CurrentUser.MonthlyTargetDepPowerSetting))
                 monthlytarget.Attributes["class"] = "current";
+            else if (!string.IsNullOrEmpty(CurrentUser.CRMReportExportPowerSetting) || !string.IsNullOrEmpty(CurrentUser.CRMReportInputPowerSetting))
+                crmreportcustomerflow.Attributes["class"] = "current";
 
             if (string.IsNullOrEmpty(CurrentUser.DayReportModulePowerSetting) && string.IsNullOrEmpty(CurrentUser.DayReportDepPowerSetting))
                 dailyreport.Visible = false;
@@ -67,6 +121,8 @@ namespace Hx.BackAdmin.dayreport
                 dailyreportviewmul.Visible = false;
             if (string.IsNullOrEmpty(CurrentUser.MonthlyTargetCorpPowerSetting) || string.IsNullOrEmpty(CurrentUser.MonthlyTargetDepPowerSetting))
                 monthlytarget.Visible = false;
+            if (string.IsNullOrEmpty(CurrentUser.CRMReportInputPowerSetting) && string.IsNullOrEmpty(CurrentUser.CRMReportExportPowerSetting))
+                crmreportcustomerflow.Visible = false;
         }
 
         private bool CheckUser()
@@ -76,7 +132,9 @@ namespace Hx.BackAdmin.dayreport
                 && string.IsNullOrEmpty(CurrentUser.DayReportViewCorpPowerSetting)
                 && string.IsNullOrEmpty(CurrentUser.DayReportViewDepPowerSetting)
                 && string.IsNullOrEmpty(CurrentUser.MonthlyTargetCorpPowerSetting)
-                && string.IsNullOrEmpty(CurrentUser.MonthlyTargetDepPowerSetting))
+                && string.IsNullOrEmpty(CurrentUser.MonthlyTargetDepPowerSetting)
+                && string.IsNullOrEmpty(CurrentUser.CRMReportExportPowerSetting)
+                && string.IsNullOrEmpty(CurrentUser.CRMReportInputPowerSetting))
                 return false;
 
             return true;

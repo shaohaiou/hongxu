@@ -20,13 +20,15 @@ namespace Hx.Components.Entity
         public string Content { get; set; }
         
         /// <summary>
-        /// 扩展预留字段
+        /// 引导框图片
         /// </summary>
         [JsonIgnore]
-        public string Ext
+        public string PicPath
         {
-            get { return GetString("Ext", ""); }
-            set { SetExtendedAttribute("Ext", value); }
+            get { return GetString("PicPath", ""); }
+            set { SetExtendedAttribute("PicPath", value); }
         }
+
+
     }
 }

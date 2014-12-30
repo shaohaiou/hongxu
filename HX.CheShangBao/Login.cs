@@ -121,6 +121,13 @@ namespace HX.CheShangBao
             System.Diagnostics.Process.Start("http://jcb.hongxu.cn/reg.aspx");
         }
 
+        private void btnLogin_Click(object sender, EventArgs e)
+        {
+            this.Visible = false;
+            Default formDefault = new Default();
+            formDefault.Show();
+        }
+
 
         
     }

@@ -51,9 +51,17 @@
     <Reference Include="System.Web.ApplicationServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="css\admin.css" />
     <Content Include="css\style.css" />
     <Content Include="Global.asax" />
+    <Content Include="images\bg_bg.png" />
+    <Content Include="images\btnbg.png" />
+    <Content Include="images\dl_bg.jpg" />
+    <Content Include="images\tblogo_bg.jpg" />
+    <Content Include="images\tel.jpg" />
     <Content Include="index.aspx" />
+    <Content Include="inventory\addcar.aspx" />
+    <Content Include="inventory\inventorymg.aspx" />
     <Content Include="reg.aspx" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -74,6 +82,20 @@
     <Compile Include="index.aspx.designer.cs">
       <DependentUpon>index.aspx</DependentUpon>
     </Compile>
+    <Compile Include="inventory\addcar.aspx.cs">
+      <DependentUpon>addcar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="inventory\addcar.aspx.designer.cs">
+      <DependentUpon>addcar.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="inventory\inventorymg.aspx.cs">
+      <DependentUpon>inventorymg.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="inventory\inventorymg.aspx.designer.cs">
+      <DependentUpon>inventorymg.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="reg.aspx.cs">
       <DependentUpon>reg.aspx</DependentUpon>
@@ -85,7 +107,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="images\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Hx.Components\Hx.Components.csproj">
@@ -101,7 +122,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>4614</DevelopmentServerPort>
+          <DevelopmentServerPort>6756</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>

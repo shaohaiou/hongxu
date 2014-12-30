@@ -8,70 +8,45 @@
     <link href="../css/admin.css" rel="stylesheet" type="text/css" />
     <script src="../js/jquery-1.3.2.min.js" type="text/javascript"></script>
     <script src="../js/ckeditor/ckeditor.js" type="text/javascript"></script>
+    <script src="../js/ajaxupload.js" type="text/javascript"></script>
     <script type="text/javascript">
         $(function () {
             CKEDITOR.replace('txtContent', { toolbar: 'Basic', height: 680, width: 980 });
+
+            var imgpath_pic;
+            var button = $('#uploadbtpic'), interval;
+            new AjaxUpload(button, {
+                action: '/cutimage.axd',
+                name: 'picfile',
+                responseType: 'json',
+                data: { action: 'jobUpload' },
+                onSubmit: function (file, ext) {
+                    if (!(ext && /^(jpg|png|jpeg|gif)$/i.test(ext))) {
+                        alert('只能上传图片！');
+                        return false;
+                    }
+                    button.val('上传中');
+                    this.disable();
+                    interval = window.setInterval(function () {
+                        var text = button.val();
+                        if (text.length < 13) {
+                            button.val(text + '.');
+                        } else {
+                            button.val('上传中');
+                        }
+                    }, 200);
+                },
+                onComplete: function (file, response) {
+                    button.val('修改图片');
+                    window.clearInterval(interval);
+                    this.enable();
+
+                    $("#imgpic").attr("src", response.src);
+                    $("#hdimage_pic").val(response.src);
+                }
+            });
         });
     </script>
-    <style type="text/css">
-        .content
-        {
-            width: 480px;
-            height: 105px;
-            position: relative;
-        }
-        .cstatic
-        {
-            padding: 26px 0 0 150px;
-            color: White;
-            font-weight: bold;
-            font-size: 20px;
-            position: absolute;
-            width: 330px;
-            left: 0px;
-        }
-        .jz
-        {
-            padding: 5px 0 0 30px;
-            color: Black;
-        }
-        .nr
-        {
-            font-weight: normal;
-            font-size: 12px;
-            overflow: hidden;
-            padding: 3px 0 0 20px;
-        }
-        img
-        {
-            float: left;
-            width: 474px !important;
-            height: 99px !important;
-            z-index: 8;
-        }
-        a:hover
-        {
-            text-decoration: none;
-        }
-        p
-        {
-            margin: 0;
-        }
-        #txtTitle
-        {
-            width: 290px;
-            border: 0;
-            margin: 0;
-            color: White;
-            overflow: hidden;
-            background: url(../images/zhaopin.jpg) no-repeat -170px -28px;
-            line-height:23px;
-            line-height:24px\9;
-            *line-height:24px;
-            _line-height:24px;
-            height:50px;
-        }
-    </style>
 </head>
 <body>
     <form id="form1" runat="server">
@@ -85,16 +60,9 @@
                         引导框：
                     </td>
                     <td>
-                        <div class="content">
-                            <a href="javascript:void(0);" title="红旭集团所有4S店招聘信息" class="fll">
-                                <img src="../images/zhaopin.jpg?t=<%=DateTime.Now.ToString("yyyyMMddHHmmss") %>" />
-                                <div class="cstatic">
-                                    <div class="nr">
-                                        <asp:TextBox ID="txtTitle" runat="server" TextMode="MultiLine" Rows="2"></asp:TextBox>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
+                        <input type="button" name="uploadbtpic" id="uploadbtpic" value="上传图片" class="an3" /><br />
+                        <img src="../images/fm.jpg" alt="图片" id="imgpic" style="width: 457px; height: 154px;border:0px;padding:0px;"
+                            runat="server" />   
                     </td>
                 </tr>
                 <tr>
@@ -116,6 +84,7 @@
             </tbody>
         </table>
     </div>
+    <input id="hdimage_pic" runat="server" type="hidden" />
     </form>
 </body>
 </html>

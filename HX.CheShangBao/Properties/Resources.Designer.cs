@@ -103,6 +103,16 @@ namespace HX.CheShangBao.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap dbg {
+            get {
+                object obj = ResourceManager.GetObject("dbg", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap logback1 {
             get {
                 object obj = ResourceManager.GetObject("logback1", resourceCulture);
@@ -136,6 +146,26 @@ namespace HX.CheShangBao.Properties {
         internal static System.Drawing.Bitmap min2 {
             get {
                 object obj = ResourceManager.GetObject("min2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap navbg {
+            get {
+                object obj = ResourceManager.GetObject("navbg", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap navbg1 {
+            get {
+                object obj = ResourceManager.GetObject("navbg1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

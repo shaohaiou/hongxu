@@ -290,7 +290,34 @@
                                 <asp:TextBox runat="server" ID="txtXSmfbydt" CssClass="srk6"></asp:TextBox>
                             </td>
                             <td class="tr">
-                                
+                                他品牌销售台次：
+                            </td>
+                            <td>
+                                <asp:TextBox runat="server" ID="txtXStppxstc" CssClass="srk6"></asp:TextBox>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="tr">
+                                他品牌单车毛利：
+                            </td>
+                            <td>
+                                <asp:TextBox runat="server" ID="txtXStppdcml" CssClass="srk6"></asp:TextBox>
+                            </td>
+                            <td class="tr">
+                                他品牌综合毛利：
+                            </td>
+                            <td>
+                                <asp:TextBox runat="server" ID="txtXStppzhml" CssClass="srk6"></asp:TextBox>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="tr">
+                                他品牌平均单台：
+                            </td>
+                            <td>
+                                <asp:TextBox runat="server" ID="txtXStpppjdt" CssClass="srk6"></asp:TextBox>
+                            </td>
+                            <td class="tr">
                             </td>
                             <td>
                             </td>

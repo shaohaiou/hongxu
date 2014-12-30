@@ -229,6 +229,7 @@ namespace HX.CheShangBao
             this.btnLogin.Size = new System.Drawing.Size(115, 41);
             this.btnLogin.TabIndex = 17;
             this.btnLogin.TabStop = false;
+            this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
             // 
             // btnLogout
             // 

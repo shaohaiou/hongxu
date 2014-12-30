@@ -45,10 +45,8 @@
         img
         {
             float: left;
-            width:98.5%;
-            height:99px;
-            border:1px solid #d7d7d7;
-            padding: 2px;
+            width:100%;
+            max-height:160px;
         }
         p{margin:0;}
         a:hover{text-decoration:none; style="position:relative;display:block;"}
@@ -58,12 +56,7 @@
 <body>
     <div class="content">
         <a href="jobview.aspx" class="fll" target="_blank" title="红旭集团所有4S店招聘信息">
-            <img src="../images/zhaopin.jpg?t=<%=DateTime.Now.ToString("yyyyMMddHHmmss") %>" />
-            <div class="cstatic">
-                <div class="nr">
-                    <%= CurrentJobOffer == null ? string.Empty : CurrentJobOffer.Title.Replace("\r","<br>").Replace(" ","<span class=\"space\"></span>")%>
-                </div>
-            </div>
+            <img src="<%=CurrentJobOffer.PicPath %>" />
         </a>
     </div>
 </body>

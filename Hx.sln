@@ -18,7 +18,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Hx.Web", "Hx.Web\", "{FFFA6
 		Release.AspNetCompiler.ForceOverwrite = "true"
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
-		VWDPort = "2585"
+		VWDPort = "6317"
 	EndProjectSection
 EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Hx.WebTest", "Hx.WebTest\", "{C259E079-C351-41A8-B727-DC35403214FF}"
@@ -38,7 +38,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Hx.WebTest", "Hx.WebTest\",
 		Release.AspNetCompiler.ForceOverwrite = "true"
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
-		VWDPort = "1304"
+		VWDPort = "6311"
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hx.BjWeb", "Hx.BjWeb\Hx.BjWeb.csproj", "{0EBE3CC6-D615-4BB3-88DB-27CA84305684}"
@@ -84,7 +84,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Hx.MailWeb", "Hx.MailWeb\",
 		Release.AspNetCompiler.ForceOverwrite = "true"
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
-		VWDPort = "3689"
+		VWDPort = "6314"
 		DefaultWebSiteLanguage = "Visual C#"
 	EndProjectSection
 EndProject

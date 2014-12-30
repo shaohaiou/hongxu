@@ -59,14 +59,18 @@ namespace Hx.BackAdmin.biz
             if (CurrentJobOffer != null)
             {
                 txtContent.Text = CurrentJobOffer.Content;
-                txtTitle.Text = CurrentJobOffer.Title;
+                if (!string.IsNullOrEmpty(CurrentJobOffer.PicPath))
+                {
+                    imgpic.Src = CurrentJobOffer.PicPath;
+                    hdimage_pic.Value = CurrentJobOffer.PicPath;
+                }
                 hdnID.Value = CurrentJobOffer.ID.ToString();
             }
         }
 
         private void FillData(JobOfferInfo entity)
         {
-            entity.Title = txtTitle.Text;
+            entity.PicPath = hdimage_pic.Value;
             entity.Content = txtContent.Text;
         }
 

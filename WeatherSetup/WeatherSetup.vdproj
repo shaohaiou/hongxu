@@ -61,6 +61,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
         "Release"
         {
@@ -175,7 +183,7 @@
                 {
                 "Name" = "8:.NET Framework"
                 "Message" = "8:[VSDNETMSG]"
-                "FrameworkVersion" = "8:.NETFramework,Version=v4.0,Profile=Client"
+                "FrameworkVersion" = "8:.NETFramework,Version=v4.0"
                 "AllowLaterVersions" = "11:FALSE"
                 "InstallUrl" = "8:http://go.microsoft.com/fwlink/?LinkId=131000"
                 }
@@ -313,7 +321,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:空调报警器"
         "ProductCode" = "8:{B464E326-2C89-4AC5-A358-1D0ABED0F2AE}"
-        "PackageCode" = "8:{6C24B186-CE4D-4178-B53B-3B4E89B38939}"
+        "PackageCode" = "8:{A64F33E2-0544-47BC-8841-D5A4BF7CF090}"
         "UpgradeCode" = "8:{DC4D9C77-1268-40DB-8DD7-797104BBAB74}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"

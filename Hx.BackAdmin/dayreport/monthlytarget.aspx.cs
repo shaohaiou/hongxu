@@ -191,6 +191,11 @@ namespace Hx.BackAdmin.dayreport
                     txtXSajpjdt.Text = target.XSajpjdt;
                     txtXSmfbydt.Text = target.XSmfbydt;
 
+                    txtXStppxstc.Text = target.XStppxstc;
+                    txtXStppdcml.Text = target.XStppdcml;
+                    txtXStppzhml.Text = target.XStppzhml;
+                    txtXStpppjdt.Text = target.XStpppjdt;
+
                     #endregion
 
                     #endregion
@@ -283,6 +288,11 @@ namespace Hx.BackAdmin.dayreport
                 target.XSxszhtc = txtXSxszhtc.Text;
                 target.XSajpjdt = txtXSajpjdt.Text;
                 target.XSmfbydt = txtXSmfbydt.Text;
+
+                target.XStppxstc = txtXStppxstc.Text;
+                target.XStppdcml = txtXStppdcml.Text;
+                target.XStppzhml = txtXStppzhml.Text;
+                target.XStpppjdt = txtXStpppjdt.Text;
             }
         }
 

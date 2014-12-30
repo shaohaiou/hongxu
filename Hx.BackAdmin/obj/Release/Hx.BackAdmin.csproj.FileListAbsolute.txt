@@ -20,6 +20,6 @@ E:\work\projects\HongXu\Hx.BackAdmin\bin\Hx.Tools.pdb
 E:\work\projects\HongXu\Hx.BackAdmin\bin\NPOI.xml
 E:\work\projects\HongXu\Hx.BackAdmin\bin\NPOI.OOXML.xml
 E:\work\projects\HongXu\Hx.BackAdmin\bin\NPOI.OpenXml4Net.xml
+E:\work\projects\HongXu\Hx.BackAdmin\obj\Release\Hx.BackAdmin.csprojResolveAssemblyReference.cache
 E:\work\projects\HongXu\Hx.BackAdmin\obj\Release\Hx.BackAdmin.dll
 E:\work\projects\HongXu\Hx.BackAdmin\obj\Release\Hx.BackAdmin.pdb
-E:\work\projects\HongXu\Hx.BackAdmin\obj\Release\Hx.BackAdmin.csprojResolveAssemblyReference.cache

@@ -45,6 +45,9 @@ namespace Hx.Components.HttpHandler
                 case "weixinjtUpload":
                     result = WeixinjtUpload();
                     break;
+                case "jobUpload":
+                    result = JobUpload();
+                    break;
                 default:
                     result = "{msg:'上传出错！没有参数类型'}";
                     break;
@@ -225,6 +228,34 @@ namespace Hx.Components.HttpHandler
             o[0] = b;
             o[1] = context.Request.Files[0].FileName;
             string result = DynamicWebServices.InvokeWebService(url + "/webservice/UploadServices.asmx", "WeixinjtUploadImage", o).ToString();
+            if (!string.IsNullOrEmpty(result))
+            {
+                return "{msg:'success',src:'" + result + "'}";
+            }
+            else
+            {
+                return "{msg:'error',errorcode:'2'}";
+            }
+        }
+
+        /// <summary>
+        /// 招聘活动上传
+        /// </summary>
+        /// <returns></returns>
+        private string JobUpload()
+        {
+            HttpContext context = HttpContext.Current;
+            string strExtension = Path.GetExtension(context.Request.Files[0].FileName).ToLower();
+            ///处理上载的文件流信息。
+            byte[] b = new byte[context.Request.Files[0].ContentLength];
+            using (Stream fs = context.Request.Files[0].InputStream)
+            {
+                fs.Read(b, 0, context.Request.Files[0].ContentLength);
+            }
+            object[] o = new object[2];
+            o[0] = b;
+            o[1] = context.Request.Files[0].FileName;
+            string result = DynamicWebServices.InvokeWebService(url + "/webservice/UploadServices.asmx", "JobUploadImage", o).ToString();
             if (!string.IsNullOrEmpty(result))
             {
                 return "{msg:'success',src:'" + result + "'}";

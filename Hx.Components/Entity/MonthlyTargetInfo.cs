@@ -269,6 +269,48 @@ namespace Hx.Components.Entity
             set { SetExtendedAttribute("XSmfbydt", value); }
         }
 
+        /// <summary>
+        /// 他品牌销售台次
+        /// </summary>
+        [JsonIgnore]
+        public string XStppxstc
+        {
+            get { return GetString("XStppxstc", ""); }
+            set { SetExtendedAttribute("XStppxstc", value); }
+        }
+
+        /// <summary>
+        /// 他品牌单车毛利
+        /// </summary>
+        [JsonIgnore]
+        public string XStppdcml
+        {
+            get { return GetString("XStppdcml", ""); }
+            set { SetExtendedAttribute("XStppdcml", value); }
+        }
+
+        /// <summary>
+        /// 他品牌综合毛利
+        /// </summary>
+        [JsonIgnore]
+        public string XStppzhml
+        {
+            get { return GetString("XStppzhml", ""); }
+            set { SetExtendedAttribute("XStppzhml", value); }
+        }
+
+        /// <summary>
+        /// 他品牌平均单台
+        /// </summary>
+        [JsonIgnore]
+        public string XStpppjdt
+        {
+            get { return GetString("XStpppjdt", ""); }
+            set { SetExtendedAttribute("XStpppjdt", value); }
+        }
+
+
+
         #endregion
 
         #endregion

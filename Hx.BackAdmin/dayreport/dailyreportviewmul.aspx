@@ -266,6 +266,8 @@
                             Text="月报汇总" />
                         <asp:Button runat="server" ID="btnKeyTarget" CssClass="an1" OnClick="btnKeyTarget_Click"
                             Text="指标汇总" />
+                        <asp:Button runat="server" ID="btnReportCount" CssClass="an1" OnClick="btnReportCount_Click"
+                            Text="填报统计" />
                         <%if (CurrentDep == DayReportDep.DCC部)
                           { %>
                         <asp:Button runat="server" ID="btnDCCZhhz" CssClass="an1" OnClick="btnKeyTarget_Click"
@@ -291,6 +293,7 @@
         <input type="hidden" runat="server" id="hdnDayReportCorp" />
         <input type="hidden" runat="server" id="hdnKeyReportType" />
         </form>
+        <asp:Label runat="server" ID="lblReportCount" CssClass="mb10 mt10 block"></asp:Label>
         <table border="0" cellspacing="0" cellpadding="0" id="tblView" runat="server" enableviewstate="false"
             style="display: none;">
             <tbody>

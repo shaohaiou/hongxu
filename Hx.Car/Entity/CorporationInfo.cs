@@ -141,5 +141,15 @@ namespace Hx.Car.Entity
             get { return GetInt("Sort", 0); }
             set { SetExtendedAttribute("Sort", value.ToString()); }
         }
+
+        /// <summary>
+        /// 日报表他品牌模块
+        /// </summary>
+        [JsonIgnore]
+        public int DailyreportTpp
+        {
+            get { return GetInt("DailyreportTpp", 0); }
+            set { SetExtendedAttribute("DailyreportTpp", value.ToString()); }
+        }
     }
 }

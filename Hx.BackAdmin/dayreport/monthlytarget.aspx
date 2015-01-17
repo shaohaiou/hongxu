@@ -141,7 +141,7 @@
                           {%><%}
                           else if (CurrentDep == DayReportDep.销售部)
                           {%>
-                          <tr>
+                        <tr>
                             <td colspan="4" style="background-color: #ccc; color: Black; font-weight: bold;">
                                 关键指标
                             </td>
@@ -289,13 +289,25 @@
                             <td>
                                 <asp:TextBox runat="server" ID="txtXSmfbydt" CssClass="srk6"></asp:TextBox>
                             </td>
+                            <%if (CurrentCorporation != null && CurrentCorporation.DailyreportTpp == 1)
+                              { %>
                             <td class="tr">
                                 他品牌销售台次：
                             </td>
                             <td>
                                 <asp:TextBox runat="server" ID="txtXStppxstc" CssClass="srk6"></asp:TextBox>
                             </td>
+                            <%}
+                              else
+                              { %>
+                            <td class="tr">
+                            </td>
+                            <td>
+                            </td>
+                            <%} %>
                         </tr>
+                        <%if (CurrentCorporation != null && CurrentCorporation.DailyreportTpp == 1)
+                          { %>
                         <tr>
                             <td class="tr">
                                 他品牌单车毛利：
@@ -322,13 +334,14 @@
                             <td>
                             </td>
                         </tr>
+                        <%} %>
                         <tr>
                             <td colspan="4" style="background-color: #ccc; color: Black; font-weight: bold;">
                                 各项目标值
                             </td>
                         </tr>
                         <%=GetTableStr()%>
-                          <%}
+                        <%}
                           else
                           {%>
                         <tr>

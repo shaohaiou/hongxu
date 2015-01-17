@@ -16,6 +16,7 @@ namespace Hx.Car.Providers
 {
     public abstract class CarDataProvider
     {
+        private static System.Web.Script.Serialization.JavaScriptSerializer json = new System.Web.Script.Serialization.JavaScriptSerializer();
         private static CarDataProvider _defaultprovider = null;
         private static object _lock = new object();
 
@@ -415,8 +416,8 @@ namespace Hx.Car.Providers
 
         public static CarBrandInfo PopulateCarBrandInfo(IDataReader reader)
         {
-            return new CarBrandInfo 
-            { 
+            return new CarBrandInfo
+            {
                 ID = DataConvert.SafeInt(reader["ID"]),
                 Name = reader["Name"] as string,
                 NameIndex = reader["NameIndex"] as string
@@ -471,6 +472,92 @@ namespace Hx.Car.Providers
 
             return entity;
         }
+
+        #endregion
+
+        #region 集车宝
+
+        #region 车辆管理
+
+        public abstract int AddJcbCar(JcbCarInfo entity);
+
+        public abstract List<JcbCarInfo> GetJcbCarList();
+
+        public static JcbCarInfo PopulateJcbCarInfo(IDataReader reader)
+        {
+            JcbCarInfo entity = new JcbCarInfo()
+            {
+                ID = (int)reader["ID"],
+                VINCode = reader["VINCode"] as string,
+                Cph = reader["Cph"] as string,
+                Ysj = DataConvert.SafeDecimal(reader["Ysj"]),
+                LastUpdateTime = DataConvert.SafeDate(reader["LastUpdateTime"]),
+                Cdjg = DataConvert.SafeDecimal(reader["Cdjg"]),
+                UserID = (int)reader["UserID"]
+            };
+            SerializerData data = new SerializerData();
+            data.Keys = reader["PropertyNames"] as string;
+            data.Values = reader["PropertyValues"] as string;
+            entity.SetSerializerData(data);
+            entity.Picslist = json.Deserialize<List<JcbcarpicInfo>>(entity.Pics);
+            return entity;
+        }
+
+        #endregion
+
+        #region 帐号管理
+
+        public abstract int AddJcbAccount(JcbAccountInfo entity);
+
+        public abstract List<JcbAccountInfo> GetJcbAccountList();
+
+        public static JcbAccountInfo PopulateJcbAccountInfo(IDataReader reader)
+        {
+            JcbAccountInfo entity = new JcbAccountInfo()
+            {
+                ID = (int)reader["ID"],
+                UserID = (int)reader["UserID"],
+                AccountName = reader["AccountName"] as string,
+                Password = reader["Password"] as string,
+                AddTime = DataConvert.SafeDate(reader["AddTime"]),
+                JcbSiteType = (JcbSiteType)(byte)reader["JcbSiteType"]
+            };
+            SerializerData data = new SerializerData();
+            data.Keys = reader["PropertyNames"] as string;
+            data.Values = reader["PropertyValues"] as string;
+            entity.SetSerializerData(data);
+            return entity;
+        }
+
+        #endregion
+
+        #region 营销记录
+
+        public abstract int AddJcbMarketrecord(JcbMarketrecordInfo entity);
+
+        public abstract List<JcbMarketrecordInfo> GetJcbMarketrecordList();
+
+        public static JcbMarketrecordInfo PopulateJcbMarketrecordInfo(IDataReader reader)
+        {
+            JcbMarketrecordInfo entity = new JcbMarketrecordInfo()
+            {
+                ID = (int)reader["ID"],
+                CarID = (int)reader["CarID"],
+                AccountID = (int)reader["AccountID"],
+                JcbSiteType = (JcbSiteType)(byte)reader["JcbSiteType"],
+                UploadTime = reader["UploadTime"] as DateTime?,
+                ViewUrl = reader["ViewUrl"] as string,
+                IsSale = DataConvert.SafeBool(reader["IsSale"]),
+                IsDel = DataConvert.SafeBool(reader["IsDel"])
+            };
+            SerializerData data = new SerializerData();
+            data.Keys = reader["PropertyNames"] as string;
+            data.Values = reader["PropertyValues"] as string;
+            entity.SetSerializerData(data);
+            return entity;
+        }
+
+        #endregion
 
         #endregion
     }

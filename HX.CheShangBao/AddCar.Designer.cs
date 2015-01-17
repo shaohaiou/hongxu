@@ -33,7 +33,9 @@
             // 
             // wbcontent
             // 
+            this.wbcontent.AllowWebBrowserDrop = false;
             this.wbcontent.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.wbcontent.IsWebBrowserContextMenuEnabled = false;
             this.wbcontent.Location = new System.Drawing.Point(0, 0);
             this.wbcontent.MinimumSize = new System.Drawing.Size(20, 20);
             this.wbcontent.Name = "wbcontent";
@@ -54,6 +56,7 @@
             this.Name = "AddCar";
             this.Text = "AddCar";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.Load += new System.EventHandler(this.AddCar_Load);
             this.ResumeLayout(false);
 
         }

@@ -89,6 +89,14 @@
                     </td>
                 </tr>
                 <tr>
+                    <td class="bg1">
+                        日报表他品牌模块：
+                    </td>
+                    <td>
+                        <asp:CheckBox runat="server" ID="cbxDailyreportTPP" />
+                    </td>
+                </tr>
+                <tr>
                     <td></td>
                     <td class="clpp">
                         <asp:Repeater runat="server" ID="rptCarbrand">

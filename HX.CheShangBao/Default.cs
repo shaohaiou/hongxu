@@ -11,7 +11,7 @@ namespace HX.CheShangBao
 {
     public partial class Default : Form
     {
-        private static Dictionary<string,string> urls = new Dictionary<string,string>();
+        private static Dictionary<string, string> urls = new Dictionary<string, string>();
         public Default()
         {
             InitializeComponent();
@@ -102,6 +102,10 @@ namespace HX.CheShangBao
 
         private void wbContent_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
         {
+            if (e.Url.ToString() != wbContent.Url.ToString())
+                return;
+            if (wbContent.ReadyState != WebBrowserReadyState.Complete)
+                return; 
             HtmlDocument htmlDoc = wbContent.Document;
 
             if (wbContent.Url.AbsoluteUri == urls["库存管理-销售中车源"])
@@ -111,13 +115,69 @@ namespace HX.CheShangBao
                 {
                     btnAddCar.Click += new HtmlElementEventHandler(btnAddCar_Click);
                 }
+                HtmlDocument iframeDoc = wbContent.Document.Window.Frames["frmRight"].Document;
+
+                for (int i = 0; i < 10; i++)
+                {
+                    HtmlElement btnYjyx = iframeDoc.All["btnYjyx" + i];
+                    if (btnYjyx != null)
+                    {
+                        btnYjyx.Click += new HtmlElementEventHandler(btnYjyx_Click);
+                    }
+                    HtmlElement btnXgxx = iframeDoc.All["btnXgxx" + i];
+                    if (btnXgxx != null)
+                    {
+                        btnXgxx.Click += new HtmlElementEventHandler(btnXgxx_Click);
+                    }
+                }
             }
         }
 
+        /// <summary>
+        /// 新增车辆
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnAddCar_Click(object sender, HtmlElementEventArgs e)
         {
             AddCar formAddCar = new AddCar();
+            formAddCar.defaultform = this;
             formAddCar.ShowDialog();
+        }
+
+        /// <summary>
+        /// 一键营销
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnYjyx_Click(object sender, HtmlElementEventArgs e)
+        {
+            HtmlElement btnYjyx = (HtmlElement)sender;
+            int id = int.Parse(btnYjyx.GetAttribute("val"));
+            Yjyx formYjyx = new Yjyx();
+            formYjyx.defaultform = this;
+            formYjyx.carid = id;
+            formYjyx.Show();
+        }
+
+        /// <summary>
+        /// 修改信息
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnXgxx_Click(object sender, HtmlElementEventArgs e)
+        {
+            HtmlElement btnXgxx = (HtmlElement)sender; 
+            int id = int.Parse(btnXgxx.GetAttribute("val"));
+            AddCar formAddCar = new AddCar();
+            formAddCar.defaultform = this;
+            formAddCar.carid = id;
+            formAddCar.Show();
+        }
+
+        public void RefreshPage()
+        {
+            wbContent.Navigate(wbContent.Url);
         }
     }
 }

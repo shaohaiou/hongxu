@@ -21,5 +21,10 @@ namespace Hx.Car.Entity
         /// 首字母
         /// </summary>
         public string NameIndex { get; set; }
+
+        /// <summary>
+        /// 列表绑定字段
+        /// </summary>
+        public string BindName { get { return string.Format("{0} {1}" ,NameIndex.ToUpper(),Name); } }
     }
 }

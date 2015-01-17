@@ -47,8 +47,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Admins.cs" />
+    <Compile Include="Areas.cs" />
     <Compile Include="Banks.cs" />
     <Compile Include="BasePage\AdminPage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BasePage\JcbBase.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="BasePage\PageBase.cs">
@@ -71,6 +75,7 @@
     <Compile Include="Entity\BenzvoteInfo.cs" />
     <Compile Include="Entity\BenzvotePothunterInfo.cs" />
     <Compile Include="Entity\BenzvoteSettingInfo.cs" />
+    <Compile Include="Entity\CityInfo.cs" />
     <Compile Include="Entity\CRMReportInfo.cs" />
     <Compile Include="Entity\CustomerInfo.cs" />
     <Compile Include="Entity\DailyReportHistoryInfo.cs" />
@@ -82,6 +87,7 @@
     <Compile Include="Entity\Job.cs" />
     <Compile Include="Entity\JobOfferInfo.cs" />
     <Compile Include="Entity\MonthlyTargetInfo.cs" />
+    <Compile Include="Entity\PromaryInfo.cs" />
     <Compile Include="Entity\ShowUrl.cs" />
     <Compile Include="Entity\WeixinActInfo.cs" />
     <Compile Include="Entity\JituanvotePothunterInfo.cs" />

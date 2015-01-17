@@ -69,6 +69,7 @@ namespace Hx.BackAdmin.global
 
                 txtName.Text = CurrentCorporation.Name;
                 hdnCarbrand.Value = CurrentCorporation.CarBrand;
+                cbxDailyreportTPP.Checked = CurrentCorporation.DailyreportTpp == 1;
 
                 SetSelectedByText(ddlBank, CurrentCorporation.Bank);
                 SetSelectedByText(ddlBankProfitMargin, CurrentCorporation.BankProfitMargin);
@@ -86,6 +87,7 @@ namespace Hx.BackAdmin.global
             corporation.CarBrand = hdnCarbrand.Value;
             corporation.Bank = ddlBank.SelectedValue;
             corporation.BankProfitMargin = ddlBankProfitMargin.SelectedValue;
+            corporation.DailyreportTpp = cbxDailyreportTPP.Checked ? 1 : 0;
 
             Corporations.Instance.Update(corporation);
 

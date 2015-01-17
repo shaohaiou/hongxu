@@ -311,6 +311,49 @@ namespace Hx.Components.BasePage
         {
             WebHelper.SetSelectedByText(listControl, selectText);
         }
+        /// <summary>
+        /// 设置ListControl选中项
+        /// </summary>
+        /// <param name="listControl">ListControl控件</param>
+        /// <param name="selectValue">选中的Value</param>
+        /// <param name="separator">分隔符</param>
+        protected void SetMultSelectedByValue(ListControl listControl, string selectValue, string separator)
+        {
+            WebHelper.SetMultSelectedByValue(listControl, selectValue, separator);
+        }
+
+        /// <summary>
+        /// 设置ListControl选中项
+        /// </summary>
+        /// <param name="listControl">ListControl控件</param>
+        /// <param name="selectText">选中的Text</param>
+        /// <param name="separator">分隔符</param>
+        protected void SetMultSelectedByText(ListControl listControl, string selectText, string separator)
+        {
+            WebHelper.SetMultSelectedByText(listControl, selectText, separator);
+        }
+
+        /// <summary>
+        /// 获取ListControl多个选中项的Value值
+        /// </summary>
+        /// <param name="listControl">ListControl控件</param>
+        /// <param name="separator">分隔符</param>
+        /// <returns></returns>
+        protected string GetMultSeletctedValue(ListControl listControl, string separator)
+        {
+            return WebHelper.GetListControlMoreValue(listControl, separator);
+        }
+
+        /// <summary>
+        /// 获取ListControl多个选中项的Text值
+        /// </summary>
+        /// <param name="listControl">ListControl控件</param>
+        /// <param name="separator">分隔符</param>
+        /// <returns></returns>
+        protected string GetMultSeletctedText(ListControl listControl, string separator)
+        {
+            return WebHelper.GetListControlMoreText(listControl, separator);
+        }
 
         /// <summary>
         /// 从列表控件里删除符合指定值的项

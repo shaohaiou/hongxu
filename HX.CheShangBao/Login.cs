@@ -127,8 +127,5 @@ namespace HX.CheShangBao
             Default formDefault = new Default();
             formDefault.Show();
         }
-
-
-        
     }
 }

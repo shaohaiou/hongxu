@@ -639,5 +639,40 @@ namespace Hx.Components.Providers
         }
 
         #endregion
+
+        #region 地区管理
+
+        public abstract List<PromaryInfo> GetPromaryList();
+
+        public abstract List<CityInfo> GetCityList();
+
+        protected PromaryInfo PopulatePromary(IDataReader reader)
+        {
+            PromaryInfo entity = new PromaryInfo
+            {
+                ID = DataConvert.SafeInt(reader["ID"]),
+                Name = reader["Name"] as string
+            };
+
+            return entity;
+        }
+
+        protected CityInfo PopulateCity(IDataReader reader)
+        {
+            CityInfo entity = new CityInfo
+            {
+                ID = DataConvert.SafeInt(reader["ID"]),
+                Name = reader["Name"] as string,
+                PID = DataConvert.SafeInt(reader["PID"])
+            };
+
+            return entity;
+        }
+
+        #endregion
+
+        #region MyRegion
+        
+        #endregion
     }
 }

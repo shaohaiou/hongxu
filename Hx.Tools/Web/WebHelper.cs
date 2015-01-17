@@ -434,6 +434,37 @@ namespace Hx.Tools.Web
                 li.Selected = true;
             }
         }
+        /// <summary>
+        /// 设置ListControl选中项
+        /// </summary>
+        /// <param name="listControl">ListControl控件</param>
+        /// <param name="selectValue">选中的Value</param>
+        /// <param name="separator">分隔符</param>
+        public static void SetMultSelectedByValue(ListControl listControl, string selectValue, string separator)
+        {
+            listControl.ClearSelection();
+            string[] vals = selectValue.Split(new string[]{ separator}, StringSplitOptions.RemoveEmptyEntries);
+            foreach (ListItem li in listControl.Items)
+            {
+                li.Selected = vals.Contains(li.Value);
+            }
+        }
+
+        /// <summary>
+        /// 设置ListControl选中项
+        /// </summary>
+        /// <param name="listControl">ListControl控件</param>
+        /// <param name="selectText">选中的Text</param>
+        /// <param name="separator">分隔符</param>
+        public static void SetMultSelectedByText(ListControl listControl, string selectText,string separator)
+        {
+            listControl.ClearSelection();
+            string[] vals = selectText.Split(new string[] { separator }, StringSplitOptions.RemoveEmptyEntries);
+            foreach (ListItem li in listControl.Items)
+            {
+                li.Selected = vals.Contains(li.Text);
+            }
+        }
 
         #endregion
 

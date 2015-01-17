@@ -1422,5 +1422,39 @@ namespace HX.DALSQLServer
         }
 
         #endregion
+
+        #region 地区管理
+
+        public override List<PromaryInfo> GetPromaryList()
+        {
+            List<PromaryInfo> list = new List<PromaryInfo>();
+            string sql = "SELECT * FROM HX_Promary";
+            using (IDataReader reader = SqlHelper.ExecuteReader(_con, CommandType.Text, sql))
+            {
+                while (reader.Read())
+                {
+                    list.Add(PopulatePromary(reader));
+                }
+            }
+
+            return list;
+        }
+
+        public override List<CityInfo> GetCityList()
+        {
+            List<CityInfo> list = new List<CityInfo>();
+            string sql = "SELECT * FROM HX_City";
+            using (IDataReader reader = SqlHelper.ExecuteReader(_con, CommandType.Text, sql))
+            {
+                while (reader.Read())
+                {
+                    list.Add(PopulateCity(reader));
+                }
+            }
+
+            return list;
+        }
+
+        #endregion
     }
 }

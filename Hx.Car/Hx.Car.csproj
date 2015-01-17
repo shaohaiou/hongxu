@@ -38,6 +38,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -54,10 +55,18 @@
     <Compile Include="Entity\CarInfo.cs" />
     <Compile Include="Entity\CarQuotationInfo.cs" />
     <Compile Include="Entity\CorporationInfo.cs" />
+    <Compile Include="Entity\JcbAccountInfo.cs" />
+    <Compile Include="Entity\JcbCarInfo.cs" />
+    <Compile Include="Entity\JcbcarpicInfo.cs" />
+    <Compile Include="Entity\JcbMarketrecordInfo.cs" />
     <Compile Include="Enum\BankingType.cs" />
     <Compile Include="Enum\CarQuotationType.cs" />
+    <Compile Include="Enum\JcbPicType.cs" />
+    <Compile Include="Enum\JcbSiteType.cs" />
     <Compile Include="Enum\LoanType.cs" />
     <Compile Include="Entity\SybxInfo.cs" />
+    <Compile Include="JcbCars.cs" />
+    <Compile Include="Jcbs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\CarDataProvider.cs" />
     <Compile Include="Query\CarQuery.cs" />

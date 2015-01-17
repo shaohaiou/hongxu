@@ -54,5 +54,10 @@ namespace Hx.Components
         public static readonly string JITUANVOTE_LIST = "cache-jituanvote-list";   //集团投票活动所有投票信息缓存键值
         public static readonly string JITUANVOTESETTING = "cache-jituanvotesetting"; //集团投票活动设置缓存键值
 
+        public static readonly string PROMARY_LIST = "cache-promary-list"; //省份缓存键值
+        public static readonly string CITY_LIST = "cache-city-list"; //市缓存键值
+        public static readonly string JCBCAR_LIST = "cache-jcbcar-list"; //集车宝车辆信息列表缓存键值
+        public static readonly string JCBACCOUNT_LIST = "cache-jcbaccount-list"; //集车宝账户信息列表缓存键值
+        public static readonly string JCBMARKETRECORD_LIST = "cache-jcbmarketrecord-list"; //集车宝营销记录信息列表缓存键值
     }
 }

@@ -4,6 +4,11 @@ using System.Linq;
 using System.Web;
 using System.Web.Security;
 using System.Web.SessionState;
+using Hx.Components;
+using Hx.Car;
+using Hx.TaskAndJob.Job;
+using Hx.Tools;
+using Hx.Components.Entity;
 
 namespace Hx.JcbWeb
 {
@@ -13,7 +18,11 @@ namespace Hx.JcbWeb
         void Application_Start(object sender, EventArgs e)
         {
             // 在应用程序启动时运行的代码
-
+            try
+            {
+                Start();
+            }
+            catch { }
         }
 
         void Application_End(object sender, EventArgs e)
@@ -25,7 +34,8 @@ namespace Hx.JcbWeb
         void Application_Error(object sender, EventArgs e)
         {
             // 在出现未处理的错误时运行的代码
-
+            HttpApplication app = (HttpApplication)sender;
+            ExpLog.Write(app.Context.Server.GetLastError());
         }
 
         void Session_Start(object sender, EventArgs e)
@@ -43,5 +53,30 @@ namespace Hx.JcbWeb
 
         }
 
+        private void Start()
+        {
+            Jobs.Instance().Start();                        //任务启动
+#if DEBUG
+            EventLogs.WebLog("网站启动");//写入系统日志信息
+#endif
+
+            LoadData();
+        }
+
+        private void LoadData()
+        {
+            try
+            {
+                CarBrands.Instance.ReloadCarBrandCache();
+                Cars.Instance.ReloadAllCarList();
+                Cars.Instance.ReloadCarListBycChangs();
+                JcbCars.Instance.ReloadListCache();
+                Jcbs.Instance.ReloadAccountListCache();
+                CarBrands.Instance.ReloadCarBrandCacheByCorporation();
+                Areas.Instance.ReloadPromaryListCache();
+                Areas.Instance.ReloadCityListCache();
+            }
+            catch { }
+        }
     }
 }

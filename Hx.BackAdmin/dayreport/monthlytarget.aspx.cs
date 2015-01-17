@@ -90,6 +90,20 @@ namespace Hx.BackAdmin.dayreport
             }
         }
 
+        private CorporationInfo _currentcorporation = null;
+        protected CorporationInfo CurrentCorporation
+        {
+            get
+            {
+                int id = DataConvert.SafeInt(ddlCorp.SelectedValue);
+                if (_currentcorporation == null && id > 0)
+                {
+                    _currentcorporation = Corporations.Instance.GetModel(id);
+                }
+                return _currentcorporation;
+            }
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -191,10 +205,13 @@ namespace Hx.BackAdmin.dayreport
                     txtXSajpjdt.Text = target.XSajpjdt;
                     txtXSmfbydt.Text = target.XSmfbydt;
 
-                    txtXStppxstc.Text = target.XStppxstc;
-                    txtXStppdcml.Text = target.XStppdcml;
-                    txtXStppzhml.Text = target.XStppzhml;
-                    txtXStpppjdt.Text = target.XStpppjdt;
+                    if (CurrentCorporation != null && CurrentCorporation.DailyreportTpp == 1)
+                    {
+                        txtXStppxstc.Text = target.XStppxstc;
+                        txtXStppdcml.Text = target.XStppdcml;
+                        txtXStppzhml.Text = target.XStppzhml;
+                        txtXStpppjdt.Text = target.XStpppjdt;
+                    }
 
                     #endregion
 
@@ -289,10 +306,13 @@ namespace Hx.BackAdmin.dayreport
                 target.XSajpjdt = txtXSajpjdt.Text;
                 target.XSmfbydt = txtXSmfbydt.Text;
 
-                target.XStppxstc = txtXStppxstc.Text;
-                target.XStppdcml = txtXStppdcml.Text;
-                target.XStppzhml = txtXStppzhml.Text;
-                target.XStpppjdt = txtXStpppjdt.Text;
+                if (CurrentCorporation != null && CurrentCorporation.DailyreportTpp == 1)
+                {
+                    target.XStppxstc = txtXStppxstc.Text;
+                    target.XStppdcml = txtXStppdcml.Text;
+                    target.XStppzhml = txtXStppzhml.Text;
+                    target.XStpppjdt = txtXStpppjdt.Text;
+                }
             }
         }
 

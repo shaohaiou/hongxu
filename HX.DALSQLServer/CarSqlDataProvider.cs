@@ -586,5 +586,233 @@ namespace HX.DALSQLServer
         }
 
         #endregion
+
+        #region 集车宝
+
+        #region 车辆管理
+
+        public override int AddJcbCar(JcbCarInfo entity)
+        {
+            SerializerData data = entity.GetSerializerData();
+            string sql = @"
+            IF @ID = 0
+            BEGIN
+                INSERT INTO HX_JcbCar(
+                    [VINCode]
+                    ,[Cph]
+                    ,[Ysj]
+                    ,[LastUpdateTime]
+                    ,[Cdjg]
+                    ,[UserID]
+                    ,[PropertyNames]
+                    ,[PropertyValues]) VALUES (
+                    @VINCode
+                    ,@Cph
+                    ,@Ysj
+                    ,@LastUpdateTime
+                    ,@Cdjg
+                    ,@UserID
+                    ,@PropertyNames
+                    ,@PropertyValues)
+                ;SELECT @@IDENTITY
+            END
+            ELSE 
+            BEGIN
+                UPDATE HX_JcbCar SET
+                [VINCode] = @VINCode
+                ,[Cph] = @Cph
+                ,[Ysj] = @Ysj
+                ,[LastUpdateTime] = @LastUpdateTime
+                ,[Cdjg] = @Cdjg
+                ,[UserID] = @UserID
+                ,[PropertyNames] = @PropertyNames
+                ,[PropertyValues] = @PropertyValues
+                WHERE [ID] = @ID
+                ;SELECT @ID
+            END";
+            SqlParameter[] p = 
+            {
+                new SqlParameter("@ID",entity.ID),
+                new SqlParameter("@VINCode",entity.VINCode),
+                new SqlParameter("@Cph",entity.Cph),
+                new SqlParameter("@Ysj",entity.Ysj),
+                new SqlParameter("@LastUpdateTime",entity.LastUpdateTime),
+                new SqlParameter("@Cdjg",entity.Cdjg),
+                new SqlParameter("@UserID",entity.UserID),
+                new SqlParameter("@PropertyNames",data.Keys),
+                new SqlParameter("@PropertyValues",data.Values)
+            };
+            entity.ID = DataConvert.SafeInt(SqlHelper.ExecuteScalar(_con, CommandType.Text, sql, p));
+            return entity.ID;
+        }
+
+        public override List<JcbCarInfo> GetJcbCarList()
+        {
+            List<JcbCarInfo> list = new List<JcbCarInfo>();
+            string sql = "SELECT * FROM HX_JcbCar";
+
+            using (IDataReader reader = SqlHelper.ExecuteReader(_con, CommandType.Text, sql))
+            {
+                while (reader.Read())
+                {
+                    list.Add(PopulateJcbCarInfo(reader));
+                }
+            }
+
+            return list;
+        }
+        
+        #endregion
+
+        #region 帐号管理
+
+        public override int AddJcbAccount(JcbAccountInfo entity)
+        {
+            SerializerData data = entity.GetSerializerData();
+            string sql = @"
+            IF @ID = 0
+            BEGIN
+                INSERT INTO HX_JcbAccount(
+                    [UserID]
+                    ,[AccountName]
+                    ,[Password]
+                    ,[JcbSiteType]
+                    ,[AddTime]
+                    ,[PropertyNames]
+                    ,[PropertyValues]) VALUES (
+                    @UserID
+                    ,@AccountName
+                    ,@Password
+                    ,@JcbSiteType
+                    ,@AddTime
+                    ,@PropertyNames
+                    ,@PropertyValues)
+                ;SELECT @@IDENTITY
+            END
+            ELSE 
+            BEGIN
+                UPDATE HX_JcbAccount SET
+                [UserID] = @UserID
+                ,[AccountName] = @AccountName
+                ,[Password] = @Password
+                ,[JcbSiteType] = @JcbSiteType
+                ,[PropertyNames] = @PropertyNames
+                ,[PropertyValues] = @PropertyValues
+                WHERE [ID] = @ID
+                ;SELECT @ID
+            END";
+            SqlParameter[] p = 
+            {
+                new SqlParameter("@ID",entity.ID),
+                new SqlParameter("@UserID",entity.UserID),
+                new SqlParameter("@AccountName",entity.AccountName),
+                new SqlParameter("@Password",entity.Password),
+                new SqlParameter("@JcbSiteType",(byte)entity.JcbSiteType),
+                new SqlParameter("@AddTime",entity.AddTime),
+                new SqlParameter("@PropertyNames",data.Keys),
+                new SqlParameter("@PropertyValues",data.Values)
+            };
+            entity.ID = DataConvert.SafeInt(SqlHelper.ExecuteScalar(_con, CommandType.Text, sql, p));
+            return entity.ID;
+        }
+
+        public override List<JcbAccountInfo> GetJcbAccountList()
+        {
+            List<JcbAccountInfo> list = new List<JcbAccountInfo>();
+            string sql = "SELECT * FROM HX_JcbAccount";
+
+            using (IDataReader reader = SqlHelper.ExecuteReader(_con, CommandType.Text, sql))
+            {
+                while (reader.Read())
+                {
+                    list.Add(PopulateJcbAccountInfo(reader));
+                }
+            }
+
+            return list;
+        }
+
+        #endregion
+
+        #region 营销记录
+
+        public override int AddJcbMarketrecord(JcbMarketrecordInfo entity)
+        {
+            SerializerData data = entity.GetSerializerData();
+            string sql = @"
+            IF @ID = 0
+            BEGIN
+                INSERT INTO HX_JcbMarketrecord(
+                    [CarID]
+                    ,[AccountID]
+                    ,[JcbSiteType]
+                    ,[UploadTime]
+                    ,[ViewUrl]
+                    ,[IsSale]
+                    ,[IsDel]
+                    ,[PropertyNames]
+                    ,[PropertyValues]) VALUES (
+                    @CarID
+                    ,@AccountID
+                    ,@JcbSiteType
+                    ,@UploadTime
+                    ,@ViewUrl
+                    ,@IsSale
+                    ,@IsDel
+                    ,@PropertyNames
+                    ,@PropertyValues)
+                ;SELECT @@IDENTITY
+            END
+            ELSE 
+            BEGIN
+                UPDATE HX_JcbMarketrecord SET
+                [CarID] = @CarID
+                ,[AccountID] = @AccountID
+                ,[JcbSiteType] = @JcbSiteType
+                ,[UploadTime] = @UploadTime
+                ,[ViewUrl] = @ViewUrl
+                ,[IsSale] = @IsSale
+                ,[IsDel] = @IsDel
+                ,[PropertyNames] = @PropertyNames
+                ,[PropertyValues] = @PropertyValues
+                WHERE [ID] = @ID
+                ;SELECT @ID
+            END";
+            SqlParameter[] p = 
+            {
+                new SqlParameter("@ID",entity.ID),
+                new SqlParameter("@CarID",entity.CarID),
+                new SqlParameter("@AccountID",entity.AccountID),
+                new SqlParameter("@JcbSiteType",(byte)entity.JcbSiteType),
+                new SqlParameter("@UploadTime",entity.UploadTime),
+                new SqlParameter("@ViewUrl",entity.ViewUrl),
+                new SqlParameter("@IsSale",entity.IsSale),
+                new SqlParameter("@IsDel",entity.IsDel),
+                new SqlParameter("@PropertyNames",data.Keys),
+                new SqlParameter("@PropertyValues",data.Values)
+            };
+            entity.ID = DataConvert.SafeInt(SqlHelper.ExecuteScalar(_con, CommandType.Text, sql, p));
+            return entity.ID;
+        }
+
+        public override List<JcbMarketrecordInfo> GetJcbMarketrecordList()
+        {
+            List<JcbMarketrecordInfo> list = new List<JcbMarketrecordInfo>();
+            string sql = "SELECT * FROM HX_JcbMarketrecord";
+
+            using (IDataReader reader = SqlHelper.ExecuteReader(_con, CommandType.Text, sql))
+            {
+                while (reader.Read())
+                {
+                    list.Add(PopulateJcbMarketrecordInfo(reader));
+                }
+            }
+
+            return list;
+        }
+
+        #endregion
+
+        #endregion
     }
 }

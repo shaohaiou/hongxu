@@ -15,7 +15,13 @@ namespace Hx.Components.BasePage
         /// </summary>
         protected override void Check()
         {
-
+            if (!JCBContext.Current.UserCheck)
+            {
+                Response.Clear();
+                Response.Write("您没有权限操作！");
+                Response.End();
+                return;
+            }
         }
 
         /// <summary>
@@ -43,13 +49,13 @@ namespace Hx.Components.BasePage
         /// <summary>
         /// 后台用户名
         /// </summary>
-        protected string AdminName
+        protected string UserName
         {
             get
             {
-                if (HXContext.Current.AdminCheck)
+                if (JCBContext.Current.UserCheck)
                 {
-                    return HXContext.Current.AdminUser.UserName;
+                    return JCBContext.Current.AdminUser.UserName;
                 }
                 return string.Empty;
             }
@@ -58,27 +64,26 @@ namespace Hx.Components.BasePage
         /// <summary>
         /// 后台用户ID
         /// </summary>
-        protected int AdminID
+        protected int UserID
         {
             get
             {
-                return 1;
-                //return HXContext.Current.AdminUserID;
+                return JCBContext.Current.AdminUserID;
             }
         }
 
         /// <summary>
         /// 后台用户实体
         /// </summary>
-        protected AdminInfo Admin
+        protected JcbUserInfo Admin
         {
             get
             {
-                return HXContext.Current.AdminUser;
+                return JCBContext.Current.AdminUser;
             }
             set
             {
-                HXContext.Current.AdminUser = value;
+                JCBContext.Current.AdminUser = value;
             }
         }
 

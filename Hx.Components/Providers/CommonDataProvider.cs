@@ -671,8 +671,103 @@ namespace Hx.Components.Providers
 
         #endregion
 
-        #region MyRegion
-        
+        #region Jcb用户管理
+
+        /// <summary>
+        /// 通过管理员名获取管理员
+        /// </summary>
+        /// <param name="name">管理员名</param>
+        /// <returns></returns>
+        public abstract JcbUserInfo GetJcbUserByName(string id);
+
+        /// <summary>
+        /// 管理员是否已经存在
+        /// </summary>
+        /// <param name="name">管理员ID</param>
+        /// <returns></returns>
+        public abstract bool ExistsJcbUser(int id);
+
+        /// <summary>
+        /// 添加管理员
+        /// </summary>
+        /// <param name="model">后台用户实体类</param>
+        /// <returns>添加成功返回ID</returns>
+        public abstract int AddJcbUser(JcbUserInfo model);
+
+        /// <summary>
+        /// 更新管理员
+        /// </summary>
+        /// <param name="model">后台用户实体类</param>
+        /// <returns>修改是否成功</returns>
+        public abstract bool UpdateJcbUser(JcbUserInfo model);
+
+        /// <summary>
+        /// 删除管理员
+        /// </summary>
+        /// <param name="AID"></param>
+        /// <returns></returns>
+        public abstract bool DeleteJcbUser(int AID);
+
+        /// <summary>
+        /// 通过ID获取管理员
+        /// </summary>
+        /// <param name="id">ID</param>
+        /// <returns>管理员实体信息</returns>
+        public abstract JcbUserInfo GetJcbUser(int id);
+
+        /// <summary>
+        /// 验证用户登陆
+        /// </summary>
+        /// <param name="userName">用户名</param>
+        /// <param name="password">密码</param>
+        /// <returns>用户ID</returns>
+        public abstract int ValiJcbUser(string userName, string password);
+
+        /// <summary>
+        /// 返回所有用户
+        /// </summary>
+        /// <returns></returns>
+        public abstract List<JcbUserInfo> GetAllJcbUsers();
+
+        /// <summary>
+        /// 修改密码
+        /// </summary>
+        /// <param name="userID">管理员ID</param>
+        /// <param name="oldPassword">旧密码</param>
+        /// <param name="newPassword">新密码</param>
+        /// <returns></returns>
+        public abstract bool ChangeJcbUserPw(int userID, string oldPassword, string newPassword);
+
+        /// <summary>
+        /// 获取用于加密的值
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <returns></returns>
+        public abstract string GetJcbUserKey(int userID);
+
+        /// <summary>
+        /// 填充后台用户实体类
+        /// </summary>
+        /// <param name="reader">记录集</param>
+        /// <returns>实体类</returns>
+        protected JcbUserInfo PopulateJcbUser(IDataReader reader)
+        {
+            JcbUserInfo admin = new JcbUserInfo();
+            admin.ID = (int)reader["ID"];
+            admin.Administrator = DataConvert.SafeBool(reader["Administrator"]);
+            admin.LastLoginIP = reader["LastLoginIP"] as string;
+            admin.LastLoginTime = reader["LastLoginTime"] as DateTime?;
+            admin.Password = reader["Password"] as string;
+            admin.UserName = reader["UserName"] as string;
+
+            SerializerData data = new SerializerData();
+            data.Keys = reader["PropertyNames"] as string;
+            data.Values = reader["PropertyValues"] as string;
+            admin.SetSerializerData(data);
+
+            return admin;
+        }
+
         #endregion
     }
 }

@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 using System.Runtime.InteropServices;
+using Hx.Car;
 
 namespace HX.CheShangBao
 {
@@ -123,9 +124,13 @@ namespace HX.CheShangBao
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            this.Visible = false;
-            Default formDefault = new Default();
-            formDefault.Show();
+            Global.CurrentUser = Jcbs.Instance.GetJcbUserRemote(txtUserName.Text,txtPassword.Text);
+            if (Global.CurrentUser != null)
+            {
+                this.Visible = false;
+                Default formDefault = new Default();
+                formDefault.Show();
+            }
         }
     }
 }

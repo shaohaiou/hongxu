@@ -29,12 +29,15 @@ namespace Hx.Car.Entity
         [JsonProperty("JcbSiteType")]
         public DateTime AddTime { get; set; }
 
+        [JsonProperty("JcbAccountType")]
+        public JcbAccountType JcbAccountType { get; set; }
+
 
         /// <summary>
-        /// 扩展信息
+        /// 帐号类型
         /// </summary>
         [JsonIgnore]
-        public string ext
+        public string Ext
         {
             get { return GetString("ext", ""); }
             set { SetExtendedAttribute("ext", value); }

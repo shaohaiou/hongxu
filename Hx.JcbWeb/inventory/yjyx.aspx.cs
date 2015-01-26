@@ -34,43 +34,7 @@ namespace Hx.JcbWeb.inventory
             get
             {
                 if (listaccount == null)
-                {
-                    listaccount = new List<JcbAccountInfo>();
-                    listaccount.Add(new JcbAccountInfo()
-                    {
-                        ID = 1,
-                        AccountName = "hxjt",
-                        Password = "w958137",
-                        UserID = 1,
-                        JcbSiteType = JcbSiteType.t_二手车之家
-                    });
-                    listaccount.Add(new JcbAccountInfo()
-                    {
-                        ID = 2,
-                        AccountName = "hxjt",
-                        Password = "w958137",
-                        UserID = 1,
-                        JcbSiteType = JcbSiteType.t_58同城
-                    });
-                    listaccount.Add(new JcbAccountInfo()
-                    {
-                        ID = 3,
-                        AccountName = "hxjt",
-                        Password = "w958137",
-                        UserID = 1,
-                        JcbSiteType = JcbSiteType.赶集网
-                    });
-                    listaccount.Add(new JcbAccountInfo()
-                    {
-                        ID = 4,
-                        AccountName = "hxjt1",
-                        Password = "w958137",
-                        UserID = 1,
-                        JcbSiteType = JcbSiteType.t_二手车之家
-                    });
-                    //listaccount = Jcbs.Instance.GetAccountList(true);
-
-                }
+                    listaccount = Jcbs.Instance.GetAccountList(true);
                 return listaccount;
             }
         }
@@ -96,9 +60,15 @@ namespace Hx.JcbWeb.inventory
 
         private void LoadData()
         {
+#if DEBUG
+            DataTable t = EnumExtensions.ToTable<JcbSiteType>();
+            t.DefaultView.RowFilter = "[Text] <> '58同城' and [Text] <> '赶集网'";
+            rptData.DataSource = t.DefaultView;
+            rptData.DataBind();
+#else
             rptData.DataSource = EnumExtensions.ToTable<JcbSiteType>();
             rptData.DataBind();
-
+#endif
             btnSubmit.Attributes["carid"] = CurrentCarID.ToString();
         }
 
@@ -109,9 +79,9 @@ namespace Hx.JcbWeb.inventory
                 DataRowView row = (DataRowView)e.Item.DataItem;
                 DropDownList ddlAccounts = (DropDownList)e.Item.FindControl("ddlAccounts");
                 Label lblIsMarketing = (Label)e.Item.FindControl("lblIsMarketing");
-                if (ListAccount.Exists(a => a.UserID == AdminID && a.JcbSiteType == (JcbSiteType)DataConvert.SafeInt(row["Value"])))
+                if (ListAccount.Exists(a => a.UserID == UserID && a.JcbSiteType == (JcbSiteType)DataConvert.SafeInt(row["Value"])))
                 {
-                    ddlAccounts.DataSource = ListAccount.FindAll(a => a.UserID == AdminID && a.JcbSiteType == (JcbSiteType)DataConvert.SafeInt(row["Value"]));
+                    ddlAccounts.DataSource = ListAccount.FindAll(a => a.UserID == UserID && a.JcbSiteType == (JcbSiteType)DataConvert.SafeInt(row["Value"]));
                     ddlAccounts.DataTextField = "AccountName";
                     ddlAccounts.DataValueField = "ID";
                     ddlAccounts.DataBind();

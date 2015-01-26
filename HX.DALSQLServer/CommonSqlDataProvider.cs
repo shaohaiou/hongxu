@@ -1456,5 +1456,222 @@ namespace HX.DALSQLServer
         }
 
         #endregion
+
+        #region Jcb用户管理
+
+        /// <summary>
+        ///  获取用于加密的值
+        /// </summary>
+        /// <param name="userID">管理员ID</param>
+        /// <returns>用于加密的值</returns>
+        public override string GetJcbUserKey(int userID)
+        {
+            StringBuilder strSql = new StringBuilder();
+            strSql.Append("select  top 1 CheckKey from HX_JcbUser ");
+            strSql.Append(" where ID=@ID ");
+            object o = SqlHelper.ExecuteScalar(_con, CommandType.Text, strSql.ToString(), new SqlParameter("@ID", userID));
+            return o as string;
+        }
+
+        /// <summary>
+        /// 管理员是否已经存在
+        /// </summary>
+        /// <param name="name">管理员ID</param>
+        /// <returns>管理员是否存在</returns>
+        public override bool ExistsJcbUser(int id)
+        {
+            string sql = "select count(1) from HX_JcbUser where ID=@ID";
+            int i = Convert.ToInt32(SqlHelper.ExecuteScalar(_con, CommandType.Text, sql, new SqlParameter("@ID", id)));
+            if (i > 0)
+            {
+                return true;
+            }
+            return false;
+        }
+        /// <summary>
+        /// 通过用户名获得后台管理员信息
+        /// </summary>
+        /// <param name="UserName">用户名</param>
+        /// <returns>管理员实体信息</returns>
+        public override JcbUserInfo GetJcbUserByName(string UserName)
+        {
+            string sql = "select * from HX_JcbUser where UserName=@UserName";
+            JcbUserInfo admin = null;
+            using (IDataReader reader = SqlHelper.ExecuteReader(_con, CommandType.Text, sql, new SqlParameter("@UserName", UserName)))
+            {
+                if (reader.Read())
+                {
+                    admin = PopulateJcbUser(reader);
+                }
+            }
+            return admin;
+        }
+
+        /// <summary>
+        /// 添加管理员
+        /// </summary>
+        /// <param name="model">后台用户实体类</param>
+        /// <returns>添加成功返回ID</returns>
+        public override int AddJcbUser(JcbUserInfo model)
+        {
+            SerializerData data = model.GetSerializerData();
+            string sql = @"
+            INSERT INTO HX_JcbUser(UserName,Password,Administrator,LastLoginIP,LastLoginTime,[PropertyNames],[PropertyValues])
+            VALUES (@UserName,@Password,@Administrator,@LastLoginIP,@LastLoginTime,@PropertyNames,@PropertyValues)
+            ;SELECT @@IDENTITY";
+            SqlParameter[] p = 
+            {
+                new SqlParameter("@UserName",model.UserName),
+                new SqlParameter("@Password",model.Password),
+                new SqlParameter("@Administrator",model.Administrator),
+                new SqlParameter("@LastLoginIP",model.LastLoginIP),
+                new SqlParameter("@LastLoginTime",model.LastLoginTime),
+                new SqlParameter("@PropertyNames",data.Keys),
+                new SqlParameter("@PropertyValues",data.Values)
+            };
+            model.ID = DataConvert.SafeInt(SqlHelper.ExecuteScalar(_con, CommandType.Text, sql, p));
+            return model.ID;
+        }
+
+        /// <summary>
+        /// 更新管理员
+        /// </summary>
+        /// <param name="model">后台用户实体类</param>
+        /// <returns>修改是否成功</returns>
+        public override bool UpdateJcbUser(JcbUserInfo model)
+        {
+            SerializerData data = model.GetSerializerData();
+            string sql = @"UPDATE HX_JcbUser SET
+            UserName = @UserName
+            ,Password = @Password
+            ,Administrator = @Administrator
+            ,LastLoginIP = @LastLoginIP
+            ,LastLoginTime = @LastLoginTime
+            ,[PropertyNames] = @PropertyNames
+            ,[PropertyValues] = @PropertyValues
+            WHERE ID = @ID
+            ";
+            SqlParameter[] p = 
+            {
+                new SqlParameter("@UserName",model.UserName),
+                new SqlParameter("@Password",model.Password),
+                new SqlParameter("@Administrator",model.Administrator),
+                new SqlParameter("@LastLoginIP",model.LastLoginIP),
+                new SqlParameter("@LastLoginTime",model.LastLoginTime),
+                new SqlParameter("@PropertyNames",data.Keys),
+                new SqlParameter("@PropertyValues",data.Values),
+                new SqlParameter("@ID",model.ID)
+            };
+            int result = SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql, p);
+            if (result > 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// 删除管理员
+        /// </summary>
+        /// <param name="AID">管理员ID</param>
+        /// <returns>删除是否成功</returns>
+        public override bool DeleteJcbUser(int id)
+        {
+            StringBuilder strSql = new StringBuilder();
+            strSql.Append("delete from HX_JcbUser ");
+            strSql.Append(" where ID=@ID ");
+            int result = SqlHelper.ExecuteNonQuery(_con, CommandType.Text, strSql.ToString(), new SqlParameter("@ID", id));
+            if (result > 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// 通过ID获取管理员
+        /// </summary>
+        /// <param name="id">ID</param>
+        /// <returns>管理员实体信息</returns>
+        public override JcbUserInfo GetJcbUser(int id)
+        {
+            StringBuilder strSql = new StringBuilder();
+            strSql.Append("select  top 1 * from HX_JcbUser ");
+            strSql.Append(" where ID=@ID ");
+            JcbUserInfo admin = null;
+            using (IDataReader reader = SqlHelper.ExecuteReader(_con, CommandType.Text, strSql.ToString(), new SqlParameter("@ID", id)))
+            {
+                if (reader.Read())
+                {
+                    admin = PopulateJcbUser(reader);
+                }
+            }
+            return admin;
+        }
+
+        /// <summary>
+        /// 验证用户登陆
+        /// </summary>
+        /// <param name="userName">用户名</param>
+        /// <param name="password">密码</param>
+        /// <returns>用户ID</returns>
+        public override int ValiJcbUser(string userName, string password)
+        {
+            StringBuilder strSql = new StringBuilder();
+            strSql.Append("select ID from HX_JcbUser");
+            strSql.Append(" where UserName=@UserName and Password=@PassWord");
+
+            object obj = SqlHelper.ExecuteScalar(_con, CommandType.Text, strSql.ToString(), new SqlParameter("@UserName", userName), new SqlParameter("@PassWord", password));
+            if (obj == null)
+            {
+                return -2;
+            }
+            else
+            {
+                return Convert.ToInt32(obj);
+            }
+        }
+
+        /// <summary>
+        /// 返回所有用户
+        /// </summary>
+        /// <returns>返回所有用户</returns>
+        public override List<JcbUserInfo> GetAllJcbUsers()
+        {
+            StringBuilder strSql = new StringBuilder();
+            strSql.Append("select * from HX_JcbUser");
+
+
+            List<JcbUserInfo> admins = new List<JcbUserInfo>();
+            using (IDataReader reader = SqlHelper.ExecuteReader(_con, CommandType.Text, strSql.ToString()))
+            {
+                while (reader.Read())
+                {
+                    admins.Add(PopulateJcbUser(reader));
+                }
+            }
+            return admins;
+        }
+
+        /// <summary>
+        /// 修改密码
+        /// </summary>
+        /// <param name="userID">管理员ID</param>
+        /// <param name="oldPassword">旧密码</param>
+        /// <param name="newPassword">新密码</param>
+        /// <returns>修改密码是否成功</returns>
+        public override bool ChangeJcbUserPw(int userID, string oldPassword, string newPassword)
+        {
+            StringBuilder strSql = new StringBuilder();
+            strSql.Append("update HX_JcbUser set ");
+            strSql.Append("Password=@NewPassword");
+            strSql.Append(" where ID=@ID and Password=@Password ");
+            int result = SqlHelper.ExecuteNonQuery(_con, CommandType.Text, strSql.ToString(), new SqlParameter("@ID", userID), new SqlParameter("@Password", oldPassword), new SqlParameter("@NewPassword", newPassword));
+            if (result < 1)
+                return false;
+            return true;
+        }
+
+        #endregion
     }
 }

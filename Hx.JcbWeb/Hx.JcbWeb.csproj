@@ -67,9 +67,11 @@
     <Content Include="images\dl_bg.jpg" />
     <Content Include="images\fdj.png" />
     <Content Include="images\fm.jpg" />
+    <Content Include="images\hasconfig.png" />
     <Content Include="images\hclose.png" />
     <Content Include="images\headerbg.png" />
     <Content Include="images\neishi.png" />
+    <Content Include="images\noconfig.png" />
     <Content Include="images\nt.jpg" />
     <Content Include="images\picsdel.png" />
     <Content Include="images\tblogo_bg.jpg" />
@@ -82,10 +84,27 @@
     <Content Include="inventory\inventoryleft.aspx" />
     <Content Include="inventory\inventorymg.aspx" />
     <Content Include="inventory\inventoryright.aspx" />
+    <Content Include="inventory\marketingstatus.aspx" />
     <Content Include="inventory\yjyx.aspx" />
+    <Content Include="inventory\yxtg.aspx" />
     <Content Include="js\ajaxupload.js" />
+    <Content Include="js\calendar.js" />
+    <Content Include="js\config.js" />
     <Content Include="js\jquery-1.3.2.min.js" />
+    <Content Include="js\lang\en.js" />
+    <Content Include="js\lang\zh-cn.js" />
+    <Content Include="js\lang\zh-tw.js" />
+    <Content Include="js\My97DatePicker.htm" />
+    <Content Include="js\skin\datePicker.gif" />
+    <Content Include="js\skin\default\datepicker.css" />
+    <Content Include="js\skin\default\img.gif" />
+    <Content Include="js\skin\WdatePicker.css" />
+    <Content Include="js\skin\whyGreen\bg.jpg" />
+    <Content Include="js\skin\whyGreen\datepicker.css" />
+    <Content Include="js\skin\whyGreen\img.gif" />
     <Content Include="js\WdatePicker.js" />
+    <Content Include="marketing\accountconfig.aspx" />
+    <Content Include="marketing\accountmg.aspx" />
     <Content Include="reg.aspx" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -135,12 +154,40 @@
     <Compile Include="inventory\inventoryright.aspx.designer.cs">
       <DependentUpon>inventoryright.aspx</DependentUpon>
     </Compile>
+    <Compile Include="inventory\marketingstatus.aspx.cs">
+      <DependentUpon>marketingstatus.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="inventory\marketingstatus.aspx.designer.cs">
+      <DependentUpon>marketingstatus.aspx</DependentUpon>
+    </Compile>
     <Compile Include="inventory\yjyx.aspx.cs">
       <DependentUpon>yjyx.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="inventory\yjyx.aspx.designer.cs">
       <DependentUpon>yjyx.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="inventory\yxtg.aspx.cs">
+      <DependentUpon>yxtg.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="inventory\yxtg.aspx.designer.cs">
+      <DependentUpon>yxtg.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="marketing\accountconfig.aspx.cs">
+      <DependentUpon>accountconfig.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="marketing\accountconfig.aspx.designer.cs">
+      <DependentUpon>accountconfig.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="marketing\accountmg.aspx.cs">
+      <DependentUpon>accountmg.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="marketing\accountmg.aspx.designer.cs">
+      <DependentUpon>accountmg.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="reg.aspx.cs">

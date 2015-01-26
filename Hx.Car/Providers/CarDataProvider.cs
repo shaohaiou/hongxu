@@ -509,6 +509,8 @@ namespace Hx.Car.Providers
 
         public abstract int AddJcbAccount(JcbAccountInfo entity);
 
+        public abstract void DeleteAccount(string ids);
+
         public abstract List<JcbAccountInfo> GetJcbAccountList();
 
         public static JcbAccountInfo PopulateJcbAccountInfo(IDataReader reader)
@@ -520,7 +522,8 @@ namespace Hx.Car.Providers
                 AccountName = reader["AccountName"] as string,
                 Password = reader["Password"] as string,
                 AddTime = DataConvert.SafeDate(reader["AddTime"]),
-                JcbSiteType = (JcbSiteType)(byte)reader["JcbSiteType"]
+                JcbSiteType = (JcbSiteType)(byte)reader["JcbSiteType"],
+                JcbAccountType = (JcbAccountType)(byte)reader["JcbAccountType"]
             };
             SerializerData data = new SerializerData();
             data.Keys = reader["PropertyNames"] as string;

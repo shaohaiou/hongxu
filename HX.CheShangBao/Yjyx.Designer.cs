@@ -67,6 +67,7 @@
             this.wbcontent.ScrollBarsEnabled = false;
             this.wbcontent.Size = new System.Drawing.Size(398, 325);
             this.wbcontent.TabIndex = 2;
+            this.wbcontent.DocumentCompleted += new System.Windows.Forms.WebBrowserDocumentCompletedEventHandler(this.wbcontent_DocumentCompleted);
             // 
             // Yjyx
             // 

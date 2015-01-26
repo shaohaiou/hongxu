@@ -732,6 +732,12 @@ namespace HX.DALSQLServer
             return list;
         }
 
+        public override void DeleteAccount(string ids)
+        {
+            string sql = "DELETE FROM HX_JcbAccount WHERE ID IN (" + ids + ")";
+            SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql);
+        }
+
         #endregion
 
         #region 营销记录

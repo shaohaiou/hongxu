@@ -11,6 +11,8 @@ using System.Runtime.InteropServices;
 using System.Web.Security;
 using System.Net;
 using Hx.Tools;
+using System.ComponentModel;
+using System.Threading;
 
 namespace Hx.Tools
 {
@@ -1304,6 +1306,31 @@ namespace Hx.Tools
                 weeknum = weeknum + 1;
             }
             return weeknum;
-        } 
+        }
+
+        #region 多线程
+
+        public delegate void DelayRunFunc();
+
+        /// <summary>
+        /// 延时执行
+        /// </summary>
+        /// <param name="delay"></param>
+        /// <param name="?"></param>
+        public static void DelayRun(int delay, DelayRunFunc func)
+        {
+            BackgroundWorker b = new BackgroundWorker();
+            b.RunWorkerCompleted += delegate(object sender, RunWorkerCompletedEventArgs e)
+            {
+                func();
+            };
+            b.DoWork += delegate(object sender, DoWorkEventArgs e)
+            {
+                Thread.Sleep(delay);
+            };
+            b.RunWorkerAsync();
+        }
+
+        #endregion
     }
 }

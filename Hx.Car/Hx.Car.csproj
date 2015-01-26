@@ -61,10 +61,12 @@
     <Compile Include="Entity\JcbMarketrecordInfo.cs" />
     <Compile Include="Enum\BankingType.cs" />
     <Compile Include="Enum\CarQuotationType.cs" />
+    <Compile Include="Enum\JcbAccountType.cs" />
     <Compile Include="Enum\JcbPicType.cs" />
     <Compile Include="Enum\JcbSiteType.cs" />
     <Compile Include="Enum\LoanType.cs" />
     <Compile Include="Entity\SybxInfo.cs" />
+    <Compile Include="HttpHandler\JcbApiHandler.cs" />
     <Compile Include="JcbCars.cs" />
     <Compile Include="Jcbs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -83,9 +85,7 @@
       <Name>Hx.Tools</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="HttpHandler\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

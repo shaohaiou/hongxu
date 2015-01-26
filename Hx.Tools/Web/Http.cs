@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Net;
 using System.IO;
+using System.Collections.Specialized;
 
 namespace Hx.Tools.Web
 {
@@ -10,7 +11,7 @@ namespace Hx.Tools.Web
     {
         #region GetPage
 
-        public static string GetPage(string url)
+        public static string GetPage(string url,int tryTimes = 1)
         {
             string content = "";
             try
@@ -33,7 +34,12 @@ namespace Hx.Tools.Web
                 }
                 myHttpWebResponse1.Close();
             }
-            catch { }
+            catch 
+            {
+                tryTimes++;
+                if (tryTimes <= 3)
+                    content = GetPage(url, tryTimes);
+            }
             return (content);
 
         }
@@ -301,6 +307,37 @@ namespace Hx.Tools.Web
         public static string Post(string postData, string xhttpUrl, string encoding)
         {
             return Post(postData, xhttpUrl, false, encoding);
+        }
+
+        public static bool PostData(NameValueCollection postVars, string[] wcfurls)
+        {
+            bool result = true;
+
+            foreach (string wcfurl in wcfurls)
+            {
+                try
+                {
+                    WebClient wc = new WebClient();
+                    wc.UploadValues(wcfurl.Trim(), "POST", postVars);
+                    wc.Dispose();
+                }
+                catch
+                {
+                    try
+                    {
+                        WebClient wc = new WebClient();
+                        wc.UploadValues(wcfurl.Trim(), "POST", postVars);
+                        wc.Dispose();
+                    }
+                    catch
+                    {
+                        result = false;
+                        continue;
+                    }
+                }
+            }
+
+            return result;
         }
 
         #endregion

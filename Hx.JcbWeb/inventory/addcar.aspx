@@ -105,7 +105,7 @@
                         }, 200);
                     },
                     onComplete: function (file, response) {
-                        button1.val('修改照片');
+                        button1.val('上传照片');
                         window.clearInterval(interval1);
                         this.enable();
                         AddPic(response.src);

@@ -84,6 +84,7 @@
     <Compile Include="Entity\DayReportUserInfo.cs" />
     <Compile Include="Entity\EventLogEntry.cs" />
     <Compile Include="Entity\GlobalSettingInfo.cs" />
+    <Compile Include="Entity\JcbUserInfo.cs" />
     <Compile Include="Entity\Job.cs" />
     <Compile Include="Entity\JobOfferInfo.cs" />
     <Compile Include="Entity\MonthlyTargetInfo.cs" />
@@ -114,6 +115,7 @@
     <Compile Include="HttpHandler\RemoteConnection.cs" />
     <Compile Include="Interface\IJob.cs" />
     <Compile Include="Interface\IQuery.cs" />
+    <Compile Include="JcbUsers.cs" />
     <Compile Include="JobOffers.cs" />
     <Compile Include="Jobs.cs" />
     <Compile Include="Logs.cs" />
@@ -129,6 +131,7 @@
     <Compile Include="Query\WeixinActQuery.cs" />
     <Compile Include="Query\JituanvoteQuery.cs" />
     <Compile Include="Web\HXContext.cs" />
+    <Compile Include="Web\JCBContext.cs" />
     <Compile Include="WeixinActs.cs" />
   </ItemGroup>
   <ItemGroup>

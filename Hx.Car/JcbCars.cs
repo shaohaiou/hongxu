@@ -5,11 +5,14 @@ using System.Text;
 using Hx.Car.Entity;
 using Hx.Car.Providers;
 using Hx.Components;
+using System.Web.Script.Serialization;
+using Hx.Tools.Web;
 
 namespace Hx.Car
 {
     public class JcbCars
     {
+        private static JavaScriptSerializer json = new JavaScriptSerializer();
         #region 单例
         private static object sync_creater = new object();
 
@@ -40,7 +43,7 @@ namespace Hx.Car
         public List<JcbCarInfo> GetList(bool fromCache = false)
         {
             if (!fromCache)
-                return CarDataProvider.Instance().GetJcbCarList().OrderByDescending(c=>c.LastUpdateTime).ToList();
+                return CarDataProvider.Instance().GetJcbCarList().OrderByDescending(c => c.LastUpdateTime).ToList();
 
             string key = GlobalKey.JCBCAR_LIST;
             List<JcbCarInfo> list = MangaCache.Get(key) as List<JcbCarInfo>;
@@ -52,10 +55,10 @@ namespace Hx.Car
             return list;
         }
 
-        public JcbCarInfo GetModel(int id,bool fromCache = false)
+        public JcbCarInfo GetModel(int id, bool fromCache = false)
         {
             List<JcbCarInfo> list = GetList(fromCache);
-            return list.Find(c=>c.ID == id);
+            return list.Find(c => c.ID == id);
         }
 
         public void ReloadListCache()
@@ -63,6 +66,13 @@ namespace Hx.Car
             string key = GlobalKey.JCBCAR_LIST;
             MangaCache.Remove(key);
             GetList(true);
+        }
+
+        public JcbCarInfo GetModelRemote(int id, bool fromCache = false)
+        {
+            string url = "http://jcb.hongxu.cn/jcbapi.axd?action=getcarinfo&id=" + id;
+            string jsonstr = Http.GetPage(url);
+            return json.Deserialize<JcbCarInfo>(jsonstr);
         }
     }
 }

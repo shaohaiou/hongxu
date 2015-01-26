@@ -9,6 +9,7 @@ using System.Windows.Forms;
 
 namespace HX.CheShangBao
 {
+    
     public partial class Default : Form
     {
         private static Dictionary<string, string> urls = new Dictionary<string, string>();
@@ -27,6 +28,7 @@ namespace HX.CheShangBao
         private void Init()
         {
             urls.Add("库存管理-销售中车源", "http://jcb.hongxu.cn/inventory/inventorymg.aspx");
+            urls.Add("营销管理-营销网站帐号管理", "http://jcb.hongxu.cn/marketing/accountmg.aspx");
         }
 
         private void pnlNav_Click(object sender, EventArgs e)
@@ -39,6 +41,8 @@ namespace HX.CheShangBao
 
             if (pnlCur.Name == "pnlNav2")
                 wbContent.Url = new Uri(urls["库存管理-销售中车源"]);
+            else if(pnlCur.Name == "pnlNav3")
+                wbContent.Url = new Uri(urls["营销管理-营销网站帐号管理"]);
         }
 
         private void SetNavStyle(Panel pnlCur)
@@ -116,20 +120,6 @@ namespace HX.CheShangBao
                     btnAddCar.Click += new HtmlElementEventHandler(btnAddCar_Click);
                 }
                 HtmlDocument iframeDoc = wbContent.Document.Window.Frames["frmRight"].Document;
-
-                for (int i = 0; i < 10; i++)
-                {
-                    HtmlElement btnYjyx = iframeDoc.All["btnYjyx" + i];
-                    if (btnYjyx != null)
-                    {
-                        btnYjyx.Click += new HtmlElementEventHandler(btnYjyx_Click);
-                    }
-                    HtmlElement btnXgxx = iframeDoc.All["btnXgxx" + i];
-                    if (btnXgxx != null)
-                    {
-                        btnXgxx.Click += new HtmlElementEventHandler(btnXgxx_Click);
-                    }
-                }
             }
         }
 
@@ -145,39 +135,14 @@ namespace HX.CheShangBao
             formAddCar.ShowDialog();
         }
 
-        /// <summary>
-        /// 一键营销
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnYjyx_Click(object sender, HtmlElementEventArgs e)
-        {
-            HtmlElement btnYjyx = (HtmlElement)sender;
-            int id = int.Parse(btnYjyx.GetAttribute("val"));
-            Yjyx formYjyx = new Yjyx();
-            formYjyx.defaultform = this;
-            formYjyx.carid = id;
-            formYjyx.Show();
-        }
-
-        /// <summary>
-        /// 修改信息
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnXgxx_Click(object sender, HtmlElementEventArgs e)
-        {
-            HtmlElement btnXgxx = (HtmlElement)sender; 
-            int id = int.Parse(btnXgxx.GetAttribute("val"));
-            AddCar formAddCar = new AddCar();
-            formAddCar.defaultform = this;
-            formAddCar.carid = id;
-            formAddCar.Show();
-        }
-
         public void RefreshPage()
         {
             wbContent.Navigate(wbContent.Url);
+        }
+
+        private void Default_Load(object sender, EventArgs e)
+        {
+            wbContent.ObjectForScripting = new ServerJsToClient(this);
         }
     }
 }

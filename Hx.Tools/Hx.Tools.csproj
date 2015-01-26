@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CSharpAPIs.cs" />
     <Compile Include="CustomIdentity.cs" />
     <Compile Include="DataConvert.cs" />
     <Compile Include="DynamicWebServices.cs" />

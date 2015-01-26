@@ -47,11 +47,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccountConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AccountConfig.Designer.cs">
+      <DependentUpon>AccountConfig.cs</DependentUpon>
+    </Compile>
     <Compile Include="AddCar.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="AddCar.Designer.cs">
       <DependentUpon>AddCar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AutoLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AutoLogin.Designer.cs">
+      <DependentUpon>AutoLogin.cs</DependentUpon>
     </Compile>
     <Compile Include="Default.cs">
       <SubType>Form</SubType>
@@ -65,6 +77,7 @@
     <Compile Include="FrmTest.Designer.cs">
       <DependentUpon>FrmTest.cs</DependentUpon>
     </Compile>
+    <Compile Include="Global.cs" />
     <Compile Include="Login.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -79,17 +92,36 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServerJsToClient.cs" />
     <Compile Include="Yjyx.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Yjyx.Designer.cs">
       <DependentUpon>Yjyx.cs</DependentUpon>
     </Compile>
+    <Compile Include="Yxtg.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Yxtg.Designer.cs">
+      <DependentUpon>Yxtg.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="AccountConfig.resx">
+      <DependentUpon>AccountConfig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AutoLogin.resx">
+      <DependentUpon>AutoLogin.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmTest.resx">
       <DependentUpon>FrmTest.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="MarketingStatus.resx">
+      <DependentUpon>MarketingStatus.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Yjyx.resx">
       <DependentUpon>Yjyx.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Yxtg.resx">
+      <DependentUpon>Yxtg.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="images\logback.png" />
     <EmbeddedResource Include="AddCar.resx">
@@ -157,6 +189,20 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\hclose.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Hx.Car\Hx.Car.csproj">
+      <Project>{CF0E5EFE-4900-4316-8C90-48ED4DD5998D}</Project>
+      <Name>Hx.Car</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Hx.Components\Hx.Components.csproj">
+      <Project>{295BF964-5939-4DFD-9E4F-15725C3A0876}</Project>
+      <Name>Hx.Components</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Hx.Tools\Hx.Tools.csproj">
+      <Project>{5057EE9C-D7BC-436D-A748-6CCEDDEF5F78}</Project>
+      <Name>Hx.Tools</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

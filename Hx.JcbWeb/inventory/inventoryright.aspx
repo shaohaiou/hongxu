@@ -23,6 +23,15 @@
             $("#txtDateLastUpdateTimeEnd").click(function () {
                 WdatePicker({ 'readOnly': 'true', dateFmt: 'yyyy-MM-dd', maxDate: '<%=DateTime.Today.ToString("yyyy-MM-dd") %>' });
             });
+            $(".btnYxtg").click(function () {
+                window.external.Yxtg($(this).attr("val"));
+            });
+            $(".btnYjyx").click(function () {
+                window.external.Yjyx($(this).attr("val"));
+            });
+            $(".btnXgxx").click(function () {
+                window.external.Xgxx($(this).attr("val"));
+            });
         });
     </script>
 </head>
@@ -118,7 +127,8 @@
                             车牌号：<%#string.IsNullOrEmpty(Eval("Cph").ToString()) ? "-" : Eval("Cph").ToString()%><br />
                             <%#Eval("Bxlc")%>万公里
                             <%#Eval("Wgys")%><br />
-                            <a href="javascript:void(0)" name="btnXgxx<%# Container.ItemIndex %>" val="<%#Eval("ID") %>">修改信息</a> </li>
+                            <a href="javascript:void(0)" class="btnXgxx" val="<%#Eval("ID") %>">
+                                修改信息</a> </li>
                         <li class="bfb12"><span class="red strong">
                             <%#Eval("Ysj")%>万</span><br />
                             <a href="javascript:void(0)">改价格</a> </li>
@@ -127,9 +137,10 @@
                         </li>
                         <li class="bfb12">
                             <%#Eval("LastUpdateTime", "{0:yyyy-MM-dd}<br />{0:HH:mm}")%></li>
-                        <li class="bfb10">
-                            <a href="javascript:void(0);" name="btnYjyx<%# Container.ItemIndex %>" val="<%#Eval("ID") %>">一键营销</a>
-                        </li>
+                        <li class="bfb10"><a href="javascript:void(0);"
+                            val="<%#Eval("ID") %>" class="btnYxtg">营销推广</a><br />
+                            <a href="javascript:void(0);" class="btnYjyx" val="<%#Eval("ID") %>">
+                                一键营销</a> </li>
                         <li class="bfb10"><a href="javascript:void(0);">删除</a></li>
                     </ul>
                 </ItemTemplate>

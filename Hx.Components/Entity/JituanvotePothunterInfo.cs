@@ -107,5 +107,16 @@ namespace Hx.Components.Entity
             get { return GetString("Introduce", ""); }
             set { SetExtendedAttribute("Introduce", value); }
         }
+
+        /// <summary>
+        /// 被评论数
+        /// </summary>
+        [JsonIgnore]
+        public int Comments
+        {
+            get { return GetInt("Comments", 0); }
+            set { SetExtendedAttribute("Comments", value.ToString()); }
+        }
+
     }
 }

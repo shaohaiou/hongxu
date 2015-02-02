@@ -65,6 +65,23 @@ namespace Hx.BackAdmin.weixin
             }
         }
 
+        private static object synchelper = new object();
+        private List<WeixinActCommentInfo> _listcomment = null;
+        public List<WeixinActCommentInfo> ListComment
+        {
+            get
+            {
+                if (_listcomment == null)
+                {
+                    lock (synchelper)
+                    {
+                        _listcomment = WeixinActs.Instance.GetComments(true);
+                    }
+                }
+                return _listcomment;
+            }
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -101,6 +118,28 @@ namespace Hx.BackAdmin.weixin
             List<JituanvotePothunterInfo> plist = WeixinActs.Instance.GetJituanvotePothunterList(true);
             rptData.DataSource = plist;
             rptData.DataBind();
+        }
+
+        protected void rptData_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            {
+                JituanvotePothunterInfo entity = (JituanvotePothunterInfo)e.Item.DataItem;
+                Repeater rptCommentFirstTwo = (Repeater)e.Item.FindControl("rptCommentFirstTwo");
+                Repeater rptCommentMore = (Repeater)e.Item.FindControl("rptCommentMore");
+                List<WeixinActCommentInfo> source = ListComment.FindAll(c => c.AthleteID == entity.ID && c.WeixinActType == Components.Enumerations.WeixinActType.集团活动).ToList().OrderByDescending(c => c.ID).ToList();
+                if (rptCommentFirstTwo != null)
+                {
+                    rptCommentFirstTwo.DataSource = source.Count > 2 ? source.Take(2) : source;
+                    rptCommentFirstTwo.DataBind();
+                }
+                if (rptCommentMore != null && source.Count > 2)
+                {
+                    source = source.Skip(2).ToList();
+                    rptCommentMore.DataSource = source.Count > 3 ? source.Take(3) : source;
+                    rptCommentMore.DataBind();
+                }
+            }
         }
 
         /// <summary>

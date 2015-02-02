@@ -548,6 +548,8 @@ namespace Hx.Components.Providers
 
         #region 集团投票活动
 
+        #region 选手管理
+
         public abstract bool AddJituanvotePothunterInfo(JituanvotePothunterInfo entity);
 
         public abstract void DelJituanvotePothunterInfo(string ids);
@@ -568,6 +570,10 @@ namespace Hx.Components.Providers
 
             return entity;
         }
+        
+        #endregion
+
+        #region 销售精英投票活动
 
         public abstract List<JituanvoteInfo> GetJituanvoteList(int pageindex, int pagesize, JituanvoteQuery query, ref int recordcount);
 
@@ -592,6 +598,10 @@ namespace Hx.Components.Providers
 
             return entity;
         }
+        
+        #endregion
+
+        #region 活动设置
 
         public abstract void AddJituanvoteSetting(JituanvoteSettingInfo entity);
 
@@ -604,6 +614,33 @@ namespace Hx.Components.Providers
             data.Keys = reader["PropertyNames"] as string;
             data.Values = reader["PropertyValues"] as string;
             entity.SetSerializerData(data);
+
+            return entity;
+        }
+        
+        #endregion
+
+        #endregion
+
+        #region 评论管理
+
+        public abstract int CreateAndUpdateComment(WeixinActCommentInfo entity);
+
+        public abstract List<WeixinActCommentInfo> GetWeixinActComments();
+
+        protected WeixinActCommentInfo PopulateWeixinActCommentInfo(IDataReader reader)
+        {
+            WeixinActCommentInfo entity = new WeixinActCommentInfo() 
+            {
+                ID = DataConvert.SafeInt(reader["ID"]),
+                WeixinActType = (WeixinActType)(byte)reader["WeixinActType"],
+                AthleteID = DataConvert.SafeInt(reader["AthleteID"]),
+                Commenter = reader["Commenter"] as string,
+                PraiseNum = DataConvert.SafeInt(reader["PraiseNum"]),
+                BelittleNum = DataConvert.SafeInt(reader["BelittleNum"]),
+                Comment = reader["Comment"] as string,
+                AddTime = DataConvert.SafeDate(reader["AddTime"])
+            };
 
             return entity;
         }

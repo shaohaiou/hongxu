@@ -80,5 +80,11 @@ namespace HX.CheShangBao
             formAccountMg.sitetypeval = sitetypeval;
             formAccountMg.Show();
         }
+
+        public void Reload()
+        {
+            if (CurrentDefault != null)
+                CurrentDefault.RefreshPage();
+        }
     }
 }

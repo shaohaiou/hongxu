@@ -646,6 +646,12 @@ namespace HX.DALSQLServer
             return entity.ID;
         }
 
+        public override void DeleteJcbCars(string ids)
+        {
+            string sql = "DELETE FROM HX_JcbCar WHERE ID IN (" + ids + ")";
+            SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql);
+        }
+
         public override List<JcbCarInfo> GetJcbCarList()
         {
             List<JcbCarInfo> list = new List<JcbCarInfo>();
@@ -677,6 +683,7 @@ namespace HX.DALSQLServer
                     ,[AccountName]
                     ,[Password]
                     ,[JcbSiteType]
+                    ,[JcbAccountType]
                     ,[AddTime]
                     ,[PropertyNames]
                     ,[PropertyValues]) VALUES (
@@ -684,6 +691,7 @@ namespace HX.DALSQLServer
                     ,@AccountName
                     ,@Password
                     ,@JcbSiteType
+                    ,@JcbAccountType
                     ,@AddTime
                     ,@PropertyNames
                     ,@PropertyValues)
@@ -696,6 +704,7 @@ namespace HX.DALSQLServer
                 ,[AccountName] = @AccountName
                 ,[Password] = @Password
                 ,[JcbSiteType] = @JcbSiteType
+                ,[JcbAccountType] = @JcbAccountType
                 ,[PropertyNames] = @PropertyNames
                 ,[PropertyValues] = @PropertyValues
                 WHERE [ID] = @ID
@@ -708,6 +717,7 @@ namespace HX.DALSQLServer
                 new SqlParameter("@AccountName",entity.AccountName),
                 new SqlParameter("@Password",entity.Password),
                 new SqlParameter("@JcbSiteType",(byte)entity.JcbSiteType),
+                new SqlParameter("@JcbAccountType",(byte)entity.JcbAccountType),
                 new SqlParameter("@AddTime",entity.AddTime),
                 new SqlParameter("@PropertyNames",data.Keys),
                 new SqlParameter("@PropertyValues",data.Values)

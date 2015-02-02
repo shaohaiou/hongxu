@@ -40,6 +40,12 @@ namespace Hx.Car
             return CarDataProvider.Instance().AddJcbCar(entity);
         }
 
+        public void Delete(string ids)
+        {
+            CarDataProvider.Instance().DeleteJcbCars(ids);
+            ReloadListCache();
+        }
+
         public List<JcbCarInfo> GetList(bool fromCache = false)
         {
             if (!fromCache)

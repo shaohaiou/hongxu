@@ -1,5 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="jituanvotepothunteredit.aspx.cs"
-    Inherits="Hx.BackAdmin.weixin.jituanvotepothunteredit" %>
+    ValidateRequest="false" Inherits="Hx.BackAdmin.weixin.jituanvotepothunteredit" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -7,9 +7,13 @@
     <title>添加/编辑选手信息</title>
     <link href="../css/admin.css" rel="stylesheet" type="text/css" />
     <script src="../js/jquery-1.3.2.min.js" type="text/javascript"></script>
+    <script src="../js/ckeditor/ckeditor.js" type="text/javascript"></script>
     <script src="../js/ajaxupload.js" type="text/javascript"></script>
+    <script src="../js/comm.js" type="text/javascript"></script>
     <script type="text/javascript">
         $(function () {
+            CKEDITOR.replace('txtIntroduce', { toolbar: 'Basic', height: 380, width: 680 });
+
             var imgpath_pic;
             var button = $('#uploadbtpic'), interval;
             new AjaxUpload(button, {
@@ -80,6 +84,13 @@
                     }
                 });
             });
+
+            $("#btnCopyLink").click(function () {
+                copyToClipboard($("#txtLink").text());
+            });
+            $("#txtLink").click(function () {
+                $("#txtLink").select();
+            });
         })
     </script>
 </head>
@@ -124,11 +135,23 @@
                 </tr>
                 <tr>
                     <td class="bg1">
-                        <span class="red">*</span>个人介绍：
+                        微信链接：
                     </td>
                     <td>
-                        <asp:TextBox ID="txtIntroduce" runat="server" TextMode="MultiLine" Rows="4" Width="300"></asp:TextBox><asp:RequiredFieldValidator
-                            ID="rfvIntroduce" runat="server" CssClass="red" ErrorMessage="个人介绍必须填写" ControlToValidate="txtIntroduce"
+                        <%if (pothunter != null)
+                          { %>
+                        <input id="txtLink" type="text" class="srk1" value="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx0c9b37c9d5ddf8a8&redirect_uri=http%3A%2F%2Fbj.hongxu.cn%2Fweixin%2Fjituanvotedetail.aspx%3fid=<%=pothunter.ID%>&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect" />
+                        <a id="btnCopyLink" href="javascript:void(0);">点击复制</a>
+                        <%} %>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bg1">
+                        <span class="red">*</span>十年历程：
+                    </td>
+                    <td>
+                        <asp:TextBox ID="txtIntroduce" runat="server" TextMode="MultiLine" CssClass="ckeditor"></asp:TextBox><asp:RequiredFieldValidator
+                            ID="rfvIntroduce" runat="server" CssClass="red" ErrorMessage="十年历程必须填写" ControlToValidate="txtIntroduce"
                             Display="Dynamic"></asp:RequiredFieldValidator>
                     </td>
                 </tr>
@@ -165,7 +188,7 @@
                             </li>
                             <li style="padding-right: 10px;">
                                 <input type="button" value="上传图片" class="an3 uploadbtpics" /><br />
-                                <img src="../images/fm.jpg" alt="展示图片2" id="imgpics2" class="imgpics" style="width:440px;
+                                <img src="../images/fm.jpg" alt="展示图片2" id="imgpics2" class="imgpics" style="width: 440px;
                                     height: auto;" val="" runat="server" />
                             </li>
                             <li style="padding-right: 10px;">

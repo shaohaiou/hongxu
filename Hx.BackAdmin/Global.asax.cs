@@ -93,6 +93,10 @@ namespace Hx.BackAdmin
                     WeixinActs.Instance.ReloadAllJituanvote();
                     WeixinActs.Instance.ReloadJituanvotePothunterListCache();
                 }
+                if ((jituanvotesetting != null && jituanvotesetting.Switch == 1) || (benzvotesetting != null && benzvotesetting.Switch == 1))
+                {
+                    WeixinActs.Instance.ReloadComments();
+                }
             }
             catch { }
         }

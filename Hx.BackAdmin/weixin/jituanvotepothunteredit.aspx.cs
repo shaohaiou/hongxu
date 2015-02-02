@@ -31,7 +31,7 @@ namespace Hx.BackAdmin.weixin
             }
         }
 
-        private JituanvotePothunterInfo pothunter;
+        public JituanvotePothunterInfo pothunter;
 
         protected void Page_Load(object sender, EventArgs e)
         {

@@ -15,6 +15,11 @@ namespace Hx.JcbWeb.inventory
         {
             if (!IsPostBack)
             {
+                if (GetString("action") == "del")
+                {
+                    string ids = GetString("ids");
+                    JcbCars.Instance.Delete(ids);
+                }
                 LoadData();
             }
         }
@@ -26,8 +31,8 @@ namespace Hx.JcbWeb.inventory
         }
 
         protected void btnSearch_Click(object sender, EventArgs e)
-        { 
-            
+        {
+
         }
     }
 }

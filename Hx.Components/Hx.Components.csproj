@@ -90,6 +90,7 @@
     <Compile Include="Entity\MonthlyTargetInfo.cs" />
     <Compile Include="Entity\PromaryInfo.cs" />
     <Compile Include="Entity\ShowUrl.cs" />
+    <Compile Include="Entity\WeixinActCommentInfo.cs" />
     <Compile Include="Entity\WeixinActInfo.cs" />
     <Compile Include="Entity\JituanvotePothunterInfo.cs" />
     <Compile Include="Entity\JituanvoteSettingInfo.cs" />
@@ -106,6 +107,7 @@
     <Compile Include="Enumerations\OVCustomerNature.cs" />
     <Compile Include="Enumerations\UrlRuleType.cs" />
     <Compile Include="Enumerations\UserRoleType.cs" />
+    <Compile Include="Enumerations\WeixinActType.cs" />
     <Compile Include="EventLogs.cs" />
     <Compile Include="GlobalKey.cs" />
     <Compile Include="GlobalSettings.cs" />

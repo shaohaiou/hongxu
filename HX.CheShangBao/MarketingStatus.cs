@@ -200,11 +200,8 @@ namespace HX.CheShangBao
                                     txtUserName.SetAttribute("value", account.AccountName);
                                     txtPassWord.SetAttribute("value", account.Password);
                                     SubmitLogin.InvokeMember("click");
-
-                                    Utils.DelayRun(1000, delegate()
-                                    {
-                                        wb.Url = new Uri(Jcbs.Instance.GetLoginUrl(account));
-                                    });
+                                    wb.Stop();
+                                    wb.Navigate(Jcbs.Instance.GetPublicUrl(account));
                                 }
                                 //发布信息
                                 else if (wb.Url.ToString() == Jcbs.Instance.GetPublicUrl(account))
@@ -373,7 +370,7 @@ namespace HX.CheShangBao
                                     HtmlElement colorall = HtmlDoc.All["colorall"];
                                     foreach (HtmlElement elem in colorall.GetElementsByTagName("li"))
                                     {
-                                        if (elem.InnerHtml.IndexOf(CurrentCar.Wgys) > 0 || elem.InnerHtml.IndexOf("其他") > 0)
+                                        if (elem.InnerHtml.IndexOf(CurrentCar.Wgys) > 0 || elem.InnerHtml.IndexOf("其它") > 0)
                                         {
                                             elem.InvokeMember("click");
                                             break;
@@ -389,80 +386,13 @@ namespace HX.CheShangBao
                                         HtmlElement Maintenance2 = HtmlDoc.All["Maintenance2"];
                                         Maintenance2.InvokeMember("click");
                                     }
-                                    if (CurrentCar.Djz == "有")
-                                    {
-                                        HtmlElement dj_yes = HtmlDoc.All["dj_yes"];
-                                        dj_yes.InvokeMember("click");
-                                        if (!string.IsNullOrEmpty(CurrentCar.DjzPic))
-                                        {
-                                            string picurl = string.Format(Global.Host + CurrentCar.DjzPic);
-                                            UploadPic(picurl, HtmlDoc.All["dj_cert"]);
-                                        }
-                                    }
-                                    else if (CurrentCar.Djz == "丢失")
-                                    {
-                                        HtmlElement dj_lost = HtmlDoc.All["dj_lost"];
-                                        dj_lost.InvokeMember("click");
-                                    }
-                                    else if (CurrentCar.Djz == "补办中")
-                                    {
-                                        HtmlElement dj_doing = HtmlDoc.All["dj_doing"];
-                                        dj_doing.InvokeMember("click");
-                                    }
-                                    if (CurrentCar.Xsz == "有")
-                                    {
-                                        HtmlElement xs_yes = HtmlDoc.All["xs_yes"];
-                                        xs_yes.InvokeMember("click");
-                                        if (!string.IsNullOrEmpty(CurrentCar.XszPic))
-                                        {
-                                            string picurl = string.Format(Global.Host + CurrentCar.XszPic);
-                                            UploadPic(picurl, HtmlDoc.All["xs_cert"]);
-                                        }
-                                    }
-                                    else if (CurrentCar.Xsz == "丢失")
-                                    {
-                                        HtmlElement xs_lost = HtmlDoc.All["xs_lost"];
-                                        xs_lost.InvokeMember("click");
-                                    }
-                                    else if (CurrentCar.Xsz == "补办中")
-                                    {
-                                        HtmlElement xs_doing = HtmlDoc.All["xs_doing"];
-                                        xs_doing.InvokeMember("click");
-                                    }
-                                    if (CurrentCar.Gcfp == "有")
-                                    {
-                                        HtmlElement gc_yes = HtmlDoc.All["gc_yes"];
-                                        gc_yes.InvokeMember("click");
-                                        if (!string.IsNullOrEmpty(CurrentCar.GcfpPic))
-                                        {
-                                            string picurl = string.Format(Global.Host + CurrentCar.GcfpPic);
-                                            UploadPic(picurl, HtmlDoc.All["gc_cert"]);
-                                        }
-                                    }
-                                    else if (CurrentCar.Gcfp == "丢失")
-                                    {
-                                        HtmlElement gc_lost = HtmlDoc.All["gc_lost"];
-                                        gc_lost.InvokeMember("click");
-                                    }
-                                    else if (CurrentCar.Gcfp == "补办中")
-                                    {
-                                        HtmlElement gc_doing = HtmlDoc.All["gc_doing"];
-                                        gc_doing.InvokeMember("click");
-                                    }
                                     HtmlElement in_linkname = HtmlDoc.All["in_linkname"];
                                     in_linkname.SetAttribute("value", Global.CurrentUser.Name);
                                     HtmlElement in_phone = HtmlDoc.All["in_phone"];
                                     in_phone.SetAttribute("value", Global.CurrentUser.Mobile);
                                     HtmlElement txtRemarkContent = HtmlDoc.All["txtRemarkContent"];
                                     txtRemarkContent.SetAttribute("value", CurrentCar.Czzs);
-                                    if (CurrentCar.Picslist.Count > 0)
-                                    {
-                                        WriteMsg(account.ID, "正在上传车辆图片");
-                                        string picurls = string.Join(" ", CurrentCar.Picslist.OrderByDescending(p => p.IsFirstpic).ToList().Select(p => Global.Host + p.PicUrl).ToList());
-                                        HtmlElement flashObject1 = HtmlDoc.All["flashObject1"];
-                                        UploadPicByMouseLeftClick(picurls, flashObject1, wb);
-                                    }
-                                    HtmlElement CarSubmit = HtmlDoc.All["CarSubmit"];
+
                                     carName.InvokeMember("focus");
                                     carName.InvokeMember("blur");
                                     wirteDispla.InvokeMember("focus");
@@ -473,17 +403,99 @@ namespace HX.CheShangBao
                                     in_linkname.InvokeMember("blur");
                                     in_phone.InvokeMember("focus");
                                     in_phone.InvokeMember("blur");
-                                    Utils.DelayRun(10000, delegate()
+
+                                    #region 图片上传
+
+                                    AsyncCallback uploadpic = delegate(IAsyncResult ar)
                                     {
-                                        CarSubmit.InvokeMember("click");
-                                    });
+                                        if (CurrentCar.Djz == "有")
+                                        {
+                                            HtmlElement dj_yes = HtmlDoc.All["dj_yes"];
+                                            dj_yes.InvokeMember("click");
+                                            if (!string.IsNullOrEmpty(CurrentCar.DjzPic))
+                                            {
+                                                string picurl = string.Format(Global.Host + CurrentCar.DjzPic);
+                                                UploadPic(picurl, HtmlDoc.All["dj_cert"]);
+                                            }
+                                        }
+                                        else if (CurrentCar.Djz == "丢失")
+                                        {
+                                            HtmlElement dj_lost = HtmlDoc.All["dj_lost"];
+                                            dj_lost.InvokeMember("click");
+                                        }
+                                        else if (CurrentCar.Djz == "补办中")
+                                        {
+                                            HtmlElement dj_doing = HtmlDoc.All["dj_doing"];
+                                            dj_doing.InvokeMember("click");
+                                        }
+                                        if (CurrentCar.Xsz == "有")
+                                        {
+                                            HtmlElement xs_yes = HtmlDoc.All["xs_yes"];
+                                            xs_yes.InvokeMember("click");
+                                            if (!string.IsNullOrEmpty(CurrentCar.XszPic))
+                                            {
+                                                string picurl = string.Format(Global.Host + CurrentCar.XszPic);
+                                                UploadPic(picurl, HtmlDoc.All["xs_cert"]);
+                                            }
+                                        }
+                                        else if (CurrentCar.Xsz == "丢失")
+                                        {
+                                            HtmlElement xs_lost = HtmlDoc.All["xs_lost"];
+                                            xs_lost.InvokeMember("click");
+                                        }
+                                        else if (CurrentCar.Xsz == "补办中")
+                                        {
+                                            HtmlElement xs_doing = HtmlDoc.All["xs_doing"];
+                                            xs_doing.InvokeMember("click");
+                                        }
+                                        if (CurrentCar.Gcfp == "有")
+                                        {
+                                            HtmlElement gc_yes = HtmlDoc.All["gc_yes"];
+                                            gc_yes.InvokeMember("click");
+                                            if (!string.IsNullOrEmpty(CurrentCar.GcfpPic))
+                                            {
+                                                string picurl = string.Format(Global.Host + CurrentCar.GcfpPic);
+                                                UploadPic(picurl, HtmlDoc.All["gc_cert"]);
+                                            }
+                                        }
+                                        else if (CurrentCar.Gcfp == "丢失")
+                                        {
+                                            HtmlElement gc_lost = HtmlDoc.All["gc_lost"];
+                                            gc_lost.InvokeMember("click");
+                                        }
+                                        else if (CurrentCar.Gcfp == "补办中")
+                                        {
+                                            HtmlElement gc_doing = HtmlDoc.All["gc_doing"];
+                                            gc_doing.InvokeMember("click");
+                                        }
+
+                                        HtmlElement CarSubmit = HtmlDoc.All["CarSubmit"];
+                                        Utils.DelayRun(7000, delegate()
+                                        {
+                                            CarSubmit.InvokeMember("click");
+                                        });
+                                    };
+
+                                    if (CurrentCar.Picslist.Count > 0)
+                                    {
+                                        WriteMsg(account.ID, "正在上传车辆图片...");
+                                        string picurls = string.Join(" ", CurrentCar.Picslist.OrderByDescending(p => p.IsFirstpic).ToList().Select(p => Global.Host + p.PicUrl).ToList());
+                                        HtmlElement uploadModel1 = HtmlDoc.All["uploadModel1"];
+                                        UploadPicByMouseLeftClick(picurls, uploadModel1, wb, uploadpic);
+                                    }
+                                    else
+                                    {
+                                        uploadpic(null);
+                                    }
+
+                                    #endregion
                                 }
                                 else if (wb.Url.ToString().StartsWith(Jcbs.Instance.GetSuccessUrl(account)))
                                 {
                                     Regex r_id = new Regex(@"InfoId=([\d]+)");
                                     if (r_id.IsMatch(wb.Url.ToString()))
                                     {
-                                        string viewurl = Jcbs.Instance.GetViewUrl(account,r_id.Match(wb.Url.ToString()).Groups[1].Value);
+                                        string viewurl = Jcbs.Instance.GetViewUrl(account, r_id.Match(wb.Url.ToString()).Groups[1].Value);
                                         WriteMsg(account.ID, "信息发布成功");
                                         WriteViewUrl(account.ID, viewurl);
                                         lock (sync_account)
@@ -719,26 +731,31 @@ namespace HX.CheShangBao
                         while (!windowopen)
                             Thread.Sleep(100);
                         Thread.Sleep(200);
-                        List<HX.Tools.CSharpWindowsAPI.WindowInfo> windows = CSharpWindowsAPI.GetAllDesktopWindows().ToList();
-                        while (!windows.Exists(w => w.szWindowName.IndexOf("选择要") >= 0))
+                        bool hasfindhandle = true;
+                        DateTime timestart = DateTime.Now;
+                        IntPtr hwndCalc = CSharpWindowsAPI.FindWindow("#32770", null);
+                        while (hwndCalc == IntPtr.Zero)
                         {
-                            windows = CSharpWindowsAPI.GetAllDesktopWindows().ToList();
-                            Thread.Sleep(200);
+                            hwndCalc = CSharpWindowsAPI.FindWindow("#32770", null);
+                            if (DateTime.Now.Subtract(timestart).Milliseconds > 2000)
+                            {
+                                hasfindhandle = false;
+                                break;
+                            }
                         }
-                        HX.Tools.CSharpWindowsAPI.WindowInfo window = windows.Find(w => w.szWindowName.IndexOf("选择要") >= 0);
-                        List<HX.Tools.CSharpWindowsAPI.WindowInfo> children = CSharpWindowsAPI.GetChildWindows(window.hWnd).ToList();
-                        if (children.Exists(w => w.szClassName == "ComboBoxEx32") && children.Exists(w => w.szWindowName == "打开(&O)"))
+                        if (hasfindhandle)
                         {
-                            CSharpWindowsAPI.SendText(children.Find(w => w.szClassName == "ComboBoxEx32").hWnd, e.Argument.ToString());
-                            CSharpWindowsAPI.LeftMouseDown(children.Find(w => w.szWindowName == "打开(&O)").hWnd);
+                            IntPtr hwndFilepath = CSharpWindowsAPI.FindWindowEx(hwndCalc, 0, "ComboBoxEx32", null);
+                            if (hwndFilepath != IntPtr.Zero)
+                            {
+                                CSharpWindowsAPI.SendText(hwndFilepath, e.Argument.ToString());
+                            }
+                            IntPtr hwndSubmit = CSharpWindowsAPI.FindWindowEx(hwndCalc, 0, null, "打开(&O)");
+                            if (hwndSubmit != IntPtr.Zero)
+                            {
+                                CSharpWindowsAPI.LeftMouseDown(hwndSubmit);
+                            }
                         }
-                        Thread t = new Thread(new ThreadStart(delegate()
-                        {
-                            Thread.Sleep(20000);
-                            if (File.Exists(savepath))
-                                File.Delete(savepath);
-                        }));
-                        t.Start();
                     });
                     b.RunWorkerAsync(savepath);
                     windowopen = true;
@@ -747,7 +764,7 @@ namespace HX.CheShangBao
             }
         }
 
-        private void UploadPicByMouseLeftClick(string picurls, HtmlElement h, WebBrowser wb)
+        private void UploadPicByMouseLeftClick(string picurls, HtmlElement h, WebBrowser wb, AsyncCallback callback)
         {
             lock (sync_upload)
             {
@@ -770,25 +787,48 @@ namespace HX.CheShangBao
                         while (!windowopen)
                             Thread.Sleep(100);
                         Thread.Sleep(200);
-                        List<HX.Tools.CSharpWindowsAPI.WindowInfo> windows = CSharpWindowsAPI.GetAllDesktopWindows().ToList();
-                        while (!windows.Exists(w => w.szWindowName.IndexOf("选择要") >= 0))
+                        bool hasfindhandle = true;
+                        DateTime timestart = DateTime.Now;
+                        IntPtr hwndCalc = CSharpWindowsAPI.FindWindow("#32770", null);
+                        while (hwndCalc == IntPtr.Zero)
                         {
-                            windows = CSharpWindowsAPI.GetAllDesktopWindows().ToList();
-                            Thread.Sleep(200);
+                            hwndCalc = CSharpWindowsAPI.FindWindow("#32770", null);
+                            if (DateTime.Now.Subtract(timestart).Milliseconds > 2000)
+                            {
+                                hasfindhandle = false;
+                                break;
+                            }
                         }
-                        HX.Tools.CSharpWindowsAPI.WindowInfo window = windows.Find(w => w.szWindowName.IndexOf("选择要") >= 0);
-                        List<HX.Tools.CSharpWindowsAPI.WindowInfo> children = CSharpWindowsAPI.GetChildWindows(window.hWnd).ToList();
-                        if (children.Exists(w => w.szClassName == "ComboBoxEx32") && children.Exists(w => w.szWindowName == "打开(&O)"))
+                        if (hasfindhandle)
                         {
-                            CSharpWindowsAPI.SendText(children.Find(w => w.szClassName == "ComboBoxEx32").hWnd, e.Argument.ToString());
-                            CSharpWindowsAPI.LeftMouseDown(children.Find(w => w.szWindowName == "打开(&O)").hWnd);
+                            IntPtr hwndFilepath = CSharpWindowsAPI.FindWindowEx(hwndCalc, 0, "ComboBoxEx32", null);
+                            if (hwndFilepath != IntPtr.Zero)
+                            {
+                                CSharpWindowsAPI.SendText(hwndFilepath, e.Argument.ToString());
+                            }
+                            IntPtr hwndSubmit = CSharpWindowsAPI.FindWindowEx(hwndCalc, 0, null, "打开(&O)");
+                            if (hwndSubmit != IntPtr.Zero)
+                            {
+                                CSharpWindowsAPI.LeftMouseDown(hwndSubmit);
+                            }
                         }
-                        Thread t = new Thread(new ThreadStart(delegate()
+                        Utils.DelayRun(listdownloaded.Count * 4000, delegate()
                         {
-                            Thread.Sleep(20000);
-                            listdownloaded.ForEach(delegate(string path) { if (File.Exists(path)) { File.Delete(path); } });
-                        }));
-                        t.Start();
+                            callback(null);
+                        });
+                        //List<HX.Tools.CSharpWindowsAPI.WindowInfo> windows = CSharpWindowsAPI.GetAllDesktopWindows().ToList();
+                        //while (!windows.Exists(w => w.szWindowName.IndexOf("选择要") >= 0))
+                        //{
+                        //    windows = CSharpWindowsAPI.GetAllDesktopWindows().ToList();
+                        //    Thread.Sleep(200);
+                        //}
+                        //HX.Tools.CSharpWindowsAPI.WindowInfo window = windows.Find(w => w.szWindowName.IndexOf("选择要") >= 0);
+                        //List<HX.Tools.CSharpWindowsAPI.WindowInfo> children = CSharpWindowsAPI.GetChildWindows(window.hWnd).ToList();
+                        //if (children.Exists(w => w.szClassName == "ComboBoxEx32") && children.Exists(w => w.szWindowName == "打开(&O)"))
+                        //{
+                        //    CSharpWindowsAPI.SendText(children.Find(w => w.szClassName == "ComboBoxEx32").hWnd, e.Argument.ToString());
+                        //    CSharpWindowsAPI.LeftMouseDown(children.Find(w => w.szWindowName == "打开(&O)").hWnd);
+                        //}
                     });
                     b.RunWorkerAsync(listdownloaded.Count == 1 ? listdownloaded[0] : ("\"" + string.Join("\" \"", listdownloaded) + "\""));
                     MouseLeftClick(h, wb, ref windowopen);

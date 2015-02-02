@@ -43,6 +43,7 @@
     <Compile Include="Job\BenzvoteAccountJob.cs" />
     <Compile Include="Job\RefreshBackadminCacheJob.cs" />
     <Compile Include="Job\JituanvoteAccountJob.cs" />
+    <Compile Include="Job\WeixinCommentJob.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

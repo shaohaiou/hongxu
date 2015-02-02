@@ -8,6 +8,8 @@ using Hx.Components;
 using Hx.Tools;
 using Hx.Components.Entity;
 using System.Text.RegularExpressions;
+using Hx.Components.Enumerations;
+using System.Text;
 
 namespace Hx.BackAdmin.HttpHandler
 {
@@ -47,10 +49,22 @@ namespace Hx.BackAdmin.HttpHandler
             {
                 Jituanvotetoupiao();
             }
-            //else if (action == "jituanvotechat")
-            //{
-            //    Jituanvotechat();
-            //}
+            else if (action == "comment")
+            {
+                Comment();
+            }
+            else if (action == "commentpraise")
+            {
+                CommentPraise();
+            }
+            else if (action == "commentbelittle")
+            {
+                CommentBelittle();
+            }
+            else if (action == "getcommentmore")
+            {
+                GetCommentMore();
+            }
             else
             {
                 result = string.Format(result, "fail", "非法操作");
@@ -162,7 +176,7 @@ namespace Hx.BackAdmin.HttpHandler
 
                 if (!string.IsNullOrEmpty(openid) && !string.IsNullOrEmpty(id))
                 {
-                    string votecheckresult = WeixinActs.Instance.CheckVote(openid,id);
+                    string votecheckresult = WeixinActs.Instance.CheckVote(openid, id);
                     if (!string.IsNullOrEmpty(votecheckresult))
                     {
                         result = string.Format(result, "fail", votecheckresult);
@@ -303,115 +317,248 @@ namespace Hx.BackAdmin.HttpHandler
             }
         }
 
-        #region 留言(已删除)
-        
-        //private void Jituanvotechat()
-        //{ 
-        //    try
-        //    {
-        //        string openid = WebHelper.GetString("openid");
-        //        string id = WebHelper.GetString("id");
-        //        string chat = WebHelper.GetString("chat");
+        #endregion
 
-        //        if (!string.IsNullOrEmpty(openid) && !string.IsNullOrEmpty(id) && !string.IsNullOrEmpty(chat))
-        //        {
-        //            string votecheckresult = WeixinActs.Instance.CheckJituanVoteChat(openid, id);
-        //            if (!string.IsNullOrEmpty(votecheckresult))
-        //            {
-        //                result = string.Format(result, "fail", votecheckresult);
-        //                return;
-        //            }
+        #region 评论
 
-        //            string access_token = MangaCache.Get(GlobalKey.WEIXINACCESS_TOKEN_KEY) as string;
-        //            if (string.IsNullOrEmpty(access_token))
-        //            {
-        //                string url_access_token = string.Format("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={0}&secret={1}"
-        //                    , GlobalKey.WEIXINAPPID
-        //                    , GlobalKey.WEIXINSECRET);
-        //                string str_access_token = Http.GetPageByWebClientDefault(url_access_token);
-        //                Dictionary<string, string> dic_access_token = new Dictionary<string, string>();
-        //                try
-        //                {
-        //                    dic_access_token = json.Deserialize<Dictionary<string, string>>(str_access_token);
-        //                }
-        //                catch { }
-        //                if (dic_access_token.ContainsKey("access_token"))
-        //                {
-        //                    access_token = dic_access_token["access_token"];
-        //                    int expires_in = 7200;
-        //                    if (dic_access_token.ContainsKey("expires_in"))
-        //                        expires_in = DataConvert.SafeInt(dic_access_token["expires_in"], 7200);
-        //                    MangaCache.Add(GlobalKey.WEIXINACCESS_TOKEN_KEY, access_token, expires_in);
-        //                }
-        //            }
+        private void Comment()
+        {
+            try
+            {
+                string openid = WebHelper.GetString("openid");
+                string id = WebHelper.GetString("id");
+                string comment = WebHelper.GetString("comment");
+                int acttype = WebHelper.GetInt("acttype");
 
-        //            if (!string.IsNullOrEmpty(access_token))
-        //            {
-        //                string url_openinfo = string.Format("https://api.weixin.qq.com/cgi-bin/user/info?access_token={0}&openid={1}&lang=zh_CN"
-        //                    , access_token
-        //                    , openid);
-        //                string str_openinfo = Http.GetPageByWebClientUTF8(url_openinfo);
-        //                Dictionary<string, string> dic_openinfo = new Dictionary<string, string>();
-        //                try
-        //                {
-        //                    dic_openinfo = json.Deserialize<Dictionary<string, string>>(str_openinfo);
-        //                }
-        //                catch { }
-        //                if (!dic_openinfo.ContainsKey("errcode"))
-        //                {
-        //                    int pid = DataConvert.SafeInt(id);
-        //                    JituanvotePothunterInfo pinfo = WeixinActs.Instance.GetJituanvotePothunterInfo(pid, true);
-        //                    if (pinfo == null)
-        //                        result = string.Format(result, "fail", "不存在此选手");
-        //                    else
-        //                    {
-        //                        JituanvoteInfo entity = new JituanvoteInfo();
-        //                        entity.AthleteID = pid;
-        //                        entity.AthleteName = pinfo.Name;
-        //                        entity.SerialNumber = pinfo.SerialNumber;
-        //                        entity.Voter = dic_openinfo.ContainsKey("nickname") ? dic_openinfo["nickname"] : string.Empty;
-        //                        entity.AddTime = DateTime.Now;
-        //                        entity.Openid = openid;
-        //                        entity.Nickname = entity.Voter;
-        //                        entity.Sex = dic_openinfo.ContainsKey("sex") ? DataConvert.SafeInt(dic_openinfo["sex"]) : 0;
-        //                        entity.City = dic_openinfo.ContainsKey("city") ? dic_openinfo["city"] : string.Empty;
-        //                        entity.Country = dic_openinfo.ContainsKey("country") ? dic_openinfo["country"] : string.Empty;
-        //                        entity.Province = dic_openinfo.ContainsKey("province") ? dic_openinfo["province"] : string.Empty;
+                if (!string.IsNullOrEmpty(openid) && !string.IsNullOrEmpty(id) && !string.IsNullOrEmpty(comment))
+                {
+                    string votecheckresult = WeixinActs.Instance.CheckVoteComment((WeixinActType)acttype);
+                    if (!string.IsNullOrEmpty(votecheckresult))
+                    {
+                        result = string.Format(result, "fail", votecheckresult);
+                        return;
+                    }
 
-        //                        string dianzancode = string.Empty;
-        //                        lock (sync_helper)
-        //                        {
-        //                            dianzancode = WeixinActs.Instance.Jituanvote(entity);
-        //                        }
-        //                        if (string.IsNullOrEmpty(dianzancode))
-        //                            result = string.Format(result, "success", "");
-        //                        else
-        //                            result = string.Format(result, "fail", dianzancode);
-        //                    }
-        //                }
-        //                else
-        //                {
-        //                    result = string.Format(result, "fail", "用户信息获取失败");
-        //                }
-        //            }
-        //            else
-        //                result = string.Format(result, "fail", "access_token获取失败");
-        //        }
-        //        else
-        //        {
-        //            result = string.Format(result, "fail", "openid,vopenid,chat为空");
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        ExpLog.Write(ex);
-        //        result = string.Format(result, "fail", "执行失败");
-        //    }
-            
-        //}
+                    string access_token = MangaCache.Get(GlobalKey.WEIXINACCESS_TOKEN_KEY) as string;
+                    if (string.IsNullOrEmpty(access_token))
+                    {
+                        string url_access_token = string.Format("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={0}&secret={1}"
+                            , GlobalKey.WEIXINAPPID
+                            , GlobalKey.WEIXINSECRET);
+                        string str_access_token = Http.GetPageByWebClientDefault(url_access_token);
+                        Dictionary<string, string> dic_access_token = new Dictionary<string, string>();
+                        try
+                        {
+                            dic_access_token = json.Deserialize<Dictionary<string, string>>(str_access_token);
+                        }
+                        catch { }
+                        if (dic_access_token.ContainsKey("access_token"))
+                        {
+                            access_token = dic_access_token["access_token"];
+                            int expires_in = 7200;
+                            if (dic_access_token.ContainsKey("expires_in"))
+                                expires_in = DataConvert.SafeInt(dic_access_token["expires_in"], 7200);
+                            MangaCache.Add(GlobalKey.WEIXINACCESS_TOKEN_KEY, access_token, expires_in);
+                        }
+                    }
+
+                    if (!string.IsNullOrEmpty(access_token))
+                    {
+                        string url_openinfo = string.Format("https://api.weixin.qq.com/cgi-bin/user/info?access_token={0}&openid={1}&lang=zh_CN"
+                            , access_token
+                            , openid);
+                        string str_openinfo = Http.GetPageByWebClientUTF8(url_openinfo);
+                        Dictionary<string, string> dic_openinfo = new Dictionary<string, string>();
+                        try
+                        {
+                            dic_openinfo = json.Deserialize<Dictionary<string, string>>(str_openinfo);
+                        }
+                        catch { }
+                        if (!dic_openinfo.ContainsKey("errcode"))
+                        {
+                            int pid = DataConvert.SafeInt(id);
+                            JituanvotePothunterInfo pinfo = WeixinActs.Instance.GetJituanvotePothunterInfo(pid, true);
+                            if (pinfo == null)
+                                result = string.Format(result, "fail", "不存在此选手");
+                            else
+                            {
+                                string commenter = dic_openinfo.ContainsKey("nickname") ? dic_openinfo["nickname"] : string.Empty;
+                                WeixinActCommentInfo entity = new WeixinActCommentInfo()
+                                {
+                                    WeixinActType = (WeixinActType)acttype,
+                                    AthleteID = pid,
+                                    Commenter = commenter,
+                                    PraiseNum = 0,
+                                    BelittleNum = 0,
+                                    Comment = comment,
+                                    AddTime = DateTime.Now
+                                };
+
+                                string rcode = string.Empty;
+                                lock (sync_helper)
+                                {
+                                    rcode = WeixinActs.Instance.CommentPost(entity);
+                                }
+                                if (string.IsNullOrEmpty(rcode))
+                                    result = string.Format(result, "success", entity.ID + "," + (string.IsNullOrEmpty(commenter) ? "匿名" : commenter));
+                                else
+                                    result = string.Format(result, "fail", rcode);
+                            }
+                        }
+                        else
+                        {
+                            result = string.Format(result, "fail", "用户信息获取失败");
+                        }
+                    }
+                    else
+                        result = string.Format(result, "fail", "access_token获取失败");
+                }
+                else
+                {
+                    result = string.Format(result, "fail", "openid,vopenid,chat为空");
+                }
+            }
+            catch (Exception ex)
+            {
+                ExpLog.Write(ex);
+                result = string.Format(result, "fail", "执行失败");
+            }
+
+        }
+
+        private void CommentPraise()
+        {
+            try
+            {
+                string openid = WebHelper.GetString("openid");
+                string id = WebHelper.GetString("id");
+                int acttype = WebHelper.GetInt("acttype");
+
+                if (!string.IsNullOrEmpty(openid) && !string.IsNullOrEmpty(id))
+                {
+                    string votecheckresult = WeixinActs.Instance.CheckVoteComment((WeixinActType)acttype);
+                    if (!string.IsNullOrEmpty(votecheckresult))
+                    {
+                        result = string.Format(result, "fail", votecheckresult);
+                        return;
+                    }
+
+                    string rcode = string.Empty;
+                    lock (sync_helper)
+                    {
+                        rcode = WeixinActs.Instance.CommentPraise(DataConvert.SafeInt(id));
+                    }
+                    if (string.IsNullOrEmpty(rcode))
+                        result = string.Format(result, "success", string.Empty);
+                    else
+                        result = string.Format(result, "fail", rcode);
+                }
+            }
+            catch (Exception ex)
+            {
+                ExpLog.Write(ex);
+                result = string.Format(result, "fail", "执行失败");
+            }
+        }
+
+        private void CommentBelittle()
+        {
+            try
+            {
+                string openid = WebHelper.GetString("openid");
+                string id = WebHelper.GetString("id");
+                int acttype = WebHelper.GetInt("acttype");
+
+                if (!string.IsNullOrEmpty(openid) && !string.IsNullOrEmpty(id))
+                {
+                    string votecheckresult = WeixinActs.Instance.CheckVoteComment((WeixinActType)acttype);
+                    if (!string.IsNullOrEmpty(votecheckresult))
+                    {
+                        result = string.Format(result, "fail", votecheckresult);
+                        return;
+                    }
+
+                    string rcode = string.Empty;
+                    lock (sync_helper)
+                    {
+                        rcode = WeixinActs.Instance.CommentBelittle(DataConvert.SafeInt(id));
+                    }
+                    if (string.IsNullOrEmpty(rcode))
+                        result = string.Format(result, "success", string.Empty);
+                    else
+                        result = string.Format(result, "fail", rcode);
+                }
+            }
+            catch (Exception ex)
+            {
+                ExpLog.Write(ex);
+                result = string.Format(result, "fail", "执行失败");
+            }
+        }
+
+        private void GetCommentMore()
+        {
+            try
+            {
+                string openid = WebHelper.GetString("openid");
+                string id = WebHelper.GetString("id");
+                int acttype = WebHelper.GetInt("acttype");
+                int pageindex = WebHelper.GetInt("pageindex");
+
+                if (!string.IsNullOrEmpty(openid) && !string.IsNullOrEmpty(id))
+                {
+                    string votecheckresult = WeixinActs.Instance.CheckVoteComment((WeixinActType)acttype);
+                    if (!string.IsNullOrEmpty(votecheckresult))
+                    {
+                        result = string.Format(result, "fail", votecheckresult);
+                        return;
+                    }
+
+                    string rcode = string.Empty;
+                    StringBuilder htmlstr = new StringBuilder();
+                    try
+                    {
+                        List<WeixinActCommentInfo> listcomment = WeixinActs.Instance.GetComments(true);
+                        List<WeixinActCommentInfo> source = listcomment.FindAll(c => c.AthleteID == DataConvert.SafeInt(id) && c.WeixinActType == (WeixinActType)acttype).ToList().OrderByDescending(c => c.ID).ToList();
+                        int skipcount = 8 * (pageindex - 1);
+                        if (source.Count > 2 && source.Count > (skipcount + 2))
+                        {
+                            source = source.Skip(2).ToList().OrderBy(c => c.ID).ToList();
+                            source = source.Skip(skipcount).ToList();
+                            source = source.Count > 8 ? source.Take(8).ToList() : source;
+                        }
+                        foreach (WeixinActCommentInfo entity in source)
+                        {
+                            htmlstr.Append("<tr>");
+                            htmlstr.Append("<td><p>" + entity.Comment + "</p>");
+                            htmlstr.Append("<div class='dvcommentinfo'>");
+                            htmlstr.Append("<span>" + entity.AddTime.ToString("yyyy-MM-dd HH:mm:ss") + "</span> <span>");
+                            htmlstr.Append((string.IsNullOrEmpty(entity.Commenter) ? "匿名" : entity.Commenter) + "</span></div>");
+                            htmlstr.Append("<div class='dvcommentopt'>");
+                            htmlstr.Append("<a href='javascript:void(0);' class='btnPraise' val='" + entity.ID + "'>鲜花</a>(<span");
+                            htmlstr.Append(" id='spPraise" + entity.ID + "'>" + entity.PraiseNum + "</span>) <a href='javascript:void(0);'");
+                            htmlstr.Append(" class='btnBelittle' val='" + entity.ID + "'>鸡蛋</a>(<span id='spBelittle" + entity.ID + "'>" + entity.BelittleNum + "</span>)");
+                            htmlstr.Append("</div></td></tr>");
+                        }
+                    }
+                    catch
+                    {
+                        rcode = "发生错误";
+                    }
+                    if (string.IsNullOrEmpty(rcode))
+                        result = string.Format(result, "success", htmlstr.ToString());
+                    else
+                        result = string.Format(result, "fail", rcode);
+                }
+            }
+            catch (Exception ex)
+            {
+                ExpLog.Write(ex);
+                result = string.Format(result, "fail", "执行失败");
+            }
+        }
 
         #endregion
 
-        #endregion
     }
 }

@@ -56,8 +56,8 @@
                     responseType: 'json',
                     data: { action: 'jcbUpload' },
                     onSubmit: function (file, ext) {
-                        if (!(ext && /^(jpg|png|jpeg|gif)$/i.test(ext))) {
-                            alert('只能上传图片！');
+                        if (!(ext && /^(jpg|jpeg|gif)$/i.test(ext))) {
+                            alert('只能上传jpg|jpeg|gif图片！');
                             return false;
                         }
                         button1.val('上传中');
@@ -89,8 +89,8 @@
                     responseType: 'json',
                     data: { action: 'jcbUpload' },
                     onSubmit: function (file, ext) {
-                        if (!(ext && /^(jpg|png|jpeg|gif)$/i.test(ext))) {
-                            alert('只能上传图片！');
+                        if (!(ext && /^(jpg|jpeg|gif)$/i.test(ext))) {
+                            alert('只能上传jpg|jpeg|gif图片！');
                             return false;
                         }
                         button1.val('上传中');

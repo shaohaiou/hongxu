@@ -481,6 +481,8 @@ namespace Hx.Car.Providers
 
         public abstract int AddJcbCar(JcbCarInfo entity);
 
+        public abstract void DeleteJcbCars(string ids);
+
         public abstract List<JcbCarInfo> GetJcbCarList();
 
         public static JcbCarInfo PopulateJcbCarInfo(IDataReader reader)

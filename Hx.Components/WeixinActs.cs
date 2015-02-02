@@ -8,6 +8,7 @@ using Hx.Components.Query;
 using Hx.Tools;
 using Hx.Tools.Web;
 using System.Web;
+using Hx.Components.Enumerations;
 
 namespace Hx.Components
 {
@@ -450,6 +451,8 @@ namespace Hx.Components
         private static object sync_jituanvote = new object();
         private List<JituanvoteInfo> JituanvotesCache = new List<JituanvoteInfo>();
 
+        #region 选手管理
+
         /// <summary>
         /// 添加/编辑参赛选手
         /// </summary>
@@ -536,6 +539,51 @@ namespace Hx.Components
             return list;
         }
 
+        #endregion
+
+        #region 活动设置管理
+
+        public void AddJituanvoteSetting(JituanvoteSettingInfo entity)
+        {
+            CommonDataProvider.Instance().AddJituanvoteSetting(entity);
+        }
+
+        public JituanvoteSettingInfo GetJituanvoteSetting(bool fromCache = false)
+        {
+            if (!fromCache)
+            {
+                return CommonDataProvider.Instance().GetJituanvoteSetting();
+            }
+
+            string key = GlobalKey.JITUANVOTESETTING;
+            JituanvoteSettingInfo setting = MangaCache.Get(key) as JituanvoteSettingInfo;
+            if (setting == null)
+            {
+                lock (sync_creater)
+                {
+                    setting = MangaCache.Get(key) as JituanvoteSettingInfo;
+                    if (setting == null)
+                    {
+                        setting = CommonDataProvider.Instance().GetJituanvoteSetting();
+
+                        MangaCache.Max(key, setting);
+                    }
+                }
+            }
+            return setting;
+        }
+
+        public void ReloadJituanvoteSetting()
+        {
+            string key = GlobalKey.JITUANVOTESETTING;
+            MangaCache.Remove(key);
+            GetJituanvoteSetting(true);
+        }
+
+        #endregion
+
+        #region 销售精英投票活动
+
         /// <summary>
         /// 分页获取投票信息
         /// </summary>
@@ -593,43 +641,6 @@ namespace Hx.Components
             jituanvotes = GetAllJituanvote();
         }
 
-        public void AddJituanvoteSetting(JituanvoteSettingInfo entity)
-        {
-            CommonDataProvider.Instance().AddJituanvoteSetting(entity);
-        }
-
-        public JituanvoteSettingInfo GetJituanvoteSetting(bool fromCache = false)
-        {
-            if (!fromCache)
-            {
-                return CommonDataProvider.Instance().GetJituanvoteSetting();
-            }
-
-            string key = GlobalKey.JITUANVOTESETTING;
-            JituanvoteSettingInfo setting = MangaCache.Get(key) as JituanvoteSettingInfo;
-            if (setting == null)
-            {
-                lock (sync_creater)
-                {
-                    setting = MangaCache.Get(key) as JituanvoteSettingInfo;
-                    if (setting == null)
-                    {
-                        setting = CommonDataProvider.Instance().GetJituanvoteSetting();
-
-                        MangaCache.Max(key, setting);
-                    }
-                }
-            }
-            return setting;
-        }
-
-        public void ReloadJituanvoteSetting()
-        {
-            string key = GlobalKey.JITUANVOTESETTING;
-            MangaCache.Remove(key);
-            GetJituanvoteSetting(true);
-        }
-
         public string Jituanvote(JituanvoteInfo vote)
         {
             try
@@ -664,20 +675,20 @@ namespace Hx.Components
                 {
                     if (Jituanvotes.Keys.Contains(id + "_" + openid))
                     {
-                        return "您已经为她投过票了，不能重复投哦。";
+                        return "您已经为他/她点过赞了哦。";
                     }
                     List<KeyValuePair<string, DateTime>> votes = Jituanvotes.Where(b => b.Key.EndsWith("_" + openid) && b.Value > DateTime.Today).ToList();
                     if (votes.Count > 0)
                     {
                         DateTime ftime = votes.Min(b => b.Value);
                         int minutes = setting == null ? 30 : setting.OverdueMinutes;
-                        if (minutes > 0 && DateTime.Now.AddMinutes(-1 * minutes) > ftime)
-                        {
-                            return "您今日的投票期已过，请明日再投。";
-                        }
+                        //if (minutes > 0 && DateTime.Now.AddMinutes(-1 * minutes) > ftime)
+                        //{
+                        //    return "您今日的点赞期已过，请明日再投。";
+                        //}
                         if (setting != null && setting.VoteTimes > 0 && votes.Count >= setting.VoteTimes)
                         {
-                            return "您今天的投票次数已经用完，记得明天再来投哦。";
+                            return "您的点赞次数已经用完。";
                         }
                     }
                 }
@@ -709,6 +720,398 @@ namespace Hx.Components
                 }
             }
         }
+
+        #endregion
+
+        #endregion
+
+        #region 评论管理
+
+        private static object sync_comment = new object();
+
+        public int CreateAndUpdateComment(WeixinActCommentInfo entity)
+        {
+            return CommonDataProvider.Instance().CreateAndUpdateComment(entity);
+        }
+
+        public List<WeixinActCommentInfo> GetComments(bool fromCache = false)
+        {
+            if (!fromCache)
+                return CommonDataProvider.Instance().GetWeixinActComments();
+
+            string key = GlobalKey.WEIXINACTCOMMENT_LIST;
+            List<WeixinActCommentInfo> list = MangaCache.Get(key) as List<WeixinActCommentInfo>;
+            if (list == null)
+            {
+                lock (sync_comment)
+                {
+                    list = MangaCache.Get(key) as List<WeixinActCommentInfo>;
+                    if (list == null)
+                    {
+                        list = CommonDataProvider.Instance().GetWeixinActComments();
+
+                        MangaCache.Max(key, list);
+                    }
+                }
+            }
+            return list;
+        }
+
+        public void ReloadComments()
+        {
+            string key = GlobalKey.WEIXINACTCOMMENT_LIST;
+            MangaCache.Remove(key);
+            GetComments(true);
+        }
+
+        public string CheckVoteComment(WeixinActType acttype)
+        {
+            if (acttype == WeixinActType.集团活动)
+            {
+                JituanvoteSettingInfo setting = GetJituanvoteSetting(true);
+                if (setting != null && setting.Switch == 0)
+                {
+                    return "该活动已结束";
+                }
+            }
+            else if (acttype == WeixinActType.奔驰活动)
+            {
+                BenzvoteSettingInfo setting = GetBenzvoteSetting(true);
+                if (setting != null && setting.Switch == 0)
+                {
+                    return "该活动已结束";
+                }
+            }
+
+            return string.Empty;
+        }
+
+        /// <summary>
+        /// 提交评论
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public string CommentPost(WeixinActCommentInfo entity)
+        {
+            try
+            {
+                List<WeixinActCommentInfo> list = GetComments(true);
+                lock (sync_comment)
+                {
+                    int id = CreateAndUpdateComment(entity);
+                    if (id > 0)
+                    {
+                        string key = GlobalKey.WEIXINACTCOMMENT_LIST;
+                        entity.ID = id;
+                        list.Add(entity);
+                        MangaCache.Max(key, list);
+
+                        CommentCount(entity.AthleteID, entity.WeixinActType);
+                    }
+                }
+
+                return string.Empty;
+            }
+            catch (Exception ex)
+            {
+                ExpLog.Write(ex);
+                return "发生错误";
+            }
+        }
+
+        /// <summary>
+        /// 献鲜花
+        /// </summary>
+        /// <param name="id">评论ID</param>
+        /// <returns></returns>
+        public string CommentPraise(int id)
+        {
+            try
+            {
+                if (id > 0)
+                {
+                    CommentPraiseCount(id);
+                }
+
+                return string.Empty;
+            }
+            catch (Exception ex)
+            {
+                ExpLog.Write(ex);
+                return "发生错误";
+            }
+        }
+
+        /// <summary>
+        /// 砸鸡蛋
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public string CommentBelittle(int id)
+        {
+            try
+            {
+                if (id > 0)
+                {
+                    CommentBelittleCount(id);
+                }
+
+                return string.Empty;
+            }
+            catch (Exception ex)
+            {
+                ExpLog.Write(ex);
+                return "发生错误";
+            }
+        }
+
+        #region 被评论计数
+
+        private static object sync_commentcounter = new object();
+        private static object sync_commentcountercreater = new object();
+
+        private List<KeyValuePair<string, int>> _commentCounter = null;
+        public List<KeyValuePair<string, int>> CommentCounter
+        {
+            get
+            {
+                if (_commentCounter == null)
+                {
+                    lock (sync_commentcountercreater)
+                    {
+                        _commentCounter = new List<KeyValuePair<string, int>>();
+                    }
+                }
+                return _commentCounter;
+            }
+            set
+            {
+                _commentCounter = value;
+            }
+        }
+
+        /// <summary>
+        /// 评论计数
+        /// </summary>
+        /// <param name="pid">选手ID</param>
+        /// <param name="acttype">活动类型</param>
+        public void CommentCount(int pid, WeixinActType acttype)
+        {
+            try
+            {
+                lock (sync_commentcounter)
+                {
+                    string key = pid.ToString() + "_" + (int)acttype;
+                    if (CommentCounter.Exists(c => c.Key == key))
+                        CommentCounter[CommentCounter.FindIndex(c => c.Key == key)] = new KeyValuePair<string, int>(key, CommentCounter.Find(c => c.Key == key).Value + 1);
+                    else
+                        CommentCounter.Add(new KeyValuePair<string, int>(key, 1));
+                }
+            }
+            catch (Exception ex)
+            {
+                ExpLog.Write(ex);
+            }
+        }
+
+        /// <summary>
+        /// 评论计数结算
+        /// </summary>
+        public void CommentCountAccount()
+        {
+            List<KeyValuePair<string, int>> counters = new List<KeyValuePair<string, int>>();
+            lock (sync_commentcounter)
+            {
+                if (CommentCounter.Count > 0)
+                {
+                    counters.AddRange(CommentCounter);
+                    CommentCounter.Clear();
+                }
+            }
+            List<JituanvotePothunterInfo> jtvplist = GetJituanvotePothunterList(true);
+            List<BenzvotePothunterInfo> bzvplist = GetBenzvotePothunterList(true);
+            foreach (KeyValuePair<string, int> counter in counters)
+            {
+                int pid = DataConvert.SafeInt(counter.Key.Split(new char[] { '_' }, StringSplitOptions.RemoveEmptyEntries)[0]);
+                WeixinActType type = (WeixinActType)DataConvert.SafeInt(counter.Key.Split(new char[] { '_' }, StringSplitOptions.RemoveEmptyEntries)[1]);
+                if (type == WeixinActType.集团活动)
+                {
+                    if (jtvplist.Exists(p => p.ID == pid))
+                    {
+                        JituanvotePothunterInfo pinfo = jtvplist.Find(p => p.ID == pid);
+                        pinfo.Comments += counter.Value;
+                        AddJituanvotePothunterInfo(pinfo);
+                    }
+                }
+                else if (type == WeixinActType.奔驰活动)
+                {
+                    if (bzvplist.Exists(p => p.ID == pid))
+                    {
+                        BenzvotePothunterInfo pinfo = bzvplist.Find(p => p.ID == pid);
+                        pinfo.Comments += counter.Value;
+                        AddBenzvotePothunterInfo(pinfo);
+                    }
+                }
+            }
+        }
+
+        #endregion
+
+        #region 献鲜花计数
+
+
+        private static object sync_commentpraisecounter = new object();
+        private static object sync_commentpraisecountercreater = new object();
+
+        private List<KeyValuePair<string, int>> _commentpraiseCounter = null;
+        public List<KeyValuePair<string, int>> CommentPraiseCounter
+        {
+            get
+            {
+                if (_commentpraiseCounter == null)
+                {
+                    lock (sync_commentpraisecountercreater)
+                    {
+                        _commentpraiseCounter = new List<KeyValuePair<string, int>>();
+                    }
+                }
+                return _commentpraiseCounter;
+            }
+            set
+            {
+                _commentpraiseCounter = value;
+            }
+        }
+
+        /// <summary>
+        /// 评论鲜花计数
+        /// </summary>
+        /// <param name="id">评论ID</param>
+        public void CommentPraiseCount(int id)
+        {
+            try
+            {
+                lock (sync_commentpraisecounter)
+                {
+                    string key = id.ToString();
+                    if (CommentPraiseCounter.Exists(c => c.Key == key))
+                        CommentPraiseCounter[CommentPraiseCounter.FindIndex(c => c.Key == key)] = new KeyValuePair<string, int>(key, CommentPraiseCounter.Find(c => c.Key == key).Value + 1);
+                    else
+                        CommentPraiseCounter.Add(new KeyValuePair<string, int>(key, 1));
+                }
+            }
+            catch (Exception ex)
+            {
+                ExpLog.Write(ex);
+            }
+        }
+
+        /// <summary>
+        /// 鲜花计数结算
+        /// </summary>
+        public void CommentPraiseCountAccount()
+        {
+            List<KeyValuePair<string, int>> counters = new List<KeyValuePair<string, int>>();
+            lock (sync_commentpraisecounter)
+            {
+                if (CommentPraiseCounter.Count > 0)
+                {
+                    counters.AddRange(CommentPraiseCounter);
+                    CommentPraiseCounter.Clear();
+                }
+            }
+            List<WeixinActCommentInfo> commentlist = GetComments(true);
+            foreach (KeyValuePair<string, int> counter in counters)
+            {
+                int id = DataConvert.SafeInt(counter.Key);
+                if (commentlist.Exists(p => p.ID == id))
+                {
+                    WeixinActCommentInfo cinfo = commentlist.Find(p => p.ID == id);
+                    cinfo.PraiseNum += counter.Value;
+                    CreateAndUpdateComment(cinfo);
+                }
+            }
+        }
+
+        #endregion
+
+        #region 砸鸡蛋计数
+
+
+        private static object sync_commentbelittlecounter = new object();
+        private static object sync_commentbelittlecountercreater = new object();
+
+        private List<KeyValuePair<string, int>> _commentbelittleCounter = null;
+        public List<KeyValuePair<string, int>> CommentBelittleCounter
+        {
+            get
+            {
+                if (_commentbelittleCounter == null)
+                {
+                    lock (sync_commentbelittlecountercreater)
+                    {
+                        _commentbelittleCounter = new List<KeyValuePair<string, int>>();
+                    }
+                }
+                return _commentbelittleCounter;
+            }
+            set
+            {
+                _commentbelittleCounter = value;
+            }
+        }
+
+        /// <summary>
+        /// 评论鸡蛋计数
+        /// </summary>
+        /// <param name="id">评论ID</param>
+        public void CommentBelittleCount(int id)
+        {
+            try
+            {
+                lock (sync_commentbelittlecounter)
+                {
+                    string key = id.ToString();
+                    if (CommentBelittleCounter.Exists(c => c.Key == key))
+                        CommentBelittleCounter[CommentBelittleCounter.FindIndex(c => c.Key == key)] = new KeyValuePair<string, int>(key, CommentBelittleCounter.Find(c => c.Key == key).Value + 1);
+                    else
+                        CommentBelittleCounter.Add(new KeyValuePair<string, int>(key, 1));
+                }
+            }
+            catch (Exception ex)
+            {
+                ExpLog.Write(ex);
+            }
+        }
+
+        /// <summary>
+        /// 鸡蛋计数结算
+        /// </summary>
+        public void CommentBelittleCountAccount()
+        {
+            List<KeyValuePair<string, int>> counters = new List<KeyValuePair<string, int>>();
+            lock (sync_commentbelittlecounter)
+            {
+                if (CommentBelittleCounter.Count > 0)
+                {
+                    counters.AddRange(CommentBelittleCounter);
+                    CommentBelittleCounter.Clear();
+                }
+            }
+            List<WeixinActCommentInfo> commentlist = GetComments(true);
+            foreach (KeyValuePair<string, int> counter in counters)
+            {
+                int id = DataConvert.SafeInt(counter.Key);
+                if (commentlist.Exists(p => p.ID == id))
+                {
+                    WeixinActCommentInfo cinfo = commentlist.Find(p => p.ID == id);
+                    cinfo.BelittleNum += counter.Value;
+                    CreateAndUpdateComment(cinfo);
+                }
+            }
+        }
+
+        #endregion
 
         #endregion
     }

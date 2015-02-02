@@ -2292,9 +2292,9 @@ namespace Hx.BackAdmin.dayreport
 
                     rows[1] = tbl.NewRow();
                     rows[1]["关键指标"] = "展厅占比";
-                    rows[1]["目标"] = (monthtarget != null && !string.IsNullOrEmpty(monthtarget.XSztzb)) ? monthtarget.XSztzb : ((mbztjcts + mbewxstc + mbtppjctc) == 0 ? string.Empty : Math.Round(mbztjcts * 100 / (mbztjcts + mbewxstc + mbtppjctc), 0).ToString());
-                    rows[1]["实际"] = (hjztjcts + hjewxstc + hjtppjctc) == 0 ? string.Empty : Math.Round(hjztjcts * 100 / (hjztjcts + hjewxstc + hjtppjctc), 0).ToString();
-                    rows[1]["详细"] = (hjztjcts + hjewxstc + hjtppjctc) == 0 ? string.Empty : string.Format("<br />({0}/{1})", Math.Round(hjztjcts, 0), Math.Round(hjztjcts + hjewxstc + hjtppjctc, 0));
+                    rows[1]["目标"] = (monthtarget != null && !string.IsNullOrEmpty(monthtarget.XSztzb)) ? monthtarget.XSztzb : ((mbztjcts + mbewxstc + mbtppjctc) == 0 ? string.Empty : Math.Round((mbztjcts + mbtppjctc) * 100 / (mbztjcts + mbewxstc + mbtppjctc), 0).ToString());
+                    rows[1]["实际"] = (hjztjcts + hjewxstc + hjtppjctc) == 0 ? string.Empty : Math.Round((hjztjcts + hjtppjctc) * 100 / (hjztjcts + hjewxstc + hjtppjctc), 0).ToString();
+                    rows[1]["详细"] = (hjztjcts + hjewxstc + hjtppjctc) == 0 ? string.Empty : string.Format("<br />({0}/{1})", Math.Round(hjztjcts + hjtppjctc, 0), Math.Round(hjztjcts + hjewxstc + hjtppjctc, 0));
                 }
                 else
                 {

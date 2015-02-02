@@ -21,7 +21,6 @@ namespace Hx.TaskAndJob.Job
                 //EventLogs.JobLog("开始结算奔驰投票活动投票：BenzvoteAccountJob");
                 isRunning = true;
                 WeixinActs.Instance.BenzvoteAccount();
-                WeixinActs.Instance.ReloadBenzvotePothunterListCache();
                 isRunning = false;
                 //EventLogs.JobLog("结束结算奔驰投票活动投票：DiskCacheJob");
             }

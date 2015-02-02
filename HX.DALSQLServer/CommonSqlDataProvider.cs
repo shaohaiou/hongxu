@@ -1352,6 +1352,70 @@ namespace HX.DALSQLServer
 
         #endregion
 
+        #region 评论管理
+
+        public override int CreateAndUpdateComment(WeixinActCommentInfo entity)
+        {
+            string sql = @"
+            IF @ID = 0
+            BEGIN
+                INSERT INTO HX_WeixinActComments(
+                    [WeixinActType]
+                    ,[AthleteID]
+                    ,[Commenter]
+                    ,[PraiseNum]
+                    ,[BelittleNum]
+                    ,[Comment]
+                    ,[AddTime]) VALUES (
+                    @WeixinActType
+                    ,@AthleteID
+                    ,@Commenter
+                    ,@PraiseNum
+                    ,@BelittleNum
+                    ,@Comment
+                    ,@AddTime)
+                ;SELECT @@IDENTITY
+            END
+            ELSE 
+            BEGIN
+                UPDATE HX_WeixinActComments SET
+                [PraiseNum] = @PraiseNum
+                ,[BelittleNum] = @BelittleNum
+                WHERE [ID] = @ID
+                ;SELECT @ID
+            END";
+            SqlParameter[] p = 
+            {
+                new SqlParameter("@ID",entity.ID),
+                new SqlParameter("@WeixinActType",(byte)entity.WeixinActType),
+                new SqlParameter("@AthleteID",entity.AthleteID),
+                new SqlParameter("@Commenter",entity.Commenter),
+                new SqlParameter("@PraiseNum",entity.PraiseNum),
+                new SqlParameter("@BelittleNum",entity.BelittleNum),
+                new SqlParameter("@Comment",entity.Comment),
+                new SqlParameter("@AddTime",entity.AddTime)
+            };
+            entity.ID = DataConvert.SafeInt(SqlHelper.ExecuteScalar(_con, CommandType.Text, sql, p));
+            return entity.ID;
+        }
+
+        public override List<WeixinActCommentInfo> GetWeixinActComments()
+        {
+            List<WeixinActCommentInfo> list = new List<WeixinActCommentInfo>();
+            string sql = "SELECT * FROM HX_WeixinActComments";
+            using (IDataReader reader = SqlHelper.ExecuteReader(_con, CommandType.Text, sql))
+            {
+                while (reader.Read())
+                {
+                    list.Add(PopulateWeixinActCommentInfo(reader));
+                }
+            }
+
+            return list;
+        }
+
+        #endregion
+
         #endregion
 
         #region 招聘管理

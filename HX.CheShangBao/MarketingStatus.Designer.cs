@@ -123,7 +123,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::HX.CheShangBao.Properties.Resources.dbg;
-            this.ClientSize = new System.Drawing.Size(1006, 400);
+            this.ClientSize = new System.Drawing.Size(1000, 400);
             this.Controls.Add(this.wbJob5);
             this.Controls.Add(this.wbJob4);
             this.Controls.Add(this.wbJob3);
@@ -134,6 +134,7 @@
             this.Controls.Add(this.wbcontent);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "MarketingStatus";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MarketingStatus";
             this.Load += new System.EventHandler(this.MarketingStatus_Load);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MarketingStatus_MouseDown);

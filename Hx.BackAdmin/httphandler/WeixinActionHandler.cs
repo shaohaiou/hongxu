@@ -325,6 +325,8 @@ namespace Hx.BackAdmin.HttpHandler
         {
             try
             {
+                result = string.Format(result, "fail", "为减轻服务器压力，评论功能已被关闭");
+                return;
                 string openid = WebHelper.GetString("openid");
                 string id = WebHelper.GetString("id");
                 string comment = WebHelper.GetString("comment");
@@ -521,18 +523,17 @@ namespace Hx.BackAdmin.HttpHandler
                         List<WeixinActCommentInfo> listcomment = WeixinActs.Instance.GetComments(true);
                         List<WeixinActCommentInfo> source = listcomment.FindAll(c => c.AthleteID == DataConvert.SafeInt(id) && c.WeixinActType == (WeixinActType)acttype).ToList().OrderByDescending(c => c.ID).ToList();
                         int skipcount = 8 * (pageindex - 1);
-                        if (source.Count > 2 && source.Count > (skipcount + 2))
+                        if (source.Count > skipcount)
                         {
-                            source = source.Skip(2).ToList().OrderBy(c => c.ID).ToList();
-                            source = source.Skip(skipcount).ToList();
+                            source = source.OrderBy(c => c.ID).ToList().Skip(skipcount).ToList();
                             source = source.Count > 8 ? source.Take(8).ToList() : source;
                         }
                         foreach (WeixinActCommentInfo entity in source)
                         {
                             htmlstr.Append("<tr>");
-                            htmlstr.Append("<td><p>" + entity.Comment + "</p>");
+                            htmlstr.Append("<td><p>" + entity.Comment.Replace("\r"," ").Replace("\n"," ").Replace("\"", " ") + "</p>");
                             htmlstr.Append("<div class='dvcommentinfo'>");
-                            htmlstr.Append("<span>" + entity.AddTime.ToString("yyyy-MM-dd HH:mm:ss") + "</span> <span>");
+                            htmlstr.Append("<span>" + entity.AddTime.ToString("HH:mm:ss") + "</span> <span>");
                             htmlstr.Append((string.IsNullOrEmpty(entity.Commenter) ? "匿名" : entity.Commenter) + "</span></div>");
                             htmlstr.Append("<div class='dvcommentopt'>");
                             htmlstr.Append("<a href='javascript:void(0);' class='btnPraise' val='" + entity.ID + "'>鲜花</a>(<span");

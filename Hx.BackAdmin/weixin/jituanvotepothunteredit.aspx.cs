@@ -77,12 +77,21 @@ namespace Hx.BackAdmin.weixin
             txtDeclare.Text = pothunter.Declare;
             imgpic.Src = pothunter.PicPath;
             hdimage_pic.Value = pothunter.PicPath;
-            imgpics1.Src = pothunter.IntroducePic1;
-            imgpics1.Attributes["val"] = pothunter.IntroducePic1;
-            imgpics2.Src = pothunter.IntroducePic2;
-            imgpics2.Attributes["val"] = pothunter.IntroducePic2;
-            imgpics3.Src = pothunter.IntroducePic3;
-            imgpics3.Attributes["val"] = pothunter.IntroducePic3;
+            if (!string.IsNullOrEmpty(pothunter.IntroducePic1))
+            {
+                imgpics1.Src = pothunter.IntroducePic1;
+                imgpics1.Attributes["val"] = pothunter.IntroducePic1;
+            }
+            if (!string.IsNullOrEmpty(pothunter.IntroducePic2))
+            {
+                imgpics2.Src = pothunter.IntroducePic2;
+                imgpics2.Attributes["val"] = pothunter.IntroducePic2;
+            }
+            if (!string.IsNullOrEmpty(pothunter.IntroducePic3))
+            {
+                imgpics3.Src = pothunter.IntroducePic3;
+                imgpics3.Attributes["val"] = pothunter.IntroducePic3;
+            }
             hdimage_pics.Value = string.Join("|",new string[] { pothunter.IntroducePic1, pothunter.IntroducePic2, pothunter.IntroducePic3 });
         }
 
@@ -94,9 +103,12 @@ namespace Hx.BackAdmin.weixin
             pothunter.Introduce = txtIntroduce.Text;
             pothunter.Declare = txtDeclare.Text;
             pothunter.PicPath = hdimage_pic.Value;
-            pothunter.IntroducePic1 = hdimage_pics.Value.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries)[0];
-            pothunter.IntroducePic2 = hdimage_pics.Value.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries)[1];
-            pothunter.IntroducePic3 = hdimage_pics.Value.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries)[2];
+            if (!string.IsNullOrEmpty(hdimage_pics.Value))
+            {
+                pothunter.IntroducePic1 = hdimage_pics.Value.Split(new char[] { '|' })[0];
+                pothunter.IntroducePic2 = hdimage_pics.Value.Split(new char[] { '|' })[1];
+                pothunter.IntroducePic3 = hdimage_pics.Value.Split(new char[] { '|' })[2];
+            }
         }
 
         protected void btSave_Click(object sender, EventArgs e)
@@ -146,10 +158,9 @@ namespace Hx.BackAdmin.weixin
 
             if (string.IsNullOrEmpty(txtName.Text.Trim())) result = "姓名必须填写";
             if (string.IsNullOrEmpty(txtSerialNumber.Text.Trim())) result = "序号必须填写";
-            if (string.IsNullOrEmpty(txtIntroduce.Text.Trim())) result = "个人介绍必须填写";
+            if (string.IsNullOrEmpty(txtIntroduce.Text.Trim())) result = "十年历程必须填写";
             if (string.IsNullOrEmpty(txtDeclare.Text.Trim())) result = "参赛宣言必须填写";
             if (string.IsNullOrEmpty(hdimage_pic.Value.Trim())) result = "请上传头像";
-            if (string.IsNullOrEmpty(hdimage_pics.Value.Trim())) result = "请上传风采展示";
 
             return result;
         }

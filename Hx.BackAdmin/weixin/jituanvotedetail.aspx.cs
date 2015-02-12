@@ -50,9 +50,8 @@ namespace Hx.BackAdmin.weixin
         {
             if (!IsPostBack)
             {
-                Openid = GetString("openid");
                 Code = GetString("code");
-
+                Openid = GetString("openid");
                 if (string.IsNullOrEmpty(Openid) && !string.IsNullOrEmpty(Code))
                 {
                     string url_openid = string.Format("https://api.weixin.qq.com/sns/oauth2/access_token?appid={0}&secret={1}&code={2}&grant_type=authorization_code"
@@ -69,7 +68,10 @@ namespace Hx.BackAdmin.weixin
                     if (dic_openid.ContainsKey("openid"))
                     {
                         Openid = dic_openid["openid"];
-                        Response.Redirect("jituanvotedetail.aspx?openid=" + Openid + "&code=" + Code + "&id=" + GetString("id"));
+                    }
+                    else
+                    {
+                        Response.Redirect("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx0c9b37c9d5ddf8a8&redirect_uri=http%3A%2F%2Fbj.hongxu.cn%2Fweixin%2Fjituanvotedetail.aspx%3fid=" + GetInt("id") +"&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect");
                         Response.End();
                     }
                 }
@@ -85,7 +87,7 @@ namespace Hx.BackAdmin.weixin
             CurrentPothunterInfo = WeixinActs.Instance.GetJituanvotePothunterInfo(id, true);
             if (CurrentPothunterInfo == null)
             {
-                Response.Write("<script>alert(\"选手信息错误\");location.href=\"" + (string.IsNullOrEmpty(FromUrl) ? "jituanvotepage.aspx" : FromUrl) + "\"</script>");
+                Response.Write("<script>alert(\"员工信息错误\");location.href=\"" + (string.IsNullOrEmpty(FromUrl) ? ("jituanvotepage.aspx?openid=" + Openid + "&code=" + Code) : FromUrl) + "\"</script>");
                 Response.End();
             }
 
@@ -94,19 +96,10 @@ namespace Hx.BackAdmin.weixin
             rptCommentFirstTwo.DataSource = source.Count > 2 ? source.Take(2) : source;
             rptCommentFirstTwo.DataBind();
 
-            if (source.Count > 2)
-            {
-                source = source.Skip(2).ToList().OrderBy(c => c.ID).ToList();
-                rptComment.DataSource = source.Count > 8 ? source.Take(8) : source;
-                rptComment.DataBind();
-                CommentPageCount = (source.Count / 8) + (source.Count % 8 > 0 ? 1 : 0);
-            }
-            else
-            {
-                rptComment.DataSource = source;
-                rptComment.DataBind();
-                CommentPageCount = 1;
-            }
+            source = source.OrderBy(c => c.ID).ToList();
+            rptComment.DataSource = source.Count > 8 ? source.Take(8) : source;
+            rptComment.DataBind();
+            CommentPageCount = (source.Count / 8) + (source.Count % 8 > 0 ? 1 : 0);
         }
 
         /// <summary>

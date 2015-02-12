@@ -7,10 +7,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes" />
-    <title>投票页面</title>
+    <title>红旭集团历年十年功勋员工</title>
     <meta content="" name="keywords">
     <meta content="" name="description">
-    <link href="../css/jituanvote.css" rel="stylesheet" type="text/css" />
+    <link href="../css/jituanvote.css?t=1.0.1" rel="stylesheet" type="text/css" />
     <script src="../js/jquery-1.3.2.min.js" type="text/javascript"></script>
     <script src="../js/weixinapi2.js" type="text/javascript"></script>
     <script src="../js/comm.js" type="text/javascript"></script>
@@ -19,7 +19,10 @@
     <form id="form1" runat="server">
     <div class="wrap">
         <div class="dad">
-            <img src="../images/jituanvote/1211.png" />
+            <img src="../images/jituanvote/logo.jpg" />
+        </div>
+        <div class="dad">
+            <img src="../images/jituanvote/shinianyuangong.jpg" />
         </div>
         <% if (CurrentSetting != null)
            {%>
@@ -46,12 +49,12 @@
                                 <a href="jituanvotedetail.aspx?id=<%# Eval("ID") %>&openid=<%=Openid %>&code=<%=Code %>"
                                     class="btnDetail" val="<%#Eval("ID") %>">十年历程</a> <a href="javascript:void(0);" class="btnVote"
                                         val="<%#Eval("ID") %>">点赞</a><a href="javascript:void(0);" class="btnComment hide" val="<%#Eval("ID") %>">
-                                            评论</a> <a href="javascript:void(0);" class="btnCommentMore hide" val="<%#Eval("ID") %>">更多</a>
+                                            评论</a> <a href="javascript:void(0);" class="btnCommentMore" val="<%#Eval("ID") %>">更多评论 </a>
                             </div>
                         </div>
                         <div class="d-comment" id="d-comment<%#Eval("ID") %>">
-                            <table id="tblCommentFirstTwo<%#Eval("ID") %>">
-                                <asp:Repeater runat="server" ID="rptCommentFirstTwo">
+                            <table id="tblCommentFirstOne<%#Eval("ID") %>">
+                                <asp:Repeater runat="server" ID="rptCommentFirstOne">
                                     <ItemTemplate>
                                         <tr>
                                             <td>
@@ -72,25 +75,6 @@
                                     </ItemTemplate>
                                 </asp:Repeater>
                             </table>
-                            <div id="tblCommentMore<%#Eval("ID") %>" style="display: none;">
-                                <table>
-                                    <asp:Repeater runat="server" ID="rptCommentMore">
-                                        <ItemTemplate>
-                                            <tr>
-                                                <td>
-                                                    <p>
-                                                        <%#Eval("Comment")%></p>
-                                                    <div class="dvcommentopt">
-                                                        <a href="javascript:void(0);" class="btnPraise" val="<%#Eval("ID") %>">鲜花</a>(<span
-                                                            id="spPraise<%#Eval("ID") %>"><%#Eval("PraiseNum")%></span>) <a href="javascript:void(0);"
-                                                                class="btnBelittle" val="<%#Eval("ID") %>">鸡蛋</a>(<span id="spBelittle<%#Eval("ID") %>"><%#Eval("BelittleNum")%></span>)
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </ItemTemplate>
-                                    </asp:Repeater>
-                                </table>
-                            </div>
                         </div>
                     </li>
                 </ItemTemplate>
@@ -98,8 +82,8 @@
                     </ul></FooterTemplate>
             </asp:Repeater>
         </div>
-        <div style="width: 50%; margin: 0 auto; font-size: 90%;">
-            <img src="../images/jituanvote/erweima.jpg" style="width: 100%;" />
+        <div style="width: 50%; margin: 0 auto; font-size: 90%;display:none;">
+
             关注红旭集团官方微信，<br />
             点击下方#走进红旭#可以“领取关注礼”
         </div>
@@ -118,10 +102,10 @@
     var animatetimer = null;
 
     if (code == "") {
-        alert("用户没有授权");
+        location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx0c9b37c9d5ddf8a8&redirect_uri=http%3A%2F%2Fbj.hongxu.cn%2Fweixin%2Fjituanvotepage.aspx&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
     }
     else if (openid == "") {
-        alert("网络异常");
+        location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx0c9b37c9d5ddf8a8&redirect_uri=http%3A%2F%2Fbj.hongxu.cn%2Fweixin%2Fjituanvotepage.aspx&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
     }
 
     $(function () {
@@ -178,7 +162,8 @@
             $("#dvComment").fadeOut(200);
         });
         $(".btnCommentMore").click(function () {
-            $("#tblCommentMore" + $(this).attr("val")).slideToggle();
+            location.href = "jituanvotedetail.aspx?id=" + $(this).attr("val") + "&openid=<%= Openid %>&code<%= Code %>#dvAllComment";
+            //$("#tblCommentMore" + $(this).attr("val")).slideToggle();
         });
         //提交评论
         $("#btnCommentSubmit").click(function () {
@@ -204,11 +189,11 @@
                             + "</div></td></tr>");
                             if ($("#d-comment" + $("#hdnCurrentid").val()).is(":hidden")) {
                                 $("#d-comment" + $("#hdnCurrentid").val()).slideDown(function () {
-                                    $("#tblCommentFirstTwo" + $("#hdnCurrentid").val()).prepend($newrow);
+                                    $("#tblCommentFirstOne" + $("#hdnCurrentid").val()).prepend($newrow);
                                 });
                             }
                             else {
-                                $("#tblCommentFirstTwo" + $("#hdnCurrentid").val()).prepend($newrow);
+                                $("#tblCommentFirstOne" + $("#hdnCurrentid").val()).prepend($newrow);
                             }
                             var comments = parseInt($("#txtComments" + $("#hdnCurrentid").val()).text().replace("被评论:", "")) + 1;
                             $("#txtComments" + $("#hdnCurrentid").val()).text("被评论:" + comments);
@@ -251,6 +236,7 @@
                         var t = o.parent().parent().find(".txtBallot");
                         if (t && t.length > 0)
                             t.text(parseInt(t.text()) + 1);
+                        alert("点赞成功，谢谢参与！");
                     }
                     else {
                         alert(data.Msg);

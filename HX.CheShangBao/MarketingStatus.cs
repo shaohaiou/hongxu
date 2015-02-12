@@ -201,12 +201,24 @@ namespace HX.CheShangBao
                                     txtPassWord.SetAttribute("value", account.Password);
                                     SubmitLogin.InvokeMember("click");
                                     wb.Stop();
-                                    wb.Navigate(Jcbs.Instance.GetPublicUrl(account));
+                                    Utils.DelayRun(1000, delegate()
+                                    {
+                                        wb.Navigate(Jcbs.Instance.GetPublicUrl(account));
+                                    });
                                 }
                                 //发布信息
                                 else if (wb.Url.ToString() == Jcbs.Instance.GetPublicUrl(account))
                                 {
                                     WriteMsg(account.ID, "正在发布车辆信息...");
+                                    if (CurrentCar.cCxmc.Length > 24)
+                                    {
+                                        WriteMsg(account.ID, "该车辆信息不适合快速发布");
+                                        lock (sync_account)
+                                        {
+                                            wbAccount.Remove(wb.Name);
+                                        }
+                                        return;
+                                    }
                                     HtmlElement selectBSYS = HtmlDoc.All["selectBSYS"];
                                     foreach (HtmlElement h in selectBSYS.GetElementsByTagName("a"))
                                     {
@@ -406,6 +418,12 @@ namespace HX.CheShangBao
 
                                     #region 图片上传
 
+                                    bool hascarpics = false;
+                                    bool hasdjzupload = true;
+                                    bool hasxszupload = true;
+                                    bool hasgcfpupload = true;
+                                    bool hascarpicsupload = false;
+
                                     AsyncCallback uploadpic = delegate(IAsyncResult ar)
                                     {
                                         if (CurrentCar.Djz == "有")
@@ -416,6 +434,19 @@ namespace HX.CheShangBao
                                             {
                                                 string picurl = string.Format(Global.Host + CurrentCar.DjzPic);
                                                 UploadPic(picurl, HtmlDoc.All["dj_cert"]);
+                                                Utils.DelayRun(100, delegate()
+                                                {
+                                                    DateTime begintime = DateTime.Now;
+                                                    HtmlElement dj_certmsg = HtmlDoc.All["dj_certmsg"];
+                                                    string classname = dj_certmsg.GetAttribute("className").ToLower();
+                                                    while (classname != "twright" && DateTime.Now.Subtract(begintime).TotalMilliseconds < 5000)
+                                                    {
+                                                        Thread.Sleep(100);
+                                                        dj_certmsg = HtmlDoc.All["dj_certmsg"];
+                                                        classname = dj_certmsg.GetAttribute("className").ToLower();
+                                                    }
+                                                    hasdjzupload = classname == "twright";
+                                                });
                                             }
                                         }
                                         else if (CurrentCar.Djz == "丢失")
@@ -436,6 +467,19 @@ namespace HX.CheShangBao
                                             {
                                                 string picurl = string.Format(Global.Host + CurrentCar.XszPic);
                                                 UploadPic(picurl, HtmlDoc.All["xs_cert"]);
+                                                Utils.DelayRun(100, delegate()
+                                                {
+                                                    DateTime begintime = DateTime.Now;
+                                                    HtmlElement xs_certmsg = HtmlDoc.All["xs_certmsg"];
+                                                    string classname = xs_certmsg.GetAttribute("className").ToLower();
+                                                    while (classname != "twright" && DateTime.Now.Subtract(begintime).TotalMilliseconds < 5000)
+                                                    {
+                                                        Thread.Sleep(100);
+                                                        xs_certmsg = HtmlDoc.All["xs_certmsg"];
+                                                        classname = xs_certmsg.GetAttribute("className").ToLower();
+                                                    }
+                                                    hasxszupload = classname == "twright";
+                                                });
                                             }
                                         }
                                         else if (CurrentCar.Xsz == "丢失")
@@ -456,6 +500,19 @@ namespace HX.CheShangBao
                                             {
                                                 string picurl = string.Format(Global.Host + CurrentCar.GcfpPic);
                                                 UploadPic(picurl, HtmlDoc.All["gc_cert"]);
+                                                Utils.DelayRun(100, delegate()
+                                                {
+                                                    DateTime begintime = DateTime.Now;
+                                                    HtmlElement gc_certmsg = HtmlDoc.All["gc_certmsg"];
+                                                    string classname = gc_certmsg.GetAttribute("className").ToLower();
+                                                    while (classname != "twright" && DateTime.Now.Subtract(begintime).TotalMilliseconds < 5000)
+                                                    {
+                                                        Thread.Sleep(100);
+                                                        gc_certmsg = HtmlDoc.All["gc_certmsg"];
+                                                        classname = gc_certmsg.GetAttribute("className").ToLower();
+                                                    }
+                                                    hasgcfpupload = classname == "twright";
+                                                });
                                             }
                                         }
                                         else if (CurrentCar.Gcfp == "丢失")
@@ -469,16 +526,71 @@ namespace HX.CheShangBao
                                             gc_doing.InvokeMember("click");
                                         }
 
-                                        HtmlElement CarSubmit = HtmlDoc.All["CarSubmit"];
-                                        Utils.DelayRun(7000, delegate()
+                                        if (hascarpics)
                                         {
-                                            CarSubmit.InvokeMember("click");
+                                            Utils.DelayRun(100, delegate()
+                                            {
+                                                DateTime begintime = DateTime.Now;
+                                                HtmlElement uploadProgress = HtmlDoc.All["uploadProgress"];
+                                                string style = uploadProgress.Style.ToLower();
+                                                while (style != "display: none" && DateTime.Now.Subtract(begintime).TotalMilliseconds < 5000)
+                                                {
+                                                    Thread.Sleep(100);
+                                                    uploadProgress = HtmlDoc.All["uploadProgress"];
+                                                    style = uploadProgress.Style.ToLower();
+                                                }
+                                                hascarpicsupload = style == "display: none";
+                                            });
+                                        }
+                                        else
+                                            hascarpicsupload = true;
+
+                                        Utils.DelayRun(100, delegate()
+                                        {
+                                            HtmlElement CarSubmit = HtmlDoc.All["CarSubmit"];
+                                            DateTime begintime = DateTime.Now;
+
+                                            if (hascarpics)
+                                            {
+                                                while (!(hasdjzupload && hasxszupload && hasgcfpupload && hascarpicsupload) && DateTime.Now.Subtract(begintime).TotalMilliseconds < 5000)
+                                                {
+                                                    Thread.Sleep(100);
+                                                }
+                                                if (hasdjzupload && hasxszupload && hasgcfpupload && hascarpicsupload)
+                                                    CarSubmit.InvokeMember("click");
+                                                else
+                                                {
+                                                    WriteMsg(account.ID, "该车辆信息不适合快速发布");
+                                                    lock (sync_account)
+                                                    {
+                                                        wbAccount.Remove(wb.Name);
+                                                    }
+                                                }
+                                            }
+                                            else
+                                            {
+                                                while (!(hasdjzupload && hasxszupload && hasgcfpupload) && DateTime.Now.Subtract(begintime).TotalMilliseconds < 5000)
+                                                {
+                                                    Thread.Sleep(100);
+                                                }
+                                                if (hasdjzupload && hasxszupload && hasgcfpupload)
+                                                    CarSubmit.InvokeMember("click");
+                                                else
+                                                {
+                                                    WriteMsg(account.ID, "该车辆信息不适合快速发布");
+                                                    lock (sync_account)
+                                                    {
+                                                        wbAccount.Remove(wb.Name);
+                                                    }
+                                                }
+                                            }
                                         });
                                     };
 
                                     if (CurrentCar.Picslist.Count > 0)
                                     {
                                         WriteMsg(account.ID, "正在上传车辆图片...");
+                                        hascarpics = true;
                                         string picurls = string.Join(" ", CurrentCar.Picslist.OrderByDescending(p => p.IsFirstpic).ToList().Select(p => Global.Host + p.PicUrl).ToList());
                                         HtmlElement uploadModel1 = HtmlDoc.All["uploadModel1"];
                                         UploadPicByMouseLeftClick(picurls, uploadModel1, wb, uploadpic);
@@ -521,7 +633,11 @@ namespace HX.CheShangBao
                             }
                             else if (account.JcbAccountType == JcbAccountType.商户帐号)
                             {
+                                #region 自动提交信息
 
+
+
+                                #endregion
                             }
                             break;
                         case JcbSiteType.t_58同城:
@@ -712,6 +828,10 @@ namespace HX.CheShangBao
                 catch
                 {
                     WriteMsg(account.ID, "车辆信息不符合快速营销方式");
+                    lock (sync_account)
+                    {
+                        wbAccount.Remove(wb.Name);
+                    }
                 }
             }
         }
@@ -737,7 +857,7 @@ namespace HX.CheShangBao
                         while (hwndCalc == IntPtr.Zero)
                         {
                             hwndCalc = CSharpWindowsAPI.FindWindow("#32770", null);
-                            if (DateTime.Now.Subtract(timestart).Milliseconds > 2000)
+                            if (DateTime.Now.Subtract(timestart).TotalMilliseconds > 2000)
                             {
                                 hasfindhandle = false;
                                 break;
@@ -793,7 +913,7 @@ namespace HX.CheShangBao
                         while (hwndCalc == IntPtr.Zero)
                         {
                             hwndCalc = CSharpWindowsAPI.FindWindow("#32770", null);
-                            if (DateTime.Now.Subtract(timestart).Milliseconds > 2000)
+                            if (DateTime.Now.Subtract(timestart).TotalMilliseconds > 5000)
                             {
                                 hasfindhandle = false;
                                 break;
@@ -812,7 +932,9 @@ namespace HX.CheShangBao
                                 CSharpWindowsAPI.LeftMouseDown(hwndSubmit);
                             }
                         }
-                        Utils.DelayRun(listdownloaded.Count * 4000, delegate()
+                        else
+                            throw new Exception();
+                        Utils.DelayRun(1000, delegate()
                         {
                             callback(null);
                         });

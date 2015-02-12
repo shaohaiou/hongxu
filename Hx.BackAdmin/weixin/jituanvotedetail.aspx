@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes" />
-    <title>选手详细信息</title>
+    <title>十年历程</title>
     <meta content="" name="keywords">
     <meta content="" name="description">
     <link href="../css/jituanvote.css" rel="stylesheet" type="text/css" />
@@ -18,7 +18,8 @@
 <body>
     <div class="dwrap">
         <div class="nav">
-            <a href="jituanvotepage.aspx?openid=<%=Openid %>&code=<%=Code %>" style="color: black;font-weight: bold;">←返回</a>
+            <a href="jituanvotepage.aspx?openid=<%=Openid %>&code=<%=Code %>&isback=1" style="color: black;
+                font-weight: bold;">←更多十年员工</a>
         </div>
         <div class="dcontent">
             <div class="c1">
@@ -43,15 +44,25 @@
                     </dl>
                     <dr id="drIntroduce"><%= CurrentPothunterInfo.Introduce%></dr>
                 </dt>
+                <%if (!(string.IsNullOrEmpty(CurrentPothunterInfo.IntroducePic1) && string.IsNullOrEmpty(CurrentPothunterInfo.IntroducePic2) && string.IsNullOrEmpty(CurrentPothunterInfo.IntroducePic3))) {%>
                 <dt>
                     <dl>
                         <a class="btnDetail1" href="javascript:void(0);">个人风采</a>
                     </dl>
                     <br />
-                    <dr style="width: 100%!important; text-align: center;"><img src="http://<%= CurrentDomain %><%= CurrentPothunterInfo.IntroducePic1%>" class="picpreview"  /><br />
+                    <dr style="width: 100%!important; text-align: center;">
+                    <%if (!string.IsNullOrEmpty(CurrentPothunterInfo.IntroducePic1)) {%>
+                    <img src="http://<%= CurrentDomain %><%= CurrentPothunterInfo.IntroducePic1%>" class="picpreview"  /><br />
+                    <%} %>
+                    <%if (!string.IsNullOrEmpty(CurrentPothunterInfo.IntroducePic2))
+                      {%>
                     <img src="http://<%= CurrentDomain %><%= CurrentPothunterInfo.IntroducePic2%>" class="picpreview"  /><br />
-                    <img src="http://<%= CurrentDomain %><%= CurrentPothunterInfo.IntroducePic3%>" class="picpreview"  /></dr>
+                    <%} %>
+                    <%if (!string.IsNullOrEmpty(CurrentPothunterInfo.IntroducePic3)) {%>
+                    <img src="http://<%= CurrentDomain %><%= CurrentPothunterInfo.IntroducePic3%>" class="picpreview"  />
+                    <%} %></dr>
                 </dt>
+                <%} %>
                 <dt id="posComment" name="posComment">
                     <dl>
                         <a class="btnDetail2" href="javascript:void(0);">评论内容</a>
@@ -73,7 +84,7 @@
                                                 <%#Eval("Comment")%></p>
                                             <div class="dvcommentinfo">
                                                 <span>
-                                                    <%#Eval("AddTime","{0:yyyy-MM-dd HH:mm:ss}") %></span> <span>
+                                                    <%#Eval("AddTime","{0:HH:mm:ss}") %></span> <span>
                                                         <%# string.IsNullOrEmpty(Eval("Commenter").ToString().Trim()) ? "匿名" : Eval("Commenter").ToString()%></span>
                                             </div>
                                             <div class="dvcommentopt">
@@ -98,7 +109,7 @@
                                                     <%#Eval("Comment")%></p>
                                                 <div class="dvcommentinfo">
                                                     <span>
-                                                        <%#Eval("AddTime","{0:yyyy-MM-dd HH:mm:ss}") %></span> <span>
+                                                        <%#Eval("AddTime","{0:HH:mm:ss}") %></span> <span>
                                                             <%# string.IsNullOrEmpty(Eval("Commenter").ToString().Trim()) ? "匿名" : Eval("Commenter").ToString()%></span>
                                                 </div>
                                                 <div class="dvcommentopt">
@@ -182,6 +193,8 @@
         });
 
         $(".btnComment").click(function () {
+            alert("为减轻服务器压力，评论功能已关闭。");
+            return;
             var top = ($("body").scrollTop() + 20) + "px";
             $("#txtComment").val("");
             $("#dvComment").css({ top: top });
@@ -201,6 +214,8 @@
 
         //提交评论
         $("#btnCommentSubmit").click(function () {
+            alert("为减轻服务器压力，评论功能已关闭。");
+            return;
             if ($.trim($("#txtComment").val()) != "") {
                 $.ajax({
                     url: "weixinaction.axd",

@@ -155,8 +155,8 @@ namespace Hx.Car
                 case JcbSiteType.t_二手车之家:
                     if (account.JcbAccountType == JcbAccountType.个人帐号)
                         result = "http://account.che168.com/login";
-                    else
-                        result = "";
+                    else if(account.JcbAccountType == JcbAccountType.商户帐号)
+                        result = "http://dealer.che168.com/login.html";
                     break;
                 case JcbSiteType.t_58同城:
                     result = "http://passport.58.com/login";
@@ -205,8 +205,8 @@ namespace Hx.Car
                 case JcbSiteType.t_二手车之家:
                     if (account.JcbAccountType == JcbAccountType.个人帐号)
                         result = "http://i.che168.com/car/add/";
-                    else
-                        result = "";
+                    else if (account.JcbAccountType == JcbAccountType.商户帐号)
+                        result = "http://dealer.che168.com/car/publish/?s=1";
                     break;
                 case JcbSiteType.t_58同城:
                     result = "http://post.58.com/330/29/s5";

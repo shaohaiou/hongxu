@@ -85,6 +85,15 @@
                 });
             });
 
+            $(".btndelpic").click(function () {
+                $("img", $(this).parent()).attr("src", "../images/fm.jpg").attr("val", "");
+                $(this).prev().val("上传图片");
+                var imgs = $(".imgpics").map(function () {
+                    return $(this).attr("val");
+                }).get().join("|")
+                $("#hdimage_pics").val(imgs);
+            });
+
             $("#btnCopyLink").click(function () {
                 copyToClipboard($("#txtLink").text());
             });
@@ -150,9 +159,7 @@
                         <span class="red">*</span>十年历程：
                     </td>
                     <td>
-                        <asp:TextBox ID="txtIntroduce" runat="server" TextMode="MultiLine" CssClass="ckeditor"></asp:TextBox><asp:RequiredFieldValidator
-                            ID="rfvIntroduce" runat="server" CssClass="red" ErrorMessage="十年历程必须填写" ControlToValidate="txtIntroduce"
-                            Display="Dynamic"></asp:RequiredFieldValidator>
+                        <asp:TextBox ID="txtIntroduce" runat="server" TextMode="MultiLine" CssClass="ckeditor"></asp:TextBox>
                     </td>
                 </tr>
                 <tr>
@@ -177,22 +184,25 @@
                 </tr>
                 <tr>
                     <td class="bg1 vt">
-                        <span class="red">*</span>风采展示：
+                        风采展示：
                     </td>
                     <td>
                         <ul>
                             <li style="padding-right: 10px;">
-                                <input type="button" value="上传图片" class="an3 uploadbtpics" /><br />
+                                <input type="button" value="上传图片" class="an3 uploadbtpics" />
+                                <input type="button" value="删除图片" class="an3 btndelpic" /><br />
                                 <img src="../images/fm.jpg" alt="展示图片1" id="imgpics1" class="imgpics" style="width: 440px;
                                     height: auto;" val="" runat="server" />
                             </li>
                             <li style="padding-right: 10px;">
-                                <input type="button" value="上传图片" class="an3 uploadbtpics" /><br />
+                                <input type="button" value="上传图片" class="an3 uploadbtpics" />
+                                <input type="button" value="删除图片" class="an3 btndelpic" /><br />
                                 <img src="../images/fm.jpg" alt="展示图片2" id="imgpics2" class="imgpics" style="width: 440px;
                                     height: auto;" val="" runat="server" />
                             </li>
                             <li style="padding-right: 10px;">
-                                <input type="button" value="上传图片" class="an3 uploadbtpics" /><br />
+                                <input type="button" value="上传图片" class="an3 uploadbtpics" />
+                                <input type="button" value="删除图片" class="an3 btndelpic" /><br />
                                 <img src="../images/fm.jpg" alt="展示图片3" id="imgpics3" class="imgpics" style="width: 440px;
                                     height: auto;" val="" runat="server" />
                             </li>

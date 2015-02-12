@@ -88,7 +88,8 @@ namespace Hx.BackAdmin.weixin
             {
                 Openid = GetString("openid");
                 Code = GetString("code");
-                if (string.IsNullOrEmpty(Openid) && !string.IsNullOrEmpty(Code))
+                int isback = GetInt("isback");
+                if (!string.IsNullOrEmpty(Code) && isback == 0)
                 {
                     string url_openid = string.Format("https://api.weixin.qq.com/sns/oauth2/access_token?appid={0}&secret={1}&code={2}&grant_type=authorization_code"
                         , GlobalKey.WEIXINAPPID
@@ -104,9 +105,19 @@ namespace Hx.BackAdmin.weixin
                     if (dic_openid.ContainsKey("openid"))
                     {
                         Openid = dic_openid["openid"];
-                        Response.Redirect("jituanvotepage.aspx?openid=" + Openid + "&code=" + Code);
-                        Response.End();
                     }
+                    else
+                    {
+#if !DEBUG
+                        Response.Redirect("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx0c9b37c9d5ddf8a8&redirect_uri=http%3A%2F%2Fbj.hongxu.cn%2Fweixin%2Fjituanvotepage.aspx&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect");
+                        Response.End();
+#endif
+                    }
+                }
+                else if (string.IsNullOrEmpty(Code))
+                {
+                    Response.Redirect("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx0c9b37c9d5ddf8a8&redirect_uri=http%3A%2F%2Fbj.hongxu.cn%2Fweixin%2Fjituanvotepage.aspx&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect");
+                    Response.End();
                 }
 
                 LoadData();
@@ -125,18 +136,18 @@ namespace Hx.BackAdmin.weixin
             if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
             {
                 JituanvotePothunterInfo entity = (JituanvotePothunterInfo)e.Item.DataItem;
-                Repeater rptCommentFirstTwo = (Repeater)e.Item.FindControl("rptCommentFirstTwo");
+                Repeater rptCommentFirstOne = (Repeater)e.Item.FindControl("rptCommentFirstOne");
                 Repeater rptCommentMore = (Repeater)e.Item.FindControl("rptCommentMore");
                 List<WeixinActCommentInfo> source = ListComment.FindAll(c => c.AthleteID == entity.ID && c.WeixinActType == Components.Enumerations.WeixinActType.集团活动).ToList().OrderByDescending(c => c.ID).ToList();
-                if (rptCommentFirstTwo != null)
+                if (rptCommentFirstOne != null)
                 {
-                    rptCommentFirstTwo.DataSource = source.Count > 2 ? source.Take(2) : source;
-                    rptCommentFirstTwo.DataBind();
+                    rptCommentFirstOne.DataSource = source.Count > 1 ? source.Take(1) : source;
+                    rptCommentFirstOne.DataBind();
                 }
-                if (rptCommentMore != null && source.Count > 2)
+                if (rptCommentMore != null && source.Count > 1)
                 {
-                    source = source.Skip(2).ToList();
-                    rptCommentMore.DataSource = source.Count > 3 ? source.Take(3) : source;
+                    source = source.Skip(1).ToList();
+                    rptCommentMore.DataSource = source.Count > 4 ? source.Take(4) : source;
                     rptCommentMore.DataBind();
                 }
             }

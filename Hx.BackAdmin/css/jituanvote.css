@@ -4,7 +4,7 @@ a{text-decoration:none;}
 .fl{float:left;}
 .fr{float:right;}
 .hide{display:none;}
-.red{color:Red;}.gray{color:Gray;}
+.red{color:Red!important;}.gray{color:Gray!important;}
 
 .wrap{max-width: 640px;min-width: 320px;margin: 0 auto;overflow: hidden;position: relative;background-color:#fbf9e4;}
 .content{border-top-style:dashed;border-top-width:1px;border-top-color:#fff;margin: 0 0 3% 0;}
@@ -17,7 +17,7 @@ a{text-decoration:none;}
     .ballot{width: 45%;display: inline-block;line-height:200%;}
     .paiming{line-height: 200%;width: 50%;display: inline-block;}
     .fense{color:#ec0b8f}
-.opt{width:100%;margin:4% 0 0 0;line-height:30px;}
+.opt{width:100%;line-height:30px;font-size:70%;}
     .xiangqing{width:45%;display:inline-block;}.xiangqing img{width:75%;}
     .toupiao{width:45%;display:inline-block;}.toupiao img{width:75%;}
     #dvComment{position:absolute;height:200px;width:90%;display:none;padding: 2% 5%;background: white;filter:alpha(opacity=50);z-index:999;}
@@ -33,17 +33,19 @@ a{text-decoration:none;}
     .dvcommentinfo span{color:Gray;}
     .dvcommentopt{float:right;font-size: 90%;}
     .dvcommentopt span{color:Gray;}
-    .d-comment td{border-bottom:1px dashed #7c7c7c;padding-bottom:2%;}
-    .btnPraise{}
-    .btnBelittle{}
+    .d-comment td{background: #FAFAFA;border: 1px solid #F4F4F4;border-radius: 3px;box-shadow: 2px 2px 2px #999;padding: 1% 2%;}
+    .btnPraise{color:Red;}
+    .btnBelittle{color:Orange;}
     .commentmore{display:none;}
     
-    .btnDetail,.btnComment,.btnCommentMore{border:2px solid Orange;padding:1% 2%;color:Orange;}
-    .btnVote{border:2px solid Purple;padding:1% 2%;color:Purple;}
+    .btnDetail,.btnComment,.btnCommentMore{border:1px solid Orange;padding:1% 2%;color:Orange;}
+    .btnVote{border:1px solid Purple;padding:1% 2%;color:Purple;}
     .btnDetail1{border:2px solid Orange;padding:3% 6%;color:Orange;font-size:90%;cursor:auto;}
     .btnDetail2{border-bottom:4px solid Orange;padding:3% 10%;color:Black;font-size:90%;cursor:auto;}
 
 .content ul li{margin:3% 0 0 6%;}
+
+td p{margin: 2% 0 3% 0;}
 
 .pager{text-align: center;margin:0 auto;line-height: 3em;height:3em;width:40%;color: white;}
     .pager dt{width:3em;}

@@ -79,7 +79,7 @@
             this.wbJob1.MinimumSize = new System.Drawing.Size(20, 20);
             this.wbJob1.Name = "wbJob1";
             this.wbJob1.ScriptErrorsSuppressed = true;
-            this.wbJob1.Size = new System.Drawing.Size(299, 85);
+            this.wbJob1.Size = new System.Drawing.Size(299, 252);
             this.wbJob1.TabIndex = 3;
             // 
             // wbJob2

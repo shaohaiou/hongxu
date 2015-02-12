@@ -471,6 +471,7 @@ namespace Hx.Components
         public void DelJituanvotePothunterInfo(string ids)
         {
             CommonDataProvider.Instance().DelJituanvotePothunterInfo(ids);
+            ReloadJituanvotePothunterListCache();
         }
 
         public JituanvotePothunterInfo GetJituanvotePothunterInfo(int id, bool fromCache = false)

@@ -102,14 +102,18 @@
                 </tr>
                 <tr>
                     <td class="bg1">
-                        <span class="red">*</span>序号：
+                        排序：
                     </td>
                     <td>
-                        <asp:TextBox ID="txtSerialNumber" runat="server"></asp:TextBox><asp:RequiredFieldValidator
-                            ID="rfvnumber" runat="server" CssClass="red" ErrorMessage="序号必须填写" ControlToValidate="txtSerialNumber"
-                            Display="Dynamic"></asp:RequiredFieldValidator><asp:RegularExpressionValidator ControlToValidate="txtSerialNumber"
-                                ErrorMessage="请输入正确的序号" Text="请输入正确的序号" CssClass="red" ID="revnumber" runat="server"
-                                SetFocusOnError="True" Display="Dynamic" ValidationExpression="^\d+$"></asp:RegularExpressionValidator>
+                        <asp:TextBox ID="txtSerialNumber" runat="server"></asp:TextBox>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bg1">
+                        序号描述：
+                    </td>
+                    <td>
+                        <asp:TextBox ID="txtSerialNumberDetail" runat="server"></asp:TextBox>
                     </td>
                 </tr>
                 <tr>
@@ -124,27 +128,23 @@
                 </tr>
                 <tr>
                     <td class="bg1">
-                        <span class="red">*</span>个人介绍：
+                        个人介绍：
                     </td>
                     <td>
-                        <asp:TextBox ID="txtIntroduce" runat="server" TextMode="MultiLine" Rows="4" Width="300"></asp:TextBox><asp:RequiredFieldValidator
-                            ID="rfvIntroduce" runat="server" CssClass="red" ErrorMessage="个人介绍必须填写" ControlToValidate="txtIntroduce"
-                            Display="Dynamic"></asp:RequiredFieldValidator>
+                        <asp:TextBox ID="txtIntroduce" runat="server" TextMode="MultiLine" Rows="4" Width="300"></asp:TextBox>
                     </td>
                 </tr>
                 <tr>
                     <td class="bg1">
-                        <span class="red">*</span>参赛宣言：
+                        参赛宣言：
                     </td>
                     <td>
-                        <asp:TextBox ID="txtDeclare" runat="server" TextMode="MultiLine" Rows="4" Width="300"></asp:TextBox><asp:RequiredFieldValidator
-                            ID="rfvDeclare" runat="server" CssClass="red" ErrorMessage="参赛宣言必须填写" ControlToValidate="txtDeclare"
-                            Display="Dynamic"></asp:RequiredFieldValidator>
+                        <asp:TextBox ID="txtDeclare" runat="server" TextMode="MultiLine" Rows="4" Width="300"></asp:TextBox>
                     </td>
                 </tr>
                 <tr>
                     <td class="bg1">
-                        <span class="red">*</span>头像：
+                        头像：
                     </td>
                     <td>
                         <input type="button" name="uploadbtpic" id="uploadbtpic" value="上传图片" class="an3" /><br />
@@ -154,7 +154,7 @@
                 </tr>
                 <tr>
                     <td class="bg1 vt">
-                        <span class="red">*</span>风采展示：
+                        风采展示：
                     </td>
                     <td>
                         <ul>
@@ -171,6 +171,21 @@
                             <li style="padding-right: 10px;">
                                 <input type="button" value="上传图片" class="an3 uploadbtpics" /><br />
                                 <img src="../images/fm.jpg" alt="展示图片3" id="imgpics3" class="imgpics" style="width: 440px;height:auto;"
+                                    val="" runat="server" />
+                            </li>
+                            <li style="padding-right: 10px;">
+                                <input type="button" value="上传图片" class="an3 uploadbtpics" /><br />
+                                <img src="../images/fm.jpg" alt="展示图片4" id="imgpics4" class="imgpics" style="width: 440px;height:auto;"
+                                    val="" runat="server" />
+                            </li>
+                            <li style="padding-right: 10px;">
+                                <input type="button" value="上传图片" class="an3 uploadbtpics" /><br />
+                                <img src="../images/fm.jpg" alt="展示图片5" id="imgpics5" class="imgpics" style="width: 440px;height:auto;"
+                                    val="" runat="server" />
+                            </li>
+                            <li style="padding-right: 10px;">
+                                <input type="button" value="上传图片" class="an3 uploadbtpics" /><br />
+                                <img src="../images/fm.jpg" alt="展示图片6" id="imgpics6" class="imgpics" style="width: 440px;height:auto;"
                                     val="" runat="server" />
                             </li>
                         </ul>

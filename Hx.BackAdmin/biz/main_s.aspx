@@ -16,7 +16,9 @@
 <body style="background:url(../images/xdd.gif) repeat-x;">
 <div class="right_nav">
      <a href="jobedit.aspx" target="ztk" id="jobedit" runat="server" class="current">招聘管理</a>
-     <a href="job.aspx" target="ztk" id="jobpreview" runat="server" >预览</a>
+     <a href="job.aspx" target="ztk" id="jobpreview" runat="server" >招聘预览</a>
+     <a href="corpmien.aspx" target="ztk" id="corpmien" runat="server">集团荣誉</a>
+     <a href="corpmiendetail.aspx" target="ztk" id="corpmiendetail" runat="server">荣誉预览</a>
 </div>
 
 <div class="r_sy" id="daohan">

@@ -31,7 +31,7 @@ body{background:url(images/ldi.gif) repeat-y;}
 	<a href="user/main.aspx" target="mainFrame"  runat="server" id="userindex_page">用户管理</a>
 	<a href="dayreport/main.aspx" target="mainFrame"  runat="server" id="dayreport_page">日报管理</a>
 	<a href="weixin/main.aspx" target="mainFrame"  runat="server" id="weixin_page">微信活动</a>
-	<a href="biz/main.aspx" target="mainFrame"  runat="server" id="zhaopin_page">招聘管理</a>
+	<a href="biz/main.aspx" target="mainFrame"  runat="server" id="zhaopin_page">oa行政</a>
 </div>
 </body>
 </html>

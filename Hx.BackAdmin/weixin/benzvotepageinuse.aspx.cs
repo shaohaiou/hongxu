@@ -8,6 +8,7 @@ using Hx.Components.BasePage;
 using Hx.Components;
 using Hx.Tools.Web;
 using Hx.Components.Entity;
+using Hx.Tools;
 
 namespace Hx.BackAdmin.weixin
 {
@@ -17,7 +18,7 @@ namespace Hx.BackAdmin.weixin
         public string Code { get; set; }
         public string Openid { get; set; }
         protected int PageIndex = 1;
-        protected int PageSize = 10;
+        protected int PageSize = 30;
         protected int PageCount = 1;
         private string subscribe = "0";
         public string Subscribe { get { return subscribe; } }
@@ -40,11 +41,10 @@ namespace Hx.BackAdmin.weixin
                 if (PageIndex > 1) prev = PageIndex - 1;
                 foreach (string key in Request.QueryString.AllKeys)
                 {
-                    if (key != "page" && key != "openid")
+                    if (key != "page")
                         querys.Add(key + "=" + Request.QueryString[key]);
                 }
                 querys.Add("page=" + prev);
-                querys.Add("openid=" + Openid);
                 return "?" + string.Join("&", querys); ;
             }
         }
@@ -58,12 +58,46 @@ namespace Hx.BackAdmin.weixin
                 if (PageIndex < PageCount) next = PageIndex + 1;
                 foreach (string key in Request.QueryString.AllKeys)
                 {
-                    if (key != "page" && key != "openid")
+                    if (key != "page")
                         querys.Add(key + "=" + Request.QueryString[key]);
                 }
                 querys.Add("page=" + next);
-                querys.Add("openid=" + Openid);
                 return "?" + string.Join("&", querys); ;
+            }
+        }
+
+        private int timestamp = 0;
+        protected int Timestamp
+        {
+            get
+            {
+                if (timestamp == 0)
+                    timestamp = Utils.ConvertDateTimeInt(DateTime.Now);
+                return timestamp;
+            }
+        }
+
+        private string nonceStr = string.Empty;
+        protected string NonceStr
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(nonceStr))
+                {
+                    nonceStr = EncryptString.MD5(DateTime.Now.ToString("yyyyMMddHHmiss") + DateTime.Now.Millisecond, true);
+                }
+                return nonceStr;
+            }
+        }
+
+        private string signature = string.Empty;
+        protected string Signature
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(signature))
+                    signature = EncryptString.SHA1_Hash(string.Format("jsapi_ticket={0}&noncestr={1}&timestamp={2}&url={3}", WeixinActs.Instance.GetJsapiTicket(), NonceStr, Timestamp, Request.Url.AbsoluteUri));
+                return signature;
             }
         }
 
@@ -71,7 +105,7 @@ namespace Hx.BackAdmin.weixin
         {
             if (!IsPostBack)
             {
-                Openid = GetString("openid");
+                Openid = Session[GlobalKey.BENZVOTEOPENID] as string;
                 Code = GetString("code");
                 if (string.IsNullOrEmpty(Openid) && !string.IsNullOrEmpty(Code))
                 {
@@ -89,9 +123,13 @@ namespace Hx.BackAdmin.weixin
                     if (dic_openid.ContainsKey("openid"))
                     {
                         Openid = dic_openid["openid"];
-                        Response.Redirect("benzvotepageinuse.aspx?openid=" + Openid + "&code=" + Code);
-                        Response.End();
+                        Session[GlobalKey.BENZVOTEOPENID] = Openid;
                     }
+                }
+                if (string.IsNullOrEmpty(Openid))
+                {
+                    Response.Redirect("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx0c9b37c9d5ddf8a8&redirect_uri=http%3A%2F%2Fbj.hongxu.cn%2Fweixin%2Fbenzvotepageinuse.aspx&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect");
+                    Response.End();
                 }
 
                 #region 用户是否关注
@@ -120,6 +158,7 @@ namespace Hx.BackAdmin.weixin
             int total = 0;
 
             List<BenzvotePothunterInfo> plist = WeixinActs.Instance.GetBenzvotePothunterList(true);
+            plist = plist.OrderByDescending(l => l.Ballot).ToList();
             total = plist.Count();
             plist = plist.Skip((PageIndex - 1) * PageSize).Take(PageSize).ToList<BenzvotePothunterInfo>();
             rptData.DataSource = plist;

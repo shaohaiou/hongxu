@@ -78,6 +78,7 @@ namespace Hx.BackAdmin
                 DayReportUsers.Instance.ReloadDayReportUserListCache();
                 DayReportModules.Instance.ReloadDailyReportModuleListCache();
                 JobOffers.Instance.ReloadJobOfferListCache();
+                CorpMiens.Instance.ReloadCorpMienListCache();
 
                 BenzvoteSettingInfo benzvotesetting = WeixinActs.Instance.GetBenzvoteSetting();
                 if (benzvotesetting != null && benzvotesetting.Switch == 1)

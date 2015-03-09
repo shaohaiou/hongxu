@@ -137,8 +137,6 @@
                         <%}
                           else if (CurrentDep == DayReportDep.财务部)
                           {%><%}
-                          else if (CurrentDep == DayReportDep.行政部)
-                          {%><%}
                           else if (CurrentDep == DayReportDep.销售部)
                           {%>
                         <tr>

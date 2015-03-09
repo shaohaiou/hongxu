@@ -49,22 +49,13 @@ namespace Hx.BackAdmin.weixin {
         protected global::System.Web.UI.WebControls.TextBox txtSerialNumber;
         
         /// <summary>
-        /// rfvnumber 控件。
+        /// txtSerialNumberDetail 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvnumber;
-        
-        /// <summary>
-        /// revnumber 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator revnumber;
+        protected global::System.Web.UI.WebControls.TextBox txtSerialNumberDetail;
         
         /// <summary>
         /// txtBallot 控件。
@@ -94,15 +85,6 @@ namespace Hx.BackAdmin.weixin {
         protected global::System.Web.UI.WebControls.TextBox txtIntroduce;
         
         /// <summary>
-        /// rfvIntroduce 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvIntroduce;
-        
-        /// <summary>
         /// txtDeclare 控件。
         /// </summary>
         /// <remarks>
@@ -110,15 +92,6 @@ namespace Hx.BackAdmin.weixin {
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtDeclare;
-        
-        /// <summary>
-        /// rfvDeclare 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvDeclare;
         
         /// <summary>
         /// imgpic 控件。
@@ -155,6 +128,33 @@ namespace Hx.BackAdmin.weixin {
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlImage imgpics3;
+        
+        /// <summary>
+        /// imgpics4 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlImage imgpics4;
+        
+        /// <summary>
+        /// imgpics5 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlImage imgpics5;
+        
+        /// <summary>
+        /// imgpics6 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlImage imgpics6;
         
         /// <summary>
         /// btSave 控件。

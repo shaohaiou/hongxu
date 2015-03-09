@@ -4,14 +4,14 @@ ul{margin:0; padding:0; list-style:none;}li{margin:0; padding:0; list-style:none
 .fr{float:right;}
 
 
-.wrap{max-width: 640px;min-width: 320px;margin: 0 auto;overflow: hidden;position: relative;background-color:#474747;}
+.wrap{max-width: 640px;min-width: 320px;margin: 0 auto;overflow: hidden;position: relative;background-color:#0050a0;}
 .content{border-top-style:dashed;border-top-width:1px;border-top-color:#fff;}
 .d-pic{width:35%;display: inline-block;position: relative;}
     .d-pic img{width:100%;display:block;}
 .flay{position:absolute;width:100%;height:100%;top: 0;left: 0;} .flay img{width:100%;}
 .d-info{width:55%;display: inline-block;vertical-align: top;padding: 4% 0 0 3%;color:White;font-size: 1.0em;}
     .yellow{color:#ffb400;}
-    .sn{width: 30%;display: inline-block;}
+    .sn{font-size:90%;display: inline-block;}
     .ballot{width: 60%;display: inline-block;line-height:200%;}
     .paiming{line-height: 200%;width: 35%;display: inline-block;}
     .fense{color:#ec0b8f}
@@ -28,9 +28,9 @@ ul{margin:0; padding:0; list-style:none;}li{margin:0; padding:0; list-style:none
     
 
 
-.dwrap{max-width: 640px;min-width: 320px;margin: 0 auto;overflow: hidden;position: relative;background-color:#f5f6e6;}
+.dwrap{max-width: 640px;min-width: 320px;margin: 0 auto;overflow: hidden;position: relative;background-color:#0050a0;}
 .c1{width:93%;margin:0 auto;}
-.d-pic1{width:33%;display: inline-block;positi  on: relative;background: #fff;padding: 1%;}
+.d-pic1{width:33%;display: inline-block;positi  on: relative;background: #fff;padding: 1%;overflow:hidden;}
 .d-pic1 img{width:100%;display:block;}
 .detailinfo{width:60%;display: inline-block;vertical-align: top;padding: 2% 0 0 0;}
     .weitalapiao{width:50%;display:inline-block;}.weitalapiao img{width:90%;}

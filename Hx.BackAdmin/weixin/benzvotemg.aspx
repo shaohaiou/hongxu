@@ -63,7 +63,7 @@
                             <%#Eval("Name") %>
                         </td>
                         <td>
-                            <%#Eval("SerialNumber") %>
+                            <%#Eval("SerialNumberDetail") %>
                         </td>
                         <td>
                             <%#Eval("Ballot") %>

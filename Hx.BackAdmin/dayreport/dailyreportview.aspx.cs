@@ -590,8 +590,10 @@ namespace Hx.BackAdmin.dayreport
                         for (int j = 0; j < days; j++)
                         {
                             if (!string.IsNullOrEmpty(tblReport.Rows[i][(j + 1).ToString()].ToString()))
-                                sheet.GetRow(i + 17).Cells[2 + j].SetCellValue(DataConvert.SafeDouble(tblReport.Rows[i][(j + 1).ToString()]));
+                                sheet.GetRow(i + 17).Cells[3 + j].SetCellValue(DataConvert.SafeDouble(tblReport.Rows[i][(j + 1).ToString()]));
                         }
+                        if (!string.IsNullOrEmpty(tblReport.Rows[i]["目标值"].ToString()))
+                            sheet.GetRow(i + 17).Cells[1].SetCellValue(DataConvert.SafeDouble(tblReport.Rows[i]["目标值"]));
                     }
 
                     #endregion
@@ -2053,6 +2055,7 @@ namespace Hx.BackAdmin.dayreport
                 strb.AppendLine("<table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" id=\"tbData\" class=\"datatable\">");
                 strb.Append("<tr class=\"bold tc bggray\">");
                 strb.Append("<td class=\"w160\">项目</td>");
+                strb.Append("<td class=\"w80\">目标值</td>");
                 strb.Append("<td class=\"w80\">合计</td>");
                 for (int i = 1; i <= days; i++)
                 {
@@ -2065,6 +2068,7 @@ namespace Hx.BackAdmin.dayreport
                 {
                     strb.Append("<tr class=\"tc\">");
                     strb.AppendFormat("<td class=\"bold bggray\">{0}</td>", row["项目"]);
+                    strb.AppendFormat("<td>{0}</td>", string.IsNullOrEmpty(row["目标值"].ToString()) ? "&nbsp;" : FormatNum(row["目标值"].ToString()));
                     strb.AppendFormat("<td>{0}</td>", string.IsNullOrEmpty(row["合计"].ToString()) ? "&nbsp;" : row["合计"].ToString());
                     for (int i = 1; i <= days; i++)
                     {
@@ -3603,7 +3607,7 @@ namespace Hx.BackAdmin.dayreport
                     {
                         data_xs.Add(json.Deserialize<Dictionary<string, string>>(list_xs[i].SCReport));
                     }
-                } 
+                }
 
                 Dictionary<string, string> targetdata_xs = new Dictionary<string, string>();
                 if (monthtarget_xs != null && !string.IsNullOrEmpty(monthtarget_xs.SCReport))

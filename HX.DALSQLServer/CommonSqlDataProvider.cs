@@ -1487,6 +1487,68 @@ namespace HX.DALSQLServer
 
         #endregion
 
+        #region 企业风采
+
+        public override List<CorpMienInfo> GetCorpMienList()
+        {
+            List<CorpMienInfo> list = new List<CorpMienInfo>();
+            string sql = "SELECT * FROM HX_CorpMien";
+            using (IDataReader reader = SqlHelper.ExecuteReader(_con, CommandType.Text, sql))
+            {
+                while (reader.Read())
+                {
+                    list.Add(PopulateCorpMien(reader));
+                }
+            }
+
+            return list;
+        }
+
+        public override void AddCorpMien(CorpMienInfo entity)
+        {
+            string sql = @"INSERT INTO HX_CorpMien(
+            [Pic]
+            ,[Introduce]
+            ,[Content]
+            )VALUES(
+            @Pic
+            ,@Introduce
+            ,@Content
+            )";
+            SqlParameter[] p = 
+            {
+                new SqlParameter("@Pic",entity.Pic),
+                new SqlParameter("@Introduce",entity.Introduce),
+				new SqlParameter("@Content", entity.Content)
+            };
+            SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql, p);
+        }
+
+        public override void UpdateCorpMien(CorpMienInfo entity)
+        {
+            string sql = @"UPDATE HX_CorpMien SET 
+            [Pic] = @Pic 
+            ,[Introduce] = @Introduce 
+            ,[Content] = @Content
+            WHERE [ID] = @ID";
+            SqlParameter[] p = 
+            {
+                new SqlParameter("@ID",entity.ID),
+                new SqlParameter("@Pic",entity.Pic),
+                new SqlParameter("@Introduce",entity.Introduce),
+                new SqlParameter("@Content",entity.Content)
+            };
+            SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql, p);
+        }
+
+        public override void DeleteCorpMien(string ids)
+        {
+            string sql = "DELETE FROM HX_CorpMien WHERE ID IN (" + ids + ")";
+            SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql);
+        }
+
+        #endregion
+
         #region 地区管理
 
         public override List<PromaryInfo> GetPromaryList()

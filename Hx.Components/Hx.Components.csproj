@@ -60,6 +60,7 @@
     </Compile>
     <Compile Include="Cache\MangaCache.cs" />
     <Compile Include="Config\CommConfig.cs" />
+    <Compile Include="CorpMiens.cs" />
     <Compile Include="CRMReports.cs" />
     <Compile Include="DailyReports.cs" />
     <Compile Include="DataProvider.cs" />
@@ -76,6 +77,7 @@
     <Compile Include="Entity\BenzvotePothunterInfo.cs" />
     <Compile Include="Entity\BenzvoteSettingInfo.cs" />
     <Compile Include="Entity\CityInfo.cs" />
+    <Compile Include="Entity\CorpMienInfo.cs" />
     <Compile Include="Entity\CRMReportInfo.cs" />
     <Compile Include="Entity\CustomerInfo.cs" />
     <Compile Include="Entity\DailyReportHistoryInfo.cs" />

@@ -143,7 +143,7 @@ namespace Hx.Components.Entity
         [JsonIgnore]
         public string CRMReportExportPowerSetting
         {
-            get { return GetString("CRMReportExportPowerSetting", ""); }
+            get { return GetString("CRMReportExportPowerSetting", "0"); }
             set { SetExtendedAttribute("CRMReportExportPowerSetting", value); }
         }
 

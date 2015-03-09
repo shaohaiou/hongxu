@@ -110,7 +110,7 @@ namespace Hx.BackAdmin.dayreport
                 dailyreportview.Attributes["class"] = "current";
             else if (!string.IsNullOrEmpty(CurrentUser.MonthlyTargetCorpPowerSetting) && !string.IsNullOrEmpty(CurrentUser.MonthlyTargetDepPowerSetting))
                 monthlytarget.Attributes["class"] = "current";
-            else if (!string.IsNullOrEmpty(CurrentUser.CRMReportExportPowerSetting) || !string.IsNullOrEmpty(CurrentUser.CRMReportInputPowerSetting))
+            else if (CurrentUser.CRMReportExportPowerSetting == "1" || !string.IsNullOrEmpty(CurrentUser.CRMReportInputPowerSetting))
                 crmreportcustomerflow.Attributes["class"] = "current";
 
             if (string.IsNullOrEmpty(CurrentUser.DayReportModulePowerSetting) && string.IsNullOrEmpty(CurrentUser.DayReportDepPowerSetting))
@@ -121,7 +121,7 @@ namespace Hx.BackAdmin.dayreport
                 dailyreportviewmul.Visible = false;
             if (string.IsNullOrEmpty(CurrentUser.MonthlyTargetCorpPowerSetting) || string.IsNullOrEmpty(CurrentUser.MonthlyTargetDepPowerSetting))
                 monthlytarget.Visible = false;
-            if (string.IsNullOrEmpty(CurrentUser.CRMReportInputPowerSetting) && string.IsNullOrEmpty(CurrentUser.CRMReportExportPowerSetting))
+            if (string.IsNullOrEmpty(CurrentUser.CRMReportInputPowerSetting) && CurrentUser.CRMReportExportPowerSetting == "0")
                 crmreportcustomerflow.Visible = false;
         }
 

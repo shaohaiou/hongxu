@@ -44,6 +44,16 @@ namespace Hx.Components.Entity
         }
 
         /// <summary>
+        /// 序号描述
+        /// </summary>
+        [JsonIgnore]
+        public string SerialNumberDetail
+        {
+            get { return GetString("SerialNumberDetail", ""); }
+            set { SetExtendedAttribute("SerialNumberDetail", value.ToString()); }
+        }
+
+        /// <summary>
         /// 得票数
         /// </summary>
         [JsonIgnore]
@@ -86,6 +96,36 @@ namespace Hx.Components.Entity
         {
             get { return GetString("IntroducePic3", ""); }
             set { SetExtendedAttribute("IntroducePic3", value); }
+        }
+
+        /// <summary>
+        /// 风采展示图片4
+        /// </summary>
+        [JsonIgnore]
+        public string IntroducePic4
+        {
+            get { return GetString("IntroducePic4", ""); }
+            set { SetExtendedAttribute("IntroducePic4", value); }
+        }
+
+        /// <summary>
+        /// 风采展示图片5
+        /// </summary>
+        [JsonIgnore]
+        public string IntroducePic5
+        {
+            get { return GetString("IntroducePic5", ""); }
+            set { SetExtendedAttribute("IntroducePic5", value); }
+        }
+
+        /// <summary>
+        /// 风采展示图片6
+        /// </summary>
+        [JsonIgnore]
+        public string IntroducePic6
+        {
+            get { return GetString("IntroducePic6", ""); }
+            set { SetExtendedAttribute("IntroducePic6", value); }
         }
 
         /// <summary>

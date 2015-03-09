@@ -34,6 +34,7 @@ namespace Hx.Components
         public static readonly string MONTHTARGET_LIST = "cache-monthtarget-list"; //月度目标列表缓存键值
         public static readonly string DAILYREPORTMODULE_LIST = "cache-dailyreportmodule-list"; //日报模块列表缓存键值
         public static readonly string JOBOFFER_LIST = "cache-joboffer-list"; //招聘信息列表缓存键值
+        public static readonly string CORPMIEN_LIST = "cache-corpmien-list"; //企业风采列表缓存键值
         public static readonly string CRMREPORT_LIST = "cache-crmreport-list"; //crm报表列表缓存键值
 
         public static readonly string QUOTATION_KEY = "cache-quotation"; //报价单缓存键值
@@ -44,10 +45,12 @@ namespace Hx.Components
         public static readonly string WEIXINSECRET = "f6e1f096a7e847e9775b1cc64e713a33";    //微信密钥
         public static readonly string WEIXINACCESS_TOKEN_KEY = "access_token"; //微信access_token 键值
         public static readonly string WEIXINOPENID_SESSIONKEY = "session-weixinopenid";   //微信openid的session键值
+        public static readonly string WEIXINJSAPI_TICKET_KEY = "jsapi_ticket"; //微信jsapi_ticket 键值
 
         public static readonly string BENZVOTEPOTHUNTER_LIST = "cache-benzvotepothunter-list";   //奔驰投票活动选手列表缓存键值
         public static readonly string BENZVOTE_LIST = "cache-benzvote-list";   //奔驰投票活动所有投票信息缓存键值
         public static readonly string BENZVOTESETTING = "cache-benzvotesetting"; //奔驰投票活动设置缓存键值
+        public static readonly string BENZVOTEOPENID = "session-benzvoteopenid"; //奔驰投票活动openid键值
 
         public static readonly string JITUANVOTEPOTHUNTER_LIST = "cache-jituanvotepothunter-list";   //集团投票活动选手列表缓存键值
         public static readonly string JITUANVOTE_LIST = "cache-jituanvote-list";   //集团投票活动所有投票信息缓存键值

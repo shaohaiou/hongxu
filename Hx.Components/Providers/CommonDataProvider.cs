@@ -677,6 +677,31 @@ namespace Hx.Components.Providers
 
         #endregion
 
+        #region 企业风采
+
+        public abstract List<CorpMienInfo> GetCorpMienList();
+
+        public abstract void AddCorpMien(CorpMienInfo entity);
+
+        public abstract void UpdateCorpMien(CorpMienInfo entity);
+
+        public abstract void DeleteCorpMien(string ids);
+
+        protected CorpMienInfo PopulateCorpMien(IDataReader reader)
+        {
+            CorpMienInfo entity = new CorpMienInfo
+            {
+                ID = DataConvert.SafeInt(reader["ID"]),
+                Pic = reader["Pic"] as string,
+                Introduce = reader["Introduce"] as string,
+                Content = reader["Content"] as string
+            };
+
+            return entity;
+        }
+
+        #endregion
+
         #region 地区管理
 
         public abstract List<PromaryInfo> GetPromaryList();

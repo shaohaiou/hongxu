@@ -328,7 +328,7 @@ namespace Hx.BackAdmin.dayreport
 
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
-            if (CurrentDep == DayReportDep.财务部 || CurrentDep == DayReportDep.行政部)
+            if (CurrentDep == DayReportDep.财务部)
             {
                 WriteSuccessMessage("保存成功！", "数据已经成功保存！", string.IsNullOrEmpty(FromUrl) ? UrlDecode(CurrentUrl) : FromUrl);
                 return;

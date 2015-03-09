@@ -112,6 +112,46 @@ namespace Hx.Components
             return dic_openinfo;
         }
 
+        /// <summary>
+        /// 获取JS-SDK使用权限签名
+        /// </summary>
+        /// <returns></returns>
+        public string GetJsapiTicket()
+        {
+            string jsapi_ticket = MangaCache.Get(GlobalKey.WEIXINJSAPI_TICKET_KEY) as string;
+            if (string.IsNullOrEmpty(jsapi_ticket))
+            {
+                lock (sync_creater)
+                {
+                    jsapi_ticket = MangaCache.Get(GlobalKey.WEIXINJSAPI_TICKET_KEY) as string;
+                    if (string.IsNullOrEmpty(jsapi_ticket))
+                    {
+                        string accesstoken = GetAccessToken();
+                        string url_jsapi_ticket = string.Format("https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token={0}&type=jsapi"
+                            , accesstoken);
+                        string str_jsapi_ticket = Http.GetPageByWebClientDefault(url_jsapi_ticket);
+                        Dictionary<string, string> dic_jsapi_ticket = new Dictionary<string, string>();
+                        try
+                        {
+                            dic_jsapi_ticket = json.Deserialize<Dictionary<string, string>>(str_jsapi_ticket);
+                        }
+                        catch { }
+                        if (dic_jsapi_ticket.ContainsKey("errmsg") && dic_jsapi_ticket["errmsg"] == "ok")
+                        {
+                            jsapi_ticket = dic_jsapi_ticket["ticket"];
+                            int expires_in = 7200;
+                            if (dic_jsapi_ticket.ContainsKey("expires_in"))
+                                expires_in = DataConvert.SafeInt(dic_jsapi_ticket["expires_in"], 7200);
+                            MangaCache.Add(GlobalKey.WEIXINJSAPI_TICKET_KEY, jsapi_ticket, expires_in);
+                        }
+                    }
+                }
+            }
+
+            return jsapi_ticket;
+
+        }
+
         #endregion
 
         #region 测试活动
@@ -368,29 +408,30 @@ namespace Hx.Components
             BenzvoteSettingInfo setting = GetBenzvoteSetting(true);
             if (setting != null && setting.Switch == 0)
             {
-                return "该活动已结束";
+                return "该活动还未开始，敬请期待。";
             }
 
             lock (sync_benzvote)
             {
                 if (Benzvotes != null)
                 {
-                    if (Benzvotes.Keys.Contains(id + "_" + openid))
-                    {
-                        return "您已经为她投过票了，不能重复投哦。";
-                    }
-                    List<KeyValuePair<string, DateTime>> votes = Benzvotes.Where(b => b.Key.EndsWith("_" + openid)).ToList();
+                    List<KeyValuePair<string, DateTime>> votes = Benzvotes.Where(b => b.Key.EndsWith("_" + openid) && b.Value.ToString("yyyyMMdd") == DateTime.Today.ToString("yyyyMMdd")).ToList();
+
                     if (votes.Count > 0)
                     {
+                        if (setting != null && setting.VoteTimes > 0 && votes.Count >= setting.VoteTimes)
+                        {
+                            return "您已经投过" + setting.VoteTimes + "次票，不能再投了。";
+                        } 
+                        if (votes.Exists(v => v.Key == (id + "_" + openid)))
+                        {
+                            return "您今天已经为他/她投过票了，不能重复投哦。";
+                        }
                         DateTime ftime = votes.Min(b => b.Value);
                         int minutes = setting == null ? 30 : setting.OverdueMinutes;
                         if (minutes > 0 && DateTime.Now.AddMinutes(-1 * minutes) > ftime)
                         {
-                            return "您的投票期已过。";
-                        }
-                        if (setting != null && setting.VoteTimes > 0 && votes.Count >= setting.VoteTimes)
-                        {
-                            return "您已经投过" + setting.VoteTimes + "次票，不能再投了。";
+                            return "您今天的投票期限已过。";
                         }
                     }
 

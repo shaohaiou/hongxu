@@ -44,7 +44,7 @@ a:hover{text-decoration:underline;}a:focus {outline:0;}
 .red{color:Red;}
 .yellow{color:Yellow;}
 .orange{color:Orange;}
-.gray{color:Gray;}
+.gray{color:Gray!important;}
 .vt{vertical-align:top;}
 .money{background-color:#FFEB99!important;padding-right:2px;}
 

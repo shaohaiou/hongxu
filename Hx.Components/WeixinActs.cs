@@ -390,8 +390,16 @@ namespace Hx.Components
                 lock (sync_benzvote)
                 {
                     if (Benzvotes == null) Benzvotes = new Dictionary<string, DateTime>();
-                    Benzvotes.Add(vote.AthleteID + "_" + vote.Openid, vote.AddTime);
-                    BenzvotesCache.Add(vote);
+                    if (!Benzvotes.Keys.Contains(vote.AthleteID + "_" + vote.Openid))
+                    {
+                        Benzvotes.Add(vote.AthleteID + "_" + vote.Openid, vote.AddTime);
+                        BenzvotesCache.Add(vote);
+                    }
+                    else
+                    {
+                        Benzvotes[vote.AthleteID + "_" + vote.Openid] = vote.AddTime;
+                        BenzvotesCache.Add(vote);
+                    }
                 }
 
                 return string.Empty;
@@ -399,7 +407,7 @@ namespace Hx.Components
             catch (Exception ex)
             {
                 ExpLog.Write(ex);
-                return "发生错误";
+                return "系统繁忙，请稍后再试";
             }
         }
 
@@ -421,7 +429,7 @@ namespace Hx.Components
                     {
                         if (setting != null && setting.VoteTimes > 0 && votes.Count >= setting.VoteTimes)
                         {
-                            return "您已经投过" + setting.VoteTimes + "次票，不能再投了。";
+                            return "您今天已经投过" + setting.VoteTimes + "次票，请明天再来为他/她投票吧。";
                         } 
                         if (votes.Exists(v => v.Key == (id + "_" + openid)))
                         {

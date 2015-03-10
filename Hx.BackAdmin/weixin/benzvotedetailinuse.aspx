@@ -123,7 +123,7 @@
             type: 'GET',
             dataType: "json",
             error: function (msg) {
-                alert("发生错误");
+                alert("系统繁忙，请稍后再试!");
             },
             success: function (data) {
                 if (data.Value == "success") {

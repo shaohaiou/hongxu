@@ -29,6 +29,8 @@ namespace Hx.BackAdmin.biz
             }
         }
 
+        public int RecordCount { get; set; }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -38,6 +40,14 @@ namespace Hx.BackAdmin.biz
                     CorpMiens.Instance.Delete(GetString("id"));
                     ResponseRedirect(FromUrl);
                 }
+                else if (GetString("action") == "move")
+                {
+                    int toindex = GetInt("toindex");
+                    int id = GetInt("id");
+                    CorpMiens.Instance.Move(id, toindex);
+
+                    ResponseRedirect(FromUrl);
+                }
                 else
                 {
                     int pageindex = GetInt("page", 1);
@@ -45,9 +55,11 @@ namespace Hx.BackAdmin.biz
                     {
                         pageindex = 1;
                     }
-                    int pagesize = GetInt("pagesize", 10);
+                    int pagesize = GetInt("pagesize", search_fy.PageSize);
                     int total = 0;
                     List<CorpMienInfo> list = CorpMiens.Instance.GetList();
+
+                    RecordCount = list.Count();
 
                     total = list.Count();
                     list = list.Skip((pageindex - 1) * pagesize).Take(pagesize).ToList<CorpMienInfo>();

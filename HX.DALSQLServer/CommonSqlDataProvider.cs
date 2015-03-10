@@ -1506,14 +1506,19 @@ namespace HX.DALSQLServer
 
         public override void AddCorpMien(CorpMienInfo entity)
         {
-            string sql = @"INSERT INTO HX_CorpMien(
-            [Pic]
-            ,[Introduce]
-            ,[Content]
+            string sql = @"
+            DECLARE @RecordCount INT
+            SELECT @RecordCount = COUNT(0) FROM HX_CorpMien
+            INSERT INTO HX_CorpMien(
+                [Pic]
+                ,[Introduce]
+                ,[Content]
+                ,[OrderIndex]
             )VALUES(
-            @Pic
-            ,@Introduce
-            ,@Content
+                @Pic
+                ,@Introduce
+                ,@Content
+                ,@RecordCount + 1
             )";
             SqlParameter[] p = 
             {
@@ -1545,6 +1550,31 @@ namespace HX.DALSQLServer
         {
             string sql = "DELETE FROM HX_CorpMien WHERE ID IN (" + ids + ")";
             SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql);
+
+            sql = @"UPDATE dbo.HX_CorpMien SET
+            [OrderIndex] = T.[OrderIndex]
+            FROM dbo.HX_CorpMien S,(
+            SELECT (SELECT COUNT(0) FROM dbo.HX_CorpMien t2 WHERE t1.[ID] >= t2.[ID]) OrderIndex, t1.[ID] 
+            FROM dbo.HX_CorpMien t1
+            ) T
+            WHERE S.[ID] = T.[ID]";
+            SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql);
+        }
+
+        public override void MoveCorpMien(int id, int toindex)
+        {
+            string sql = @"UPDATE dbo.HX_CorpMien SET
+            [OrderIndex] = (SELECT [OrderIndex] FROM dbo.HX_CorpMien WHERE [ID] = @ID)
+            WHERE [OrderIndex] = @OrderIndex;
+            UPDATE dbo.HX_CorpMien SET
+            [OrderIndex] = @OrderIndex 
+            WHERE [ID] = @ID";
+            SqlParameter[] p = new SqlParameter[] 
+            { 
+                new SqlParameter("@ID",id),
+                new SqlParameter("@OrderIndex",toindex)
+            };
+            SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql, p);
         }
 
         #endregion

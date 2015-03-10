@@ -12,20 +12,31 @@
             $(".btndel").click(function () {
                 return confirm("确定要删除该记录吗？");
             });
+
+            $(".btnmoveprev").click(function () {
+                var orderindex = parseInt($(this).attr("orderindex"));
+                if (orderindex == 1) return false;
+            });
+            $(".btnmovenext").click(function () {
+                var orderindex = parseInt($(this).attr("orderindex"));
+                if (orderindex == <%= RecordCount %>) return false;
+            });
         });
     </script>
 </head>
 <body>
     <form id="form1" runat="server">
     <div class="ht_main">
-        <table width="260" border="0" cellspacing="0" cellpadding="0" class="biaoge2">
+        <div class="lan5x">
+            <a href="corpmienedit.aspx?from=<%=CurrentUrl %>" class="an4">新 增</a></div>
+        <table width="280" border="0" cellspacing="0" cellpadding="0" class="biaoge2">
             <asp:Repeater ID="rptData" runat="server">
                 <HeaderTemplate>
                     <tr class="bgbt">
                         <td>
                             荣誉展示
                         </td>
-                        <td class="w120">
+                        <td class="w160">
                             操作
                         </td>
                     </tr>
@@ -33,13 +44,19 @@
                 <ItemTemplate>
                     <tr>
                         <td>
-                            <a href="corpmienview.aspx?id=<%#Eval("ID") %>" title="<%#Eval("Introduce") %>" target="_blank" style="display: block;position: relative;padding-top: 100px;width: 120px;text-align: center;">
-                                <img src="<%#Eval("Pic")%>" alt="" style="width:100px;height:100px;position: absolute;left: 10px;top: 0;" />
+                            <a href="corpmienview.aspx?id=<%#Eval("ID") %>" title="<%#Eval("Introduce") %>" target="_blank"
+                                style="display: block; position: relative; padding-top: 100px; width: 120px;
+                                text-align: center;">
+                                <img src="<%#Eval("Pic")%>" alt="" style="width: 100px; height: 100px; position: absolute;
+                                    left: 10px; top: 0;" />
                                 <%#Hx.Tools.StrHelper.GetFuzzyChar(Eval("Introduce").ToString(),8) %></a>
                         </td>
                         <td class="lan5x">
                             <a class="btndel" href="corpmien.aspx?id=<%#Eval("ID") %>&action=del&from=<%=CurrentUrl %>">
                                 删除</a><a href="corpmienedit.aspx?id=<%#Eval("ID") %>&from=<%=CurrentUrl %>">编辑</a>
+                            <a class="btnmoveprev <%# int.Parse(Eval("OrderIndex").ToString()) ==1 ? "gray" : "" %>" orderindex="<%#Eval("OrderIndex") %>" href="corpmien.aspx?id=<%#Eval("ID") %>&toindex=<%# int.Parse(Eval("OrderIndex").ToString()) - 1 %>&action=move&from=<%=CurrentUrl %>">
+                                上移</a> <a class="btnmovenext <%# int.Parse(Eval("OrderIndex").ToString()) ==RecordCount ? "gray" : "" %>" orderindex="<%#Eval("OrderIndex") %>" href="corpmien.aspx?id=<%#Eval("ID") %>&toindex=<%# int.Parse(Eval("OrderIndex").ToString()) + 1 %>&action=move&from=<%=CurrentUrl %>">
+                                    下移</a>
                         </td>
                     </tr>
                 </ItemTemplate>

@@ -40,13 +40,13 @@ namespace Hx.Components
         public List<CorpMienInfo> GetList(bool fromCache = false)
         {
             if (!fromCache)
-                return CommonDataProvider.Instance().GetCorpMienList();
+                return CommonDataProvider.Instance().GetCorpMienList().OrderBy(c => c.OrderIndex).ToList();
 
             string key = GlobalKey.CORPMIEN_LIST;
             List<CorpMienInfo> list = MangaCache.Get(key) as List<CorpMienInfo>;
             if (list == null)
             {
-                list = CommonDataProvider.Instance().GetCorpMienList();
+                list = CommonDataProvider.Instance().GetCorpMienList().OrderBy(c=>c.OrderIndex).ToList();
                 MangaCache.Max(key, list);
             }
             return list;
@@ -67,6 +67,12 @@ namespace Hx.Components
         public void Delete(string ids)
         {
             CommonDataProvider.Instance().DeleteCorpMien(ids);
+            ReloadCorpMienListCache();
+        }
+
+        public void Move(int id, int toindex)
+        {
+            CommonDataProvider.Instance().MoveCorpMien(id, toindex);
             ReloadCorpMienListCache();
         }
 

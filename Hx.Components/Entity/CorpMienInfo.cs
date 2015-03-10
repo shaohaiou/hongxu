@@ -14,5 +14,7 @@ namespace Hx.Components.Entity
         public string Introduce { get; set; }
 
         public string Content { get; set; }
+
+        public int OrderIndex { get; set; }
     }
 }

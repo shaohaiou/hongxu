@@ -687,6 +687,8 @@ namespace Hx.Components.Providers
 
         public abstract void DeleteCorpMien(string ids);
 
+        public abstract void MoveCorpMien(int id, int toindex);
+
         protected CorpMienInfo PopulateCorpMien(IDataReader reader)
         {
             CorpMienInfo entity = new CorpMienInfo
@@ -694,7 +696,8 @@ namespace Hx.Components.Providers
                 ID = DataConvert.SafeInt(reader["ID"]),
                 Pic = reader["Pic"] as string,
                 Introduce = reader["Introduce"] as string,
-                Content = reader["Content"] as string
+                Content = reader["Content"] as string,
+                OrderIndex = DataConvert.SafeInt(reader["OrderIndex"])
             };
 
             return entity;

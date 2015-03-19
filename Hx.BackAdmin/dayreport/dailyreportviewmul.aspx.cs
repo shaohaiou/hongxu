@@ -241,6 +241,7 @@ namespace Hx.BackAdmin.dayreport
                 };
                 query.OrderBy = " [DayUnique] ASC";
                 List<DailyReportInfo> list = DailyReports.Instance.GetList(query, true);
+                list = list.FindAll(l => l.DailyReportCheckStatus != DailyReportCheckStatus.审核不通过);
                 MonthlyTargetInfo monthtarget = MonthlyTargets.Instance.GetModel(corplist[i].ID, CurrentDep, day, true);
                 int days = 0;
                 DataTable tbl = GetReport(CurrentDep, list, monthtarget, day, corplist[i].ID, ref days);
@@ -479,6 +480,7 @@ namespace Hx.BackAdmin.dayreport
                     DayReportDep = DayReportDep.销售部
                 };
                 List<DailyReportInfo> list_xs = DailyReports.Instance.GetList(query_xs, true);
+                list_xs = list_xs.FindAll(l => l.DailyReportCheckStatus != DailyReportCheckStatus.审核不通过);
                 MonthlyTargetInfo monthtarget_xs = MonthlyTargets.Instance.GetModel(corpid, DayReportDep.销售部, day, true);
                 List<DailyReportModuleInfo> rlist_xs = DayReportModules.Instance.GetList(true);
                 rlist_xs = rlist_xs.FindAll(l => l.Department == DayReportDep.销售部).OrderBy(l => l.Sort).ToList();
@@ -504,6 +506,7 @@ namespace Hx.BackAdmin.dayreport
                     DayReportDep = DayReportDep.售后部
                 };
                 List<DailyReportInfo> list_sh = DailyReports.Instance.GetList(query_sh, true);
+                list_sh = list_sh.FindAll(l => l.DailyReportCheckStatus != DailyReportCheckStatus.审核不通过);
                 MonthlyTargetInfo monthtarget_sh = MonthlyTargets.Instance.GetModel(corpid, DayReportDep.售后部, day, true);
                 List<DailyReportModuleInfo> rlist_sh = DayReportModules.Instance.GetList(true);
                 rlist_sh = rlist_sh.FindAll(l => l.Department == DayReportDep.售后部).OrderBy(l => l.Sort).ToList();
@@ -679,6 +682,7 @@ namespace Hx.BackAdmin.dayreport
                     DayReportDep = DayReportDep.销售部
                 };
                 List<DailyReportInfo> xslist = DailyReports.Instance.GetList(query, true);
+                xslist = xslist.FindAll(l => l.DailyReportCheckStatus != DailyReportCheckStatus.审核不通过);
                 MonthlyTargetInfo xsmonthtarget = MonthlyTargets.Instance.GetModel(corpid, DayReportDep.销售部, day, true);
                 List<DailyReportModuleInfo> xsrlist = DayReportModules.Instance.GetList(true);
                 xsrlist = xsrlist.FindAll(l => l.Department == DayReportDep.销售部).OrderBy(l => l.Sort).ToList();
@@ -1315,6 +1319,7 @@ namespace Hx.BackAdmin.dayreport
                 };
                 query.OrderBy = " [DayUnique] ASC";
                 List<DailyReportInfo> list = DailyReports.Instance.GetList(query, true);
+                list = list.FindAll(l => l.DailyReportCheckStatus != DailyReportCheckStatus.审核不通过);
                 MonthlyTargetInfo monthtarget = MonthlyTargets.Instance.GetModel(corplist[i].ID, CurrentDep, day, true);
                 int days = 0;
                 DataTable tbl = GetReport(CurrentDep, list, monthtarget, day, corplist[i].ID, ref days);
@@ -1479,6 +1484,7 @@ namespace Hx.BackAdmin.dayreport
                         DayReportDep = DayReportDep.销售部
                     };
                     List<DailyReportInfo> list_last = DailyReports.Instance.GetList(query_last, true);
+                    list_last = list_last.FindAll(l => l.DailyReportCheckStatus != DailyReportCheckStatus.审核不通过);
                     List<DailyReportModuleInfo> rlist_xs = DayReportModules.Instance.GetList(true);
                     rlist_xs = rlist_xs.FindAll(l => l.Department == DayReportDep.销售部).OrderBy(l => l.Sort).ToList();
                     List<Dictionary<string, string>> data_last = new List<Dictionary<string, string>>();
@@ -2509,6 +2515,7 @@ namespace Hx.BackAdmin.dayreport
                             DayReportDep = DayReportDep.DCC部
                         };
                         List<DailyReportInfo> list_last = DailyReports.Instance.GetList(query_last, true);
+                        list_last = list_last.FindAll(l => l.DailyReportCheckStatus != DailyReportCheckStatus.审核不通过);
                         List<DailyReportModuleInfo> rlist_dcc = DayReportModules.Instance.GetList(true);
                         rlist_dcc = rlist_dcc.FindAll(l => l.Department == DayReportDep.DCC部).OrderBy(l => l.Sort).ToList();
                         List<Dictionary<string, string>> data_last = new List<Dictionary<string, string>>();
@@ -3071,6 +3078,7 @@ namespace Hx.BackAdmin.dayreport
                     DayReportDep = DayReportDep.销售部
                 };
                 List<DailyReportInfo> list_xs = DailyReports.Instance.GetList(query_xs, true);
+                list_xs = list_xs.FindAll(l => l.DailyReportCheckStatus != DailyReportCheckStatus.审核不通过);
                 MonthlyTargetInfo monthtarget_xs = MonthlyTargets.Instance.GetModel(corpid, DayReportDep.销售部, day, true);
                 List<DailyReportModuleInfo> rlist_xs = DayReportModules.Instance.GetList(true);
                 rlist_xs = rlist_xs.FindAll(l => l.Department == DayReportDep.销售部).OrderBy(l => l.Sort).ToList();
@@ -3270,6 +3278,7 @@ namespace Hx.BackAdmin.dayreport
                         DayReportDep = DayReportDep.售后部
                     };
                     List<DailyReportInfo> listSHB = DailyReports.Instance.GetList(query, true);
+                    listSHB = listSHB.FindAll(l => l.DailyReportCheckStatus != DailyReportCheckStatus.审核不通过);
                     List<Dictionary<string, string>> dataSHB = new List<Dictionary<string, string>>();
                     for (int i = 0; i < listSHB.Count; i++)
                     {
@@ -3395,6 +3404,7 @@ namespace Hx.BackAdmin.dayreport
                 };
                 query.OrderBy = " [DayUnique] ASC";
                 List<DailyReportInfo> list = DailyReports.Instance.GetList(query, true);
+                list = list.FindAll(l => l.DailyReportCheckStatus != DailyReportCheckStatus.审核不通过);
                 DataRow row = tblresult.NewRow();
                 row["公司"] = corplist[i].Name;
                 row["录入"] = list.Count;

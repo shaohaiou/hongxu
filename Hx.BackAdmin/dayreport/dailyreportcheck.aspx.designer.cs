@@ -10,60 +10,87 @@
 namespace Hx.BackAdmin.dayreport {
     
     
-    public partial class main_is {
+    public partial class dailyreportcheck {
         
         /// <summary>
-        /// dailyreport 控件。
+        /// form1 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor dailyreport;
+        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
         
         /// <summary>
-        /// monthlytarget 控件。
+        /// ddlCorp 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor monthlytarget;
+        protected global::System.Web.UI.WebControls.DropDownList ddlCorp;
         
         /// <summary>
-        /// dailyreportview 控件。
+        /// txtDate 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor dailyreportview;
+        protected global::System.Web.UI.WebControls.TextBox txtDate;
         
         /// <summary>
-        /// dailyreportviewmul 控件。
+        /// spRemind 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor dailyreportviewmul;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl spRemind;
         
         /// <summary>
-        /// dailyreportcheck 控件。
+        /// txtDailyReportCheckStatus 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor dailyreportcheck;
+        protected global::System.Web.UI.WebControls.Label txtDailyReportCheckStatus;
         
         /// <summary>
-        /// crmreportcustomerflow 控件。
+        /// txtCheckRemark 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor crmreportcustomerflow;
+        protected global::System.Web.UI.WebControls.TextBox txtCheckRemark;
+        
+        /// <summary>
+        /// btnPass 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnPass;
+        
+        /// <summary>
+        /// btnUnPass 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnUnPass;
+        
+        /// <summary>
+        /// spMsg 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl spMsg;
     }
 }

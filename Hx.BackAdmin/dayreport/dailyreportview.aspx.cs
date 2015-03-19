@@ -171,6 +171,7 @@ namespace Hx.BackAdmin.dayreport
                 };
                 query.OrderBy = " [DayUnique] ASC";
                 List<DailyReportInfo> list = DailyReports.Instance.GetList(query, true);
+                list = list.FindAll(l => l.DailyReportCheckStatus != DailyReportCheckStatus.审核不通过);
                 MonthlyTargetInfo monthtarget = MonthlyTargets.Instance.GetModel(DataConvert.SafeInt(ddlCorp.SelectedValue), CurrentDep, day, true);
 
                 spTitle.InnerText = string.Format("{0}年{1}月{2}工作表", day.Year, day.Month, CurrentDep.ToString().Replace("部", string.Empty));
@@ -217,6 +218,7 @@ namespace Hx.BackAdmin.dayreport
                     DayReportDep = CurrentDep
                 };
                 List<DailyReportInfo> list = DailyReports.Instance.GetList(query, true);
+                list = list.FindAll(l => l.DailyReportCheckStatus != DailyReportCheckStatus.审核不通过);
                 MonthlyTargetInfo monthtarget = MonthlyTargets.Instance.GetModel(DataConvert.SafeInt(ddlCorp.SelectedValue), CurrentDep, day, true);
 
                 IWorkbook workbook = null;
@@ -241,6 +243,7 @@ namespace Hx.BackAdmin.dayreport
                     {
                         for (int i = 0; i < tblReport.Rows.Count; i++)
                         {
+                            if (tblReport.Rows[i]["项目"] == "是否审核") continue;
                             for (int j = 0; j < days; j++)
                             {
                                 if (!string.IsNullOrEmpty(tblReport.Rows[i][(j + 1).ToString()].ToString()))
@@ -256,6 +259,7 @@ namespace Hx.BackAdmin.dayreport
                         string[] tpp = new string[] { "其中他品牌新增订单台次", "他品牌交车台次", "他品牌单车毛利", "他品牌单车综合毛利" };
                         for (int i = 0; i < tblReport.Rows.Count; i++)
                         {
+                            if (tblReport.Rows[i]["项目"] == "是否审核") continue;
                             if (!tpp.Contains(tblReport.Rows[i]["项目"].ToString()))
                             {
                                 for (int j = 0; j < days; j++)
@@ -337,6 +341,7 @@ namespace Hx.BackAdmin.dayreport
                             DayReportDep = DayReportDep.销售部
                         };
                         List<DailyReportInfo> list_last = DailyReports.Instance.GetList(query_last, true);
+                        list_last = list_last.FindAll(l => l.DailyReportCheckStatus != DailyReportCheckStatus.审核不通过);
                         List<DailyReportModuleInfo> rlist_xs = DayReportModules.Instance.GetList(true);
                         rlist_xs = rlist_xs.FindAll(l => l.Department == DayReportDep.销售部).OrderBy(l => l.Sort).ToList();
                         List<Dictionary<string, string>> data_last = new List<Dictionary<string, string>>();
@@ -430,6 +435,7 @@ namespace Hx.BackAdmin.dayreport
 
                     for (int i = 0; i < tblReport.Rows.Count; i++)
                     {
+                        if (tblReport.Rows[i]["项目"] == "是否审核") continue;
                         for (int j = 0; j < days; j++)
                         {
                             if (!string.IsNullOrEmpty(tblReport.Rows[i][(j + 1).ToString()].ToString()))
@@ -458,6 +464,7 @@ namespace Hx.BackAdmin.dayreport
 
                     for (int i = 0; i < tblReport.Rows.Count; i++)
                     {
+                        if (tblReport.Rows[i]["项目"] == "是否审核") continue;
                         for (int j = 0; j < days; j++)
                         {
                             if (!string.IsNullOrEmpty(tblReport.Rows[i][(j + 1).ToString()].ToString()))
@@ -484,6 +491,7 @@ namespace Hx.BackAdmin.dayreport
 
                     for (int i = 0; i < tblReport.Rows.Count; i++)
                     {
+                        if (tblReport.Rows[i]["项目"] == "是否审核") continue;
                         for (int j = 0; j < days; j++)
                         {
                             if (!string.IsNullOrEmpty(tblReport.Rows[i][(j + 1).ToString()].ToString()))
@@ -509,6 +517,7 @@ namespace Hx.BackAdmin.dayreport
                             DayReportDep = DayReportDep.市场部
                         };
                         List<DailyReportInfo> list_last = DailyReports.Instance.GetList(query_last, true);
+                        list_last = list_last.FindAll(l => l.DailyReportCheckStatus != DailyReportCheckStatus.审核不通过);
                         List<DailyReportModuleInfo> rlist_sc = DayReportModules.Instance.GetList(true);
                         rlist_sc = rlist_sc.FindAll(l => l.Department == DayReportDep.市场部).OrderBy(l => l.Sort).ToList();
                         List<Dictionary<string, string>> data_last = new List<Dictionary<string, string>>();
@@ -559,6 +568,7 @@ namespace Hx.BackAdmin.dayreport
 
                     for (int i = 0; i < tblReport.Rows.Count; i++)
                     {
+                        if (tblReport.Rows[i]["项目"] == "是否审核") continue;
                         for (int j = 0; j < days; j++)
                         {
                             if (!string.IsNullOrEmpty(tblReport.Rows[i][(j + 1).ToString()].ToString()))
@@ -587,6 +597,7 @@ namespace Hx.BackAdmin.dayreport
 
                     for (int i = 0; i < tblReport.Rows.Count; i++)
                     {
+                        if (tblReport.Rows[i]["项目"] == "是否审核") continue;
                         for (int j = 0; j < days; j++)
                         {
                             if (!string.IsNullOrEmpty(tblReport.Rows[i][(j + 1).ToString()].ToString()))
@@ -697,6 +708,7 @@ namespace Hx.BackAdmin.dayreport
 
                     for (int i = 0; i < tblReport.Rows.Count; i++)
                     {
+                        if (tblReport.Rows[i]["项目"] == "是否审核") continue;
                         for (int j = 0; j < days; j++)
                         {
                             if (!string.IsNullOrEmpty(tblReport.Rows[i][(j + 1).ToString()].ToString()))
@@ -722,6 +734,7 @@ namespace Hx.BackAdmin.dayreport
                             DayReportDep = DayReportDep.DCC部
                         };
                         List<DailyReportInfo> list_last = DailyReports.Instance.GetList(query_last, true);
+                        list_last = list_last.FindAll(l => l.DailyReportCheckStatus != DailyReportCheckStatus.审核不通过);
                         List<DailyReportModuleInfo> rlist_dcc = DayReportModules.Instance.GetList(true);
                         rlist_dcc = rlist_dcc.FindAll(l => l.Department == DayReportDep.DCC部).OrderBy(l => l.Sort).ToList();
                         List<Dictionary<string, string>> data_last = new List<Dictionary<string, string>>();
@@ -765,6 +778,7 @@ namespace Hx.BackAdmin.dayreport
 
                     for (int i = 0; i < tblReport.Rows.Count; i++)
                     {
+                        if (tblReport.Rows[i]["项目"] == "是否审核") continue;
                         for (int j = 0; j < days; j++)
                         {
                             if (!string.IsNullOrEmpty(tblReport.Rows[i][(j + 1).ToString()].ToString()))
@@ -804,6 +818,7 @@ namespace Hx.BackAdmin.dayreport
 
                     for (int i = 0; i < tblReport.Rows.Count; i++)
                     {
+                        if (tblReport.Rows[i]["项目"] == "是否审核") continue;
                         for (int j = 0; j < days; j++)
                         {
                             if (!string.IsNullOrEmpty(tblReport.Rows[i][(j + 1).ToString()].ToString()))
@@ -832,6 +847,7 @@ namespace Hx.BackAdmin.dayreport
 
                     for (int i = 0; i < tblReport.Rows.Count; i++)
                     {
+                        if (tblReport.Rows[i]["项目"] == "是否审核") continue;
                         for (int j = 0; j < days; j++)
                         {
                             if (!string.IsNullOrEmpty(tblReport.Rows[i][(j + 1).ToString()].ToString()))
@@ -949,8 +965,12 @@ namespace Hx.BackAdmin.dayreport
 
                 #region 每日数据
 
+                DataRow rowCheck = tbl.NewRow();
+                rowCheck["项目"] = "是否审核";
+
                 for (int i = 1; i <= days; i++)
                 {
+                    rowCheck[i] = "1";
                     if (DateTime.TryParse(txtDate.Text + "-" + i.ToString("00"), out day) && list.Exists(l => l.DayUnique == day.ToString("yyyyMMdd")))
                     {
                         DailyReportInfo r = list.Find(l => l.DayUnique == day.ToString("yyyyMMdd"));
@@ -962,6 +982,7 @@ namespace Hx.BackAdmin.dayreport
                                 rows[j][i] = reportdate.ContainsKey(rlist[j].ID.ToString()) ? reportdate[rlist[j].ID.ToString()] : string.Empty;
                             }
                         }
+                        rowCheck[i] = r.DailyReportCheckStatus == DailyReportCheckStatus.未审核 ? "0" : "1";
                     }
                 }
 
@@ -971,6 +992,7 @@ namespace Hx.BackAdmin.dayreport
                 {
                     tbl.Rows.Add(row);
                 }
+                tbl.Rows.Add(rowCheck);
                 #endregion
             }
             else if (dep == DayReportDep.二手车部 && DateTime.TryParse(txtDate.Text + "-01", out day))
@@ -984,6 +1006,7 @@ namespace Hx.BackAdmin.dayreport
                     DayReportDep = DayReportDep.销售部
                 };
                 List<DailyReportInfo> list_xs = DailyReports.Instance.GetList(query_xs, true);
+                list_xs = list_xs.FindAll(l => l.DailyReportCheckStatus != DailyReportCheckStatus.审核不通过);
                 MonthlyTargetInfo monthtarget_xs = MonthlyTargets.Instance.GetModel(DataConvert.SafeInt(ddlCorp.SelectedValue), DayReportDep.销售部, day, true);
                 List<DailyReportModuleInfo> rlist_xs = DayReportModules.Instance.GetList(true);
                 rlist_xs = rlist_xs.FindAll(l => l.Department == DayReportDep.销售部).OrderBy(l => l.Sort).ToList();
@@ -1009,6 +1032,7 @@ namespace Hx.BackAdmin.dayreport
                     DayReportDep = DayReportDep.售后部
                 };
                 List<DailyReportInfo> list_sh = DailyReports.Instance.GetList(query_sh, true);
+                list_sh = list_sh.FindAll(l => l.DailyReportCheckStatus != DailyReportCheckStatus.审核不通过);
                 MonthlyTargetInfo monthtarget_sh = MonthlyTargets.Instance.GetModel(DataConvert.SafeInt(ddlCorp.SelectedValue), DayReportDep.售后部, day, true);
                 List<DailyReportModuleInfo> rlist_sh = DayReportModules.Instance.GetList(true);
                 rlist_sh = rlist_sh.FindAll(l => l.Department == DayReportDep.售后部).OrderBy(l => l.Sort).ToList();
@@ -1107,8 +1131,12 @@ namespace Hx.BackAdmin.dayreport
 
                 #region 每日数据
 
+                DataRow rowCheck = tbl.NewRow();
+                rowCheck["项目"] = "是否审核";
+
                 for (int i = 1; i <= days; i++)
                 {
+                    rowCheck[i] = "1";
                     if (DateTime.TryParse(txtDate.Text + "-" + i.ToString("00"), out day) && list.Exists(l => l.DayUnique == day.ToString("yyyyMMdd")))
                     {
                         DailyReportInfo r = list.Find(l => l.DayUnique == day.ToString("yyyyMMdd"));
@@ -1124,6 +1152,7 @@ namespace Hx.BackAdmin.dayreport
                                 rows[j + 3][i] = reportdate.ContainsKey(rlist[j].ID.ToString()) ? reportdate[rlist[j].ID.ToString()] : string.Empty;
                             }
                         }
+                        rowCheck[i] = r.DailyReportCheckStatus == DailyReportCheckStatus.未审核 ? "0" : "1";
                     }
                     if (DateTime.TryParse(txtDate.Text + "-" + i.ToString("00"), out day) && list_xs.Exists(l => l.DayUnique == day.ToString("yyyyMMdd")))
                     {
@@ -1163,6 +1192,7 @@ namespace Hx.BackAdmin.dayreport
                 {
                     tbl.Rows.Add(row);
                 }
+                tbl.Rows.Add(rowCheck);
                 #endregion
             }
             else if (dep == DayReportDep.市场部 && DateTime.TryParse(txtDate.Text + "-01", out day))
@@ -1206,8 +1236,12 @@ namespace Hx.BackAdmin.dayreport
 
                 #region 每日数据
 
+                DataRow rowCheck = tbl.NewRow();
+                rowCheck["项目"] = "是否审核";
+
                 for (int i = 1; i <= days; i++)
                 {
+                    rowCheck[i] = "1";
                     if (DateTime.TryParse(txtDate.Text + "-" + i.ToString("00"), out day) && list.Exists(l => l.DayUnique == day.ToString("yyyyMMdd")))
                     {
                         DailyReportInfo r = list.Find(l => l.DayUnique == day.ToString("yyyyMMdd"));
@@ -1219,6 +1253,7 @@ namespace Hx.BackAdmin.dayreport
                                 rows[j][i] = reportdate.ContainsKey(rlist[j].ID.ToString()) ? reportdate[rlist[j].ID.ToString()] : string.Empty;
                             }
                         }
+                        rowCheck[i] = r.DailyReportCheckStatus == DailyReportCheckStatus.未审核 ? "0" : "1";
                     }
                 }
 
@@ -1228,6 +1263,7 @@ namespace Hx.BackAdmin.dayreport
                 {
                     tbl.Rows.Add(row);
                 }
+                tbl.Rows.Add(rowCheck);
                 #endregion
             }
             else if (dep == DayReportDep.DCC部 && DateTime.TryParse(txtDate.Text + "-01", out day))
@@ -1241,6 +1277,7 @@ namespace Hx.BackAdmin.dayreport
                     DayReportDep = DayReportDep.销售部
                 };
                 List<DailyReportInfo> xslist = DailyReports.Instance.GetList(query, true);
+                xslist = xslist.FindAll(l => l.DailyReportCheckStatus != DailyReportCheckStatus.审核不通过);
                 MonthlyTargetInfo xsmonthtarget = MonthlyTargets.Instance.GetModel(DataConvert.SafeInt(ddlCorp.SelectedValue), DayReportDep.销售部, day, true);
                 List<DailyReportModuleInfo> xsrlist = DayReportModules.Instance.GetList(true);
                 xsrlist = xsrlist.FindAll(l => l.Department == DayReportDep.销售部).OrderBy(l => l.Sort).ToList();
@@ -1357,9 +1394,12 @@ namespace Hx.BackAdmin.dayreport
 
                 #region 每日数据
 
+                DataRow rowCheck = tbl.NewRow();
+                rowCheck["项目"] = "是否审核";
+
                 for (int i = 1; i <= days; i++)
                 {
-
+                    rowCheck[i] = "1";
                     if (DateTime.TryParse(txtDate.Text + "-" + i.ToString("00"), out day) && list.Exists(l => l.DayUnique == day.ToString("yyyyMMdd")))
                     {
                         DailyReportInfo r = list.Find(l => l.DayUnique == day.ToString("yyyyMMdd"));
@@ -1414,6 +1454,7 @@ namespace Hx.BackAdmin.dayreport
                                 }
                             }
                         }
+                        rowCheck[i] = r.DailyReportCheckStatus == DailyReportCheckStatus.未审核 ? "0" : "1";
                     }
                     if (DateTime.TryParse(txtDate.Text + "-" + i.ToString("00"), out day) && xslist.Exists(l => l.DayUnique == day.ToString("yyyyMMdd")))
                     {
@@ -1433,6 +1474,7 @@ namespace Hx.BackAdmin.dayreport
                 {
                     tbl.Rows.Add(row);
                 }
+                tbl.Rows.Add(rowCheck);
                 #endregion
             }
             else if (dep == DayReportDep.财务部)
@@ -1662,6 +1704,9 @@ namespace Hx.BackAdmin.dayreport
 
                 #region 每日数据
 
+                DataRow rowCheck = tbl.NewRow();
+                rowCheck["项目"] = "是否审核";
+
                 string[] mrycdkdq = null;
                 if (monthtarget != null && !string.IsNullOrEmpty(monthtarget.CWycdkdq))
                 {
@@ -1677,6 +1722,7 @@ namespace Hx.BackAdmin.dayreport
 
                 for (int i = 1; i <= days; i++)
                 {
+                    rowCheck[i] = "1";
                     index = 0;
                     if (DateTime.TryParse(txtDate.Text + "-" + i.ToString("00"), out day) && list.Exists(l => l.DayUnique == day.ToString("yyyyMMdd")))
                     {
@@ -1780,6 +1826,7 @@ namespace Hx.BackAdmin.dayreport
                                 }
                             }
                         }
+                        rowCheck[i] = r.DailyReportCheckStatus == DailyReportCheckStatus.未审核 ? "0" : "1";
                     }
                 }
 
@@ -1789,6 +1836,7 @@ namespace Hx.BackAdmin.dayreport
                 {
                     tbl.Rows.Add(row);
                 }
+                tbl.Rows.Add(rowCheck);
 
                 #endregion
             }
@@ -1830,8 +1878,12 @@ namespace Hx.BackAdmin.dayreport
 
                 #region 每日数据
 
+                DataRow rowCheck = tbl.NewRow();
+                rowCheck["项目"] = "是否审核";
+
                 for (int i = 1; i <= days; i++)
                 {
+                    rowCheck[i] = "1";
                     if (DateTime.TryParse(txtDate.Text + "-" + i.ToString("00"), out day) && list.Exists(l => l.DayUnique == day.ToString("yyyyMMdd")))
                     {
                         DailyReportInfo r = list.Find(l => l.DayUnique == day.ToString("yyyyMMdd"));
@@ -1843,6 +1895,7 @@ namespace Hx.BackAdmin.dayreport
                                 rows[j][i] = reportdate.ContainsKey(rlist[j].ID.ToString()) ? reportdate[rlist[j].ID.ToString()] : string.Empty;
                             }
                         }
+                        rowCheck[i] = r.DailyReportCheckStatus == DailyReportCheckStatus.未审核 ? "0" : "1";
                     }
                 }
 
@@ -1852,6 +1905,7 @@ namespace Hx.BackAdmin.dayreport
                 {
                     tbl.Rows.Add(row);
                 }
+                tbl.Rows.Add(rowCheck);
                 #endregion
             }
 
@@ -1878,15 +1932,19 @@ namespace Hx.BackAdmin.dayreport
                 strb.Append("<td class=\"w80\">目标值</td>");
                 strb.Append("<td class=\"w80\">合计</td>");
                 strb.Append("<td class=\"w80\">完成率</td>");
+
+                tbl.DefaultView.RowFilter = "项目='是否审核'";
                 for (int i = 1; i <= days; i++)
                 {
-                    strb.AppendFormat("<td class=\"w40\">{0}</td>", i);
+                    string ischeck = tbl.DefaultView[0][i].ToString();
+                    strb.AppendFormat("<td class=\"w40\">{0}</td>", ischeck == "1" ? i.ToString() : string.Format("<span class=\"red\">{0}</span>", i));
                 }
                 strb.Append("<td></td>");
                 strb.Append("</tr>");
 
                 foreach (DataRow row in tbl.Rows)
                 {
+                    if (row["项目"].ToString() == "是否审核") continue;
                     strb.Append("<tr class=\"tc\">");
                     strb.AppendFormat("<td class=\"bold bggray\">{0}</td>", row["项目"]);
                     strb.AppendFormat("<td>{0}</td>", string.IsNullOrEmpty(row["目标值"].ToString()) ? "&nbsp;" : FormatNum(row["目标值"].ToString()));
@@ -1915,15 +1973,19 @@ namespace Hx.BackAdmin.dayreport
                 strb.Append("<td class=\"w80\">目标值</td>");
                 strb.Append("<td class=\"w80\">合计</td>");
                 strb.Append("<td class=\"w80\">完成率</td>");
+
+                tbl.DefaultView.RowFilter = "项目='是否审核'";
                 for (int i = 1; i <= days; i++)
                 {
-                    strb.AppendFormat("<td class=\"w40\">{0}</td>", i);
+                    string ischeck = tbl.DefaultView[0][i].ToString();
+                    strb.AppendFormat("<td class=\"w40\">{0}</td>", ischeck == "1" ? i.ToString() : string.Format("<span class=\"red\">{0}</span>", i));
                 }
                 strb.Append("<td></td>");
                 strb.Append("</tr>");
 
                 foreach (DataRow row in tbl.Rows)
                 {
+                    if (row["项目"].ToString() == "是否审核") continue;
                     if (tpp.Contains(row["项目"].ToString()) && CurrentCorporation != null && CurrentCorporation.DailyreportTpp == 0)
                         continue;
                     strb.Append("<tr class=\"tc\">");
@@ -1952,15 +2014,19 @@ namespace Hx.BackAdmin.dayreport
                 strb.Append("<td class=\"w80\">目标值</td>");
                 strb.Append("<td class=\"w80\">合计</td>");
                 strb.Append("<td class=\"w80\">完成率</td>");
+
+                tbl.DefaultView.RowFilter = "项目='是否审核'";
                 for (int i = 1; i <= days; i++)
                 {
-                    strb.AppendFormat("<td class=\"w40\">{0}</td>", i);
+                    string ischeck = tbl.DefaultView[0][i].ToString();
+                    strb.AppendFormat("<td class=\"w40\">{0}</td>", ischeck == "1" ? i.ToString() : string.Format("<span class=\"red\">{0}</span>", i));
                 }
                 strb.Append("<td></td>");
                 strb.Append("</tr>");
 
                 foreach (DataRow row in tbl.Rows)
                 {
+                    if (row["项目"].ToString() == "是否审核") continue;
                     string[] tsjestr = new string[] { "中保理赔", "太保", "平安", "人寿", "大地", "中华联合", "浙商", "大众", "其他", "旧件利用额" };
                     bool ismoney = row["项目"].ToString().IndexOf("金额") > 0 || row["项目"].ToString().IndexOf("产值") > 0 || tsjestr.Contains(row["项目"].ToString());
                     strb.Append("<tr class=\"tc\">");
@@ -1989,15 +2055,19 @@ namespace Hx.BackAdmin.dayreport
                 strb.Append("<td class=\"w80\">目标值</td>");
                 strb.Append("<td class=\"w80\">合计</td>");
                 strb.Append("<td class=\"w80\">完成率</td>");
+
+                tbl.DefaultView.RowFilter = "项目='是否审核'";
                 for (int i = 1; i <= days; i++)
                 {
-                    strb.AppendFormat("<td class=\"w40\">{0}</td>", i);
+                    string ischeck = tbl.DefaultView[0][i].ToString();
+                    strb.AppendFormat("<td class=\"w40\">{0}</td>", ischeck == "1" ? i.ToString() : string.Format("<span class=\"red\">{0}</span>", i));
                 }
                 strb.Append("<td></td>");
                 strb.Append("</tr>");
 
                 foreach (DataRow row in tbl.Rows)
                 {
+                    if (row["项目"].ToString() == "是否审核") continue;
                     bool ismoney = row["项目"].ToString().IndexOf("金额") > 0 || row["项目"].ToString().IndexOf("产值") > 0;
                     strb.Append("<tr class=\"tc\">");
                     strb.AppendFormat("<td class=\"bold bggray\">{0}</td>", row["项目"]);
@@ -2024,15 +2094,19 @@ namespace Hx.BackAdmin.dayreport
                 strb.Append("<td class=\"w160\">项目（万元）</td>");
                 strb.Append("<td class=\"w80\">期初余额</td>");
                 strb.Append("<td class=\"w80\">合计</td>");
+
+                tbl.DefaultView.RowFilter = "项目='是否审核'";
                 for (int i = 1; i <= days; i++)
                 {
-                    strb.AppendFormat("<td class=\"w40\">{0}</td>", i);
+                    string ischeck = tbl.DefaultView[0][i].ToString();
+                    strb.AppendFormat("<td class=\"w40\">{0}</td>", ischeck == "1" ? i.ToString() : string.Format("<span class=\"red\">{0}</span>", i));
                 }
                 strb.Append("<td></td>");
                 strb.Append("</tr>");
 
                 foreach (DataRow row in tbl.Rows)
                 {
+                    if (row["项目"].ToString() == "是否审核") continue;
                     strb.Append("<tr class=\"tc\">");
                     strb.AppendFormat("<td class=\"bold bggray\">{0}</td>", row["项目"]);
                     strb.AppendFormat("<td>{0}</td>", string.IsNullOrEmpty(row["期初余额"].ToString()) ? "&nbsp;" : FormatNum(row["期初余额"].ToString()));
@@ -2057,15 +2131,19 @@ namespace Hx.BackAdmin.dayreport
                 strb.Append("<td class=\"w160\">项目</td>");
                 strb.Append("<td class=\"w80\">目标值</td>");
                 strb.Append("<td class=\"w80\">合计</td>");
+
+                tbl.DefaultView.RowFilter = "项目='是否审核'";
                 for (int i = 1; i <= days; i++)
                 {
-                    strb.AppendFormat("<td class=\"w40\">{0}</td>", i);
+                    string ischeck = tbl.DefaultView[0][i].ToString();
+                    strb.AppendFormat("<td class=\"w40\">{0}</td>", ischeck == "1" ? i.ToString() : string.Format("<span class=\"red\">{0}</span>", i));
                 }
                 strb.Append("<td></td>");
                 strb.Append("</tr>");
 
                 foreach (DataRow row in tbl.Rows)
                 {
+                    if (row["项目"].ToString() == "是否审核") continue;
                     strb.Append("<tr class=\"tc\">");
                     strb.AppendFormat("<td class=\"bold bggray\">{0}</td>", row["项目"]);
                     strb.AppendFormat("<td>{0}</td>", string.IsNullOrEmpty(row["目标值"].ToString()) ? "&nbsp;" : FormatNum(row["目标值"].ToString()));
@@ -2154,6 +2232,7 @@ namespace Hx.BackAdmin.dayreport
                         DayReportDep = DayReportDep.销售部
                     };
                     List<DailyReportInfo> list_last = DailyReports.Instance.GetList(query_last, true);
+                    list_last = list_last.FindAll(l => l.DailyReportCheckStatus != DailyReportCheckStatus.审核不通过);
                     List<DailyReportModuleInfo> rlist_xs = DayReportModules.Instance.GetList(true);
                     rlist_xs = rlist_xs.FindAll(l => l.Department == DayReportDep.销售部).OrderBy(l => l.Sort).ToList();
                     List<Dictionary<string, string>> data_last = new List<Dictionary<string, string>>();
@@ -2789,6 +2868,7 @@ namespace Hx.BackAdmin.dayreport
                         DayReportDep = DayReportDep.市场部
                     };
                     List<DailyReportInfo> list_last = DailyReports.Instance.GetList(query_last, true);
+                    list_last = list_last.FindAll(l => l.DailyReportCheckStatus != DailyReportCheckStatus.审核不通过);
                     List<DailyReportModuleInfo> rlist_sc = DayReportModules.Instance.GetList(true);
                     rlist_sc = rlist_sc.FindAll(l => l.Department == DayReportDep.市场部).OrderBy(l => l.Sort).ToList();
                     List<Dictionary<string, string>> data_last = new List<Dictionary<string, string>>();
@@ -3183,6 +3263,7 @@ namespace Hx.BackAdmin.dayreport
                         DayReportDep = DayReportDep.DCC部
                     };
                     List<DailyReportInfo> list_last = DailyReports.Instance.GetList(query_last, true);
+                    list_last = list_last.FindAll(l => l.DailyReportCheckStatus != DailyReportCheckStatus.审核不通过);
                     List<DailyReportModuleInfo> rlist_dcc = DayReportModules.Instance.GetList(true);
                     rlist_dcc = rlist_dcc.FindAll(l => l.Department == DayReportDep.DCC部).OrderBy(l => l.Sort).ToList();
                     List<Dictionary<string, string>> data_last = new List<Dictionary<string, string>>();
@@ -3597,6 +3678,7 @@ namespace Hx.BackAdmin.dayreport
                     DayReportDep = DayReportDep.销售部
                 };
                 List<DailyReportInfo> list_xs = DailyReports.Instance.GetList(query_xs, true);
+                list_xs = list_xs.FindAll(l => l.DailyReportCheckStatus != DailyReportCheckStatus.审核不通过);
                 MonthlyTargetInfo monthtarget_xs = MonthlyTargets.Instance.GetModel(DataConvert.SafeInt(ddlCorp.SelectedValue), DayReportDep.销售部, day, true);
                 List<DailyReportModuleInfo> rlist_xs = DayReportModules.Instance.GetList(true);
                 rlist_xs = rlist_xs.FindAll(l => l.Department == DayReportDep.销售部).OrderBy(l => l.Sort).ToList();
@@ -3794,6 +3876,7 @@ namespace Hx.BackAdmin.dayreport
                         DayReportDep = DayReportDep.售后部
                     };
                     List<DailyReportInfo> listSHB = DailyReports.Instance.GetList(query, true);
+                    listSHB = listSHB.FindAll(l => l.DailyReportCheckStatus != DailyReportCheckStatus.审核不通过);
                     List<Dictionary<string, string>> dataSHB = new List<Dictionary<string, string>>();
                     for (int i = 0; i < listSHB.Count; i++)
                     {

@@ -138,6 +138,26 @@ namespace Hx.Components.Entity
         }
 
         /// <summary>
+        /// 日报审核公司权限设置
+        /// </summary>
+        [JsonIgnore]
+        public string DayReportCheckCorpPowerSetting
+        {
+            get { return GetString("DayReportCheckCorpPowerSetting", ""); }
+            set { SetExtendedAttribute("DayReportCheckCorpPowerSetting", value); }
+        }
+
+        /// <summary>
+        /// 日报审核部门权限设置
+        /// </summary>
+        [JsonIgnore]
+        public string DayReportCheckDepPowerSetting
+        {
+            get { return GetString("DayReportCheckDepPowerSetting", ""); }
+            set { SetExtendedAttribute("DayReportCheckDepPowerSetting", value); }
+        }
+
+        /// <summary>
         /// CRM报表导出权限设置
         /// </summary>
         [JsonIgnore]

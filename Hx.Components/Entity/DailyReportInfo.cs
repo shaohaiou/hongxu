@@ -41,5 +41,27 @@ namespace Hx.Components.Entity
             get { return GetString("SCReport", ""); }
             set { SetExtendedAttribute("SCReport", value); }
         }
+
+        /// <summary>
+        /// 审核状态
+        /// </summary>
+        [JsonIgnore]
+        public DailyReportCheckStatus DailyReportCheckStatus
+        {
+            get { return (DailyReportCheckStatus)GetInt("DailyReportCheckStatus", 1); }
+            set { SetExtendedAttribute("DailyReportCheckStatus", ((int)value).ToString()); }
+        }
+
+        /// <summary>
+        /// 审核备注
+        /// </summary>
+        [JsonIgnore]
+        public string DailyReportCheckRemark
+        {
+            get { return GetString("DailyReportCheckRemark", ""); }
+            set { SetExtendedAttribute("DailyReportCheckRemark", value); }
+        }
+
+
     }
 }

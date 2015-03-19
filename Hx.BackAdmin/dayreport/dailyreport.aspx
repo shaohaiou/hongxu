@@ -227,6 +227,25 @@
                                     AutoPostBack="true"></asp:TextBox>
                             </td>
                         </tr>
+                        <%if (CurrentDep == DayReportDep.销售部 || CurrentDep == DayReportDep.售后部)
+                          {%>
+                        <tr>
+                            <td class="bg4 tr">
+                                数据审核状态：
+                            </td>
+                            <td>
+                                <asp:Label runat="server" ID="txtDailyReportCheckStatus"></asp:Label><span class="red">（目前由财务经理进行数据审核）</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="bg4 tr">
+                                审核备注：
+                            </td>
+                            <td>
+                                <asp:Label runat="server" ID="txtDailyReportCheckRemark"></asp:Label>
+                            </td>
+                        </tr>
+                        <%}%>
                         <%if (CurrentDep == DayReportDep.销售部)
                           {%>
                         <tr>

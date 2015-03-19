@@ -94,6 +94,24 @@ namespace Hx.BackAdmin.dayreport {
         protected global::System.Web.UI.WebControls.Repeater rptDayReportViewDep;
         
         /// <summary>
+        /// rptDayReportCheckCorp 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater rptDayReportCheckCorp;
+        
+        /// <summary>
+        /// rptDayReportCheckDep 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater rptDayReportCheckDep;
+        
+        /// <summary>
         /// cbxCRMReportExport 控件。
         /// </summary>
         /// <remarks>
@@ -173,6 +191,24 @@ namespace Hx.BackAdmin.dayreport {
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputHidden hdnDayReportViewDep;
+        
+        /// <summary>
+        /// hdnDayReportCheckCorp 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hdnDayReportCheckCorp;
+        
+        /// <summary>
+        /// hdnDayReportCheckDep 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hdnDayReportCheckDep;
         
         /// <summary>
         /// hdnCRMReportInput 控件。

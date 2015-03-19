@@ -355,6 +355,39 @@ namespace Hx.Components.Providers
 
         #endregion
 
+        #region 日报审核记录
+
+        public abstract void CreateDailyReportCheckHistory(DailyReportCheckHistoryInfo entity);
+
+        public abstract List<DailyReportCheckHistoryInfo> GetDailyReportCheckHistoryList(int pageindex, int pagesize, DailyReportCheckHistoryQuery query, ref int recordcount);
+
+        protected DailyReportCheckHistoryInfo PopulateDailyReportCheckHistory(IDataReader reader)
+        {
+            DailyReportCheckHistoryInfo entity = new DailyReportCheckHistoryInfo
+            {
+                ID = DataConvert.SafeInt(reader["ID"]),
+                DayUnique = reader["DayUnique"] as string,
+                CreatorCorporationID = DataConvert.SafeInt(reader["CreatorCorporationID"]),
+                CreatorCorporationName = reader["CreatorCorporationName"] as string,
+                CreatorDepartment = (DayReportDep)(byte)reader["CreatorDepartment"],
+                Creator = reader["Creator"] as string,
+                CreateTime = DataConvert.SafeDate(reader["CreateTime"]),
+                ReportDepartment = (DayReportDep)(byte)reader["ReportDepartment"],
+                ReportCorporationID = DataConvert.SafeInt(reader["ReportCorporationID"])
+            };
+
+            DailyReportInfo mondify = new DailyReportInfo();
+            SerializerData data = new SerializerData();
+            data.Keys = reader["PropertyNames"] as string;
+            data.Values = reader["PropertyValues"] as string;
+            mondify.SetSerializerData(data);
+            entity.CheckedInfo = mondify;
+
+            return entity;
+        }
+
+        #endregion
+
         #region 日报模块
 
         public abstract List<DailyReportModuleInfo> GetDailyReportModuleList();

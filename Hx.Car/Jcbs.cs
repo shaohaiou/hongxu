@@ -10,6 +10,7 @@ using Hx.Tools.Web;
 using System.Web.Script.Serialization;
 using Hx.Components.Entity;
 using System.Collections.Specialized;
+using System.Windows.Forms;
 
 namespace Hx.Car
 {
@@ -297,6 +298,34 @@ namespace Hx.Car
             }
 
             return result;
+        }
+
+        #endregion
+
+        #region 登录
+
+        public void DoLogin(WebBrowser wb, JcbAccountInfo account)
+        {
+            switch (account.JcbSiteType)
+            { 
+                case JcbSiteType.t_二手车之家:
+                    if (account.JcbAccountType == JcbAccountType.个人帐号)
+                    {
+                        HtmlDocument HtmlDoc = wb.Document;
+                        HtmlElement txtUserName = HtmlDoc.All["UserName"];
+                        HtmlElement txtPassWord = HtmlDoc.All["PassWord"];
+                        HtmlElement SubmitLogin = HtmlDoc.All["SubmitLogin"];
+                        txtUserName.SetAttribute("value", account.AccountName);
+                        txtPassWord.SetAttribute("value", account.Password);
+                        SubmitLogin.InvokeMember("click");
+                        wb.Stop();
+                    }
+                    else if (account.JcbAccountType == JcbAccountType.商户帐号)
+                    { }
+                    break;
+                default:
+                    break;
+            }
         }
 
         #endregion

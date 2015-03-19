@@ -71,6 +71,7 @@
     <Content Include="biz\corpmien.aspx" />
     <Content Include="biz\corpmiendetail.aspx" />
     <Content Include="biz\corpmienedit.aspx" />
+    <Content Include="biz\corpmienmore.aspx" />
     <Content Include="biz\corpmienview.aspx" />
     <Content Include="biz\job.aspx" />
     <Content Include="biz\jobedit.aspx" />
@@ -94,7 +95,9 @@
     <Content Include="dayreport\crmreportcustomerflow.aspx" />
     <Content Include="dayreport\crmreportexport.aspx" />
     <Content Include="dayreport\crmreportoutwardvisit.aspx" />
+    <Content Include="dayreport\dailyreportcheck.aspx" />
     <Content Include="dayreport\dailyreportviewmul.aspx" />
+    <Content Include="dayreport\dayreportcheckhistorymg.aspx" />
     <Content Include="dayreport\dayreporthistorymg.aspx" />
     <Content Include="dayreport\main.aspx" />
     <Content Include="dayreport\main_i.aspx" />
@@ -432,6 +435,13 @@
     <Compile Include="biz\corpmienedit.aspx.designer.cs">
       <DependentUpon>corpmienedit.aspx</DependentUpon>
     </Compile>
+    <Compile Include="biz\corpmienmore.aspx.cs">
+      <DependentUpon>corpmienmore.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="biz\corpmienmore.aspx.designer.cs">
+      <DependentUpon>corpmienmore.aspx</DependentUpon>
+    </Compile>
     <Compile Include="biz\corpmienview.aspx.cs">
       <DependentUpon>corpmienview.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -558,12 +568,26 @@
     <Compile Include="dayreport\crmreportoutwardvisit.aspx.designer.cs">
       <DependentUpon>crmreportoutwardvisit.aspx</DependentUpon>
     </Compile>
+    <Compile Include="dayreport\dailyreportcheck.aspx.cs">
+      <DependentUpon>dailyreportcheck.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="dayreport\dailyreportcheck.aspx.designer.cs">
+      <DependentUpon>dailyreportcheck.aspx</DependentUpon>
+    </Compile>
     <Compile Include="dayreport\dailyreportviewmul.aspx.cs">
       <DependentUpon>dailyreportviewmul.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="dayreport\dailyreportviewmul.aspx.designer.cs">
       <DependentUpon>dailyreportviewmul.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="dayreport\dayreportcheckhistorymg.aspx.cs">
+      <DependentUpon>dayreportcheckhistorymg.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="dayreport\dayreportcheckhistorymg.aspx.designer.cs">
+      <DependentUpon>dayreportcheckhistorymg.aspx</DependentUpon>
     </Compile>
     <Compile Include="dayreport\dayreporthistorymg.aspx.cs">
       <DependentUpon>dayreporthistorymg.aspx</DependentUpon>

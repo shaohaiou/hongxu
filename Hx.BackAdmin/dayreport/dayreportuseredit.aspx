@@ -70,6 +70,20 @@
             $(".cbxDayReportViewDep").click(function () {
                 setdayreportviewdep();
             });
+            $("#cbxAllDayReportCheckCorp").click(function () {
+                $(".cbxDayReportCheckCorp").attr("checked", $(this).attr("checked"));
+                setdayreportcheckcorp();
+            })
+            $(".cbxDayReportCheckCorp").click(function () {
+                setdayreportcheckcorp();
+            });
+            $("#cbxAllDayReportCheckDep").click(function () {
+                $(".cbxDayReportCheckDep").attr("checked", $(this).attr("checked"));
+                setdayreportcheckdep();
+            })
+            $(".cbxDayReportCheckDep").click(function () {
+                setdayreportcheckdep();
+            });
             $("#cbxAllCRMReportInput").click(function () {
                 $(".cbxCRMReportInput").attr("checked", $(this).attr("checked"));
                 setcrmreportinput();
@@ -140,6 +154,24 @@
             if (dayreportviewdep != '')
                 dayreportviewdep = '|' + dayreportviewdep + '|'
             $("#hdnDayReportViewDep").val(dayreportviewdep);
+        }
+
+        function setdayreportcheckcorp() {
+            var dayreportcheckcorp = $(".cbxDayReportCheckCorp:checked").map(function () {
+                return $(this).val();
+            }).get().join('|');
+            if (dayreportcheckcorp != '')
+                dayreportcheckcorp = '|' + dayreportcheckcorp + '|'
+            $("#hdnDayReportCheckCorp").val(dayreportcheckcorp);
+        }
+
+        function setdayreportcheckdep() {
+            var dayreportcheckdep = $(".cbxDayReportCheckDep:checked").map(function () {
+                return $(this).val();
+            }).get().join('|');
+            if (dayreportcheckdep != '')
+                dayreportcheckdep = '|' + dayreportcheckdep + '|'
+            $("#hdnDayReportCheckDep").val(dayreportcheckdep);
         }
 
         function setcrmreportinput() {
@@ -381,6 +413,69 @@
                     </td>
                 </tr>
                 <tr>
+                    <td class="bg4 tr vt">
+                        日报审核公司权限：
+                    </td>
+                    <td class="clpp">
+                        <ul>
+                            <li class="nh">
+                                <label>
+                                    <input type="checkbox" id="cbxAllDayReportCheckCorp" class="fll" />全选</label></li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                    </td>
+                    <td>
+                        <asp:Repeater runat="server" ID="rptDayReportCheckCorp" EnableTheming="false">
+                            <HeaderTemplate>
+                                <ul>
+                            </HeaderTemplate>
+                            <ItemTemplate>
+                                <li class="blockinline" style="width:230px;">
+                                    <label>
+                                        <input type="checkbox" class="cbxDayReportCheckCorp fll" value="<%# Eval("ID") %>"
+                                            <%#SetDayReportCheckCorp(Eval("ID").ToString()) %> /><%# Eval("Name") %></label></li>
+                            </ItemTemplate>
+                            <FooterTemplate>
+                                </ul></FooterTemplate>
+                        </asp:Repeater>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bg4 tr vt">
+                        日报审核部门权限：
+                    </td>
+                    <td class="clpp">
+                        <ul>
+                            <li class="nh">
+                                <label>
+                                    <input type="checkbox" id="cbxAllDayReportCheckDep" class="fll" />全选</label></li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                    </td>
+                    <td>
+                        <asp:Repeater runat="server" ID="rptDayReportCheckDep" EnableViewState="false">
+                            <HeaderTemplate>
+                                <ul>
+                            </HeaderTemplate>
+                            <ItemTemplate>
+                                <li class="blockinline">
+                                    <label>
+                                        <input type="checkbox" class="cbxDayReportCheckDep fll" value="<%# Eval("Value") %>"
+                                            <%#SetDayReportCheckDep(Eval("Value").ToString()) %> /><%# Eval("Name") %></label></li>
+                            </ItemTemplate>
+                            <FooterTemplate>
+                                </ul>
+                            </FooterTemplate>
+                        </asp:Repeater>
+                    </td>
+                </tr>
+                <tr>
                     <td class="tr">
                         CRM报表导出权限：
                     </td>
@@ -431,6 +526,8 @@
                         <input type="hidden" runat="server" id="hdnTargetCorp" />
                         <input type="hidden" runat="server" id="hdnDayReportViewCorp" />
                         <input type="hidden" runat="server" id="hdnDayReportViewDep" />
+                        <input type="hidden" runat="server" id="hdnDayReportCheckCorp" />
+                        <input type="hidden" runat="server" id="hdnDayReportCheckDep" />
                         <input type="hidden" runat="server" id="hdnCRMReportInput" />
                         <asp:Button runat="server" ID="btnSubmit" Text="保存" CssClass="an1" OnClick="btnSubmit_Click" />
                     </td>

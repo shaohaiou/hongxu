@@ -46,7 +46,7 @@ namespace Hx.BackAdmin.dayreport
         protected string CurrentQuery
         {
             get
-            { 
+            {
                 if (string.IsNullOrEmpty(currentquery))
                 {
                     foreach (string q in Request.QueryString.AllKeys)
@@ -127,10 +127,21 @@ namespace Hx.BackAdmin.dayreport
 
             if (report != null)
             {
-
+                txtDailyReportCheckStatus.Text = report.DailyReportCheckStatus.ToString();
+                if (report.DailyReportCheckStatus == DailyReportCheckStatus.审核通过)
+                    txtDailyReportCheckStatus.CssClass = "green";
+                else if (report.DailyReportCheckStatus == DailyReportCheckStatus.审核不通过)
+                {
+                    txtDailyReportCheckStatus.CssClass = "red";
+                    txtDailyReportCheckRemark.Text = report.DailyReportCheckRemark;
+                }
+                else if (report.DailyReportCheckStatus == DailyReportCheckStatus.未审核)
+                    txtDailyReportCheckStatus.CssClass = "gray";
             }
             else
             {
+                txtDailyReportCheckStatus.Text = string.Empty;
+                txtDailyReportCheckRemark.Text = string.Empty;
                 foreach (Control c in up1.ContentTemplateContainer.Controls.Cast<Control>())
                 {
                     if (c.GetType() == typeof(TextBox) && c.ID != "txtDate")
@@ -514,11 +525,28 @@ namespace Hx.BackAdmin.dayreport
                             CorporationID = DataConvert.SafeInt(ddlCorp.SelectedValue),
                             DayUnique = day.ToString("yyyyMMdd"),
                             Creator = CurrentUser.UserName,
-                            LastUpdateUser = CurrentUser.UserName
+                            LastUpdateUser = CurrentUser.UserName,
+                            DailyReportCheckStatus = DailyReportCheckStatus.未审核
                         };
                     }
                     else
+                    {
                         report.LastUpdateUser = CurrentUser.UserName;
+                    }
+                    if (CurrentDep == DayReportDep.销售部 || CurrentDep == DayReportDep.售后部)
+                    {
+                        if (report.DailyReportCheckStatus == DailyReportCheckStatus.审核通过 && CurrentUser.AllowModify != "1")
+                        {
+
+                            WriteErrorMessage("提交失败", "数据在提交之前已经被审核通过了", string.IsNullOrEmpty(FromUrl) ? UrlDecode(CurrentUrl) : FromUrl);
+                            return;
+                        }
+                        report.DailyReportCheckStatus = DailyReportCheckStatus.未审核;
+                    }
+                    else
+                    {
+                        report.DailyReportCheckStatus = DailyReportCheckStatus.审核通过;
+                    }
 
                     FillData(report);
 
@@ -730,7 +758,9 @@ namespace Hx.BackAdmin.dayreport
                 }
             }
             else allowmodify = true;
-
+            if ((CurrentDep == DayReportDep.销售部 || CurrentDep == DayReportDep.售后部) 
+                && report != null 
+                && (report.DailyReportCheckStatus == DailyReportCheckStatus.未审核 || report.DailyReportCheckStatus == DailyReportCheckStatus.审核不通过)) allowmodify = true;
             if (CurrentUser.AllowModify == "1") allowmodify = true;
 
             if (CurrentDep == DayReportDep.财务部)
@@ -748,7 +778,7 @@ namespace Hx.BackAdmin.dayreport
                     }
                     else if (count_yhzhye.Contains(name))
                     {
-                        tr = string.Format("<tr><td class=\"bg4 tr\">{0}：</td><td><input id=\"txtmodule{1}\" name=\"txtmodule{1}\" class=\"countyhzhyesub number srk6 tr {5}\" value=\"{2}\" {3} /> 万元{6} <span class=\"gray pl10\">{4}</span></td></tr>", name, m.ID, value, string.IsNullOrEmpty(value) || CurrentUser.AllowModify == "1" ? string.Empty : "disabled=\"disabled\"", m.Description, m.Mustinput ? "required" : string.Empty, m.Mustinput ? "<span class=\"red pl10\">*</span>" : string.Empty);
+                        tr = string.Format("<tr><td class=\"bg4 tr\">{0}：</td><td><input id=\"txtmodule{1}\" name=\"txtmodule{1}\" class=\"countyhzhyesub number srk6 tr {5}\" value=\"{2}\" {3} /> 万元{6} <span class=\"gray pl10\">{4}</span></td></tr>", name, m.ID, value, string.IsNullOrEmpty(value) || allowmodify ? string.Empty : "disabled=\"disabled\"", m.Description, m.Mustinput ? "required" : string.Empty, m.Mustinput ? "<span class=\"red pl10\">*</span>" : string.Empty);
                     }
                     else if (name == "本日预计支付合计数")
                     {
@@ -756,26 +786,26 @@ namespace Hx.BackAdmin.dayreport
                     }
                     else if (count_bryjzf.Contains(name))
                     {
-                        tr = string.Format("<tr><td class=\"bg4 tr\">{0}：</td><td><input id=\"txtmodule{1}\" name=\"txtmodule{1}\" class=\"countbryjzfsub number srk6 tr {5}\" value=\"{2}\" {3} /> 万元{6} <span class=\"gray pl10\">{4}</span></td></tr>", name, m.ID, value, string.IsNullOrEmpty(value) || CurrentUser.AllowModify == "1" ? string.Empty : "disabled=\"disabled\"", m.Description, m.Mustinput ? "required" : string.Empty, m.Mustinput ? "<span class=\"red pl10\">*</span>" : string.Empty);
+                        tr = string.Format("<tr><td class=\"bg4 tr\">{0}：</td><td><input id=\"txtmodule{1}\" name=\"txtmodule{1}\" class=\"countbryjzfsub number srk6 tr {5}\" value=\"{2}\" {3} /> 万元{6} <span class=\"gray pl10\">{4}</span></td></tr>", name, m.ID, value, string.IsNullOrEmpty(value) || allowmodify ? string.Empty : "disabled=\"disabled\"", m.Description, m.Mustinput ? "required" : string.Empty, m.Mustinput ? "<span class=\"red pl10\">*</span>" : string.Empty);
                     }
                     else
-                        tr = string.Format("<tr><td class=\"bg4 tr\">{0}：</td><td><input id=\"txtmodule{1}\" name=\"txtmodule{1}\" class=\"number srk6 tr {5}\" value=\"{2}\" {3} /> 万元{6} <span class=\"gray pl10\">{4}</span></td></tr>", name, m.ID, value, string.IsNullOrEmpty(value) || CurrentUser.AllowModify == "1" ? string.Empty : "readonly=\"true\"", m.Description, m.Mustinput ? "required" : string.Empty, m.Mustinput ? "<span class=\"red pl10\">*</span>" : string.Empty);
+                        tr = string.Format("<tr><td class=\"bg4 tr\">{0}：</td><td><input id=\"txtmodule{1}\" name=\"txtmodule{1}\" class=\"number srk6 tr {5}\" value=\"{2}\" {3} /> 万元{6} <span class=\"gray pl10\">{4}</span></td></tr>", name, m.ID, value, string.IsNullOrEmpty(value) || allowmodify ? string.Empty : "readonly=\"true\"", m.Description, m.Mustinput ? "required" : string.Empty, m.Mustinput ? "<span class=\"red pl10\">*</span>" : string.Empty);
                     strb.AppendLine(tr);
                 }
             }
             else if (CurrentDep == DayReportDep.销售部 && day.ToString("dd") == "01")
-            { 
+            {
                 foreach (DailyReportModuleInfo m in list.FindAll(l => mp.Contains(l.ID.ToString())))
                 {
                     string name = m.Name;
                     string value = kvp.Keys.Contains(m.ID.ToString()) ? kvp[m.ID.ToString()] : string.Empty;
                     string tr;
-                    if(name=="展厅订单台数")
-                        tr = string.Format("<tr><td class=\"bg4 tr\">{0}：</td><td><input id=\"txtmodule{1}\" name=\"txtmodule{1}\" class=\"number srk6 {5} {7}\" value=\"{2}\" {3} />{6}<span class=\"gray pl10\">{4}</span></td></tr>", name, m.ID, string.IsNullOrEmpty(value) ? "需包含上月留单" : value, string.IsNullOrEmpty(value) || CurrentUser.AllowModify == "1" ? string.Empty : "readonly=\"true\"", m.Description, m.Mustinput ? "required" : string.Empty, m.Mustinput ? "<span class=\"red pl10\">*</span>" : string.Empty,string.IsNullOrEmpty(value) ? "remind gray" : string.Empty);
+                    if (name == "展厅订单台数")
+                        tr = string.Format("<tr><td class=\"bg4 tr\">{0}：</td><td><input id=\"txtmodule{1}\" name=\"txtmodule{1}\" class=\"number srk6 {5} {7}\" value=\"{2}\" {3} />{6}<span class=\"gray pl10\">{4}</span></td></tr>", name, m.ID, string.IsNullOrEmpty(value) ? "需包含上月留单" : value, string.IsNullOrEmpty(value) || allowmodify ? string.Empty : "readonly=\"true\"", m.Description, m.Mustinput ? "required" : string.Empty, m.Mustinput ? "<span class=\"red pl10\">*</span>" : string.Empty, string.IsNullOrEmpty(value) ? "remind gray" : string.Empty);
                     else if (name == "入库台次")
-                        tr = string.Format("<tr><td class=\"bg4 tr\">{0}：</td><td><input id=\"txtmodule{1}\" name=\"txtmodule{1}\" class=\"number srk6 {5} {7}\" value=\"{2}\" {3} />{6}<span class=\"gray pl10\">{4}</span></td></tr>", name, m.ID, string.IsNullOrEmpty(value) ? "需包含上月在库数" : value, string.IsNullOrEmpty(value) || CurrentUser.AllowModify == "1" ? string.Empty : "readonly=\"true\"", m.Description, m.Mustinput ? "required" : string.Empty, m.Mustinput ? "<span class=\"red pl10\">*</span>" : string.Empty, string.IsNullOrEmpty(value) ? "remind gray" : string.Empty);
+                        tr = string.Format("<tr><td class=\"bg4 tr\">{0}：</td><td><input id=\"txtmodule{1}\" name=\"txtmodule{1}\" class=\"number srk6 {5} {7}\" value=\"{2}\" {3} />{6}<span class=\"gray pl10\">{4}</span></td></tr>", name, m.ID, string.IsNullOrEmpty(value) ? "需包含上月在库数" : value, string.IsNullOrEmpty(value) || allowmodify ? string.Empty : "readonly=\"true\"", m.Description, m.Mustinput ? "required" : string.Empty, m.Mustinput ? "<span class=\"red pl10\">*</span>" : string.Empty, string.IsNullOrEmpty(value) ? "remind gray" : string.Empty);
                     else
-                        tr = string.Format("<tr><td class=\"bg4 tr\">{0}：</td><td><input id=\"txtmodule{1}\" name=\"txtmodule{1}\" class=\"number srk6 {5}\" value=\"{2}\" {3} />{6}<span class=\"gray pl10\">{4}</span></td></tr>", name, m.ID, value, string.IsNullOrEmpty(value) || CurrentUser.AllowModify == "1" ? string.Empty : "readonly=\"true\"", m.Description, m.Mustinput ? "required" : string.Empty, m.Mustinput ? "<span class=\"red pl10\">*</span>" : string.Empty);
+                        tr = string.Format("<tr><td class=\"bg4 tr\">{0}：</td><td><input id=\"txtmodule{1}\" name=\"txtmodule{1}\" class=\"number srk6 {5}\" value=\"{2}\" {3} />{6}<span class=\"gray pl10\">{4}</span></td></tr>", name, m.ID, value, string.IsNullOrEmpty(value) || allowmodify? string.Empty : "readonly=\"true\"", m.Description, m.Mustinput ? "required" : string.Empty, m.Mustinput ? "<span class=\"red pl10\">*</span>" : string.Empty);
                     strb.AppendLine(tr);
                 }
             }
@@ -785,7 +815,7 @@ namespace Hx.BackAdmin.dayreport
                 {
                     string name = m.Name;
                     string value = kvp.Keys.Contains(m.ID.ToString()) ? kvp[m.ID.ToString()] : string.Empty;
-                    string tr = string.Format("<tr><td class=\"bg4 tr\">{0}：</td><td><input id=\"txtmodule{1}\" name=\"txtmodule{1}\" class=\"number srk6 {5}\" value=\"{2}\" {3} />{6}<span class=\"gray pl10\">{4}</span></td></tr>", name, m.ID, value, string.IsNullOrEmpty(value) || CurrentUser.AllowModify == "1" ? string.Empty : "readonly=\"true\"", m.Description, m.Mustinput ? "required" : string.Empty, m.Mustinput ? "<span class=\"red pl10\">*</span>" : string.Empty);
+                    string tr = string.Format("<tr><td class=\"bg4 tr\">{0}：</td><td><input id=\"txtmodule{1}\" name=\"txtmodule{1}\" class=\"number srk6 {5}\" value=\"{2}\" {3} />{6}<span class=\"gray pl10\">{4}</span></td></tr>", name, m.ID, value, string.IsNullOrEmpty(value) || allowmodify ? string.Empty : "readonly=\"true\"", m.Description, m.Mustinput ? "required" : string.Empty, m.Mustinput ? "<span class=\"red pl10\">*</span>" : string.Empty);
                     strb.AppendLine(tr);
                 }
             }

@@ -15,7 +15,7 @@ using Hx.Car.Entity;
 
 namespace Hx.BackAdmin.dayreport
 {
-    public partial class dayreporthistorymg : AdminBase
+    public partial class dayreportcheckhistorymg : AdminBase
     {
         private System.Web.Script.Serialization.JavaScriptSerializer json = new System.Web.Script.Serialization.JavaScriptSerializer();
 
@@ -91,12 +91,12 @@ namespace Hx.BackAdmin.dayreport
             int total = 0;
 
             DateTime date = DateTime.Now;
-            DailyReportHistoryQuery query = new DailyReportHistoryQuery();
+            DailyReportCheckHistoryQuery query = new DailyReportCheckHistoryQuery();
             if (DateTime.TryParse(txtDate.Text, out date))
                 query.DayUnique = date.ToString("yyyyMMdd");
             if (ddlCorporation.SelectedIndex > 0)
                 query.CorporationID = DataConvert.SafeInt(ddlCorporation.SelectedValue);
-            if(ddlReportCorporation.SelectedIndex > 0)
+            if (ddlReportCorporation.SelectedIndex > 0)
                 query.ReportCorprationID = DataConvert.SafeInt(ddlReportCorporation.SelectedValue);
             if (ddlDepartment.SelectedIndex > 0)
                 query.Department = (DayReportDep)DataConvert.SafeInt(ddlDepartment.SelectedValue);
@@ -105,7 +105,7 @@ namespace Hx.BackAdmin.dayreport
             if (!string.IsNullOrEmpty(txtOperator.Text.Trim()))
                 query.Operator = txtOperator.Text.Trim();
 
-            List<DailyReportHistoryInfo> list = DailyReports.Instance.GetHistorys(pageindex, pagesize, query, ref total);
+            List<DailyReportCheckHistoryInfo> list = DailyReports.Instance.GetCheckHistorys(pageindex, pagesize, query, ref total);
             rpthistory.DataSource = list;
             rpthistory.DataBind();
 
@@ -113,29 +113,33 @@ namespace Hx.BackAdmin.dayreport
             search_fy.PageSize = pagesize;
         }
 
-        protected string GetDetail(string reportCorporationID, string reportDepartment, string strReport)
+        protected string GetDetail(string reportCorporationID, string reportDepartment, object checkedinfo)
         {
             string result = string.Empty;
-            Dictionary<string, string> data = new Dictionary<string, string>();
-            try
+            DailyReportInfo reportinfo = checkedinfo as DailyReportInfo;
+            if (reportinfo != null)
             {
-                data = json.Deserialize<Dictionary<string, string>>(strReport);
-            }
-            catch { };
-            if (data.Count > 0)
-            {
-                CorporationInfo corp = Corporations.Instance.GetModel(DataConvert.SafeInt(reportCorporationID), true);
-                if (corp != null)
+                result += "<div><span>审核备注:</span>" + reportinfo.DailyReportCheckRemark + "</div>";
+
+                Dictionary<string, string> data = new Dictionary<string, string>();
+                try
                 {
-                    result += "<div><span>公司:</span>" + corp.Name + "</div>";
+                    data = json.Deserialize<Dictionary<string, string>>(reportinfo.SCReport);
                 }
-                result += "<div><span>部门:</span>" + reportDepartment + "</div>";
-                List<DailyReportModuleInfo> mlist = DayReportModules.Instance.GetList((DayReportDep)Enum.Parse(typeof(DayReportDep), reportDepartment), true).OrderBy(l => l.Sort).ToList();
-                foreach (DailyReportModuleInfo m in mlist)
+                catch { };
+                if (data.Count > 0)
                 {
-                    if (data.Keys.Contains(m.ID.ToString()))
+                    CorporationInfo corp = Corporations.Instance.GetModel(DataConvert.SafeInt(reportCorporationID), true);
+                    if (corp != null)
                     {
-                        result += "<div><span>" + m.Name + ":</span>" + data[m.ID.ToString()] + "</div>";
+                        result += "<div><span>公司:</span>" + corp.Name + "</div>";
+                    }
+                    result += "<div><span>部门:</span>" + reportDepartment + "</div>";
+                    List<DailyReportModuleInfo> mlist = DayReportModules.Instance.GetList((DayReportDep)Enum.Parse(typeof(DayReportDep), reportDepartment), true).OrderBy(l => l.Sort).ToList();
+                    foreach (DailyReportModuleInfo m in mlist)
+                    {
+                        string dvalue = data.Count > 0 && data.Keys.Contains(m.ID.ToString()) ? data[m.ID.ToString()] : string.Empty;
+                        result += "<div><span>" + m.Name + ":</span>" + dvalue + "</div>";
                     }
                 }
             }
@@ -146,9 +150,9 @@ namespace Hx.BackAdmin.dayreport
         {
             string result = string.Empty;
             int id = DataConvert.SafeInt(corpid);
-            if (id > 0 && Corplist.Exists(c=>c.ID == id))
+            if (id > 0 && Corplist.Exists(c => c.ID == id))
             {
-                result = Corplist.Find(c=>c.ID == id).Name;
+                result = Corplist.Find(c => c.ID == id).Name;
             }
 
             return result;

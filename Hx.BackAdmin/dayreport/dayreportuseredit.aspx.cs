@@ -69,6 +69,12 @@ namespace Hx.BackAdmin.dayreport
             rptDayReportViewDep.DataSource = DepartmentList;
             rptDayReportViewDep.DataBind();
 
+            rptDayReportCheckCorp.DataSource = corplist;
+            rptDayReportCheckCorp.DataBind();
+
+            rptDayReportCheckDep.DataSource = DepartmentList;
+            rptDayReportCheckDep.DataBind();
+
             rptCRMReportInput.DataSource = EnumExtensions.ToTable<CRMReportType>();
             rptCRMReportInput.DataBind();
         }
@@ -85,6 +91,8 @@ namespace Hx.BackAdmin.dayreport
                 hdnTargetDep.Value = CurrentUser.MonthlyTargetDepPowerSetting;
                 hdnDayReportViewCorp.Value = CurrentUser.DayReportViewCorpPowerSetting;
                 hdnDayReportViewDep.Value = CurrentUser.DayReportViewDepPowerSetting;
+                hdnDayReportCheckCorp.Value = CurrentUser.DayReportCheckCorpPowerSetting;
+                hdnDayReportCheckDep.Value = CurrentUser.DayReportCheckDepPowerSetting;
                 hdnDayReportCorp.Value = CurrentUser.DayReportCorpPowerSetting;
                 cbxCRMReportExport.Checked = CurrentUser.CRMReportExportPowerSetting == "1";
                 hdnCRMReportInput.Value = CurrentUser.CRMReportInputPowerSetting;
@@ -193,6 +201,34 @@ namespace Hx.BackAdmin.dayreport
             return result;
         }
 
+        protected string SetDayReportCheckCorp(string id)
+        {
+            string result = string.Empty;
+
+            if (CurrentUser != null)
+            {
+                string[] corps = CurrentUser.DayReportCheckCorpPowerSetting.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
+                if (corps.Contains(id))
+                    result = "checked=\"checked\"";
+            }
+
+            return result;
+        }
+
+        protected string SetDayReportCheckDep(string v)
+        {
+            string result = string.Empty;
+
+            if (CurrentUser != null)
+            {
+                string[] deps = CurrentUser.DayReportCheckDepPowerSetting.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
+                if (deps.Contains(v))
+                    result = "checked=\"checked\"";
+            }
+
+            return result;
+        }
+
         protected string SetCRMReportInput(string v)
         {
             string result = string.Empty;
@@ -233,6 +269,8 @@ namespace Hx.BackAdmin.dayreport
             user.MonthlyTargetCorpPowerSetting = hdnTargetCorp.Value;
             user.DayReportViewCorpPowerSetting = hdnDayReportViewCorp.Value;
             user.DayReportViewDepPowerSetting = hdnDayReportViewDep.Value;
+            user.DayReportCheckCorpPowerSetting = hdnDayReportCheckCorp.Value;
+            user.DayReportCheckDepPowerSetting = hdnDayReportCheckDep.Value;
             user.DayReportCorpPowerSetting = hdnDayReportCorp.Value;
             user.CRMReportExportPowerSetting = cbxCRMReportExport.Checked ? "1" : "0";
             user.CRMReportInputPowerSetting = hdnCRMReportInput.Value;

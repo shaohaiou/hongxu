@@ -80,6 +80,7 @@
     <Compile Include="Entity\CorpMienInfo.cs" />
     <Compile Include="Entity\CRMReportInfo.cs" />
     <Compile Include="Entity\CustomerInfo.cs" />
+    <Compile Include="Entity\DailyReportCheckHistoryInfo.cs" />
     <Compile Include="Entity\DailyReportHistoryInfo.cs" />
     <Compile Include="Entity\DailyReportInfo.cs" />
     <Compile Include="Entity\DailyReportModuleInfo.cs" />
@@ -105,6 +106,7 @@
     <Compile Include="Enumerations\CFVisitNature.cs" />
     <Compile Include="Enumerations\CFVisitway.cs" />
     <Compile Include="Enumerations\CRMReportType.cs" />
+    <Compile Include="Enumerations\DailyReportCheckStatus.cs" />
     <Compile Include="Enumerations\DayReportDep.cs" />
     <Compile Include="Enumerations\OVCustomerNature.cs" />
     <Compile Include="Enumerations\UrlRuleType.cs" />
@@ -128,6 +130,7 @@
     <Compile Include="Providers\CommonDataProvider.cs" />
     <Compile Include="Query\BenzvoteQuery.cs" />
     <Compile Include="Query\CRMReportQuery.cs" />
+    <Compile Include="Query\DailyReportCheckHistoryQuery.cs" />
     <Compile Include="Query\DailyReportHistoryQuery.cs" />
     <Compile Include="Query\DailyReportQuery.cs" />
     <Compile Include="Query\EventLogQuery.cs" />

@@ -194,13 +194,7 @@ namespace HX.CheShangBao
                                 //登录
                                 if (wb.Url.ToString() == Jcbs.Instance.GetLoginUrl(account))
                                 {
-                                    HtmlElement txtUserName = HtmlDoc.All["UserName"];
-                                    HtmlElement txtPassWord = HtmlDoc.All["PassWord"];
-                                    HtmlElement SubmitLogin = HtmlDoc.All["SubmitLogin"];
-                                    txtUserName.SetAttribute("value", account.AccountName);
-                                    txtPassWord.SetAttribute("value", account.Password);
-                                    SubmitLogin.InvokeMember("click");
-                                    wb.Stop();
+                                    Jcbs.Instance.DoLogin(wb, account);
                                     Utils.DelayRun(1000, delegate()
                                     {
                                         wb.Navigate(Jcbs.Instance.GetPublicUrl(account));
@@ -212,7 +206,7 @@ namespace HX.CheShangBao
                                     WriteMsg(account.ID, "正在发布车辆信息...");
                                     if (CurrentCar.cCxmc.Length > 24)
                                     {
-                                        WriteMsg(account.ID, "该车辆信息不适合快速发布");
+                                        WriteMsg(account.ID, "该车辆信息不适合快速发布1");
                                         lock (sync_account)
                                         {
                                             wbAccount.Remove(wb.Name);
@@ -560,7 +554,7 @@ namespace HX.CheShangBao
                                                     CarSubmit.InvokeMember("click");
                                                 else
                                                 {
-                                                    WriteMsg(account.ID, "该车辆信息不适合快速发布");
+                                                    WriteMsg(account.ID, "该车辆信息不适合快速发布2");
                                                     lock (sync_account)
                                                     {
                                                         wbAccount.Remove(wb.Name);
@@ -577,7 +571,7 @@ namespace HX.CheShangBao
                                                     CarSubmit.InvokeMember("click");
                                                 else
                                                 {
-                                                    WriteMsg(account.ID, "该车辆信息不适合快速发布");
+                                                    WriteMsg(account.ID, "该车辆信息不适合快速发布3");
                                                     lock (sync_account)
                                                     {
                                                         wbAccount.Remove(wb.Name);

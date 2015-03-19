@@ -168,6 +168,11 @@
                     <td runat="server" id="tdKeyData" style="padding-bottom: 10px;">
                     </td>
                 </tr>
+                <tr>
+                    <td>
+                        <span class="gray">注：日期为红色的列表示当天数据是未审核的数据。</span>
+                    </td>
+                </tr>
                 <tr class="bggray pt">
                     <td class="tc" style="border-top: 1px solid #000; border-right: 1px solid #000; border-left: 1px solid #000;
                         width: 900px;">

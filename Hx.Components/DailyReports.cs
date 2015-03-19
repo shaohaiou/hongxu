@@ -98,5 +98,15 @@ namespace Hx.Components
             return CommonDataProvider.Instance().GetDailyReportHistoryList(pageindex, pagesize, query, ref recordcount);
         }
 
+        public void CreateCheckHistory(DailyReportCheckHistoryInfo entity)
+        {
+            CommonDataProvider.Instance().CreateDailyReportCheckHistory(entity);
+        }
+
+        public List<DailyReportCheckHistoryInfo> GetCheckHistorys(int pageindex, int pagesize, DailyReportCheckHistoryQuery query, ref int recordcount)
+        {
+            return CommonDataProvider.Instance().GetDailyReportCheckHistoryList(pageindex, pagesize, query, ref recordcount);
+        }
+
     }
 }

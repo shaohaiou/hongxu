@@ -564,7 +564,6 @@ namespace HX.DALSQLServer
                     list.Add(PopulateDailyReport(reader));
                 }
             }
-
             return list;
         }
 
@@ -667,6 +666,69 @@ namespace HX.DALSQLServer
                     ,GETDATE()
                 )";
             SerializerData data = entity.Modify.GetSerializerData();
+            SqlParameter[] p = 
+            {
+                new SqlParameter("@DayUnique",entity.DayUnique),
+                new SqlParameter("@ReportDepartment",entity.ReportDepartment),
+                new SqlParameter("@ReportCorporationID",entity.ReportCorporationID),
+                new SqlParameter("@CreatorCorporationID",entity.CreatorCorporationID),
+                new SqlParameter("@CreatorCorporationName",entity.CreatorCorporationName),
+                new SqlParameter("@CreatorDepartment",entity.CreatorDepartment),
+                new SqlParameter("@Creator",entity.Creator),
+                new SqlParameter("@PropertyNames", data.Keys),
+				new SqlParameter("@PropertyValues", data.Values)
+            };
+
+            SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql, p);
+        }
+
+        #endregion
+
+        #region 日报审核记录
+
+        public override List<DailyReportCheckHistoryInfo> GetDailyReportCheckHistoryList(int pageindex, int pagesize, DailyReportCheckHistoryQuery query, ref int recordcount)
+        {
+            List<DailyReportCheckHistoryInfo> list = new List<DailyReportCheckHistoryInfo>();
+            SqlParameter p;
+            using (IDataReader reader = CommonPageSql.GetDataReaderByPager(_con, pageindex, pagesize, query, out p))
+            {
+                while (reader.Read())
+                {
+                    list.Add(PopulateDailyReportCheckHistory(reader));
+                }
+            }
+            recordcount = DataConvert.SafeInt(p.Value);
+
+            return list;
+        }
+
+        public override void CreateDailyReportCheckHistory(DailyReportCheckHistoryInfo entity)
+        {
+            string sql = @"
+                INSERT INTO HX_DayReportCheckHistory(
+                    [PropertyNames]
+                    ,[PropertyValues]
+                    ,[DayUnique]
+                    ,[ReportDepartment]
+                    ,[ReportCorporationID]
+                    ,[CreatorCorporationID]
+                    ,[CreatorCorporationName]
+                    ,[CreatorDepartment]
+                    ,[Creator]
+                    ,[CreateTime]
+                )VALUES(
+                    @PropertyNames
+                    ,@PropertyValues
+                    ,@DayUnique
+                    ,@ReportDepartment
+                    ,@ReportCorporationID
+                    ,@CreatorCorporationID
+                    ,@CreatorCorporationName
+                    ,@CreatorDepartment
+                    ,@Creator
+                    ,GETDATE()
+                )";
+            SerializerData data = entity.CheckedInfo.GetSerializerData();
             SqlParameter[] p = 
             {
                 new SqlParameter("@DayUnique",entity.DayUnique),

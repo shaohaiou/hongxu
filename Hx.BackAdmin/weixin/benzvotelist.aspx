@@ -72,6 +72,9 @@
                         <td class="w160 tc">
                             投票时间
                         </td>
+                        <td class="w160 tc">
+                            投票人标识
+                        </td>
                     </tr>
                 </HeaderTemplate>
                 <ItemTemplate>
@@ -95,6 +98,9 @@
                         </td>
                         <td>
                             <%#Eval("AddTime","{0:yyyy-MM-dd HH:mm:ss}") %>
+                        </td>
+                        <td>
+                            <%#Eval("Openid")%>
                         </td>
                     </tr>
                 </ItemTemplate>

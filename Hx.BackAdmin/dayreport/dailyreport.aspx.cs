@@ -761,6 +761,9 @@ namespace Hx.BackAdmin.dayreport
             if ((CurrentDep == DayReportDep.销售部 || CurrentDep == DayReportDep.售后部) 
                 && report != null 
                 && (report.DailyReportCheckStatus == DailyReportCheckStatus.未审核 || report.DailyReportCheckStatus == DailyReportCheckStatus.审核不通过)) allowmodify = true;
+            else if ((CurrentDep == DayReportDep.销售部 || CurrentDep == DayReportDep.售后部)
+                && report != null
+                && report.DailyReportCheckStatus == DailyReportCheckStatus.审核通过) allowmodify = false;
             if (CurrentUser.AllowModify == "1") allowmodify = true;
 
             if (CurrentDep == DayReportDep.财务部)

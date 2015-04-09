@@ -397,7 +397,7 @@ namespace Hx.Components.BasePage
         /// <param name="message">需要显示的信息</param>
         /// <param name="returnTitle">返回地址文本</param>
         /// <param name="returnUrl">返回地址</param>
-        protected void WriteMessage(string showUrl, string messageTitle, string message, string returnTitle, string returnUrl)
+        protected virtual void WriteMessage(string showUrl, string messageTitle, string message, string returnTitle, string returnUrl)
         {
             HXContext.Current.Message = message;
             HXContext.Current.MessageTitle = messageTitle;

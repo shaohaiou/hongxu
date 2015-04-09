@@ -9,11 +9,18 @@ using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 using System.Runtime.InteropServices;
 using Hx.Car;
+using System.IO;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
+using Hx.Tools;
 
 namespace HX.CheShangBao
 {
-    public partial class Login : Form
+    public partial class Login : FormBase
     {
+        private string arFilePath = AppDomain.CurrentDomain.BaseDirectory + "/data/ar.db";
+        private AccountRemember ar = new AccountRemember();
+
         public Login()
         {
             InitializeComponent();
@@ -64,21 +71,30 @@ namespace HX.CheShangBao
 
         #endregion
 
-        #region 拖动
-
-        [DllImport("user32.dll")]
-        public static extern bool ReleaseCapture();
-
-        [DllImport("user32.dll")]
-        public static extern bool SendMessage(IntPtr hwnd, int wMsg, int wParam, int lParam);
-
-        private void Login_MouseDown(object sender, MouseEventArgs e)
+        private void SaveAR()
         {
-            ReleaseCapture();
-            SendMessage(this.Handle, 0x0112, 0xF012, 0);
-        } 
-
-        #endregion
+            try
+            {
+                if (ar != null)
+                {
+                    if (!Directory.Exists(new FileInfo(arFilePath).Directory.FullName))
+                        Directory.CreateDirectory(new FileInfo(arFilePath).Directory.FullName);
+                    IFormatter formatter = new BinaryFormatter();
+                    Stream stream = new FileStream(arFilePath, FileMode.Create, FileAccess.Write, FileShare.None);
+                    formatter.Serialize(stream, ar);
+                    stream.Close();
+                }
+                else
+                {
+                    if (File.Exists(arFilePath))
+                        File.Delete(arFilePath);
+                }
+            }
+            catch (Exception ex)
+            {
+                ExpLog.Write(ex);
+            }
+        }
 
         private void btnClose_Click(object sender, EventArgs e)
         {
@@ -124,13 +140,82 @@ namespace HX.CheShangBao
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            Global.CurrentUser = Jcbs.Instance.GetJcbUserRemote(txtUserName.Text,txtPassword.Text);
-            if (Global.CurrentUser != null)
+            DoLogin();
+        }
+
+        private void DoLogin()
+        {
+            string error = string.Empty;
+            if (string.IsNullOrEmpty(txtUserName.Text))
+                error = "请输入登录名";
+            else if (string.IsNullOrEmpty(txtPassword.Text))
+                error = "请输入密码";
+            else
             {
-                this.Visible = false;
-                Default formDefault = new Default();
-                formDefault.Show();
+                Global.CurrentUser = Jcbs.Instance.GetJcbUserRemote(txtUserName.Text, txtPassword.Text);
+                if (Global.CurrentUser != null)
+                {
+                    this.Visible = false;
+                    Default formDefault = new Default();
+                    formDefault.Show();
+
+                    if (ar == null)
+                        ar = new AccountRemember();
+                    ar.UserName = txtUserName.Text;
+                    ar.Password = txtPassword.Text;
+                    ar.IsAutoLogin = cbxAutoLogin.Checked;
+                    ar.IsRemember = cbxRemember.Checked;
+                    SaveAR();
+                }
+                else
+                {
+                    error = "登录失败，用户名或密码错误";
+                }
+            }
+            if (!string.IsNullOrEmpty(error))
+            {
+                Message frmMsg = new Message();
+                frmMsg.Msg = error;
+                frmMsg.ShowDialog();
             }
         }
+
+        private void Login_Shown(object sender, EventArgs e)
+        {
+            try
+            {
+                if (File.Exists(arFilePath))
+                {
+                    IFormatter formatter = new BinaryFormatter();
+                    Stream stream = new FileStream(arFilePath, FileMode.Open, FileAccess.Read, FileShare.Read);
+                    ar = (AccountRemember)formatter.Deserialize(stream);
+                    stream.Close();
+                }
+            }
+            catch { }
+            if (ar.IsRemember)
+            {
+                cbxRemember.Checked = ar.IsRemember;
+                cbxAutoLogin.Checked = ar.IsAutoLogin;
+                txtUserName.Text = ar.UserName;
+                txtPassword.Text = ar.Password;
+                if (ar.IsAutoLogin)
+                {
+                    DoLogin();
+                }
+            }
+        }
+    }
+
+    [Serializable]
+    public class AccountRemember
+    {
+        public string UserName { get; set; }
+
+        public string Password { get; set; }
+
+        public bool IsRemember { get; set; }
+
+        public bool IsAutoLogin { get; set; }
     }
 }

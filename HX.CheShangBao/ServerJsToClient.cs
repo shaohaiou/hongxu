@@ -62,10 +62,19 @@ namespace HX.CheShangBao
         /// <param name="aid"></param>
         public void AutoLogin(string aid)
         {
-            int id = int.Parse(aid);
-            AutoLogin formAddCar = new AutoLogin();
-            formAddCar.accountid = id;
-            formAddCar.Show();
+            if (aid.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Length == 1)
+            {
+                int id = int.Parse(aid);
+                AutoLogin formAddCar = new AutoLogin();
+                formAddCar.accountid = id;
+                formAddCar.Show();
+            }
+            else if (aid.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Length > 1)
+            {
+                AccountSel frmAccountSel = new AccountSel();
+                frmAccountSel.accountids = aid;
+                frmAccountSel.Show();
+            }
         }
 
         /// <summary>

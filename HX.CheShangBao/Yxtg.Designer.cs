@@ -81,7 +81,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Yxtg";
             this.Load += new System.EventHandler(this.Yxtg_Load);
-            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Yxtg_MouseDown);
             ((System.ComponentModel.ISupportInitialize)(this.btnClose)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

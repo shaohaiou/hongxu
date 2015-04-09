@@ -12,7 +12,7 @@ using Hx.Car.Enum;
 
 namespace HX.CheShangBao
 {
-    public partial class AccountConfig : Form
+    public partial class AccountConfig : FormBase
     {
         public Default defaultform = null;
         public int sitetypeval { get; set; }
@@ -60,21 +60,6 @@ namespace HX.CheShangBao
             if (defaultform != null) defaultform.RefreshPage();
             this.Close();
         }
-
-        #region 移动窗体
-
-        [DllImport("user32.dll")]
-        public static extern bool ReleaseCapture();
-
-        [DllImport("user32.dll")]
-        public static extern bool SendMessage(IntPtr hwnd, int wMsg, int wParam, int lParam);
-
-        private void AccountMg_MouseDown(object sender, MouseEventArgs e)
-        {
-            ReleaseCapture();
-            SendMessage(this.Handle, 0x0112, 0xF012, 0);
-        }
-        #endregion
 
         private void AccountConfig_Load(object sender, EventArgs e)
         {

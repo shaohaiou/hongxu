@@ -12,7 +12,6 @@ namespace Hx.BackAdmin.biz
 {
     public partial class corpmienview : System.Web.UI.Page
     {
-
         private CorpMienInfo _currentCorpMien;
         protected CorpMienInfo CurrentCorpMien
         {
@@ -24,6 +23,58 @@ namespace Hx.BackAdmin.biz
                 }
 
                 return _currentCorpMien;
+            }
+        }
+
+        protected string NextUrl
+        {
+            get
+            {
+                string url = "javascript:void(0)";
+
+                if (CurrentCorpMien != null)
+                {
+                    List<CorpMienInfo> list = CorpMiens.Instance.GetList(true);
+                    if (list.Exists(l => l.ID == CurrentCorpMien.ID))
+                    {
+                        int nextindex = 0;
+                        int currentindex = list.FindIndex(l => l.ID == CurrentCorpMien.ID);
+                        if (currentindex == list.Count - 1)
+                        {
+                            nextindex = 0;
+                        }
+                        else
+                            nextindex = currentindex + 1;
+                        url = "?id=" + list[nextindex].ID;
+                    }
+                }
+                return url;
+            }
+        }
+
+        protected string PrevUrl
+        {
+            get
+            {
+                string url = "javascript:void(0)";
+
+                if (CurrentCorpMien != null)
+                {
+                    List<CorpMienInfo> list = CorpMiens.Instance.GetList(true);
+                    if (list.Exists(l => l.ID == CurrentCorpMien.ID))
+                    {
+                        int previndex = 0;
+                        int currentindex = list.FindIndex(l => l.ID == CurrentCorpMien.ID);
+                        if (currentindex == 0)
+                        {
+                            previndex = list.Count - 1;
+                        }
+                        else
+                            previndex = currentindex - 1;
+                        url = "?id=" + list[previndex].ID;
+                    }
+                }
+                return url;
             }
         }
 

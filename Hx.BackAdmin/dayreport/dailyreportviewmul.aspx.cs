@@ -1798,7 +1798,7 @@ namespace Hx.BackAdmin.dayreport
 
                 #region 表数据
 
-                DataRow[] rows = new DataRow[34];
+                DataRow[] rows = new DataRow[35];
 
                 data.DefaultView.RowFilter = "项目='来厂台次'";
                 decimal hjlctc = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
@@ -1857,6 +1857,9 @@ namespace Hx.BackAdmin.dayreport
                 data.DefaultView.RowFilter = "项目='保养产值'";
                 decimal hjbycz = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
                 decimal mbbycz = DataConvert.SafeDecimal(data.DefaultView[0]["目标值"]);
+                data.DefaultView.RowFilter = "项目='玻璃险'";
+                decimal hjblx = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
+                decimal mbblx = DataConvert.SafeDecimal(data.DefaultView[0]["目标值"]);
                 data.DefaultView.RowFilter = "项目='中保理赔'";
                 decimal hjzblp = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
                 decimal mbzblp = DataConvert.SafeDecimal(data.DefaultView[0]["目标值"]);
@@ -2076,6 +2079,11 @@ namespace Hx.BackAdmin.dayreport
                 rows[33]["关键指标"] = "索赔成功率";
                 rows[33]["目标"] = mbspsbtc == 0 ? string.Empty : Math.Round(mbsppztc * 100 / mbspsbtc, 2).ToString();
                 rows[33]["实际"] = hjspsbtc == 0 ? string.Empty : Math.Round(hjsppztc * 100 / hjspsbtc, 2).ToString();
+
+                rows[34] = tbl.NewRow();
+                rows[34]["关键指标"] = "玻璃险";
+                rows[34]["目标"] = mbblx;
+                rows[34]["实际"] = hjblx;
 
                 #endregion
 
@@ -2359,7 +2367,7 @@ namespace Hx.BackAdmin.dayreport
                 int rownum = 32;
                 if (hdnKeyReportType.Value == "dccqdzhl") rownum = 28;
                 else if (hdnKeyReportType.Value == "dccjqdzb") rownum = 36;
-                else if (hdnKeyReportType.Value == "dcczhhz") rownum = 10;
+                else if (hdnKeyReportType.Value == "dcczhhz") rownum = 12;
 
                 DataRow[] rows = new DataRow[rownum];
 
@@ -2720,24 +2728,35 @@ namespace Hx.BackAdmin.dayreport
                     rows[5]["详细"] = "目标值,合计";
 
                     rows[6] = tbl.NewRow();
-                    rows[6]["关键指标"] = "首次邀约到店率";
-                    rows[6]["目标"] = mbxzdccxsjdl == 0 ? string.Empty : Math.Round(mbscyyddkhzs * 100 / mbxzdccxsjdl, 2).ToString();
-                    rows[6]["实际"] = hjxzdccxsjdl == 0 ? string.Empty : Math.Round(hjscyyddkhzs * 100 / hjxzdccxsjdl, 2).ToString();
+                    rows[6]["关键指标"] = "建档率";
+                    rows[6]["目标"] = mbxzdccxszl == 0 ? string.Empty : Math.Round(mbxzdccxsjdl * 100 / mbxzdccxszl, 2).ToString();
+                    rows[6]["实际"] = hjxzdccxszl == 0 ? string.Empty : Math.Round(hjxzdccxsjdl * 100 / hjxzdccxszl, 2).ToString();
 
                     rows[7] = tbl.NewRow();
-                    rows[7]["关键指标"] = "再次邀约占比";
-                    rows[7]["目标"] = (mbscyyddkhzs + mbzcyydds) == 0 ? string.Empty : Math.Round(mbzcyydds * 100 / (mbscyyddkhzs + mbzcyydds), 2).ToString();
-                    rows[7]["实际"] = (hjscyyddkhzs + hjzcyydds) == 0 ? string.Empty : Math.Round(hjzcyydds * 100 / (hjscyyddkhzs + hjzcyydds), 2).ToString();
+                    rows[7]["关键指标"] = "首次邀约到店总数";
+                    rows[7]["目标"] = mbscyyddkhzs;
+                    rows[7]["实际"] = hjscyyddkhzs == 0 ? string.Empty : hjscyyddkhzs.ToString();
+                    rows[7]["详细"] = "目标值,合计";
 
                     rows[8] = tbl.NewRow();
-                    rows[8]["关键指标"] = "成交率";
-                    rows[8]["目标"] = mbscyyddkhzs == 0 ? string.Empty : Math.Round(mbcjzts * 100 / mbscyyddkhzs, 2).ToString();
-                    rows[8]["实际"] = hjscyyddkhzs == 0 ? string.Empty : Math.Round(hjcjzts * 100 / hjscyyddkhzs, 2).ToString();
+                    rows[8]["关键指标"] = "首次邀约到店率";
+                    rows[8]["目标"] = mbxzdccxsjdl == 0 ? string.Empty : Math.Round(mbscyyddkhzs * 100 / mbxzdccxsjdl, 2).ToString();
+                    rows[8]["实际"] = hjxzdccxsjdl == 0 ? string.Empty : Math.Round(hjscyyddkhzs * 100 / hjxzdccxsjdl, 2).ToString();
 
                     rows[9] = tbl.NewRow();
-                    rows[9]["关键指标"] = "网络线索转化率";
-                    rows[9]["目标"] = mbxzwlxszl == 0 ? string.Empty : Math.Round((mbqczjcjs + mbycwcjs + mbtpycjs + mbqtwlcjs) * 100 / mbxzwlxszl, 2).ToString();
-                    rows[9]["实际"] = hjxzwlxszl == 0 ? string.Empty : Math.Round((hjqczjcjs + hjycwcjs + hjtpycjs + hjqtwlcjs) * 100 / hjxzwlxszl, 2).ToString();
+                    rows[9]["关键指标"] = "再次邀约占比";
+                    rows[9]["目标"] = (mbscyyddkhzs + mbzcyydds) == 0 ? string.Empty : Math.Round(mbzcyydds * 100 / (mbscyyddkhzs + mbzcyydds), 2).ToString();
+                    rows[9]["实际"] = (hjscyyddkhzs + hjzcyydds) == 0 ? string.Empty : Math.Round(hjzcyydds * 100 / (hjscyyddkhzs + hjzcyydds), 2).ToString();
+
+                    rows[10] = tbl.NewRow();
+                    rows[10]["关键指标"] = "成交率";
+                    rows[10]["目标"] = mbscyyddkhzs == 0 ? string.Empty : Math.Round(mbcjzts * 100 / mbscyyddkhzs, 2).ToString();
+                    rows[10]["实际"] = hjscyyddkhzs == 0 ? string.Empty : Math.Round(hjcjzts * 100 / hjscyyddkhzs, 2).ToString();
+
+                    rows[11] = tbl.NewRow();
+                    rows[11]["关键指标"] = "网络线索转化率";
+                    rows[11]["目标"] = mbxzwlxszl == 0 ? string.Empty : Math.Round((mbqczjcjs + mbycwcjs + mbtpycjs + mbqtwlcjs) * 100 / mbxzwlxszl, 2).ToString();
+                    rows[11]["实际"] = hjxzwlxszl == 0 ? string.Empty : Math.Round((hjqczjcjs + hjycwcjs + hjtpycjs + hjqtwlcjs) * 100 / hjxzwlxszl, 2).ToString();
 
                     #endregion
                 }

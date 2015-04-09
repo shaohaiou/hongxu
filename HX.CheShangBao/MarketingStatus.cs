@@ -19,7 +19,7 @@ using HX.Tools;
 
 namespace HX.CheShangBao
 {
-    public partial class MarketingStatus : Form
+    public partial class MarketingStatus : FormBase
     {
         public int CarID { get; set; }
 
@@ -57,21 +57,6 @@ namespace HX.CheShangBao
             wbcontent.Url = new Uri(url);
         }
 
-        #region 移动窗体
-
-        [DllImport("user32.dll")]
-        public static extern bool ReleaseCapture();
-
-        [DllImport("user32.dll")]
-        public static extern bool SendMessage(IntPtr hwnd, int wMsg, int wParam, int lParam);
-
-        private void MarketingStatus_MouseDown(object sender, MouseEventArgs e)
-        {
-            ReleaseCapture();
-            SendMessage(this.Handle, 0x0112, 0xF012, 0);
-        }
-        #endregion
-
         private void btnClose_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -82,6 +67,7 @@ namespace HX.CheShangBao
             LoadData();
 
             wbcontent.Focus();
+            wbcontent.ObjectForScripting = new ServerJsToClient();
         }
 
         private void wbcontent_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
@@ -117,28 +103,46 @@ namespace HX.CheShangBao
         private void DoMarketing(object obj)
         {
             List<MarketJob> jobs = (List<MarketJob>)obj;
-            foreach (MarketJob jobInfo in jobs)
+            int index = 0;
+
+            RunMarketing(index, jobs);
+        }
+
+        private void RunMarketing(int index, List<MarketJob> jobs)
+        {
+            if (CurrentCar != null)
             {
-                if (CurrentCar != null)
+                while (index < jobs.Count)
                 {
-                    JcbAccountInfo account = Jcbs.Instance.GetAccountModelRemote(jobInfo.AccountID, true);
-                    if (account != null)
+                    if (!wbAccount.Keys.Contains(jobs[index].Wb.Name))
                     {
-                        lock (sync_account)
+                        JcbAccountInfo account = Jcbs.Instance.GetAccountModelRemote(jobs[index].AccountID, true);
+                        if (account != null)
                         {
-                            wbAccount.Add(jobInfo.Wb.Name, account);
+                            lock (sync_account)
+                            {
+                                wbAccount.Add(jobs[index].Wb.Name, account);
+                            }
+                            WriteMsg(jobs[index].AccountID, "正在登录营销网站");
+                            string url = Jcbs.Instance.GetLoginUrl(account);
+                            LoadPage(url, jobs[index].Wb);
                         }
-                        WriteMsg(jobInfo.AccountID, "正在登录营销网站");
-                        string url = Jcbs.Instance.GetLoginUrl(account);
-                        LoadPage(url, jobInfo.Wb);
+                        else
+                            WriteMsg(jobs[index].AccountID, "帐号信息错误");
+                        index++;
                     }
                     else
-                        WriteMsg(jobInfo.AccountID, "帐号信息错误");
+                    {
+                        Utils.DelayRun(2000, delegate()
+                        {
+                            RunMarketing(index, jobs);
+                        });
+                    }
                 }
-                else
-                {
-                    WriteMsg(jobInfo.AccountID, "车辆信息错误");
-                }
+            }
+            else
+            {
+                WriteMsg(jobs[0].AccountID, "车辆信息错误");
             }
         }
 
@@ -161,7 +165,16 @@ namespace HX.CheShangBao
                 linkView.InnerText = "查看";
                 linkView.SetAttribute("href", url);
                 HtmlElement txtMsg = CurrentDoc.All["txtMsg" + accountid];
-                txtMsg.SetAttribute("class", "green");
+                txtMsg.SetAttribute("className", "green");
+            }
+        }
+
+        private void ShowSdyx(int accountid)
+        {
+            if (CurrentDoc != null)
+            {
+                HtmlElement btnSdyx = CurrentDoc.All["btnSdyx" + accountid];
+                btnSdyx.SetAttribute("className", "btnSdyx");
             }
         }
 
@@ -194,11 +207,22 @@ namespace HX.CheShangBao
                                 //登录
                                 if (wb.Url.ToString() == Jcbs.Instance.GetLoginUrl(account))
                                 {
-                                    Jcbs.Instance.DoLogin(wb, account);
-                                    Utils.DelayRun(1000, delegate()
+                                    int loginresult = Jcbs.Instance.DoLogin(wb, account);
+                                    if (loginresult > 0)
                                     {
-                                        wb.Navigate(Jcbs.Instance.GetPublicUrl(account));
-                                    });
+                                        Utils.DelayRun(1000, delegate()
+                                        {
+                                            wb.Navigate(Jcbs.Instance.GetPublicUrl(account));
+                                        });
+                                    }
+                                    else
+                                    {
+                                        WriteMsg(account.ID, "该帐号不适合快速发布");
+                                        lock (sync_account)
+                                        {
+                                            wbAccount.Remove(wb.Name);
+                                        }
+                                    }
                                 }
                                 //发布信息
                                 else if (wb.Url.ToString() == Jcbs.Instance.GetPublicUrl(account))
@@ -206,7 +230,7 @@ namespace HX.CheShangBao
                                     WriteMsg(account.ID, "正在发布车辆信息...");
                                     if (CurrentCar.cCxmc.Length > 24)
                                     {
-                                        WriteMsg(account.ID, "该车辆信息不适合快速发布1");
+                                        WriteMsg(account.ID, "该帐号不适合快速发布1");
                                         lock (sync_account)
                                         {
                                             wbAccount.Remove(wb.Name);
@@ -629,7 +653,12 @@ namespace HX.CheShangBao
                             {
                                 #region 自动提交信息
 
-
+                                WriteMsg(account.ID, "该帐号目前不适合快速发布，");
+                                ShowSdyx(account.ID);
+                                lock (sync_account)
+                                {
+                                    wbAccount.Remove(wb.Name);
+                                }
 
                                 #endregion
                             }
@@ -814,6 +843,16 @@ namespace HX.CheShangBao
                             #endregion
                             break;
                         case JcbSiteType.赶集网:
+
+                            #region 自动提交信息
+
+                            WriteMsg(account.ID, "当前车辆信息不符合快速营销条件，");
+                            ShowSdyx(account.ID);
+                            lock (sync_account)
+                            {
+                                wbAccount.Remove(wb.Name);
+                            }
+                            #endregion
                             break;
                         default:
                             break;
@@ -821,7 +860,7 @@ namespace HX.CheShangBao
                 }
                 catch
                 {
-                    WriteMsg(account.ID, "车辆信息不符合快速营销方式");
+                    WriteMsg(account.ID, "该帐号不适合快速营销方式");
                     lock (sync_account)
                     {
                         wbAccount.Remove(wb.Name);

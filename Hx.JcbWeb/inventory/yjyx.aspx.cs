@@ -62,7 +62,7 @@ namespace Hx.JcbWeb.inventory
         {
 #if DEBUG
             DataTable t = EnumExtensions.ToTable<JcbSiteType>();
-            t.DefaultView.RowFilter = "[Text] <> '58同城' and [Text] <> '赶集网'";
+            t.DefaultView.RowFilter = "[Text] <> '58同城'";
             rptData.DataSource = t.DefaultView;
             rptData.DataBind();
 #else

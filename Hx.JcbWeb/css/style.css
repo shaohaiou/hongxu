@@ -52,7 +52,7 @@ body{font-size:12px; color:#333;}
 
 .main{ width:800px; float:right; overflow:hidden;}
 .tit{ height:40px; position:relative; border-bottom:1px #E1E1E1 solid;}
-.tit h1{ height:40px; position: absolute; border-bottom:1px #0F5D9D solid; padding:0 15px; font:100 18px/40px "\5FAE\8F6F\96C5\9ED1"; color:#0B5AA5; left:0px; top:0px;}
+.tit h1{ height:40px; position: absolute; padding:0 15px; font:100 18px/40px "\5FAE\8F6F\96C5\9ED1"; color:#0B5AA5; left:0px; top:0px;}
 .tit a{ display:block; float:right; padding:0 13px 0 10px; font:600 14px/26px "\5B8B\4F53"; color:#FFF; background:#4CAE35; border:1px #399F22 solid; margin:5px 20px 0 0;}
 
 .seach{ padding-top:25px; width:800px; overflow:hidden; line-height:23px; font-size:14px; padding-bottom:10px;}
@@ -106,6 +106,7 @@ body{font-size:12px; color:#333;}
 .framr .sel{ margin:0 5px 0 0; width:103px;}
 .framtip{ font-size:12px; line-height:22px;}
 .framr em{ line-height:22px; padding:0 10px; background:url(../images/ico_bg.png) no-repeat -150px -29px; display:inline-block; height:22px;}
+.framtip em {vertical-align: top;}
 .wrog{ color:#FE0000}
 .wrog em{ background:url(../images/ico_bg.png) no-repeat -200px -29px;}
 .framr p{ float:left; width:666px; color:#999; font-size:12px; line-height:22px;}
@@ -311,3 +312,29 @@ body{font-size:12px; color:#333;}
 .fixfc{ width:129px; position:fixed; bottom:70px; left:50%;_position:absolute;_top:expression(documentElement.scrollTop + documentElement.clientHeight-this.offsetHeight-65); margin-left:475px;}
 .fixfc a{ display:block; background:#135FAB url(../images/tip_bg.gif) no-repeat 4px 6px; padding:15px 4px 5px 8px; line-height:16px; color:#fff; text-indent:26px;}
 .fixfc a:hover{ background:#ED1312 url(../images/tip_bg.gif) no-repeat 4px -74px;}
+
+.ppContent{padding: 0 40px;}
+.ppContent .ppinfo{padding: 30px 0 40px 0;line-height: 25px;}
+.ppContent .ppcenter{text-align: center;}
+.ppContent .ppcenter a{margin: 0 5px;}
+
+/* select下拉 */
+.ppselecter, .ppselecter *{font-size: 12px;font-family: "宋体" , Verdana, Arial, Helvetica, sans-serif;line-height: normal;}
+.ppselecter{border: 1px solid #77AAE3;width: 220px;top: 4px;position: absolute;overflow: hidden;left: 0;left: -1px\9;}
+.ppselecter_ssl{width: 175px;}
+.ppselecter .ppseltit{background-color: #EEF7FD;height: 15px;padding-top: 4px;text-indent: 6px;color: #666;border-bottom: 1px solid #77AAE3;}
+.ppselecter table td table td{padding: 3px;}
+.ppselecter .active{background: #D1E8FA;color: #333;font-weight: normal;}
+
+/* 登录中 */
+.passportLoading{height: 70px;background: url(../images/loading_bg.png) center center no-repeat;text-align: center;margin-top: 42px;}
+.passportLoading img{margin-top: 19px;}
+.saa_pspt .box .loadingText{text-align: center;margin-top: 5px;}
+.ppselecter table td{vertical-align: middle;text-align: left;height: auto !important;padding-top: inherit;border-style: none;}
+
+
+.area1{border: 1px #DCEEFC solid;width: 948px;margin: 0 auto;overflow: hidden;}
+.area1 h2{padding: 15px 0 0 20px;font: 100 18px/30px "\5FAE\8F6F\96C5\9ED1";color: #0B5AA5;}
+.area1 .tit{margin: 0 124px 0 112px;font-size: 14px;}
+.tit{height: 40px;position: relative;border-bottom: 1px #E1E1E1 solid;}
+.area1 .tit h1{font-size: 16px;line-height: 30px;padding-top: 5px;height: 34px;}

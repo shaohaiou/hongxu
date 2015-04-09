@@ -59,6 +59,7 @@
             height: 114px;
             padding: 23px 0;
             display: inline;
+            margin:0 5px;
         }
     </style>
 </head>
@@ -72,7 +73,7 @@
                         width: 120px; text-align: center;">
                         <img src="<%#Eval("Pic")%>" alt="" style="width: 100px; height: 100px; position: absolute;
                             left: 10px; top: 0;" />
-                        <%#Hx.Tools.StrHelper.GetFuzzyChar(Eval("Introduce").ToString(),8) %></a></li>
+                        <%#Hx.Tools.StrHelper.GetFuzzyChar(Eval("Introduce").ToString(),25) %></a></li>
                 </ItemTemplate>
             </asp:Repeater>
         </ul>

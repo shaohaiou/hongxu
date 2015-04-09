@@ -680,6 +680,34 @@ namespace Hx.Components.Providers
 
         #endregion
 
+        #region 二手车评估器
+
+        public abstract void AddEscpgInfo(EscpgInfo entity);
+
+        public abstract List<EscpgInfo> GetEscpgList();
+
+        public abstract void UpdateEscpgRestore(string ids);
+
+        protected EscpgInfo PopulateEscpgInfo(IDataReader reader)
+        {
+            EscpgInfo entity = new EscpgInfo()
+            {
+                ID = DataConvert.SafeInt(reader["ID"]),
+                Brand = reader["Brand"] as string,
+                Chexi = reader["Chexi"] as string,
+                Nianfen = reader["Nianfen"] as string,
+                Kuanshi = reader["Kuanshi"] as string,
+                Licheng = reader["Licheng"] as string,
+                Phone = reader["Phone"] as string,
+                AddTime = reader["AddTime"] as string,
+                Restore = (bool)reader["Restore"]
+            };
+
+            return entity;
+        }
+
+        #endregion
+
         #endregion
 
         #region 招聘管理

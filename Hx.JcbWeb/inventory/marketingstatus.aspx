@@ -8,6 +8,13 @@
     <title>快速营销状态</title>
     <link href="../css/admin.css" rel="stylesheet" type="text/css" />
     <script src="../js/jquery-1.3.2.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function () {
+            $(".btnSdyx").click(function () {
+                window.external.AutoLogin($(this).attr("val"));
+            });
+        })
+    </script>
 </head>
 <body>
     <div class="nav">
@@ -26,6 +33,7 @@
                         <img id="picFirst" src="../images/fm.jpg" runat="server" />
                         <asp:Label runat="server" ID="lblTTL" class="ttl"></asp:Label>
                         <span id="txtMsg<%#Eval("ID") %>" class="red" ></span>
+                        <a class="hide btnSdyx" href="javascript:void(0);" val="<%#Eval("ID") %>" id="btnSdyx<%#Eval("ID") %>">手动营销</a>
                         <a href="#@" target="_blank" id="linkView<%#Eval("ID") %>"></a></li>
                 </ItemTemplate>
             </asp:Repeater>

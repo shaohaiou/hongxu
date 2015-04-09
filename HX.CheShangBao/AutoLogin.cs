@@ -79,17 +79,16 @@ namespace HX.CheShangBao
                 case Hx.Car.Enum.JcbSiteType.t_二手车之家:
                     if (wbcontent.Url.ToString() == Jcbs.Instance.GetLoginUrl(CurretnAccount))
                     {
-                        HtmlElement txtUserName = HtmlDoc.All["UserName"];
-                        HtmlElement txtPassWord = HtmlDoc.All["PassWord"];
-                        HtmlElement SubmitLogin = HtmlDoc.All["SubmitLogin"];
-                        txtUserName.SetAttribute("value", CurretnAccount.AccountName);
-                        txtPassWord.SetAttribute("value", CurretnAccount.Password);
-                        SubmitLogin.InvokeMember("click");
+                        Jcbs.Instance.DoLogin(wbcontent, CurretnAccount);
                     }
                     break;
                 case Hx.Car.Enum.JcbSiteType.t_58同城:
                     break;
                 case Hx.Car.Enum.JcbSiteType.赶集网:
+                    if (wbcontent.Url.ToString() == Jcbs.Instance.GetLoginUrl(CurretnAccount))
+                    {
+                        Jcbs.Instance.DoLogin(wbcontent, CurretnAccount);
+                    }
                     break;
                 default:
                     break;

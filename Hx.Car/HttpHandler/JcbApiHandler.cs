@@ -9,6 +9,7 @@ using Hx.Car.Entity;
 using System.Web.Script.Serialization;
 using Hx.Components;
 using Hx.Components.Entity;
+using Hx.Tools;
 
 namespace Hx.Car.HttpHandler
 {
@@ -91,7 +92,7 @@ namespace Hx.Car.HttpHandler
 #else
             if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
             {
-                if (JcbUsers.Instance.ValiUser(username, password) > 0)
+                if (JcbUsers.Instance.ValiUser(username, EncryptString.MD5(password)) > 0)
                 {
                     JcbUserInfo entity = JcbUsers.Instance.GetUserByName(username);
                     result = json.Serialize(entity);

@@ -19,7 +19,9 @@ namespace Hx.BackAdmin.weixin
                 Response.Redirect("~/Login.aspx");
                 return;
             }
-            if (!HXContext.Current.AdminUser.Administrator && ((int)HXContext.Current.AdminUser.UserRole & (int)Components.Enumerations.UserRoleType.微信活动管理员) == 0)
+            if (!HXContext.Current.AdminUser.Administrator 
+                && ((int)HXContext.Current.AdminUser.UserRole & (int)Components.Enumerations.UserRoleType.微信活动管理员) == 0
+                && ((int)HXContext.Current.AdminUser.UserRole & (int)Components.Enumerations.UserRoleType.二手车估价器管理员) == 0)
             {
                 Response.Clear();
                 Response.Write("您没有权限操作！");

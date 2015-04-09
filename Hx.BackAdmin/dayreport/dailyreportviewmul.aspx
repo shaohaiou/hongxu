@@ -149,7 +149,7 @@
         .showbox
         {
             position: fixed;
-            top: 0;
+            top:50px;
             left: 50%;
             z-index: 9999;
             opacity: 0;

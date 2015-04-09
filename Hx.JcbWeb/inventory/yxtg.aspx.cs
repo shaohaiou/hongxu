@@ -96,7 +96,7 @@ namespace Hx.JcbWeb.inventory
                 HtmlAnchor btnView = (System.Web.UI.HtmlControls.HtmlAnchor)e.Item.FindControl("btnView");
                 if (ListAccount.Exists(a => a.JcbSiteType == (JcbSiteType)DataConvert.SafeInt(row["Value"]) && a.UserID == UserID))
                 {
-                    btnAutoLogin.Attributes["val"] = ListAccount.Find(a => a.JcbSiteType == (JcbSiteType)DataConvert.SafeInt(row["Value"]) && a.UserID == UserID).ID.ToString();
+                    btnAutoLogin.Attributes["val"] = string.Join(",", ListAccount.FindAll(a => a.JcbSiteType == (JcbSiteType)DataConvert.SafeInt(row["Value"]) && a.UserID == UserID).Select(a=>a.ID).ToList());
                 }
                 else
                 {

@@ -7,10 +7,13 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>月报查询</title>
 </head>
-<frameset rows="32,*" frameborder="no" border="0" framespacing="0">
+
+<frameset rows="<%if(IsZJL){ %>30,<%} %>32,*" frameborder="no" border="0" framespacing="0">
+<%if(IsZJL){ %><frame src="/top.aspx" name="top" scrolling="No" noresize="noresize" id="top" title="top" runat="server" /><%} %>
   <frame src="" name="sk" scrolling="No" noresize="noresize" id="sk" title="sk" runat="server" />
   <frame src="" name="ztk" id="ztk" title="ztk" runat="server" />
 </frameset>
+
 <noframes>
     <body>
     </body>

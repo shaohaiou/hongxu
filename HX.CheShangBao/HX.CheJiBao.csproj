@@ -53,6 +53,12 @@
     <Compile Include="AccountConfig.Designer.cs">
       <DependentUpon>AccountConfig.cs</DependentUpon>
     </Compile>
+    <Compile Include="AccountSel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AccountSel.Designer.cs">
+      <DependentUpon>AccountSel.cs</DependentUpon>
+    </Compile>
     <Compile Include="AddCar.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -70,6 +76,9 @@
     </Compile>
     <Compile Include="Default.Designer.cs">
       <DependentUpon>Default.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormBase.cs">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="FrmTest.cs">
       <SubType>Form</SubType>
@@ -90,6 +99,12 @@
     <Compile Include="MarketingStatus.Designer.cs">
       <DependentUpon>MarketingStatus.cs</DependentUpon>
     </Compile>
+    <Compile Include="Message.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Message.Designer.cs">
+      <DependentUpon>Message.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServerJsToClient.cs" />
@@ -108,6 +123,9 @@
     <EmbeddedResource Include="AccountConfig.resx">
       <DependentUpon>AccountConfig.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="AccountSel.resx">
+      <DependentUpon>AccountSel.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="AutoLogin.resx">
       <DependentUpon>AutoLogin.cs</DependentUpon>
     </EmbeddedResource>
@@ -116,6 +134,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MarketingStatus.resx">
       <DependentUpon>MarketingStatus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Message.resx">
+      <DependentUpon>Message.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Yjyx.resx">
       <DependentUpon>Yjyx.cs</DependentUpon>
@@ -206,6 +227,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\" />
+    <Folder Include="data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\btncommit.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

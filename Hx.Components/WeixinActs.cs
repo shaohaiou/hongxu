@@ -1164,5 +1164,24 @@ namespace Hx.Components
         #endregion
 
         #endregion
+
+        #region 二手车评估器
+
+        public void AddEscpgInfo(EscpgInfo entity)
+        {
+            CommonDataProvider.Instance().AddEscpgInfo(entity);
+        }
+
+        public List<EscpgInfo> GetEscpgList()
+        {
+            return CommonDataProvider.Instance().GetEscpgList();
+        }
+
+        public void UpdateEscpgRestore(string ids)
+        {
+            CommonDataProvider.Instance().UpdateEscpgRestore(ids);
+        }
+
+        #endregion
     }
 }

@@ -137,7 +137,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MarketingStatus";
             this.Load += new System.EventHandler(this.MarketingStatus_Load);
-            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MarketingStatus_MouseDown);
             ((System.ComponentModel.ISupportInitialize)(this.btnClose)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

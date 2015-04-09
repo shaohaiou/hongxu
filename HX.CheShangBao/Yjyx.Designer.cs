@@ -87,7 +87,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Yjyx";
             this.Load += new System.EventHandler(this.Yjyx_Load);
-            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Yjyx_MouseDown);
             ((System.ComponentModel.ISupportInitialize)(this.btnClose)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

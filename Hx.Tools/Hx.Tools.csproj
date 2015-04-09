@@ -63,6 +63,9 @@
     <Compile Include="StrHelper.cs" />
     <Compile Include="UserPrincipal.cs" />
     <Compile Include="Utils.cs" />
+    <Compile Include="ValidationCode\Cracker.cs" />
+    <Compile Include="ValidationCode\NeuralNet.cs" />
+    <Compile Include="ValidationCode\ValidationImage.cs" />
     <Compile Include="Web\Http.cs" />
     <Compile Include="Web\ManageCookies.cs" />
     <Compile Include="Web\WebHelper.cs" />

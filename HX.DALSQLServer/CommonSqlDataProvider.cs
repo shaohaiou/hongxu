@@ -1478,6 +1478,68 @@ namespace HX.DALSQLServer
 
         #endregion
 
+        #region 二手车评估器
+
+        public override void AddEscpgInfo(EscpgInfo entity)
+        {
+            string sql = @"
+                INSERT INTO HX_Escpg(
+                    [Brand]
+                    ,[Chexi]
+                    ,[Nianfen]
+                    ,[Kuanshi]
+                    ,[Licheng]
+                    ,[Phone]
+                    ,[AddTime]
+                    ,[Restore]
+                )VALUES(
+                    @Brand
+                    ,@Chexi
+                    ,@Nianfen
+                    ,@Kuanshi
+                    ,@Licheng
+                    ,@Phone
+                    ,@AddTime
+                    ,@Restore)
+            ";
+            SqlParameter[] p = 
+            {
+                new SqlParameter("@Brand",entity.Brand),
+                new SqlParameter("@Chexi",entity.Chexi),
+                new SqlParameter("@Nianfen",entity.Nianfen),
+                new SqlParameter("@Kuanshi",entity.Kuanshi),
+                new SqlParameter("@Licheng",entity.Licheng),
+                new SqlParameter("@Phone",entity.Phone),
+                new SqlParameter("@AddTime",entity.AddTime),
+                new SqlParameter("@Restore",entity.Restore)
+            };
+            SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql, p);
+
+        }
+
+        public override List<EscpgInfo> GetEscpgList()
+        {
+            List<EscpgInfo> list = new List<EscpgInfo>();
+            string sql = "SELECT * FROM HX_Escpg";
+            using (IDataReader reader = SqlHelper.ExecuteReader(_con, CommandType.Text, sql))
+            {
+                while (reader.Read())
+                {
+                    list.Add(PopulateEscpgInfo(reader));
+                }
+            }
+
+            return list;
+        }
+
+        public override void UpdateEscpgRestore(string ids)
+        {
+            string sql = "UPDATE HX_Escpg SET [Restore] = 1 WHERE [ID] IN ('" + ids + "')";
+            SqlHelper.ExecuteNonQuery(_con,CommandType.Text,sql);
+        }
+
+        #endregion
+
         #endregion
 
         #region 招聘管理

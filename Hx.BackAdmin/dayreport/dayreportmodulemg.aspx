@@ -173,7 +173,7 @@
             </asp:Repeater>
         </table>
         <webdiyer:AspNetPager ID="search_fy" UrlPaging="true" NextPageText="下一页" PrevPageText="上一页"
-            CurrentPageButtonClass="current" PageSize="10" runat="server" NumericButtonType="Text"
+            CurrentPageButtonClass="current" PageSize="100" runat="server" NumericButtonType="Text"
             MoreButtonType="Text" ShowFirstLast="false" HorizontalAlign="Left" AlwaysShow="false"
             ShowDisabledButtons="False" PagingButtonSpacing="">
         </webdiyer:AspNetPager>

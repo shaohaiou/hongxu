@@ -84,7 +84,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "AccountMg";
             this.Load += new System.EventHandler(this.AccountConfig_Load);
-            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.AccountMg_MouseDown);
             ((System.ComponentModel.ISupportInitialize)(this.btnClose)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

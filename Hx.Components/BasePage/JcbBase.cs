@@ -5,6 +5,7 @@ using System.Text;
 using Hx.Components.Web;
 using Hx.Components.Entity;
 using Hx.Components.Enumerations;
+using System.Web;
 
 namespace Hx.Components.BasePage
 {
@@ -98,6 +99,15 @@ namespace Hx.Components.BasePage
                 }
                 return string.Empty;
             }
+        }
+
+        protected override void WriteMessage(string showUrl, string messageTitle, string message, string returnTitle, string returnUrl)
+        {
+            JCBContext.Current.Message = message;
+            JCBContext.Current.MessageTitle = messageTitle;
+            JCBContext.Current.ReturnTitle = returnTitle;
+            JCBContext.Current.ReturnUrl = returnUrl;
+            HttpContext.Current.Server.Transfer(showUrl);
         }
     }
 }

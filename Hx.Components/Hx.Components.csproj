@@ -58,6 +58,9 @@
     <Compile Include="BasePage\PageBase.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="BasePage\WeixinBase.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Cache\MangaCache.cs" />
     <Compile Include="Config\CommConfig.cs" />
     <Compile Include="CorpMiens.cs" />
@@ -85,6 +88,7 @@
     <Compile Include="Entity\DailyReportInfo.cs" />
     <Compile Include="Entity\DailyReportModuleInfo.cs" />
     <Compile Include="Entity\DayReportUserInfo.cs" />
+    <Compile Include="Entity\EscpgInfo.cs" />
     <Compile Include="Entity\EventLogEntry.cs" />
     <Compile Include="Entity\GlobalSettingInfo.cs" />
     <Compile Include="Entity\JcbUserInfo.cs" />
@@ -108,6 +112,7 @@
     <Compile Include="Enumerations\CRMReportType.cs" />
     <Compile Include="Enumerations\DailyReportCheckStatus.cs" />
     <Compile Include="Enumerations\DayReportDep.cs" />
+    <Compile Include="Enumerations\JcbCompanyType.cs" />
     <Compile Include="Enumerations\OVCustomerNature.cs" />
     <Compile Include="Enumerations\UrlRuleType.cs" />
     <Compile Include="Enumerations\UserRoleType.cs" />
@@ -117,6 +122,7 @@
     <Compile Include="GlobalSettings.cs" />
     <Compile Include="HttpHandler\CheckAdminUserNameHandler.cs" />
     <Compile Include="HttpHandler\CheckCodeHandler.cs" />
+    <Compile Include="HttpHandler\CheckJcbAdminUserNameHandler.cs" />
     <Compile Include="HttpHandler\NewCutImageHandler.cs" />
     <Compile Include="HttpHandler\RemoteConnection.cs" />
     <Compile Include="Interface\IJob.cs" />

@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 
 namespace HX.CheShangBao
 {
-    public partial class Yjyx : Form
+    public partial class Yjyx : FormBase
     {
         public Default defaultform = null;
         public int carid = 0;
@@ -27,21 +27,6 @@ namespace HX.CheShangBao
                 url += "?id=" + carid;
             wbcontent.Url = new Uri(url);
         }
-
-        #region 移动窗体
-
-        [DllImport("user32.dll")]
-        public static extern bool ReleaseCapture();
-
-        [DllImport("user32.dll")]
-        public static extern bool SendMessage(IntPtr hwnd, int wMsg, int wParam, int lParam);
-
-        private void Yjyx_MouseDown(object sender, MouseEventArgs e)
-        {
-            ReleaseCapture();
-            SendMessage(this.Handle, 0x0112, 0xF012, 0);
-        }
-        #endregion
 
         private void wbcontent_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
         {

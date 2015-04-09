@@ -41,7 +41,7 @@ namespace Hx.BackAdmin.dayreport
             {
                 pageindex = 1;
             }
-            int pagesize = GetInt("pagesize", 10);
+            int pagesize = GetInt("pagesize", search_fy.PageSize);
             int total = 0;
 
             List<DailyReportModuleInfo> list = DayReportModules.Instance.GetList(true);

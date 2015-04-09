@@ -2582,7 +2582,7 @@ namespace Hx.BackAdmin.dayreport
 
                 #region 表数据
 
-                DataRow[] rows = new DataRow[27];
+                DataRow[] rows = new DataRow[28];
 
                 data.DefaultView.RowFilter = "项目='来厂台次'";
                 decimal hjlctc = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
@@ -2641,6 +2641,9 @@ namespace Hx.BackAdmin.dayreport
                 data.DefaultView.RowFilter = "项目='保养产值'";
                 decimal hjbycz = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
                 decimal mbbycz = DataConvert.SafeDecimal(data.DefaultView[0]["目标值"]);
+                data.DefaultView.RowFilter = "项目='玻璃险'";
+                decimal hjblx = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
+                decimal mbblx = DataConvert.SafeDecimal(data.DefaultView[0]["目标值"]);
                 data.DefaultView.RowFilter = "项目='中保理赔'";
                 decimal hjzblp = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
                 decimal mbzblp = DataConvert.SafeDecimal(data.DefaultView[0]["目标值"]);
@@ -2768,64 +2771,69 @@ namespace Hx.BackAdmin.dayreport
                 rows[16]["实际"] = hjsgzcz;
 
                 rows[17] = tbl.NewRow();
-                rows[17]["关键指标"] = "中保";
-                rows[17]["目标"] = hjzblp.ToString();
-                rows[17]["实际"] = hjsgzcz == 0 ? string.Empty : Math.Round(hjzblp * 100 / hjsgzcz, 2).ToString();
-                rows[17]["详细"] = mbzblp.ToString();
+                rows[17]["关键指标"] = "玻璃险";
+                rows[17]["目标"] = mbblx;
+                rows[17]["实际"] = hjblx;
 
                 rows[18] = tbl.NewRow();
-                rows[18]["关键指标"] = "太保";
-                rows[18]["目标"] = hjtb.ToString();
-                rows[18]["实际"] = hjsgzcz == 0 ? string.Empty : Math.Round(hjtb * 100 / hjsgzcz, 2).ToString();
-                rows[18]["详细"] = mbtb.ToString();
+                rows[18]["关键指标"] = "中保";
+                rows[18]["目标"] = hjzblp.ToString();
+                rows[18]["实际"] = hjsgzcz == 0 ? string.Empty : Math.Round(hjzblp * 100 / hjsgzcz, 2).ToString();
+                rows[18]["详细"] = mbzblp.ToString();
 
                 rows[19] = tbl.NewRow();
-                rows[19]["关键指标"] = "平安";
-                rows[19]["目标"] = hjpa.ToString();
-                rows[19]["实际"] = hjsgzcz == 0 ? string.Empty : Math.Round(hjpa * 100 / hjsgzcz, 2).ToString();
-                rows[19]["详细"] = mbpa.ToString();
+                rows[19]["关键指标"] = "太保";
+                rows[19]["目标"] = hjtb.ToString();
+                rows[19]["实际"] = hjsgzcz == 0 ? string.Empty : Math.Round(hjtb * 100 / hjsgzcz, 2).ToString();
+                rows[19]["详细"] = mbtb.ToString();
 
                 rows[20] = tbl.NewRow();
-                rows[20]["关键指标"] = "人寿";
-                rows[20]["目标"] = hjrs.ToString();
-                rows[20]["实际"] = hjsgzcz == 0 ? string.Empty : Math.Round(hjrs * 100 / hjsgzcz, 2).ToString();
-                rows[20]["详细"] = mbrs.ToString();
+                rows[20]["关键指标"] = "平安";
+                rows[20]["目标"] = hjpa.ToString();
+                rows[20]["实际"] = hjsgzcz == 0 ? string.Empty : Math.Round(hjpa * 100 / hjsgzcz, 2).ToString();
+                rows[20]["详细"] = mbpa.ToString();
 
                 rows[21] = tbl.NewRow();
-                rows[21]["关键指标"] = "大地";
-                rows[21]["目标"] = hjdd.ToString();
-                rows[21]["实际"] = hjsgzcz == 0 ? string.Empty : Math.Round(hjdd * 100 / hjsgzcz, 2).ToString();
-                rows[21]["详细"] = mbdd.ToString();
+                rows[21]["关键指标"] = "人寿";
+                rows[21]["目标"] = hjrs.ToString();
+                rows[21]["实际"] = hjsgzcz == 0 ? string.Empty : Math.Round(hjrs * 100 / hjsgzcz, 2).ToString();
+                rows[21]["详细"] = mbrs.ToString();
 
                 rows[22] = tbl.NewRow();
-                rows[22]["关键指标"] = "中华联合";
-                rows[22]["目标"] = hjzhlh.ToString();
-                rows[22]["实际"] = hjsgzcz == 0 ? string.Empty : Math.Round(hjzhlh * 100 / hjsgzcz, 2).ToString();
-                rows[22]["详细"] = mbzhlh.ToString();
+                rows[22]["关键指标"] = "大地";
+                rows[22]["目标"] = hjdd.ToString();
+                rows[22]["实际"] = hjsgzcz == 0 ? string.Empty : Math.Round(hjdd * 100 / hjsgzcz, 2).ToString();
+                rows[22]["详细"] = mbdd.ToString();
 
                 rows[23] = tbl.NewRow();
-                rows[23]["关键指标"] = "浙商";
-                rows[23]["目标"] = hjzs.ToString();
-                rows[23]["实际"] = hjsgzcz == 0 ? string.Empty : Math.Round(hjzs * 100 / hjsgzcz, 2).ToString();
-                rows[23]["详细"] = mbzs.ToString();
+                rows[23]["关键指标"] = "中华联合";
+                rows[23]["目标"] = hjzhlh.ToString();
+                rows[23]["实际"] = hjsgzcz == 0 ? string.Empty : Math.Round(hjzhlh * 100 / hjsgzcz, 2).ToString();
+                rows[23]["详细"] = mbzhlh.ToString();
 
                 rows[24] = tbl.NewRow();
-                rows[24]["关键指标"] = "大众";
-                rows[24]["目标"] = hjdz.ToString();
-                rows[24]["实际"] = hjsgzcz == 0 ? string.Empty : Math.Round(hjdz * 100 / hjsgzcz, 2).ToString();
-                rows[24]["详细"] = mbdz.ToString();
+                rows[24]["关键指标"] = "浙商";
+                rows[24]["目标"] = hjzs.ToString();
+                rows[24]["实际"] = hjsgzcz == 0 ? string.Empty : Math.Round(hjzs * 100 / hjsgzcz, 2).ToString();
+                rows[24]["详细"] = mbzs.ToString();
 
                 rows[25] = tbl.NewRow();
-                rows[25]["关键指标"] = "其他";
-                rows[25]["目标"] = hjqt.ToString();
-                rows[25]["实际"] = hjsgzcz == 0 ? string.Empty : Math.Round(hjqt * 100 / hjsgzcz, 2).ToString();
-                rows[25]["详细"] = mbqt.ToString();
+                rows[25]["关键指标"] = "大众";
+                rows[25]["目标"] = hjdz.ToString();
+                rows[25]["实际"] = hjsgzcz == 0 ? string.Empty : Math.Round(hjdz * 100 / hjsgzcz, 2).ToString();
+                rows[25]["详细"] = mbdz.ToString();
 
                 rows[26] = tbl.NewRow();
-                rows[26]["关键指标"] = "合计";
-                rows[26]["目标"] = (hjzblp + hjtb + hjpa + hjrs + hjdd + hjzhlh + hjzs + hjdz + hjqt).ToString();
-                rows[26]["实际"] = string.Empty;
-                rows[26]["详细"] = (mbzblp + mbtb + mbpa + mbrs + mbdd + mbzhlh + mbzs + mbdz + mbqt).ToString();
+                rows[26]["关键指标"] = "其他";
+                rows[26]["目标"] = hjqt.ToString();
+                rows[26]["实际"] = hjsgzcz == 0 ? string.Empty : Math.Round(hjqt * 100 / hjsgzcz, 2).ToString();
+                rows[26]["详细"] = mbqt.ToString();
+
+                rows[27] = tbl.NewRow();
+                rows[27]["关键指标"] = "合计";
+                rows[27]["目标"] = (hjzblp + hjtb + hjpa + hjrs + hjdd + hjzhlh + hjzs + hjdz + hjqt).ToString();
+                rows[27]["实际"] = string.Empty;
+                rows[27]["详细"] = (mbzblp + mbtb + mbpa + mbrs + mbdd + mbzhlh + mbzs + mbdz + mbqt).ToString();
 
                 #endregion
 
@@ -4285,11 +4293,10 @@ namespace Hx.BackAdmin.dayreport
                 strb.AppendLine("</tr>");
                 strb.AppendLine("<tr class=\"bold tc bggray\">");
                 strb.AppendLine("<td class=\"w80\">关键指标</td>");
-                for (int i = 12; i < 17; i++)
+                for (int i = 12; i < 18; i++)
                 {
                     strb.AppendFormat("<td class=\"w100\">{0}</td>", GetCellValue(tbl.Rows[i]["关键指标"].ToString(), string.Empty, false, false));
                 }
-                strb.AppendLine("<td class=\"w100\">&nbsp;</td>");
                 strb.AppendLine("</tr>");
                 strb.AppendLine("<tr class=\"tc\">");
                 strb.AppendLine("<td class=\"bold bggray\">目标</td>");
@@ -4298,7 +4305,7 @@ namespace Hx.BackAdmin.dayreport
                 strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[14]["目标"].ToString(), string.Empty, false, false));
                 strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[15]["目标"].ToString(), string.Empty, false, false));
                 strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[16]["目标"].ToString(), string.Empty, false, false));
-                strb.AppendLine("<td>&nbsp;</td>");
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[17]["目标"].ToString(), string.Empty, false, false));
                 strb.AppendLine("</tr>");
                 strb.AppendLine("<tr class=\"tc\">");
                 strb.AppendLine("<td class=\"bold bggray\">实际</td>");
@@ -4307,7 +4314,7 @@ namespace Hx.BackAdmin.dayreport
                 strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[14]["实际"].ToString(), string.Empty, !string.IsNullOrEmpty(tbl.Rows[14]["完成率"].ToString()) && DataConvert.SafeDecimal(tbl.Rows[14]["完成率"]) < 100, false));
                 strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[15]["实际"].ToString(), string.Empty, !string.IsNullOrEmpty(tbl.Rows[15]["完成率"].ToString()) && DataConvert.SafeDecimal(tbl.Rows[15]["完成率"]) < 100, false));
                 strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[16]["实际"].ToString(), string.Empty, !string.IsNullOrEmpty(tbl.Rows[16]["完成率"].ToString()) && DataConvert.SafeDecimal(tbl.Rows[16]["完成率"]) < 100, false));
-                strb.AppendLine("<td>&nbsp;</td>");
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[17]["实际"].ToString(), string.Empty, !string.IsNullOrEmpty(tbl.Rows[17]["完成率"].ToString()) && DataConvert.SafeDecimal(tbl.Rows[17]["完成率"]) < 100, false));
                 strb.AppendLine("</tr>");
                 strb.AppendLine("<tr class=\"tc\">");
                 strb.AppendLine("<td class=\"bold bggray\">完成率</td>");
@@ -4316,7 +4323,7 @@ namespace Hx.BackAdmin.dayreport
                 strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[14]["完成率"].ToString(), string.Empty, false, true));
                 strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[15]["完成率"].ToString(), string.Empty, false, true));
                 strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[16]["完成率"].ToString(), string.Empty, false, true));
-                strb.AppendLine("<td>&nbsp;</td>");
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[17]["完成率"].ToString(), string.Empty, false, true));
                 strb.AppendLine("</tr>");
                 strb.AppendLine("</table>");
 
@@ -4329,63 +4336,63 @@ namespace Hx.BackAdmin.dayreport
                 strb.AppendLine("</tr>");
                 strb.AppendLine("<tr>");
                 strb.AppendLine("<td class=\"bold tc bggray\">中保</td>");
-                strb.AppendFormat("<td class=\"tc\">{0}</td>", GetCellValue(tbl.Rows[17]["实际"].ToString(), string.Empty, false, true));
-                strb.AppendFormat("<td class=\"tc\">{0}</td>", GetCellValue(tbl.Rows[17]["目标"].ToString(), string.Empty, false, false));
-                strb.AppendFormat("<td class=\"tc\">{0}</td>", GetCellValue(tbl.Rows[17]["详细"].ToString(), string.Empty, false, false));
-                strb.AppendLine("</tr>");
-                strb.AppendLine("<tr>");
-                strb.AppendLine("<td class=\"bold tc bggray\">太保</td>");
                 strb.AppendFormat("<td class=\"tc\">{0}</td>", GetCellValue(tbl.Rows[18]["实际"].ToString(), string.Empty, false, true));
                 strb.AppendFormat("<td class=\"tc\">{0}</td>", GetCellValue(tbl.Rows[18]["目标"].ToString(), string.Empty, false, false));
                 strb.AppendFormat("<td class=\"tc\">{0}</td>", GetCellValue(tbl.Rows[18]["详细"].ToString(), string.Empty, false, false));
                 strb.AppendLine("</tr>");
                 strb.AppendLine("<tr>");
-                strb.AppendLine("<td class=\"bold tc bggray\">平安</td>");
+                strb.AppendLine("<td class=\"bold tc bggray\">太保</td>");
                 strb.AppendFormat("<td class=\"tc\">{0}</td>", GetCellValue(tbl.Rows[19]["实际"].ToString(), string.Empty, false, true));
                 strb.AppendFormat("<td class=\"tc\">{0}</td>", GetCellValue(tbl.Rows[19]["目标"].ToString(), string.Empty, false, false));
                 strb.AppendFormat("<td class=\"tc\">{0}</td>", GetCellValue(tbl.Rows[19]["详细"].ToString(), string.Empty, false, false));
                 strb.AppendLine("</tr>");
                 strb.AppendLine("<tr>");
-                strb.AppendLine("<td class=\"bold tc bggray\">人寿</td>");
+                strb.AppendLine("<td class=\"bold tc bggray\">平安</td>");
                 strb.AppendFormat("<td class=\"tc\">{0}</td>", GetCellValue(tbl.Rows[20]["实际"].ToString(), string.Empty, false, true));
                 strb.AppendFormat("<td class=\"tc\">{0}</td>", GetCellValue(tbl.Rows[20]["目标"].ToString(), string.Empty, false, false));
                 strb.AppendFormat("<td class=\"tc\">{0}</td>", GetCellValue(tbl.Rows[20]["详细"].ToString(), string.Empty, false, false));
                 strb.AppendLine("</tr>");
                 strb.AppendLine("<tr>");
-                strb.AppendLine("<td class=\"bold tc bggray\">大地</td>");
+                strb.AppendLine("<td class=\"bold tc bggray\">人寿</td>");
                 strb.AppendFormat("<td class=\"tc\">{0}</td>", GetCellValue(tbl.Rows[21]["实际"].ToString(), string.Empty, false, true));
                 strb.AppendFormat("<td class=\"tc\">{0}</td>", GetCellValue(tbl.Rows[21]["目标"].ToString(), string.Empty, false, false));
                 strb.AppendFormat("<td class=\"tc\">{0}</td>", GetCellValue(tbl.Rows[21]["详细"].ToString(), string.Empty, false, false));
                 strb.AppendLine("</tr>");
                 strb.AppendLine("<tr>");
-                strb.AppendLine("<td class=\"bold tc bggray\">中华联合</td>");
+                strb.AppendLine("<td class=\"bold tc bggray\">大地</td>");
                 strb.AppendFormat("<td class=\"tc\">{0}</td>", GetCellValue(tbl.Rows[22]["实际"].ToString(), string.Empty, false, true));
                 strb.AppendFormat("<td class=\"tc\">{0}</td>", GetCellValue(tbl.Rows[22]["目标"].ToString(), string.Empty, false, false));
                 strb.AppendFormat("<td class=\"tc\">{0}</td>", GetCellValue(tbl.Rows[22]["详细"].ToString(), string.Empty, false, false));
                 strb.AppendLine("</tr>");
                 strb.AppendLine("<tr>");
-                strb.AppendLine("<td class=\"bold tc bggray\">浙商</td>");
+                strb.AppendLine("<td class=\"bold tc bggray\">中华联合</td>");
                 strb.AppendFormat("<td class=\"tc\">{0}</td>", GetCellValue(tbl.Rows[23]["实际"].ToString(), string.Empty, false, true));
                 strb.AppendFormat("<td class=\"tc\">{0}</td>", GetCellValue(tbl.Rows[23]["目标"].ToString(), string.Empty, false, false));
                 strb.AppendFormat("<td class=\"tc\">{0}</td>", GetCellValue(tbl.Rows[23]["详细"].ToString(), string.Empty, false, false));
                 strb.AppendLine("</tr>");
                 strb.AppendLine("<tr>");
-                strb.AppendLine("<td class=\"bold tc bggray\">大众</td>");
+                strb.AppendLine("<td class=\"bold tc bggray\">浙商</td>");
                 strb.AppendFormat("<td class=\"tc\">{0}</td>", GetCellValue(tbl.Rows[24]["实际"].ToString(), string.Empty, false, true));
                 strb.AppendFormat("<td class=\"tc\">{0}</td>", GetCellValue(tbl.Rows[24]["目标"].ToString(), string.Empty, false, false));
                 strb.AppendFormat("<td class=\"tc\">{0}</td>", GetCellValue(tbl.Rows[24]["详细"].ToString(), string.Empty, false, false));
                 strb.AppendLine("</tr>");
                 strb.AppendLine("<tr>");
-                strb.AppendLine("<td class=\"bold tc bggray\">其他</td>");
+                strb.AppendLine("<td class=\"bold tc bggray\">大众</td>");
                 strb.AppendFormat("<td class=\"tc\">{0}</td>", GetCellValue(tbl.Rows[25]["实际"].ToString(), string.Empty, false, true));
                 strb.AppendFormat("<td class=\"tc\">{0}</td>", GetCellValue(tbl.Rows[25]["目标"].ToString(), string.Empty, false, false));
                 strb.AppendFormat("<td class=\"tc\">{0}</td>", GetCellValue(tbl.Rows[25]["详细"].ToString(), string.Empty, false, false));
                 strb.AppendLine("</tr>");
                 strb.AppendLine("<tr>");
-                strb.AppendLine("<td class=\"bold tc\">合计</td>");
-                strb.AppendLine("<td class=\"tc\">&nbsp;</td>");
+                strb.AppendLine("<td class=\"bold tc bggray\">其他</td>");
+                strb.AppendFormat("<td class=\"tc\">{0}</td>", GetCellValue(tbl.Rows[26]["实际"].ToString(), string.Empty, false, true));
                 strb.AppendFormat("<td class=\"tc\">{0}</td>", GetCellValue(tbl.Rows[26]["目标"].ToString(), string.Empty, false, false));
                 strb.AppendFormat("<td class=\"tc\">{0}</td>", GetCellValue(tbl.Rows[26]["详细"].ToString(), string.Empty, false, false));
+                strb.AppendLine("</tr>");
+                strb.AppendLine("<tr>");
+                strb.AppendLine("<td class=\"bold tc\">合计</td>");
+                strb.AppendLine("<td class=\"tc\">&nbsp;</td>");
+                strb.AppendFormat("<td class=\"tc\">{0}</td>", GetCellValue(tbl.Rows[27]["目标"].ToString(), string.Empty, false, false));
+                strb.AppendFormat("<td class=\"tc\">{0}</td>", GetCellValue(tbl.Rows[27]["详细"].ToString(), string.Empty, false, false));
                 strb.AppendLine("</tr>");
                 strb.AppendLine("</table>");
 

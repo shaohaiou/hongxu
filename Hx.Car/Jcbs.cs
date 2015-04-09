@@ -11,6 +11,8 @@ using System.Web.Script.Serialization;
 using Hx.Components.Entity;
 using System.Collections.Specialized;
 using System.Windows.Forms;
+using Hx.Tools.ValidationCode;
+using System.Drawing;
 
 namespace Hx.Car
 {
@@ -129,14 +131,14 @@ namespace Hx.Car
             NameValueCollection postVars = new NameValueCollection();
             postVars.Add("action", "createmarketrecord");
             postVars.Add("datastr", json.Serialize(entity));
-            Http.PostData(postVars,new string[]{ url});
+            Http.PostData(postVars, new string[] { url });
         }
 
         #endregion
 
         #region 用户管理
 
-        public JcbUserInfo GetJcbUserRemote(string username,string password)
+        public JcbUserInfo GetJcbUserRemote(string username, string password)
         {
             string url = "http://jcb.hongxu.cn/jcbapi.axd?action=getjcbuserinfo&username=" + username + "&password=" + password;
             string jsonstr = Http.GetPage(url);
@@ -156,7 +158,7 @@ namespace Hx.Car
                 case JcbSiteType.t_二手车之家:
                     if (account.JcbAccountType == JcbAccountType.个人帐号)
                         result = "http://account.che168.com/login";
-                    else if(account.JcbAccountType == JcbAccountType.商户帐号)
+                    else if (account.JcbAccountType == JcbAccountType.商户帐号)
                         result = "http://dealer.che168.com/login.html";
                     break;
                 case JcbSiteType.t_58同城:
@@ -172,8 +174,33 @@ namespace Hx.Car
             return result;
         }
 
+        public string GetLoginedUrl(JcbAccountInfo account)
+        {
+            string result = string.Empty;
+
+            switch (account.JcbSiteType)
+            {
+                case JcbSiteType.t_二手车之家:
+                    if (account.JcbAccountType == JcbAccountType.个人帐号)
+                        result = "http://account.che168.com/login";
+                    else if (account.JcbAccountType == JcbAccountType.商户帐号)
+                        result = "http://dealer.che168.com/index.html";
+                    break;
+                case JcbSiteType.t_58同城:
+                    result = "http://passport.58.com/login";
+                    break;
+                case JcbSiteType.赶集网:
+                    result = "https://passport.ganji.com/login.php";
+                    break;
+                default:
+                    break;
+            }
+
+            return result;
+        }
+
         public string GetSuccessUrl(JcbAccountInfo account)
-        { 
+        {
             string result = string.Empty;
 
             switch (account.JcbSiteType)
@@ -194,11 +221,11 @@ namespace Hx.Car
                     break;
             }
 
-            return result;            
+            return result;
         }
 
         public string GetPublicUrl(JcbAccountInfo account)
-        { 
+        {
             string result = string.Empty;
 
             switch (account.JcbSiteType)
@@ -213,13 +240,13 @@ namespace Hx.Car
                     result = "http://post.58.com/330/29/s5";
                     break;
                 case JcbSiteType.赶集网:
-                    result = "https://passport.ganji.com/login.php";
+                    result = "http://www.ganji.com/pub/pub.php?act=pub&method=load&cid=6&mcid=14";
                     break;
                 default:
                     break;
             }
 
-            return result;            
+            return result;
         }
 
         /// <summary>
@@ -228,7 +255,7 @@ namespace Hx.Car
         /// <param name="account"></param>
         /// <param name="cid">车辆ID</param>
         /// <returns></returns>
-        public string GetViewUrl(JcbAccountInfo account,string cid)
+        public string GetViewUrl(JcbAccountInfo account, string cid)
         {
             string result = string.Empty;
 
@@ -250,7 +277,7 @@ namespace Hx.Car
                     break;
             }
 
-            return result;   
+            return result;
         }
 
         public string GetListUrl(JcbAccountInfo account)
@@ -269,13 +296,13 @@ namespace Hx.Car
                     result = "http://post.58.com/330/29/s5";
                     break;
                 case JcbSiteType.赶集网:
-                    result = "https://passport.ganji.com/login.php";
+                    result = "http://www.ganji.com/pub/pub_select.php";
                     break;
                 default:
                     break;
             }
 
-            return result;            
+            return result;
         }
 
         public string GetSiteUrl(JcbSiteType sitetype)
@@ -304,10 +331,11 @@ namespace Hx.Car
 
         #region 登录
 
-        public void DoLogin(WebBrowser wb, JcbAccountInfo account)
+        public int DoLogin(WebBrowser wb, JcbAccountInfo account)
         {
+            int result = 0;
             switch (account.JcbSiteType)
-            { 
+            {
                 case JcbSiteType.t_二手车之家:
                     if (account.JcbAccountType == JcbAccountType.个人帐号)
                     {
@@ -319,13 +347,64 @@ namespace Hx.Car
                         txtPassWord.SetAttribute("value", account.Password);
                         SubmitLogin.InvokeMember("click");
                         wb.Stop();
+                        result = 1;
                     }
                     else if (account.JcbAccountType == JcbAccountType.商户帐号)
-                    { }
+                    {
+                        HtmlDocument HtmlDoc = wb.Document;
+                        HtmlElement txtUserName = HtmlDoc.All["userName"];
+                        HtmlElement txtPassWord = HtmlDoc.All["userPWD"];
+                        HtmlElement yzPwd = HtmlDoc.All["yzPwd"];
+                        HtmlElement imgValidCode = HtmlDoc.All["imgValidCode"];
+                        HtmlElement SubmitLogin = HtmlDoc.All["SubmitLogin"];
+                        txtUserName.SetAttribute("value", account.AccountName);
+                        txtPassWord.SetAttribute("value", account.Password);
+                        //SubmitLogin.InvokeMember("click");
+                        //wb.Stop();
+
+                        //将元素绝对定位到页面左上角
+                        imgValidCode.Style = "position: absolute; z-index: 9999; top: 0px; left: 0px";
+                        //抓图
+                        var b = new Bitmap(imgValidCode.ClientRectangle.Width, imgValidCode.ClientRectangle.Height);
+                        wb.DrawToBitmap(b, new Rectangle(new Point(), imgValidCode.ClientRectangle.Size));
+                        //ValidationImage img = new ValidationImage((Bitmap)b);
+                        //List<double> t = img.test();
+                        //int tt = NeuralNet.Recognize(t);
+                        Cracker cracker = new Cracker();
+                        string vcode = cracker.Read(b);
+                        yzPwd.SetAttribute("value", vcode);
+                    }
+                    break;
+                case JcbSiteType.赶集网:
+                    if (true)
+                    {
+                        HtmlDocument HtmlDoc = wb.Document;
+                        HtmlElement txtUserName = HtmlDoc.All["login_username"];
+                        HtmlElement txtPassWord = HtmlDoc.All["login_password"];
+                        HtmlElement SubmitLogin = null;
+                        HtmlElement loginform = HtmlDoc.All["loginform"];
+                        foreach (HtmlElement ele in loginform.GetElementsByTagName("input"))
+                        {
+                            if (ele.GetAttribute("type") == "submit")
+                            {
+                                SubmitLogin = ele;
+                                break;
+                            }
+                        }
+
+                        txtUserName.SetAttribute("value", account.AccountName);
+                        txtPassWord.SetAttribute("value", account.Password);
+                        if (SubmitLogin != null)
+                        {
+                            SubmitLogin.InvokeMember("click");
+                            result = 1;
+                        }
+                    }
                     break;
                 default:
                     break;
             }
+            return result;
         }
 
         #endregion

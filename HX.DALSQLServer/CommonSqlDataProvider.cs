@@ -1540,6 +1540,197 @@ namespace HX.DALSQLServer
 
         #endregion
 
+        #region 卡券活动
+
+        #region 活动设置
+
+        public override void AddCardSetting(CardSettingInfo entity)
+        {
+            SerializerData data = entity.GetSerializerData();
+            string sql = @"
+            IF EXISTS(SELECT * FROM HX_CardSetting)
+            BEGIN
+                UPDATE HX_CardSetting SET
+                    [PropertyNames] = @PropertyNames
+                    ,[PropertyValues] = @PropertyValues
+            END
+            ELSE
+            BEGIN
+                INSERT INTO HX_CardSetting(
+                    [PropertyNames]
+                    ,[PropertyValues]
+                )VALUES(
+                    @PropertyNames
+                    ,@PropertyValues)
+            END
+            ";
+            SqlParameter[] p = 
+            {
+                new SqlParameter("@PropertyNames",data.Keys),
+                new SqlParameter("@PropertyValues",data.Values)
+            };
+            SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql, p);
+        }
+
+        public override CardSettingInfo GetCardSetting()
+        {
+            string sql = "SELECT * FROM HX_CardSetting";
+            CardSettingInfo entity = null;
+            using (IDataReader reader = SqlHelper.ExecuteReader(_con, CommandType.Text, sql))
+            {
+                if (reader.Read())
+                {
+                    entity = PopulateCardSetting(reader);
+                }
+            }
+            return entity;
+        }
+
+        #endregion
+
+        #region 卡券抽奖记录
+
+        public override void AddCardPullRecord(CardPullRecordInfo entity)
+        {
+            string sql = @"
+                INSERT INTO HX_CardPullRecords(
+                    [Openid]
+                    ,[UserName]
+                    ,[Cardid]
+                    ,[Cardtitle]
+                    ,[Cardawardname]
+                    ,[Cardlogourl]
+                    ,[PullResult]
+                    ,[AddTime]
+                )VALUES(
+                    @Openid
+                    ,@UserName
+                    ,@Cardid
+                    ,@Cardtitle
+                    ,@Cardawardname
+                    ,@Cardlogourl
+                    ,@PullResult
+                    ,@AddTime)
+            ";
+            SqlParameter[] p = 
+            {
+                new SqlParameter("@Openid",entity.Openid),
+                new SqlParameter("@UserName",entity.UserName),
+                new SqlParameter("@Cardid",entity.Cardid),
+                new SqlParameter("@Cardtitle",entity.Cardtitle),
+                new SqlParameter("@Cardawardname",entity.Cardawardname),
+                new SqlParameter("@Cardlogourl",entity.Cardlogourl),
+                new SqlParameter("@PullResult",entity.PullResult),
+                new SqlParameter("@AddTime",entity.AddTime),
+            };
+            SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql, p);
+        }
+
+        public override void PullCard(string openid)
+        {
+            string sql = @"
+                UPDATE HX_CardPullRecords SET
+                [PullResult] = '2'
+                WHERE [Openid] = @Openid";
+            SqlParameter[] p = 
+            {
+                new SqlParameter("@Openid",openid)
+            };
+            SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql, p);
+        }
+
+        public override List<CardPullRecordInfo> GetCardPullRecordList()
+        {
+            List<CardPullRecordInfo> list = new List<CardPullRecordInfo>();
+            string sql = "SELECT * FROM HX_CardPullRecords";
+            using (IDataReader reader = SqlHelper.ExecuteReader(_con, CommandType.Text, sql))
+            {
+                while (reader.Read())
+                {
+                    list.Add(PopulateCardPullRecord(reader));
+                }
+            }
+
+            return list;
+        }
+
+        public override void ClearCardPullRecord()
+        {
+            string sql = "DELETE FROM HX_CardPullRecords";
+            SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql);
+        }
+
+        public override List<CardidInfo> GetCardidInfolist()
+        {
+            List<CardidInfo> list = new List<CardidInfo>();
+            string sql = "SELECT * FROM HX_CardidInfo";
+            using (IDataReader reader = SqlHelper.ExecuteReader(_con, CommandType.Text, sql))
+            {
+                while (reader.Read())
+                {
+                    list.Add(PopulateCardidInfo(reader));
+                }
+            }
+
+            return list;
+        }
+
+        public override void AddCardidInfo(CardidInfo entity)
+        {
+            string sql = @"
+                INSERT INTO HX_CardidInfo(
+                    [Cardid]
+                    ,[Cardtitle]
+                    ,[Award]
+                    ,[Num]
+                )VALUES(
+                    @Cardid
+                    ,@Cardtitle
+                    ,@Award
+                    ,@Num
+                )
+            ";
+            SqlParameter[] p = 
+            {
+                new SqlParameter("@Cardid",entity.Cardid),
+                new SqlParameter("@Cardtitle",entity.Cardtitle),
+                new SqlParameter("@Award",entity.Award),
+                new SqlParameter("@Num",entity.Num),
+            };
+            SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql, p);
+        }
+
+        public override void DeleteCardidInfo(string ids)
+        {
+            string sql = "DELETE FROM HX_CardidInfo WHERE [ID] IN (" + ids +")";
+            SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql);
+        }
+
+        public override void UpdateCardidInfo(CardidInfo entity)
+        {
+            string sql = @"
+                UPDATE HX_CardidInfo SET
+                    [Cardid] = @Cardid
+                    ,[Cardtitle] = @Cardtitle
+                    ,[Award] = @Award
+                    ,[Num] = @Num
+                WHERE [ID] = @ID
+            ";
+            SqlParameter[] p = 
+            {
+                new SqlParameter("@ID",entity.ID),
+                new SqlParameter("@Cardid",entity.Cardid),
+                new SqlParameter("@Cardtitle",entity.Cardtitle),
+                new SqlParameter("@Award",entity.Award),
+                new SqlParameter("@Num",entity.Num),
+            };
+            SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql, p);
+        }
+
+        #endregion
+
+        #endregion
+
         #endregion
 
         #region 招聘管理

@@ -98,6 +98,12 @@ namespace Hx.BackAdmin
                 {
                     WeixinActs.Instance.ReloadComments();
                 }
+                CardSettingInfo cardsetting = WeixinActs.Instance.GetCardSetting();
+                if (cardsetting != null && cardsetting.Switch == 1)
+                {
+                    WeixinActs.Instance.ReloadCardlist();
+                    WeixinActs.Instance.ReloadCardPullRecordListCache();
+                }
             }
             catch { }
         }

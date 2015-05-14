@@ -23,6 +23,7 @@ using NPOI.XSSF.UserModel;
 using System.Text.RegularExpressions;
 using NPOI.HPSF;
 using NPOI.SS.Util;
+using NPOI.HSSF.Util;
 
 namespace Hx.BackAdmin.dayreport
 {
@@ -3108,7 +3109,7 @@ namespace Hx.BackAdmin.dayreport
                     {
                         data_xs.Add(json.Deserialize<Dictionary<string, string>>(list_xs[i].SCReport));
                     }
-                } 
+                }
 
                 Dictionary<string, string> targetdata_xs = new Dictionary<string, string>();
                 if (monthtarget_xs != null && !string.IsNullOrEmpty(monthtarget_xs.SCReport))
@@ -3529,6 +3530,308 @@ namespace Hx.BackAdmin.dayreport
             spMsg.InnerText = string.Empty;
 
             LoadReportCountData();
+        }
+
+        protected void btnXSFollow_Click(object sender, EventArgs e)
+        {
+            DateTime day = DateTime.Today;
+            if (DateTime.TryParse(txtDate2.Text, out day))
+            {
+                DataTable tblresult = new DataTable();
+
+                #region 表结构
+
+                tblresult.Columns.Add("店名");
+                tblresult.Columns.Add("展厅成交率目标值");
+                tblresult.Columns.Add("展厅成交率实际");
+                tblresult.Columns.Add("展厅订单台数目标值");
+                tblresult.Columns.Add("展厅订单台数合计");
+                tblresult.Columns.Add("展厅订单台数完成率");
+                tblresult.Columns.Add("展厅交车台数目标值");
+                tblresult.Columns.Add("展厅交车台数合计");
+                tblresult.Columns.Add("展厅交车台数完成率");
+                tblresult.Columns.Add("其中DCC交车台次目标值");
+                tblresult.Columns.Add("其中DCC交车台次合计");
+                tblresult.Columns.Add("其中DCC交车台次完成率");
+                tblresult.Columns.Add("展厅首次来客批次目标值");
+                tblresult.Columns.Add("展厅首次来客批次合计");
+                tblresult.Columns.Add("展厅首次来客批次完成率");
+                tblresult.Columns.Add("留档批次目标值");
+                tblresult.Columns.Add("留档批次合计");
+                tblresult.Columns.Add("留档批次完成率");
+                tblresult.Columns.Add("展厅首次到店记录数目标值");
+                tblresult.Columns.Add("展厅首次到店记录数合计");
+                tblresult.Columns.Add("展厅首次到店记录数完成率");
+                tblresult.Columns.Add("展厅首次到店建档数目标值");
+                tblresult.Columns.Add("展厅首次到店建档数合计");
+                tblresult.Columns.Add("展厅首次到店建档数完成率");
+                tblresult.Columns.Add("DCC邀约到店目标值");
+                tblresult.Columns.Add("DCC邀约到店合计");
+                tblresult.Columns.Add("DCC邀约到店完成率");
+                tblresult.Columns.Add("新增DCC线索总量目标值");
+                tblresult.Columns.Add("新增DCC线索总量合计");
+                tblresult.Columns.Add("新增DCC线索总量完成率");
+                tblresult.Columns.Add("新增DCC线索建档量目标值");
+                tblresult.Columns.Add("新增DCC线索建档量合计");
+                tblresult.Columns.Add("新增DCC线索建档量完成率");
+                tblresult.Columns.Add("首次邀约到店客户总数目标值");
+                tblresult.Columns.Add("首次邀约到店客户总数合计");
+                tblresult.Columns.Add("首次邀约到店客户总数完成率");
+                tblresult.Columns.Add("DCC订单数目标值");
+                tblresult.Columns.Add("DCC订单数合计");
+                tblresult.Columns.Add("DCC订单数完成率");
+                tblresult.Columns.Add("DCC成交总台数目标值");
+                tblresult.Columns.Add("DCC成交总台数合计");
+                tblresult.Columns.Add("DCC成交总台数完成率");
+                tblresult.Columns.Add("DCC建档率目标值");
+                tblresult.Columns.Add("DCC建档率合计");
+                tblresult.Columns.Add("DCC首次邀约到店率目标值");
+                tblresult.Columns.Add("DCC首次邀约到店率合计");
+                tblresult.Columns.Add("DCC成交率目标值");
+                tblresult.Columns.Add("DCC成交率合计");
+                tblresult.Columns.Add("DCC线索转换率目标值");
+                tblresult.Columns.Add("DCC线索转换率合计");
+
+                #endregion
+
+                List<CorporationInfo> corplist = Corporations.Instance.GetList(true);
+                string[] corppower = hdnDayReportCorp.Value.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
+                corplist = corplist.FindAll(c => corppower.Contains(c.ID.ToString()));
+                for (int i = 0; i < corplist.Count; i++)
+                {
+                    DataRow row = tblresult.NewRow();
+
+                    #region 销售数据
+
+                    DayReportDep dep = DayReportDep.销售部;
+                    DailyReportQuery query = new DailyReportQuery()
+                    {
+                        DayUnique = day.ToString("yyyyMM"),
+                        CorporationID = corplist[i].ID,
+                        DayReportDep = dep
+                    };
+                    query.OrderBy = " [DayUnique] ASC";
+                    List<DailyReportInfo> list = DailyReports.Instance.GetList(query, true);
+                    list = list.FindAll(l => l.DailyReportCheckStatus != DailyReportCheckStatus.审核不通过);
+                    MonthlyTargetInfo monthtarget = MonthlyTargets.Instance.GetModel(corplist[i].ID, dep, day, true);
+                    int days = 0;
+                    DataTable tblDay = GetReport(dep, list, monthtarget, day, corplist[i].ID, ref days);
+                    DataTable tblKey = GetKeyReport(dep, list, monthtarget, tblDay, corplist[i].ID);
+
+                    row["店名"] = corplist[i].Name;
+                    tblKey.DefaultView.RowFilter = "关键指标='展厅成交率'";
+                    row["展厅成交率目标值"] = tblKey.DefaultView[0]["目标"];
+                    row["展厅成交率实际"] = tblKey.DefaultView[0]["实际"];
+                    tblDay.DefaultView.RowFilter = "项目='展厅订单台数'";
+                    row["展厅订单台数目标值"] = tblDay.DefaultView[0]["目标值"];
+                    row["展厅订单台数合计"] = tblDay.DefaultView[0]["合计"];
+                    row["展厅订单台数完成率"] = tblDay.DefaultView[0]["完成率"];
+                    tblDay.DefaultView.RowFilter = "项目='展厅交车台数'";
+                    row["展厅交车台数目标值"] = tblDay.DefaultView[0]["目标值"];
+                    row["展厅交车台数合计"] = tblDay.DefaultView[0]["合计"];
+                    row["展厅交车台数完成率"] = tblDay.DefaultView[0]["完成率"];
+                    tblDay.DefaultView.RowFilter = "项目='其中DCC交车台次'";
+                    row["其中DCC交车台次目标值"] = tblDay.DefaultView[0]["目标值"];
+                    row["其中DCC交车台次合计"] = tblDay.DefaultView[0]["合计"];
+                    row["其中DCC交车台次完成率"] = tblDay.DefaultView[0]["完成率"];
+                    tblDay.DefaultView.RowFilter = "项目='展厅首次来客批次'";
+                    row["展厅首次来客批次目标值"] = tblDay.DefaultView[0]["目标值"];
+                    row["展厅首次来客批次合计"] = tblDay.DefaultView[0]["合计"];
+                    row["展厅首次来客批次完成率"] = tblDay.DefaultView[0]["完成率"];
+                    tblDay.DefaultView.RowFilter = "项目='留档批次'";
+                    row["留档批次目标值"] = tblDay.DefaultView[0]["目标值"];
+                    row["留档批次合计"] = tblDay.DefaultView[0]["合计"];
+                    row["留档批次完成率"] = tblDay.DefaultView[0]["完成率"];
+
+                    #endregion
+
+                    #region 市场数据
+
+                    dep = DayReportDep.市场部;
+                    query = new DailyReportQuery()
+                    {
+                        DayUnique = day.ToString("yyyyMM"),
+                        CorporationID = corplist[i].ID,
+                        DayReportDep = dep
+                    };
+                    query.OrderBy = " [DayUnique] ASC";
+                    list = DailyReports.Instance.GetList(query, true);
+                    list = list.FindAll(l => l.DailyReportCheckStatus != DailyReportCheckStatus.审核不通过);
+                    monthtarget = MonthlyTargets.Instance.GetModel(corplist[i].ID, dep, day, true);
+                    days = 0;
+                    tblDay = GetReport(dep, list, monthtarget, day, corplist[i].ID, ref days);
+
+                    tblDay.DefaultView.RowFilter = "项目='展厅首次到店记录数'";
+                    row["展厅首次到店记录数目标值"] = tblDay.DefaultView[0]["目标值"];
+                    row["展厅首次到店记录数合计"] = tblDay.DefaultView[0]["合计"];
+                    row["展厅首次到店记录数完成率"] = tblDay.DefaultView[0]["完成率"];
+                    tblDay.DefaultView.RowFilter = "项目='展厅首次到店建档数'";
+                    row["展厅首次到店建档数目标值"] = tblDay.DefaultView[0]["目标值"];
+                    row["展厅首次到店建档数合计"] = tblDay.DefaultView[0]["合计"];
+                    row["展厅首次到店建档数完成率"] = tblDay.DefaultView[0]["完成率"];
+                    tblDay.DefaultView.RowFilter = "项目='DCC邀约到店'";
+                    row["DCC邀约到店目标值"] = tblDay.DefaultView[0]["目标值"];
+                    row["DCC邀约到店合计"] = tblDay.DefaultView[0]["合计"];
+                    row["DCC邀约到店完成率"] = tblDay.DefaultView[0]["完成率"];
+
+                    #endregion
+
+                    #region DCC数据
+
+                    dep = DayReportDep.DCC部;
+                    query = new DailyReportQuery()
+                    {
+                        DayUnique = day.ToString("yyyyMM"),
+                        CorporationID = corplist[i].ID,
+                        DayReportDep = dep
+                    };
+                    query.OrderBy = " [DayUnique] ASC";
+                    list = DailyReports.Instance.GetList(query, true);
+                    list = list.FindAll(l => l.DailyReportCheckStatus != DailyReportCheckStatus.审核不通过);
+                    monthtarget = MonthlyTargets.Instance.GetModel(corplist[i].ID, dep, day, true);
+                    days = 0;
+                    tblDay = GetReport(dep, list, monthtarget, day, corplist[i].ID, ref days);
+                    hdnKeyReportType.Value = "dcczhhz";
+                    tblKey = GetKeyReport(dep, list, monthtarget, tblDay, corplist[i].ID);
+
+                    tblDay.DefaultView.RowFilter = "项目='新增DCC线索总量'";
+                    row["新增DCC线索总量目标值"] = tblDay.DefaultView[0]["目标值"];
+                    row["新增DCC线索总量合计"] = tblDay.DefaultView[0]["合计"];
+                    row["新增DCC线索总量完成率"] = tblDay.DefaultView[0]["完成率"];
+                    tblDay.DefaultView.RowFilter = "项目='新增DCC线索建档量'";
+                    row["新增DCC线索建档量目标值"] = tblDay.DefaultView[0]["目标值"];
+                    row["新增DCC线索建档量合计"] = tblDay.DefaultView[0]["合计"];
+                    row["新增DCC线索建档量完成率"] = tblDay.DefaultView[0]["完成率"];
+                    tblDay.DefaultView.RowFilter = "项目='首次邀约到店客户总数'";
+                    row["首次邀约到店客户总数目标值"] = tblDay.DefaultView[0]["目标值"];
+                    row["首次邀约到店客户总数合计"] = tblDay.DefaultView[0]["合计"];
+                    row["首次邀约到店客户总数完成率"] = tblDay.DefaultView[0]["完成率"];
+                    tblDay.DefaultView.RowFilter = "项目='DCC订单数'";
+                    row["DCC订单数目标值"] = tblDay.DefaultView[0]["目标值"];
+                    row["DCC订单数合计"] = tblDay.DefaultView[0]["合计"];
+                    row["DCC订单数完成率"] = tblDay.DefaultView[0]["完成率"];
+                    tblDay.DefaultView.RowFilter = "项目='DCC成交总台数'";
+                    row["DCC成交总台数目标值"] = tblDay.DefaultView[0]["目标值"];
+                    row["DCC成交总台数合计"] = tblDay.DefaultView[0]["合计"];
+                    row["DCC成交总台数完成率"] = tblDay.DefaultView[0]["完成率"];
+                    tblKey.DefaultView.RowFilter = "关键指标='建档率'";
+                    row["DCC建档率目标值"] = tblKey.DefaultView[0]["目标"];
+                    row["DCC建档率合计"] = tblKey.DefaultView[0]["实际"];
+                    tblKey.DefaultView.RowFilter = "关键指标='首次邀约到店率'";
+                    row["DCC首次邀约到店率目标值"] = tblKey.DefaultView[0]["目标"];
+                    row["DCC首次邀约到店率合计"] = tblKey.DefaultView[0]["实际"];
+                    tblKey.DefaultView.RowFilter = "关键指标='成交率'";
+                    row["DCC成交率目标值"] = tblKey.DefaultView[0]["目标"];
+                    row["DCC成交率合计"] = tblKey.DefaultView[0]["实际"];
+                    tblKey.DefaultView.RowFilter = "关键指标='网络线索转化率'";
+                    row["DCC线索转换率目标值"] = tblKey.DefaultView[0]["目标"];
+                    row["DCC线索转换率合计"] = tblKey.DefaultView[0]["实际"];
+
+                    #endregion
+
+                    tblresult.Rows.Add(row);
+                }
+
+                IWorkbook workbook = null;
+                ISheet sheet = null;
+                string newfile = string.Empty;
+                string fileName = Utils.GetMapPath(string.Format(@"\App_Data\销售客源、DCC线索周度进度跟进表模版.xls"));
+                newfile = string.Format(@"销售客源、DCC线索周度进度跟进表{0}.xls", day.ToString("yyyyMM"));
+                using (FileStream file = new FileStream(fileName, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite))
+                {
+                    workbook = new HSSFWorkbook(file);
+                }
+                sheet = workbook.GetSheetAt(0);
+                sheet.GetRow(1).GetCell(1).SetCellValue(Math.Round(double.Parse(day.Day.ToString()) / Utils.MonthDays(day), 2));
+
+                ICellStyle cellStyle = workbook.CreateCellStyle();
+                IFont font = workbook.CreateFont();
+                font.Color = HSSFColor.Black.Index;
+                cellStyle.SetFont(font);
+                cellStyle.BorderTop = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyle.BorderRight = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyle.BorderBottom = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyle.BorderLeft = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyle.TopBorderColor = HSSFColor.Black.Index;
+                cellStyle.RightBorderColor = HSSFColor.Black.Index;
+                cellStyle.BottomBorderColor = HSSFColor.Black.Index;
+                cellStyle.LeftBorderColor = HSSFColor.Black.Index;
+                int index = 5;
+                foreach (DataRow drow in tblresult.Rows)
+                {
+                    HSSFRow row = (HSSFRow)sheet.CreateRow(index);
+                    row.CreateCell(0).SetCellValue(drow["店名"].ToString());
+                    row.CreateCell(1).SetCellValue(string.Empty);
+                    row.CreateCell(2).SetCellValue(string.IsNullOrEmpty(drow["展厅成交率目标值"].ToString()) ? string.Empty : (drow["展厅成交率目标值"].ToString()));
+                    row.CreateCell(3).SetCellValue(string.IsNullOrEmpty(drow["展厅成交率实际"].ToString()) ? string.Empty : (drow["展厅成交率实际"].ToString() + "%"));
+                    row.CreateCell(4).SetCellValue(drow["展厅订单台数目标值"].ToString());
+                    row.CreateCell(5).SetCellValue(drow["展厅订单台数合计"].ToString());
+                    row.CreateCell(6).SetCellValue(string.IsNullOrEmpty(drow["展厅订单台数完成率"].ToString()) ? string.Empty : (drow["展厅订单台数完成率"].ToString() + "%"));
+                    row.CreateCell(7).SetCellValue(drow["展厅交车台数目标值"].ToString());
+                    row.CreateCell(8).SetCellValue(drow["展厅交车台数合计"].ToString());
+                    row.CreateCell(9).SetCellValue(string.IsNullOrEmpty(drow["展厅交车台数完成率"].ToString()) ? string.Empty : (drow["展厅交车台数完成率"].ToString() + "%"));
+                    row.CreateCell(10).SetCellValue(drow["其中DCC交车台次目标值"].ToString());
+                    row.CreateCell(11).SetCellValue(drow["其中DCC交车台次合计"].ToString());
+                    row.CreateCell(12).SetCellValue(string.IsNullOrEmpty(drow["其中DCC交车台次完成率"].ToString()) ? string.Empty : (drow["其中DCC交车台次完成率"].ToString() + "%"));
+                    row.CreateCell(13).SetCellValue(drow["展厅首次来客批次目标值"].ToString());
+                    row.CreateCell(14).SetCellValue(drow["展厅首次来客批次合计"].ToString());
+                    row.CreateCell(15).SetCellValue(string.IsNullOrEmpty(drow["展厅首次来客批次完成率"].ToString()) ? string.Empty : (drow["展厅首次来客批次完成率"].ToString() + "%"));
+                    row.CreateCell(16).SetCellValue(drow["留档批次目标值"].ToString());
+                    row.CreateCell(17).SetCellValue(drow["留档批次合计"].ToString());
+                    row.CreateCell(18).SetCellValue(string.IsNullOrEmpty(drow["留档批次完成率"].ToString()) ? string.Empty : (drow["留档批次完成率"].ToString() + "%"));
+                    row.CreateCell(19).SetCellValue(drow["展厅首次到店记录数目标值"].ToString());
+                    row.CreateCell(20).SetCellValue(drow["展厅首次到店记录数合计"].ToString());
+                    row.CreateCell(21).SetCellValue(string.IsNullOrEmpty(drow["展厅首次到店记录数完成率"].ToString()) ? string.Empty : (drow["展厅首次到店记录数完成率"].ToString() + "%"));
+                    row.CreateCell(22).SetCellValue(drow["展厅首次到店建档数目标值"].ToString());
+                    row.CreateCell(23).SetCellValue(drow["展厅首次到店建档数合计"].ToString());
+                    row.CreateCell(24).SetCellValue(string.IsNullOrEmpty(drow["展厅首次到店建档数完成率"].ToString()) ? string.Empty : (drow["展厅首次到店建档数完成率"].ToString() + "%"));
+                    row.CreateCell(25).SetCellValue(drow["DCC邀约到店目标值"].ToString());
+                    row.CreateCell(26).SetCellValue(drow["DCC邀约到店合计"].ToString());
+                    row.CreateCell(27).SetCellValue(string.IsNullOrEmpty(drow["DCC邀约到店完成率"].ToString()) ? string.Empty : (drow["DCC邀约到店完成率"].ToString() + "%"));
+                    row.CreateCell(28).SetCellValue(drow["新增DCC线索总量目标值"].ToString());
+                    row.CreateCell(29).SetCellValue(drow["新增DCC线索总量合计"].ToString());
+                    row.CreateCell(30).SetCellValue(string.IsNullOrEmpty(drow["新增DCC线索总量完成率"].ToString()) ? string.Empty : (drow["新增DCC线索总量完成率"].ToString() + "%"));
+                    row.CreateCell(31).SetCellValue(drow["新增DCC线索建档量目标值"].ToString());
+                    row.CreateCell(32).SetCellValue(drow["新增DCC线索建档量合计"].ToString());
+                    row.CreateCell(33).SetCellValue(string.IsNullOrEmpty(drow["新增DCC线索建档量完成率"].ToString()) ? string.Empty : (drow["新增DCC线索建档量完成率"].ToString() + "%"));
+                    row.CreateCell(34).SetCellValue(drow["首次邀约到店客户总数目标值"].ToString());
+                    row.CreateCell(35).SetCellValue(drow["首次邀约到店客户总数合计"].ToString());
+                    row.CreateCell(36).SetCellValue(string.IsNullOrEmpty(drow["首次邀约到店客户总数完成率"].ToString()) ? string.Empty : (drow["首次邀约到店客户总数完成率"].ToString() + "%"));
+                    row.CreateCell(37).SetCellValue(drow["DCC订单数目标值"].ToString());
+                    row.CreateCell(38).SetCellValue(drow["DCC订单数合计"].ToString());
+                    row.CreateCell(39).SetCellValue(string.IsNullOrEmpty(drow["DCC订单数完成率"].ToString()) ? string.Empty : (drow["DCC订单数完成率"].ToString() + "%"));
+                    row.CreateCell(40).SetCellValue(drow["DCC成交总台数目标值"].ToString());
+                    row.CreateCell(41).SetCellValue(drow["DCC成交总台数合计"].ToString());
+                    row.CreateCell(42).SetCellValue(string.IsNullOrEmpty(drow["DCC成交总台数完成率"].ToString()) ? string.Empty : (drow["DCC成交总台数完成率"].ToString() + "%"));
+                    row.CreateCell(43).SetCellValue(string.IsNullOrEmpty(drow["DCC建档率目标值"].ToString()) ? string.Empty : (drow["DCC建档率目标值"].ToString() + "%"));
+                    row.CreateCell(44).SetCellValue(string.IsNullOrEmpty(drow["DCC建档率合计"].ToString()) ? string.Empty : (drow["DCC建档率合计"].ToString() + "%"));
+                    row.CreateCell(45).SetCellValue(string.IsNullOrEmpty(drow["DCC首次邀约到店率目标值"].ToString()) ? string.Empty : (drow["DCC首次邀约到店率目标值"].ToString() + "%"));
+                    row.CreateCell(46).SetCellValue(string.IsNullOrEmpty(drow["DCC首次邀约到店率合计"].ToString()) ? string.Empty : (drow["DCC首次邀约到店率合计"].ToString() + "%"));
+                    row.CreateCell(47).SetCellValue(string.IsNullOrEmpty(drow["DCC成交率目标值"].ToString()) ? string.Empty : (drow["DCC成交率目标值"].ToString() + "%"));
+                    row.CreateCell(48).SetCellValue(string.IsNullOrEmpty(drow["DCC成交率合计"].ToString()) ? string.Empty : (drow["DCC成交率合计"].ToString() + "%"));
+                    row.CreateCell(49).SetCellValue(string.IsNullOrEmpty(drow["DCC线索转换率目标值"].ToString()) ? string.Empty : (drow["DCC线索转换率目标值"].ToString() + "%"));
+                    row.CreateCell(50).SetCellValue(string.IsNullOrEmpty(drow["DCC线索转换率合计"].ToString()) ? string.Empty : (drow["DCC线索转换率合计"].ToString() + "%"));
+
+                    for (int i = 0; i <= 50; i++)
+                    {
+                        sheet.GetRow(index).Cells[i].CellStyle = cellStyle;
+                    }
+                    index++;
+                }
+                sheet.ForceFormulaRecalculation = true;
+                using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
+                {
+                    workbook.Write(ms);
+                    Response.Clear();
+                    Response.Buffer = true;
+                    Response.ContentType = "application/vnd.ms-excel";
+                    Response.ContentEncoding = System.Text.Encoding.UTF8;
+                    Response.AppendHeader("Content-Disposition", "attachment; filename=" + HttpUtility.UrlEncode(newfile, Encoding.UTF8).ToString() + "");
+                    Response.BinaryWrite(ms.ToArray());
+                    Response.End();
+                    workbook = null;
+                }
+            }
         }
 
         /// <summary>

@@ -4450,7 +4450,7 @@ namespace Hx.BackAdmin.dayreport
                 strb.AppendLine("<td class=\"tc bold bggray\">数值</td>");
                 for (int i = 3; i < 13; i++)
                 {
-                    strb.AppendFormat("<td class=\"tc\">{0}</td>", GetCellValue(tbl.Rows[i]["目标"].ToString(), string.Empty, false, true));
+                    strb.AppendFormat("<td class=\"tc\">{0}</td>", GetCellValue(tbl.Rows[i]["目标"].ToString(), string.Empty, false, false));
                 }
                 strb.AppendLine("</tr>");
                 strb.AppendLine("</table>");

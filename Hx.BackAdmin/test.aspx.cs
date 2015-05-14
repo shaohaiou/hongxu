@@ -16,8 +16,7 @@ namespace Hx.BackAdmin
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
-            //Response.Write(Server.UrlEncode("http://bj.hongxu.cn/weixin/act.aspx"));
+            //Response.Write(Server.UrlEncode("http://bj.hongxu.cn/weixin/act.aspx?wechat_card_js=1"));
             //string s = string.Empty;
             //s.GetHashCode();
             //Response.Write(FormatNum(""));

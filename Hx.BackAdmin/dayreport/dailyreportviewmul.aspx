@@ -276,6 +276,9 @@
                             Text="渠道汇总" />
                         <asp:Button runat="server" ID="btnDCCCjqdzb" CssClass="an1" OnClick="btnKeyTarget_Click"
                             Text="网络汇总" />
+                        <%}else if(CurrentDep == DayReportDep.市场部) {%>
+                        <asp:Button runat="server" ID="btnXSFollow" CssClass="an1" OnClick="btnXSFollow_Click"
+                            Text="客源、线索进度下载" />
                         <%} %>
                         <input type="button" name="btnExportExcel" id="btnExportExcel" value="导出Excel" onclick="exportExcel()"
                             class="an1" />

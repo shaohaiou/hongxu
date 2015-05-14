@@ -167,6 +167,12 @@ namespace Hx.Car
                 case JcbSiteType.赶集网:
                     result = "https://passport.ganji.com/login.php";
                     break;
+                case JcbSiteType.搜狐二手车:
+                    if (account.JcbAccountType == JcbAccountType.个人帐号)
+                        result = "http://2sc.sohu.com/usercenter/login/";
+                    else if (account.JcbAccountType == JcbAccountType.商户帐号)
+                        result = "http://2sc.sohu.com/ctb/";
+                    break;
                 default:
                     break;
             }
@@ -191,6 +197,12 @@ namespace Hx.Car
                     break;
                 case JcbSiteType.赶集网:
                     result = "https://passport.ganji.com/login.php";
+                    break;
+                case JcbSiteType.搜狐二手车:
+                    if (account.JcbAccountType == JcbAccountType.个人帐号)
+                        result = "http://2sc.sohu.com/usercenter/car/";
+                    else if (account.JcbAccountType == JcbAccountType.商户帐号)
+                        result = "http://2sc.sohu.com/ctb/";
                     break;
                 default:
                     break;
@@ -241,6 +253,12 @@ namespace Hx.Car
                     break;
                 case JcbSiteType.赶集网:
                     result = "http://www.ganji.com/pub/pub.php?act=pub&method=load&cid=6&mcid=14";
+                    break;
+                case JcbSiteType.搜狐二手车:
+                    if (account.JcbAccountType == JcbAccountType.个人帐号)
+                        result = "http://2sc.sohu.com/sell/add/";
+                    else if (account.JcbAccountType == JcbAccountType.商户帐号)
+                        result = "http://2sc.sohu.com/ctb/";
                     break;
                 default:
                     break;

@@ -140,7 +140,7 @@
                 <li>
                     <asp:TextBox ID="tbUserPwd" runat="server" CssClass="srk2" TextMode="Password"></asp:TextBox>
                 </li>
-                <li style="height: 30px;">
+                <li style="height: 30px;display:none;">
                     <asp:TextBox ID="tbCode" runat="server" CssClass="srk3" Style="float: left;"></asp:TextBox>
                     <span style="display: inline-block; *display: inline; *zoom: 1;"><a href="javascript:fGetCode()">
                         <img src="checkcode.axd" alt="点击刷新" id="imgcode" width="90" /></a></span>

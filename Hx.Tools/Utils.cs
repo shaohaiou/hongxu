@@ -1319,6 +1319,25 @@ namespace Hx.Tools
             return weeknum;
         }
 
+        /// <summary>
+        /// 指定日期的月份有几天
+        /// </summary>
+        /// <param name="day"></param>
+        /// <returns></returns>
+        public static int MonthDays(DateTime day)
+        { 
+            DateTime daytemp = DateTime.Now;
+            if (DateTime.TryParse(day.ToString("yyyy-MM-") + "31", out daytemp))
+                return 31;
+            else if (DateTime.TryParse(day.ToString("yyyy-MM-") + "30", out daytemp))
+                return 30;
+            else if (DateTime.TryParse(day.ToString("yyyy-MM-") + "29", out daytemp))
+                return 29;
+            else if (DateTime.TryParse(day.ToString("yyyy-MM-") + "28", out daytemp))
+                return 28;
+            return 31;
+        }
+
         #region 多线程
 
         public delegate void DelayRunFunc();

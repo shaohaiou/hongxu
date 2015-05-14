@@ -79,6 +79,12 @@
     <Compile Include="Entity\BenzvoteInfo.cs" />
     <Compile Include="Entity\BenzvotePothunterInfo.cs" />
     <Compile Include="Entity\BenzvoteSettingInfo.cs" />
+    <Compile Include="Entity\CardidInfo.cs" />
+    <Compile Include="Entity\CardidlistpackInfo.cs" />
+    <Compile Include="Entity\CardInfo.cs" />
+    <Compile Include="Entity\CardpackInfo.cs" />
+    <Compile Include="Entity\CardPullRecordInfo.cs" />
+    <Compile Include="Entity\CardSettingInfo.cs" />
     <Compile Include="Entity\CityInfo.cs" />
     <Compile Include="Entity\CorpMienInfo.cs" />
     <Compile Include="Entity\CRMReportInfo.cs" />

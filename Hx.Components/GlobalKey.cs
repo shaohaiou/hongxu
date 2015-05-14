@@ -45,7 +45,8 @@ namespace Hx.Components
         public static readonly string WEIXINSECRET = "f6e1f096a7e847e9775b1cc64e713a33";    //微信密钥
         public static readonly string WEIXINACCESS_TOKEN_KEY = "access_token"; //微信access_token 键值
         public static readonly string WEIXINOPENID_SESSIONKEY = "session-weixinopenid";   //微信openid的session键值
-        public static readonly string WEIXINJSAPI_TICKET_KEY = "jsapi_ticket"; //微信jsapi_ticket 键值
+        public static readonly string WEIXINJSAPI_TICKET_KEY = "jsapi_ticket"; //微信jsapi_ticket 缓存键值
+        public static readonly string WEIXINCARDAPI_TICKET_KEY = "cardapi_ticket"; //微信卡券api_ticket 缓存键值
 
         public static readonly string BENZVOTEPOTHUNTER_LIST = "cache-benzvotepothunter-list";   //奔驰投票活动选手列表缓存键值
         public static readonly string BENZVOTE_LIST = "cache-benzvote-list";   //奔驰投票活动所有投票信息缓存键值
@@ -55,6 +56,12 @@ namespace Hx.Components
         public static readonly string JITUANVOTEPOTHUNTER_LIST = "cache-jituanvotepothunter-list";   //集团投票活动选手列表缓存键值
         public static readonly string JITUANVOTE_LIST = "cache-jituanvote-list";   //集团投票活动所有投票信息缓存键值
         public static readonly string JITUANVOTESETTING = "cache-jituanvotesetting"; //集团投票活动设置缓存键值
+
+        public static readonly string CARDSETTING = "cache-cardsetting"; //卡券活动设置缓存键值
+        public static readonly string CARDOPENID = "session-cardopenid"; //卡券活动openid键值
+        public static readonly string CARDLIST = "card-list"; //卡券列表缓存键值
+        public static readonly string CARDPULLLIST = "cardpull-list"; //卡券抽奖记录列表缓存键值
+        public static readonly string CARDIDLIST = "cardid-list"; //卡券抽奖记录列表缓存键值
 
         public static readonly string WEIXINACTCOMMENT_LIST = "cache-weixincomment-list"; //微信活动评论列表缓存键值
 

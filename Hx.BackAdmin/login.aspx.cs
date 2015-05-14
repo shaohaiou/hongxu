@@ -47,10 +47,12 @@ namespace Hx.BackAdmin
                 string code = StrHelper.Trim(tbCode.Text).ToLower();
 
                 ///用户名，密码，验证码不允许为空
-                if (!string.IsNullOrEmpty(userName) && !string.IsNullOrEmpty(password) && !string.IsNullOrEmpty(code))
+                if (!string.IsNullOrEmpty(userName) && !string.IsNullOrEmpty(password)
+                    //&& !string.IsNullOrEmpty(code)
+                    )
                 {
-                    if (Session["CheckCode"] != null && Session["CheckCode"].ToString().ToLower() == code)
-                    {
+                    //if (Session["CheckCode"] != null && Session["CheckCode"].ToString().ToLower() == code)
+                    //{
                         int id = Admins.Instance.ValiUser(userName, EncryptString.MD5(password));//验证用户
 
                         if (id > 0)
@@ -71,17 +73,17 @@ namespace Hx.BackAdmin
                             lbMsgUser.Text = "用户名或密码错误！";
                             lbMsgUser.Visible = true;
                         }
-                    }
-                    else
-                    {
-                        lbMsgUser.Text = "验证码不正确!";
-                        lbMsgUser.Visible = true;
-                    }
+                    //}
+                    //else
+                    //{
+                    //    lbMsgUser.Text = "验证码不正确!";
+                    //    lbMsgUser.Visible = true;
+                    //}
                     Session[GlobalKey.SESSION_ADMIN] = null;
                 }
                 else
                 {
-                    lbMsgUser.Text = "用户名，密码，验证码不能为空！";
+                    lbMsgUser.Text = "用户名，密码不能为空！";
                     lbMsgUser.Visible = true;
                 }
             }

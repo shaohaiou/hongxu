@@ -65,6 +65,14 @@ namespace Hx.BackAdmin.HttpHandler
             {
                 GetCommentMore();
             }
+            else if (action == "carddraw")
+            {
+                Carddraw();
+            }
+            else if (action == "cardpull")
+            {
+                CardPull();
+            }
             else
             {
                 result = string.Format(result, "fail", "非法操作");
@@ -341,28 +349,7 @@ namespace Hx.BackAdmin.HttpHandler
                         return;
                     }
 
-                    string access_token = MangaCache.Get(GlobalKey.WEIXINACCESS_TOKEN_KEY) as string;
-                    if (string.IsNullOrEmpty(access_token))
-                    {
-                        string url_access_token = string.Format("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={0}&secret={1}"
-                            , GlobalKey.WEIXINAPPID
-                            , GlobalKey.WEIXINSECRET);
-                        string str_access_token = Http.GetPageByWebClientDefault(url_access_token);
-                        Dictionary<string, string> dic_access_token = new Dictionary<string, string>();
-                        try
-                        {
-                            dic_access_token = json.Deserialize<Dictionary<string, string>>(str_access_token);
-                        }
-                        catch { }
-                        if (dic_access_token.ContainsKey("access_token"))
-                        {
-                            access_token = dic_access_token["access_token"];
-                            int expires_in = 7200;
-                            if (dic_access_token.ContainsKey("expires_in"))
-                                expires_in = DataConvert.SafeInt(dic_access_token["expires_in"], 7200);
-                            MangaCache.Add(GlobalKey.WEIXINACCESS_TOKEN_KEY, access_token, expires_in);
-                        }
-                    }
+                    string access_token = WeixinActs.Instance.GetAccessToken();
 
                     if (!string.IsNullOrEmpty(access_token))
                     {
@@ -531,7 +518,7 @@ namespace Hx.BackAdmin.HttpHandler
                         foreach (WeixinActCommentInfo entity in source)
                         {
                             htmlstr.Append("<tr>");
-                            htmlstr.Append("<td><p>" + entity.Comment.Replace("\r"," ").Replace("\n"," ").Replace("\"", " ") + "</p>");
+                            htmlstr.Append("<td><p>" + entity.Comment.Replace("\r", " ").Replace("\n", " ").Replace("\"", " ") + "</p>");
                             htmlstr.Append("<div class='dvcommentinfo'>");
                             htmlstr.Append("<span>" + entity.AddTime.ToString("HH:mm:ss") + "</span> <span>");
                             htmlstr.Append((string.IsNullOrEmpty(entity.Commenter) ? "匿名" : entity.Commenter) + "</span></div>");
@@ -550,6 +537,198 @@ namespace Hx.BackAdmin.HttpHandler
                         result = string.Format(result, "success", htmlstr.ToString());
                     else
                         result = string.Format(result, "fail", rcode);
+                }
+            }
+            catch (Exception ex)
+            {
+                ExpLog.Write(ex);
+                result = string.Format(result, "fail", "执行失败");
+            }
+        }
+
+        #endregion
+
+        #region 卡券活动
+        private static object sync_card = new object();
+
+        /// <summary>
+        /// 拉取卡券
+        /// </summary>
+        private void Carddraw()
+        {
+            try
+            {
+                string openid = WebHelper.GetString("openid");
+
+                if (!string.IsNullOrEmpty(openid))
+                {
+                    CardSettingInfo setting = WeixinActs.Instance.GetCardSetting(true);
+                    if (setting != null && setting.Switch == 1)
+                    {
+                        string accesstoken = WeixinActs.Instance.GetAccessToken(setting.AppID, setting.AppSecret);
+                        Dictionary<string, string> openinfo = WeixinActs.Instance.GetOpeninfo(accesstoken, openid);
+                        if (!openinfo.Keys.Contains("subscribe") || openinfo["subscribe"] == "0")
+                        {
+                            result = string.Format(result, "fail", string.Format("请您先关注{0}公众号，再从公众号进入此活动！", setting.AppName));
+                            return;
+                        }
+                        List<CardPullRecordInfo> listrecord = WeixinActs.Instance.GetCardPullRecordList(true);
+                        if (listrecord.Exists(l => l.Openid == openid && (l.PullResult == "2" || l.PullResult == "0")))
+                        {
+                            result = string.Format(result, "fail", "每个微信号只能参与一次抽奖！");
+                            return;
+                        }
+                        lock (sync_card)
+                        {
+                            List<CardpackInfo> cardlist = WeixinActs.Instance.GetCardlist();
+                            if (cardlist == null || (cardlist != null && cardlist.Count == 0))
+                            {
+                                result = string.Format(result, "success", "0");
+                            }
+                            else
+                            {
+                                Dictionary<int, string> cardids = new Dictionary<int, string>();
+                                List<CardidInfo> cardidinfolist = WeixinActs.Instance.GetCardidInfolist(true);
+                                string apiticket = WeixinActs.Instance.GetCardapiTicket(setting.AppID, setting.AppSecret);
+                                int timestamp = Utils.ConvertDateTimeInt(DateTime.Now);
+
+                                int i = 0;
+                                foreach (CardpackInfo cardpack in cardlist)
+                                {
+                                    if (cardpack.card.base_info != null && cardidinfolist.Exists(c => c.Cardid == cardpack.card.base_info.id))
+                                    {
+                                        int kuc = cardidinfolist.Find(c => c.Cardid == cardpack.card.base_info.id).Num;
+                                        for (int j = 0; j < kuc; j++)
+                                        {
+                                            List<string> signaturevalues = new List<string>() 
+                                            { 
+                                                timestamp.ToString(),
+                                                apiticket.ToString(),
+                                                cardpack.card.base_info.id
+                                            };
+                                            signaturevalues = signaturevalues.OrderBy(s => s.Substring(0,1)).ToList();
+                                            string signature = EncryptString.SHA1_Hash(string.Format("{0}{1}{2}", signaturevalues[0], signaturevalues[1], signaturevalues[2]));
+                                            string awardname = cardidinfolist.Find(c => c.Cardid == cardpack.card.base_info.id).Award;
+                                            cardids.Add(i, cardpack.card.base_info.id + "|" + cardpack.card.base_info.title + "|" + awardname + "|" + cardpack.card.base_info.logo_url + "|" + timestamp + "|" + signature);
+                                            i++;
+                                        }
+                                    }
+                                }
+
+                                if (cardids.Count == 0)
+                                {
+                                    result = string.Format(result, "success", "0");
+                                }
+                                else
+                                {
+                                    if (listrecord.Exists(l => l.Openid == openid && l.PullResult == "1"))
+                                    {
+                                        CardPullRecordInfo record = listrecord.Find(l => l.Openid == openid && l.PullResult == "1");
+                                        List<string> signaturevalues = new List<string>() 
+                                        { 
+                                            timestamp.ToString(),
+                                            apiticket.ToString(),
+                                            record.Cardid
+                                        };
+                                        signaturevalues = signaturevalues.OrderBy(s => s.Substring(0,1)).ToList();
+                                        string signature = EncryptString.SHA1_Hash(string.Format("{0}{1}{2}", signaturevalues[0], signaturevalues[1], signaturevalues[2]));
+                                        result = string.Format(result, "success", record.Cardid + "|" + record.Cardtitle + "|" + record.Cardawardname + "|" + record.Cardlogourl + "|" + timestamp + "|" + signature);
+                                    }
+                                    else
+                                    {
+                                        string username = string.Empty;
+                                        if (openinfo.ContainsKey("nickname"))
+                                            username = openinfo["nickname"];
+
+                                        int maxrange = cardids.Count * 100 / setting.WinRate;
+                                        Random r = new Random(DataConvert.SafeInt(DateTime.Now.ToString("ddmm") + DateTime.Now.Millisecond.ToString()));
+                                        int index = r.Next(maxrange);
+                                        if (index > cardids.Count - 1)
+                                        {
+                                            CardPullRecordInfo pullrecord = new CardPullRecordInfo()
+                                            {
+                                                Openid = openid,
+                                                UserName = username,
+                                                Cardid = string.Empty,
+                                                Cardtitle = string.Empty,
+                                                Cardawardname = string.Empty,
+                                                Cardlogourl = string.Empty,
+                                                PullResult = "0",
+                                                AddTime = DateTime.Now
+                                            };
+                                            WeixinActs.Instance.AddCardPullRecord(pullrecord);
+                                            listrecord.Add(pullrecord);
+                                            result = string.Format(result, "success", "0");
+                                        }
+                                        else
+                                        {
+                                            CardPullRecordInfo pullrecord = new CardPullRecordInfo()
+                                            {
+                                                Openid = openid,
+                                                UserName = username,
+                                                Cardid = cardids[index].Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries)[0],
+                                                Cardtitle = cardids[index].Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries)[1],
+                                                Cardawardname = cardids[index].Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries)[2],
+                                                Cardlogourl = cardids[index].Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries)[3],
+                                                PullResult = "1",
+                                                AddTime = DateTime.Now
+                                            };
+                                            WeixinActs.Instance.AddCardPullRecord(pullrecord);
+                                            listrecord.Add(pullrecord);
+                                            CardidInfo cardidinfo = cardidinfolist.Find(c => c.Cardid == pullrecord.Cardid);
+                                            cardidinfo.Num--;
+                                            WeixinActs.Instance.UpdateCardidInfo(cardidinfo);
+                                            WeixinActs.Instance.ReloadCardidListCache();
+                                            result = string.Format(result, "success", cardids[index]);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else
+                        result = string.Format(result, "fail", "该活动未开始,敬请期待。");
+                }
+                else
+                {
+                    result = string.Format(result, "fail", "openid为空");
+                }
+            }
+            catch (Exception ex)
+            {
+                ExpLog.Write(ex);
+                result = string.Format(result, "fail", "执行失败");
+            }
+        }
+
+        /// <summary>
+        /// 领取卡券
+        /// </summary>
+        private void CardPull()
+        {
+            try
+            {
+                string openid = WebHelper.GetString("openid");
+
+                if (!string.IsNullOrEmpty(openid))
+                {
+                    CardSettingInfo setting = WeixinActs.Instance.GetCardSetting(true);
+                    if (setting != null && setting.Switch == 1)
+                    {
+                        List<CardPullRecordInfo> listrecord = WeixinActs.Instance.GetCardPullRecordList(true);
+                        if (listrecord.Exists(l => l.Openid == openid))
+                        {
+                            WeixinActs.Instance.PullCard(listrecord.Find(l => l.Openid == openid).Openid);
+                            listrecord.Find(l => l.Openid == openid).PullResult = "2";
+                            result = string.Format(result, "success", "1");
+                        }
+                    }
+                    else
+                        result = string.Format(result, "fail", "该活动未开始,敬请期待。");
+                }
+                else
+                {
+                    result = string.Format(result, "fail", "openid为空");
                 }
             }
             catch (Exception ex)

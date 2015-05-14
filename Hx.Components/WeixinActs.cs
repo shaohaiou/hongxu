@@ -44,19 +44,21 @@ namespace Hx.Components
         /// 获取微信通信密钥
         /// </summary>
         /// <returns></returns>
-        public string GetAccessToken()
+        public string GetAccessToken(string appid = "", string secret = "")
         {
-            string access_token = MangaCache.Get(GlobalKey.WEIXINACCESS_TOKEN_KEY) as string;
+            if (string.IsNullOrEmpty(appid)) appid = GlobalKey.WEIXINAPPID;
+            if (string.IsNullOrEmpty(secret)) secret = GlobalKey.WEIXINSECRET;
+            string access_token = MangaCache.Get(GlobalKey.WEIXINACCESS_TOKEN_KEY + "_" + appid) as string;
             if (string.IsNullOrEmpty(access_token))
             {
                 lock (sync_creater)
                 {
-                    access_token = MangaCache.Get(GlobalKey.WEIXINACCESS_TOKEN_KEY) as string;
+                    access_token = MangaCache.Get(GlobalKey.WEIXINACCESS_TOKEN_KEY + "_" + appid) as string;
                     if (string.IsNullOrEmpty(access_token))
                     {
                         string url_access_token = string.Format("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={0}&secret={1}"
-                            , GlobalKey.WEIXINAPPID
-                            , GlobalKey.WEIXINSECRET);
+                            , appid
+                            , secret);
                         string str_access_token = Http.GetPageByWebClientDefault(url_access_token);
                         Dictionary<string, string> dic_access_token = new Dictionary<string, string>();
                         try
@@ -67,10 +69,10 @@ namespace Hx.Components
                         if (dic_access_token.ContainsKey("access_token"))
                         {
                             access_token = dic_access_token["access_token"];
-                            int expires_in = 7200;
+                            int expires_in = 7100;
                             if (dic_access_token.ContainsKey("expires_in"))
-                                expires_in = DataConvert.SafeInt(dic_access_token["expires_in"], 7200);
-                            MangaCache.Add(GlobalKey.WEIXINACCESS_TOKEN_KEY, access_token, expires_in);
+                                expires_in = DataConvert.SafeInt(dic_access_token["expires_in"], 7100);
+                            MangaCache.Add(GlobalKey.WEIXINACCESS_TOKEN_KEY + "_" + appid, access_token, expires_in);
                         }
                     }
                 }
@@ -113,20 +115,54 @@ namespace Hx.Components
         }
 
         /// <summary>
+        /// 获取用户唯一标识openid
+        /// </summary>
+        /// <param name="appid"></param>
+        /// <param name="secret"></param>
+        /// <param name="code"></param>
+        /// <returns></returns>
+        public string GetOpenid(string appid = "", string secret = "", string code = "")
+        {
+            if (string.IsNullOrEmpty(appid)) appid = GlobalKey.WEIXINAPPID;
+            if (string.IsNullOrEmpty(secret)) secret = GlobalKey.WEIXINSECRET;
+            string openid = string.Empty;
+            string url_openid = string.Format("https://api.weixin.qq.com/sns/oauth2/access_token?appid={0}&secret={1}&code={2}&grant_type=authorization_code"
+                        , appid
+                        , secret
+                        , code);
+            string str_openid = Http.GetPageByWebClientDefault(url_openid);
+            Dictionary<string, string> dic_openid = new Dictionary<string, string>();
+            try
+            {
+                dic_openid = json.Deserialize<Dictionary<string, string>>(str_openid);
+            }
+            catch { }
+            if (dic_openid.ContainsKey("openid"))
+            {
+                openid = dic_openid["openid"];
+            }
+
+            return openid;
+        }
+
+        /// <summary>
         /// 获取JS-SDK使用权限签名
         /// </summary>
         /// <returns></returns>
-        public string GetJsapiTicket()
+        public string GetJsapiTicket(string appid = "", string secret = "")
         {
-            string jsapi_ticket = MangaCache.Get(GlobalKey.WEIXINJSAPI_TICKET_KEY) as string;
+            if (string.IsNullOrEmpty(appid)) appid = GlobalKey.WEIXINAPPID;
+            if (string.IsNullOrEmpty(secret)) secret = GlobalKey.WEIXINSECRET;
+            string key = GlobalKey.WEIXINJSAPI_TICKET_KEY + "_" + appid;
+            string jsapi_ticket = MangaCache.Get(key) as string;
             if (string.IsNullOrEmpty(jsapi_ticket))
             {
                 lock (sync_creater)
                 {
-                    jsapi_ticket = MangaCache.Get(GlobalKey.WEIXINJSAPI_TICKET_KEY) as string;
+                    jsapi_ticket = MangaCache.Get(key) as string;
                     if (string.IsNullOrEmpty(jsapi_ticket))
                     {
-                        string accesstoken = GetAccessToken();
+                        string accesstoken = GetAccessToken(appid, secret);
                         string url_jsapi_ticket = string.Format("https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token={0}&type=jsapi"
                             , accesstoken);
                         string str_jsapi_ticket = Http.GetPageByWebClientDefault(url_jsapi_ticket);
@@ -139,10 +175,53 @@ namespace Hx.Components
                         if (dic_jsapi_ticket.ContainsKey("errmsg") && dic_jsapi_ticket["errmsg"] == "ok")
                         {
                             jsapi_ticket = dic_jsapi_ticket["ticket"];
-                            int expires_in = 7200;
+                            int expires_in = 7100;
                             if (dic_jsapi_ticket.ContainsKey("expires_in"))
-                                expires_in = DataConvert.SafeInt(dic_jsapi_ticket["expires_in"], 7200);
-                            MangaCache.Add(GlobalKey.WEIXINJSAPI_TICKET_KEY, jsapi_ticket, expires_in);
+                                expires_in = DataConvert.SafeInt(dic_jsapi_ticket["expires_in"], 7100);
+                            MangaCache.Add(key, jsapi_ticket, expires_in);
+                        }
+                    }
+                }
+            }
+
+            return jsapi_ticket;
+
+        }
+
+        /// <summary>
+        /// 获取卡券使用权限签名
+        /// </summary>
+        /// <returns></returns>
+        public string GetCardapiTicket(string appid = "", string secret = "")
+        {
+            if (string.IsNullOrEmpty(appid)) appid = GlobalKey.WEIXINAPPID;
+            if (string.IsNullOrEmpty(secret)) secret = GlobalKey.WEIXINSECRET;
+            string key = GlobalKey.WEIXINCARDAPI_TICKET_KEY + "_" + appid;
+            string jsapi_ticket = MangaCache.Get(key) as string;
+            if (string.IsNullOrEmpty(jsapi_ticket))
+            {
+                lock (sync_creater)
+                {
+                    jsapi_ticket = MangaCache.Get(key) as string;
+                    if (string.IsNullOrEmpty(jsapi_ticket))
+                    {
+                        string accesstoken = GetAccessToken(appid, secret);
+                        string url_jsapi_ticket = string.Format("https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token={0}&type=wx_card"
+                            , accesstoken);
+                        string str_jsapi_ticket = Http.GetPageByWebClientDefault(url_jsapi_ticket);
+                        Dictionary<string, string> dic_jsapi_ticket = new Dictionary<string, string>();
+                        try
+                        {
+                            dic_jsapi_ticket = json.Deserialize<Dictionary<string, string>>(str_jsapi_ticket);
+                        }
+                        catch { }
+                        if (dic_jsapi_ticket.ContainsKey("errmsg") && dic_jsapi_ticket["errmsg"] == "ok")
+                        {
+                            jsapi_ticket = dic_jsapi_ticket["ticket"];
+                            int expires_in = 7100;
+                            if (dic_jsapi_ticket.ContainsKey("expires_in"))
+                                expires_in = DataConvert.SafeInt(dic_jsapi_ticket["expires_in"], 7100);
+                            MangaCache.Add(key, jsapi_ticket, expires_in);
                         }
                     }
                 }
@@ -430,7 +509,7 @@ namespace Hx.Components
                         if (setting != null && setting.VoteTimes > 0 && votes.Count >= setting.VoteTimes)
                         {
                             return "您今天已经投过" + setting.VoteTimes + "次票，请明天再来为他/她投票吧。";
-                        } 
+                        }
                         if (votes.Exists(v => v.Key == (id + "_" + openid)))
                         {
                             return "您今天已经为他/她投过票了，不能重复投哦。";
@@ -1181,6 +1260,240 @@ namespace Hx.Components
         {
             CommonDataProvider.Instance().UpdateEscpgRestore(ids);
         }
+
+        #endregion
+
+        #region 卡券活动
+
+        #region 活动设置
+
+        public void AddCardSetting(CardSettingInfo entity)
+        {
+            CommonDataProvider.Instance().AddCardSetting(entity);
+        }
+
+        public CardSettingInfo GetCardSetting(bool fromCache = false)
+        {
+            if (!fromCache)
+            {
+                return CommonDataProvider.Instance().GetCardSetting();
+            }
+
+            string key = GlobalKey.CARDSETTING;
+            CardSettingInfo setting = MangaCache.Get(key) as CardSettingInfo;
+            if (setting == null)
+            {
+                lock (sync_creater)
+                {
+                    setting = MangaCache.Get(key) as CardSettingInfo;
+                    if (setting == null)
+                    {
+                        setting = CommonDataProvider.Instance().GetCardSetting();
+
+                        MangaCache.Max(key, setting);
+                    }
+                }
+            }
+            return setting;
+        }
+
+        public void ReloadCardSetting()
+        {
+            string key = GlobalKey.CARDSETTING;
+            MangaCache.Remove(key);
+            GetCardSetting(true);
+        }
+
+        #endregion
+
+        #region 获取卡券列表
+
+        /// <summary>
+        /// 获取卡券详细信息列表
+        /// </summary>
+        /// <returns></returns>
+        public List<CardpackInfo> GetCardlist()
+        {
+            CardSettingInfo setting = GetCardSetting(true);
+            string key = GlobalKey.CARDLIST + "_" + setting.AppID;
+
+            List<CardpackInfo> cardlist = MangaCache.Get(key) as List<CardpackInfo>;
+            if (cardlist == null)
+            {
+                lock (sync_creater)
+                {
+                    cardlist = MangaCache.Get(key) as List<CardpackInfo>;
+                    if (cardlist == null)
+                    {
+                        cardlist = new List<CardpackInfo>();
+                        if (setting == null) setting = new CardSettingInfo();
+                        List<CardidInfo> cardidlist = GetCardidInfolist(true);
+                        foreach (CardidInfo info in cardidlist)
+                        {
+                            CardpackInfo card = GetCardpack(setting.AppID, setting.AppSecret, info.Cardid);
+                            if (card != null)
+                                cardlist.Add(card);
+                        }
+
+                        MangaCache.Max(key, cardlist);
+                    }
+                }
+            }
+
+            return cardlist;
+        }
+
+        public void ReloadCardlist()
+        {
+            CardSettingInfo setting = GetCardSetting(true);
+            string key = GlobalKey.CARDLIST + "_" + setting.AppID;
+            MangaCache.Remove(key);
+            GetCardlist();
+        }
+
+        /// <summary>
+        /// 获取公众号下的卡券ID信息
+        /// </summary>
+        /// <param name="appid"></param>
+        /// <param name="appsecret"></param>
+        /// <returns></returns>
+        private CardidlistpackInfo GetCardidlistpack(string appid, string appsecret)
+        {
+            string url_cards = string.Format("https://api.weixin.qq.com/card/batchget?access_token={0}", WeixinActs.Instance.GetAccessToken(appid, appsecret));
+            string str_cards = Http.Post("{\"offset\":0,\"count\"=10}", url_cards);
+            CardidlistpackInfo list_card = null;
+            try
+            {
+                list_card = json.Deserialize<CardidlistpackInfo>(str_cards);
+            }
+            catch { }
+            return list_card;
+        }
+
+        /// <summary>
+        /// 获取卡券详细信息
+        /// </summary>
+        /// <param name="appid"></param>
+        /// <param name="appsecret"></param>
+        /// <param name="card_id"></param>
+        /// <returns></returns>
+        private CardpackInfo GetCardpack(string appid, string appsecret, string card_id)
+        {
+            string url = string.Format("https://api.weixin.qq.com/card/get?access_token={0}", WeixinActs.Instance.GetAccessToken(appid, appsecret));
+            string str_card = Http.Post("{\"card_id\":\"" + card_id + "\"", url, "utf-8");
+            CardpackInfo cardinfo = null;
+            try
+            {
+                cardinfo = json.Deserialize<CardpackInfo>(str_card);
+            }
+            catch { }
+            return cardinfo;
+        }
+
+        /// <summary>
+        /// 获取后台卡券设置列表信息
+        /// </summary>
+        /// <param name="fromCache"></param>
+        /// <returns></returns>
+        public List<CardidInfo> GetCardidInfolist(bool fromCache = false)
+        {
+            if (!fromCache)
+            {
+                return CommonDataProvider.Instance().GetCardidInfolist();
+            }
+
+            string key = GlobalKey.CARDIDLIST;
+            List<CardidInfo> list = MangaCache.Get(key) as List<CardidInfo>;
+            if (list == null)
+            {
+                lock (sync_creater)
+                {
+                    list = MangaCache.Get(key) as List<CardidInfo>;
+                    if (list == null)
+                    {
+                        list = CommonDataProvider.Instance().GetCardidInfolist();
+
+                        MangaCache.Max(key, list);
+                    }
+                }
+            }
+            return list;
+        }
+
+        public void ReloadCardidListCache()
+        {
+            string key = GlobalKey.CARDIDLIST;
+            MangaCache.Remove(key);
+            GetCardidInfolist(true);
+        }
+
+        public void DeleteCardidInfo(string ids)
+        {
+            CommonDataProvider.Instance().DeleteCardidInfo(ids);
+        }
+
+        public void AddCardidInfo(CardidInfo entity)
+        {
+            CommonDataProvider.Instance().AddCardidInfo(entity);
+        }
+
+        public void UpdateCardidInfo(CardidInfo entity)
+        {
+            CommonDataProvider.Instance().UpdateCardidInfo(entity);
+        }
+
+        #endregion
+
+        #region 卡券抽奖记录
+
+        public void AddCardPullRecord(CardPullRecordInfo entity)
+        {
+            CommonDataProvider.Instance().AddCardPullRecord(entity);
+        }
+
+        public void PullCard(string openid)
+        {
+            CommonDataProvider.Instance().PullCard(openid);
+        }
+
+        public List<CardPullRecordInfo> GetCardPullRecordList(bool fromCache = false)
+        {
+            if (!fromCache)
+            {
+                return CommonDataProvider.Instance().GetCardPullRecordList();
+            }
+
+            string key = GlobalKey.CARDPULLLIST;
+            List<CardPullRecordInfo> list = MangaCache.Get(key) as List<CardPullRecordInfo>;
+            if (list == null)
+            {
+                lock (sync_creater)
+                {
+                    list = MangaCache.Get(key) as List<CardPullRecordInfo>;
+                    if (list == null)
+                    {
+                        list = CommonDataProvider.Instance().GetCardPullRecordList();
+
+                        MangaCache.Max(key, list);
+                    }
+                }
+            }
+            return list;
+        }
+
+        public void ReloadCardPullRecordListCache()
+        {
+            string key = GlobalKey.CARDPULLLIST;
+            MangaCache.Remove(key);
+            GetCardPullRecordList(true);
+        }
+
+        public void ClearCardPullRecord()
+        {
+            CommonDataProvider.Instance().ClearCardPullRecord();
+        }
+
+        #endregion
 
         #endregion
     }

@@ -38,7 +38,7 @@ namespace Hx.BackAdmin
                 {
                     carquotationindex_page.Visible = true;
                 }
-                if (((int)Admin.UserRole & (int)UserRoleType.微信活动管理员) > 0 || ((int)Admin.UserRole & (int)UserRoleType.二手车估价器管理员) > 0)
+                if (((int)Admin.UserRole & (int)UserRoleType.微信活动管理员) > 0 || ((int)Admin.UserRole & (int)UserRoleType.二手车估价器管理员) > 0 || ((int)Admin.UserRole & (int)UserRoleType.卡券活动管理员) > 0)
                 {
                     weixin_page.Visible = true;
                 }

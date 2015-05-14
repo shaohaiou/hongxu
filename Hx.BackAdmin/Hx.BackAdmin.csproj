@@ -90,6 +90,7 @@
     <Content Include="css\admin.css" />
     <Content Include="css\benzvote.css" />
     <Content Include="css\calculator\calculator.css" />
+    <Content Include="css\card.css" />
     <Content Include="css\escpg.css" />
     <Content Include="css\style.css" />
     <Content Include="css\jituanvote.css" />
@@ -174,6 +175,17 @@
     <Content Include="images\sj.gif" />
     <Content Include="images\sj2.gif" />
     <Content Include="images\waiting.gif" />
+    <Content Include="images\weixin\card\bgflay.png" />
+    <Content Include="images\weixin\card\cardbg.png" />
+    <Content Include="images\weixin\card\edj.png" />
+    <Content Include="images\weixin\card\original.png" />
+    <Content Include="images\weixin\card\sdj.png" />
+    <Content Include="images\weixin\card\sidj.png" />
+    <Content Include="images\weixin\card\tdj.png" />
+    <Content Include="images\weixin\card\wzj.png" />
+    <Content Include="images\weixin\card\ydj.png" />
+    <Content Include="images\weixin\card\zj.png" />
+    <Content Include="images\weixin\card\zjbg.png" />
     <Content Include="images\weixin\escpg\btnsubmit.png" />
     <Content Include="images\weixin\escpg\ewm.png" />
     <Content Include="images\weixin\escpg\head.png" />
@@ -366,6 +378,7 @@
     <Content Include="js\comm.js" />
     <Content Include="js\config.js" />
     <Content Include="js\jquery-1.3.2.min.js" />
+    <Content Include="js\jQuery-eraser-0.4.2.js" />
     <Content Include="js\jquery-ui-1.7.3.custom.min.js" />
     <Content Include="js\jweixin-1.0.0.js" />
     <Content Include="js\lang\en.js" />
@@ -412,6 +425,10 @@
     <Content Include="weixin\benzvotepageinuse.aspx" />
     <Content Include="weixin\benzvotepothunteredit.aspx" />
     <Content Include="weixin\benzvotesetting.aspx" />
+    <Content Include="weixin\cardlist.aspx" />
+    <Content Include="weixin\cardmg.aspx" />
+    <Content Include="weixin\cardpg.aspx" />
+    <Content Include="weixin\cardpullrecordlist.aspx" />
     <Content Include="weixin\dianzan.aspx" />
     <Content Include="weixin\escpg.aspx" />
     <Content Include="weixin\escpgmg.aspx" />
@@ -940,6 +957,34 @@
     </Compile>
     <Compile Include="weixin\benzvotesetting.aspx.designer.cs">
       <DependentUpon>benzvotesetting.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="weixin\cardlist.aspx.cs">
+      <DependentUpon>cardlist.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="weixin\cardlist.aspx.designer.cs">
+      <DependentUpon>cardlist.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="weixin\cardmg.aspx.cs">
+      <DependentUpon>cardmg.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="weixin\cardmg.aspx.designer.cs">
+      <DependentUpon>cardmg.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="weixin\cardpg.aspx.cs">
+      <DependentUpon>cardpg.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="weixin\cardpg.aspx.designer.cs">
+      <DependentUpon>cardpg.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="weixin\cardpullrecordlist.aspx.cs">
+      <DependentUpon>cardpullrecordlist.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="weixin\cardpullrecordlist.aspx.designer.cs">
+      <DependentUpon>cardpullrecordlist.aspx</DependentUpon>
     </Compile>
     <Compile Include="weixin\dianzan.aspx.cs">
       <DependentUpon>dianzan.aspx</DependentUpon>

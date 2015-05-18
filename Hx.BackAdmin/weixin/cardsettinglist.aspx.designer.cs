@@ -10,7 +10,7 @@
 namespace Hx.BackAdmin.weixin {
     
     
-    public partial class cardlist {
+    public partial class cardsettinglist {
         
         /// <summary>
         /// form1 控件。

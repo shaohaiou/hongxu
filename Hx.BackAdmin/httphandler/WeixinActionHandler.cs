@@ -559,10 +559,11 @@ namespace Hx.BackAdmin.HttpHandler
             try
             {
                 string openid = WebHelper.GetString("openid");
+                int sid = WebHelper.GetInt("sid");
 
                 if (!string.IsNullOrEmpty(openid))
                 {
-                    CardSettingInfo setting = WeixinActs.Instance.GetCardSetting(true);
+                    CardSettingInfo setting = WeixinActs.Instance.GetCardSetting(sid,true);
                     if (setting != null && setting.Switch == 1)
                     {
                         string accesstoken = WeixinActs.Instance.GetAccessToken(setting.AppID, setting.AppSecret);
@@ -572,7 +573,7 @@ namespace Hx.BackAdmin.HttpHandler
                             result = string.Format(result, "fail", string.Format("请您先关注{0}公众号，再从公众号进入此活动！", setting.AppName));
                             return;
                         }
-                        List<CardPullRecordInfo> listrecord = WeixinActs.Instance.GetCardPullRecordList(true);
+                        List<CardPullRecordInfo> listrecord = WeixinActs.Instance.GetCardPullRecordList(sid,true);
                         if (listrecord.Exists(l => l.Openid == openid && (l.PullResult == "2" || l.PullResult == "0")))
                         {
                             result = string.Format(result, "fail", "每个微信号只能参与一次抽奖！");
@@ -580,7 +581,7 @@ namespace Hx.BackAdmin.HttpHandler
                         }
                         lock (sync_card)
                         {
-                            List<CardpackInfo> cardlist = WeixinActs.Instance.GetCardlist();
+                            List<CardpackInfo> cardlist = WeixinActs.Instance.GetCardlist(sid);
                             if (cardlist == null || (cardlist != null && cardlist.Count == 0))
                             {
                                 result = string.Format(result, "success", "0");
@@ -588,7 +589,7 @@ namespace Hx.BackAdmin.HttpHandler
                             else
                             {
                                 Dictionary<int, string> cardids = new Dictionary<int, string>();
-                                List<CardidInfo> cardidinfolist = WeixinActs.Instance.GetCardidInfolist(true);
+                                List<CardidInfo> cardidinfolist = WeixinActs.Instance.GetCardidInfolist(sid,true);
                                 string apiticket = WeixinActs.Instance.GetCardapiTicket(setting.AppID, setting.AppSecret);
                                 int timestamp = Utils.ConvertDateTimeInt(DateTime.Now);
 
@@ -621,9 +622,9 @@ namespace Hx.BackAdmin.HttpHandler
                                 }
                                 else
                                 {
-                                    if (listrecord.Exists(l => l.Openid == openid && l.PullResult == "1"))
+                                    if (listrecord.Exists(l => l.Openid == openid && l.SID == sid && l.PullResult == "1"))
                                     {
-                                        CardPullRecordInfo record = listrecord.Find(l => l.Openid == openid && l.PullResult == "1");
+                                        CardPullRecordInfo record = listrecord.Find(l => l.Openid == openid && l.SID == sid && l.PullResult == "1");
                                         List<string> signaturevalues = new List<string>() 
                                         { 
                                             timestamp.ToString(),
@@ -647,6 +648,7 @@ namespace Hx.BackAdmin.HttpHandler
                                         {
                                             CardPullRecordInfo pullrecord = new CardPullRecordInfo()
                                             {
+                                                SID = sid,
                                                 Openid = openid,
                                                 UserName = username,
                                                 Cardid = string.Empty,
@@ -664,6 +666,7 @@ namespace Hx.BackAdmin.HttpHandler
                                         {
                                             CardPullRecordInfo pullrecord = new CardPullRecordInfo()
                                             {
+                                                SID = sid,
                                                 Openid = openid,
                                                 UserName = username,
                                                 Cardid = cardids[index].Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries)[0],
@@ -678,7 +681,7 @@ namespace Hx.BackAdmin.HttpHandler
                                             CardidInfo cardidinfo = cardidinfolist.Find(c => c.Cardid == pullrecord.Cardid);
                                             cardidinfo.Num--;
                                             WeixinActs.Instance.UpdateCardidInfo(cardidinfo);
-                                            WeixinActs.Instance.ReloadCardidListCache();
+                                            WeixinActs.Instance.ReloadCardidListCache(sid);
                                             result = string.Format(result, "success", cardids[index]);
                                         }
                                     }
@@ -709,16 +712,17 @@ namespace Hx.BackAdmin.HttpHandler
             try
             {
                 string openid = WebHelper.GetString("openid");
+                int sid = WebHelper.GetInt("sid");
 
                 if (!string.IsNullOrEmpty(openid))
                 {
-                    CardSettingInfo setting = WeixinActs.Instance.GetCardSetting(true);
+                    CardSettingInfo setting = WeixinActs.Instance.GetCardSetting(sid,true);
                     if (setting != null && setting.Switch == 1)
                     {
-                        List<CardPullRecordInfo> listrecord = WeixinActs.Instance.GetCardPullRecordList(true);
-                        if (listrecord.Exists(l => l.Openid == openid))
+                        List<CardPullRecordInfo> listrecord = WeixinActs.Instance.GetCardPullRecordList(sid,true);
+                        if (listrecord.Exists(l => l.Openid == openid && l.SID == sid))
                         {
-                            WeixinActs.Instance.PullCard(listrecord.Find(l => l.Openid == openid).Openid);
+                            WeixinActs.Instance.PullCard(listrecord.Find(l => l.Openid == openid && l.SID == sid).Openid, sid);
                             listrecord.Find(l => l.Openid == openid).PullResult = "2";
                             result = string.Format(result, "success", "1");
                         }

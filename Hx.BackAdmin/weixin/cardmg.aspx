@@ -43,17 +43,48 @@
                     }
                 });
             });
+            $("#cbxAllPowerUser").click(function () {
+                $(".cbxPowerUser").attr("checked", $(this).attr("checked"));
+                setpoweruser();
+            })
+            $(".cbxPowerUser").click(function () {
+                setpoweruser();
+            });
         })
+
+        function setpoweruser() {
+            var poweruser = $(".cbxPowerUser:checked").map(function () {
+                return $(this).val();
+            }).get().join('|');
+            if (poweruser != '')
+                poweruser = '|' + poweruser + '|'
+            $("#hdnPowerUser").val(poweruser);
+        }
     </script>
+    <style type="text/css">
+    .clpp ul{display:inline-block;width:160px;*display:inline;*zoom:1;vertical-align:top;margin-left:3px;}
+    .nh{color:White;font-weight:bold;font-size:18px;background:#222;text-indent:5px;}
+    label{line-height: 18px;display:inline-block;*display:inline;*zoom:1;}
+    </style>
 </head>
 <body>
     <form id="form1" runat="server">
     <div class="ht_main">
         <ul class="xnav">
-            <li class="current"><a href="cardmg.aspx">活动设置</a></li>
-            <li><a href="cardlist.aspx">卡券管理</a></li>
-            <li><a href="cardpullrecordlist.aspx">抽奖记录</a></li>
+            <%if (Hx.Components.Web.HXContext.Current.AdminUser.Administrator)
+              { %><li><a href="cardsettinglist.aspx">卡券活动管理</a></li><%} %>
+            <asp:Repeater ID="rpcg" runat="server">
+                <ItemTemplate>
+                    <li <%# SetCardSettingStatus(Eval("ID").ToString()) %> <%#Eval("ID").ToString() == GetString("sid") ? "class=\"current\"" : string.Empty %>>
+                        <a href="cardmg.aspx?sid=<%#Eval("ID")%>">
+                            <%#Eval("Name").ToString()%></a></li></ItemTemplate>
+            </asp:Repeater>
         </ul>
+        <div class="flqh">
+            <span class="dj"><a href="cardmg.aspx?sid=<%= GetInt("sid")%>">活动设置</a></span> <span>
+                <a href="cardlist.aspx?sid=<%= GetInt("sid")%>">卡券管理</a></span> <span><a href="cardpullrecordlist.aspx?sid=<%= GetInt("sid")%>">
+                    抽奖记录</a></span>
+        </div>
         <table width="100%" border="0" cellspacing="0" cellpadding="0" class="biaoge3">
             <caption class="bt2">
                 卡券活动设置</caption>
@@ -125,6 +156,39 @@
                         <asp:TextBox runat="server" ID="txtWinRate" CssClass="srk4"></asp:TextBox>%
                     </td>
                 </tr>
+                <%if (Hx.Components.Web.HXContext.Current.AdminUser.Administrator)
+                  { %>
+                <tr>
+                    <td class="bg1">
+                        管理员：
+                    </td>
+                    <td class="clpp">
+                        <ul>
+                            <li class="nh">
+                                <label>
+                                    <input type="checkbox" id="cbxAllPowerUser" class="fll" />全选</label></li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                    </td>
+                    <td>
+                        <asp:Repeater runat="server" ID="rptPowerUser">
+                            <HeaderTemplate>
+                                <ul>
+                            </HeaderTemplate>
+                            <ItemTemplate>
+                                <li class="blockinline" style="width: 230px;">
+                                    <label>
+                                        <input type="checkbox" class="cbxPowerUser fll" value="<%# Eval("ID") %>" <%#SetPowerUser(Eval("ID").ToString()) %> /><%# Eval("UserName")%></label></li>
+                            </ItemTemplate>
+                            <FooterTemplate>
+                                </ul></FooterTemplate>
+                        </asp:Repeater>
+                    </td>
+                </tr>
+                <%} %>
                 <tr style="background-color: #ccc; color: Black; font-weight: bold;">
                     <td colspan="2">
                         微信分享
@@ -173,6 +237,8 @@
             </tbody>
         </table>
     </div>
+    <input type="hidden" runat="server" id="hdnPowerUser" />
+    <input type="hidden" runat="server" id="hdnName" />
     </form>
 </body>
 </html>

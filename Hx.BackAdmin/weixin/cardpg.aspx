@@ -6,10 +6,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes" />
-    <META HTTP-EQUIV="pragma" CONTENT="no-cache"> 
-    <META HTTP-EQUIV="Cache-Control" CONTENT="no-store, must-revalidate"> 
-    <META HTTP-EQUIV="expires" CONTENT="Wed, 26 Feb 1997 08:21:57 GMT"> 
-    <META HTTP-EQUIV="expires" CONTENT="0">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-store, must-revalidate">
+    <meta http-equiv="expires" content="Wed, 26 Feb 1997 08:21:57 GMT">
+    <meta http-equiv="expires" content="0">
     <title>红旭集团-卡券活动</title>
     <meta content="红旭集团,卡券活动" name="keywords">
     <meta content="红旭集团,卡券活动" name="description">
@@ -27,11 +27,13 @@
                 <img id="imgcardflay" src="../images/weixin/card/original.png" />
             </div>
             <div class="award">
-                <div class="awardtop">&nbsp;</div>
+                <div class="awardtop">
+                    &nbsp;</div>
                 <%=CurrentSetting.Awards.Replace("\r", "<br>").Replace(" ", "&nbsp;")%>
             </div>
             <div class="rule">
-                <div class="ruletop">&nbsp;</div>
+                <div class="ruletop">
+                    &nbsp;</div>
                 <%=CurrentSetting.ActRule.Replace("\r", "<br>").Replace(" ", "&nbsp;")%>
             </div>
         </div>
@@ -42,9 +44,11 @@
                 <div class="pullcard-content">
                     <img class="flaybg" src="../images/weixin/card/zjbg.png" />
                     <div class="pullcard-lay">
-                        <p id="txtaward">&nbsp;
+                        <p id="txtaward">
+                            &nbsp;
                         </p>
-                        <p id="txttitle">&nbsp;
+                        <p id="txttitle">
+                            &nbsp;
                         </p>
                         <img class="imgzj" src="" />
                         <a href="javascript:void(0);" id="btnpull"></a>
@@ -56,6 +60,7 @@
 </body>
 <script type="text/javascript">    
     var openid = "<%= Openid %>";
+    var sid = <%= SID %>
     var cardid = "";
     var timestamp = "";
     var signature = "";
@@ -137,13 +142,13 @@
             });            
             
             if(openid == ""){
-                location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=<%=CurrentSetting.AppID %>&redirect_uri=http%3A%2F%2Frb.hongxu.cn%2Fweixin%2Fcardpg.aspx%3Fwechat_card_js=1&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
+                location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=<%=CurrentSetting.AppID %>&redirect_uri=http%3A%2F%2Frb.hongxu.cn%2Fweixin%2Fcardpg.aspx%3Fwechat_card_js=1%26sid=<%=SID %>&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
                 return;
             }
             else{
                 $.ajax({
                     url: "weixinaction.axd",
-                    data: { action: "carddraw", openid: openid, d: new Date() },
+                    data: { action: "carddraw", openid: openid,sid:sid, d: new Date() },
                     type: 'POST',
                     dataType: "json",
                     error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -173,21 +178,13 @@
                                 if(award == "三等奖") imgname = "sdj.png";
                                 if(award == "四等奖") imgname = "sidj.png";
                                 $("#imgcard").attr("src","../images/weixin/card/" + imgname);
-                                
-                                $("#imgcardflay").eraser({
-                                    completeRatio: .4,
-                                    completeFunction: function(){
-                                        if(cardid != "")
-                                            $(".m-flay").show();
-                                    }
-                                });
 
                                 $("#btnpull").click(function(){
                                     $("#btnpull").unbind("click");
                                     if(cardid != ""){
                                         $.ajax({
                                             url: "weixinaction.axd",
-                                            data: { action: "cardpull", openid: openid, d: new Date() },
+                                            data: { action: "cardpull", openid: openid,sid:sid, d: new Date() },
                                             type: 'POST',
                                             dataType: "json",
                                             error: function (msg) {
@@ -217,6 +214,15 @@
                                     }
                                 });
                             }
+                            
+                            
+                            $("#imgcardflay").eraser({
+                                completeRatio: .4,
+                                completeFunction: function(){
+                                    if(cardid != "")
+                                        $(".m-flay").show();
+                                }
+                            });
                         }
                         else {
                             alert(data.Msg);

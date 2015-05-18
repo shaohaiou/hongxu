@@ -16,7 +16,7 @@
             $("#btnAdd").click(function () {
 
                 $("#hdnAddCount").val(parseInt($("#hdnAddCount").val()) + 1);
-                $("#tblmodule").append("<tr><td><input type=\"text\" id=\"txtCardid" + $("#hdnAddCount").val() + "\" name=\"txtCardid" + $("#hdnAddCount").val() + "\" class=\"srk4 w240\" /></td>"
+                $("#tblData").append("<tr><td><input type=\"text\" id=\"txtCardid" + $("#hdnAddCount").val() + "\" name=\"txtCardid" + $("#hdnAddCount").val() + "\" class=\"srk4 w240\" /></td>"
                  + "<td><input type=\"text\" id=\"txtCardtitle" + $("#hdnAddCount").val() + "\" name=\"txtCardtitle" + $("#hdnAddCount").val() + "\" class=\"srk1 w100\" value=\"\" /></td>"
                  + "<td><input type=\"text\" id=\"txtAward" + $("#hdnAddCount").val() + "\" name=\"txtAward" + $("#hdnAddCount").val() + "\" class=\"srk1 w80\" value=\"\" /></td>"
                  + "<td><input type=\"text\" id=\"txtNum" + $("#hdnAddCount").val() + "\" name=\"txtNum" + $("#hdnAddCount").val() + "\" class=\"srk1 w60\" value=\"\" /></td>"
@@ -38,12 +38,23 @@
 <body>
     <form id="form1" runat="server">
     <div class="ht_main">
+        
         <ul class="xnav">
-            <li><a href="cardmg.aspx">活动设置</a></li>
-            <li class="current"><a href="cardlist.aspx">卡券管理</a></li>
-            <li><a href="cardpullrecordlist.aspx">抽奖记录</a></li>
+            <%if (Hx.Components.Web.HXContext.Current.AdminUser.Administrator)
+              { %><li><a href="cardsettinglist.aspx">卡券活动管理</a></li><%} %>
+            <asp:Repeater ID="rpcg" runat="server">
+                <ItemTemplate>
+                    <li <%# SetCardSettingStatus(Eval("ID").ToString()) %> <%#Eval("ID").ToString() == GetString("sid") ? "class=\"current\"" : string.Empty %>>
+                        <a href="cardmg.aspx?sid=<%#Eval("ID")%>">
+                            <%#Eval("Name")%></a></li></ItemTemplate>
+            </asp:Repeater>
         </ul>
-        <table width="560" border="0" cellspacing="0" cellpadding="0" class="biaoge2" id="tblmodule">
+        <div class="flqh">
+            <span><a href="cardmg.aspx?sid=<%= GetInt("sid")%>">活动设置</a></span> 
+            <span class="dj"><a href="cardlist.aspx?sid=<%= GetInt("sid")%>">卡券管理</a></span> 
+            <span><a href="cardpullrecordlist.aspx?sid=<%= GetInt("sid")%>">抽奖记录</a></span>
+        </div>
+        <table width="560" border="0" cellspacing="0" cellpadding="0" class="biaoge2" id="tblData">
             <asp:Repeater ID="rptData" runat="server" OnItemDataBound="rptData_ItemDataBound">
                 <HeaderTemplate>
                 </HeaderTemplate>

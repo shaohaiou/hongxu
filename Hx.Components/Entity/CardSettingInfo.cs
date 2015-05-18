@@ -10,6 +10,21 @@ namespace Hx.Components.Entity
     [Serializable]
     public class CardSettingInfo : ExtendedAttributes
     {
+        [JsonProperty("id")]
+        public int ID { get; set; }
+
+        [JsonProperty("Name")]
+        public string Name { get; set; }
+
+        /// <summary>
+        /// 权限用户
+        /// </summary>
+        [JsonIgnore]
+        public string PowerUser
+        {
+            get { return GetString("PowerUser", string.Empty); }
+            set { SetExtendedAttribute("PowerUser", value.ToString()); }
+        }
 
         /// <summary>
         /// 总开关

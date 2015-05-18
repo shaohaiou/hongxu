@@ -714,21 +714,17 @@ namespace Hx.Components.Providers
 
         public abstract void AddCardSetting(CardSettingInfo entity);
 
-        public abstract void PullCard(string openid);
+        public abstract void DeleteCardSetting(string ids);
 
-        public abstract List<CardidInfo> GetCardidInfolist();
-
-        public abstract void DeleteCardidInfo(string ids);
-
-        public abstract void AddCardidInfo(CardidInfo entity);
-
-        public abstract void UpdateCardidInfo(CardidInfo entity);
-
-        public abstract CardSettingInfo GetCardSetting();
+        public abstract List<CardSettingInfo> GetCardSettinglist();
 
         protected CardSettingInfo PopulateCardSetting(IDataReader reader)
         {
-            CardSettingInfo entity = new CardSettingInfo();
+            CardSettingInfo entity = new CardSettingInfo()
+            {
+                ID = DataConvert.SafeInt(reader["ID"]),
+                Name = reader["Name"] as string
+            };
             SerializerData data = new SerializerData();
             data.Keys = reader["PropertyNames"] as string;
             data.Values = reader["PropertyValues"] as string;
@@ -737,35 +733,32 @@ namespace Hx.Components.Providers
             return entity;
         }
 
-        protected CardidInfo PopulateCardidInfo(IDataReader reader)
-        {
-            CardidInfo entity = new CardidInfo() 
-            {
-                ID = DataConvert.SafeInt(reader["ID"]),
-                Cardid = reader["Cardid"]  as string,
-                Cardtitle = reader["Cardtitle"] as string,
-                Award = reader["Award"] as string,
-                Num = DataConvert.SafeInt(reader["Num"])
-            };
-
-            return entity;
-        }
-
         #endregion
 
         #region 卡券抽奖记录
 
-        public abstract List<CardPullRecordInfo> GetCardPullRecordList();
+        public abstract void PullCard(string openid,int sid);
+
+        public abstract List<CardidInfo> GetCardidInfolist(int sid);
+
+        public abstract void DeleteCardidInfo(string ids);
+
+        public abstract void AddCardidInfo(CardidInfo entity);
+
+        public abstract void UpdateCardidInfo(CardidInfo entity);
+
+        public abstract List<CardPullRecordInfo> GetCardPullRecordList(int sid);
 
         public abstract void AddCardPullRecord(CardPullRecordInfo entity);
 
-        public abstract void ClearCardPullRecord();
+        public abstract void ClearCardPullRecord(int sid);
 
         protected CardPullRecordInfo PopulateCardPullRecord(IDataReader reader)
         {
             CardPullRecordInfo entity = new CardPullRecordInfo() 
             {
                 ID = DataConvert.SafeInt(reader["ID"]),
+                SID = DataConvert.SafeInt(reader["SID"]),
                 UserName = reader["UserName"] as string,
                 Openid = reader["Openid"] as string,
                 Cardid = reader["Cardid"] as string,
@@ -774,6 +767,20 @@ namespace Hx.Components.Providers
                 Cardlogourl = reader["Cardlogourl"] as string,
                 PullResult = reader["PullResult"] as string,
                 AddTime = DataConvert.SafeDate(reader["AddTime"])
+            };
+
+            return entity;
+        }
+
+        protected CardidInfo PopulateCardidInfo(IDataReader reader)
+        {
+            CardidInfo entity = new CardidInfo()
+            {
+                ID = DataConvert.SafeInt(reader["ID"]),
+                Cardid = reader["Cardid"] as string,
+                Cardtitle = reader["Cardtitle"] as string,
+                Award = reader["Award"] as string,
+                Num = DataConvert.SafeInt(reader["Num"])
             };
 
             return entity;

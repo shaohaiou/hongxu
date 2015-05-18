@@ -429,6 +429,7 @@
     <Content Include="weixin\cardmg.aspx" />
     <Content Include="weixin\cardpg.aspx" />
     <Content Include="weixin\cardpullrecordlist.aspx" />
+    <Content Include="weixin\cardsettinglist.aspx" />
     <Content Include="weixin\dianzan.aspx" />
     <Content Include="weixin\escpg.aspx" />
     <Content Include="weixin\escpgmg.aspx" />
@@ -985,6 +986,13 @@
     </Compile>
     <Compile Include="weixin\cardpullrecordlist.aspx.designer.cs">
       <DependentUpon>cardpullrecordlist.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="weixin\cardsettinglist.aspx.cs">
+      <DependentUpon>cardsettinglist.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="weixin\cardsettinglist.aspx.designer.cs">
+      <DependentUpon>cardsettinglist.aspx</DependentUpon>
     </Compile>
     <Compile Include="weixin\dianzan.aspx.cs">
       <DependentUpon>dianzan.aspx</DependentUpon>

@@ -1272,36 +1272,47 @@ namespace Hx.Components
             CommonDataProvider.Instance().AddCardSetting(entity);
         }
 
-        public CardSettingInfo GetCardSetting(bool fromCache = false)
+        public void DeleteCardSetting(string ids)
+        {
+            CommonDataProvider.Instance().DeleteCardSetting(ids);
+        }
+
+        public List<CardSettingInfo> GetCardSettingList(bool fromCache = false)
         {
             if (!fromCache)
             {
-                return CommonDataProvider.Instance().GetCardSetting();
+                return CommonDataProvider.Instance().GetCardSettinglist();
             }
-
-            string key = GlobalKey.CARDSETTING;
-            CardSettingInfo setting = MangaCache.Get(key) as CardSettingInfo;
-            if (setting == null)
+            string key = GlobalKey.CARDSETTINGLIST;
+            List<CardSettingInfo> list = MangaCache.Get(key) as List<CardSettingInfo>;
+            if (list == null)
             {
                 lock (sync_creater)
                 {
-                    setting = MangaCache.Get(key) as CardSettingInfo;
-                    if (setting == null)
+                    list = MangaCache.Get(key) as List<CardSettingInfo>;
+                    if (list == null)
                     {
-                        setting = CommonDataProvider.Instance().GetCardSetting();
+                        list = CommonDataProvider.Instance().GetCardSettinglist();
 
-                        MangaCache.Max(key, setting);
+                        MangaCache.Max(key, list);
                     }
                 }
             }
-            return setting;
+            return list;
+        }
+
+        public CardSettingInfo GetCardSetting(int id,bool fromCache = false)
+        {
+            List<CardSettingInfo> list = GetCardSettingList(fromCache);
+
+            return list.Find(c=>c.ID == id);
         }
 
         public void ReloadCardSetting()
         {
-            string key = GlobalKey.CARDSETTING;
+            string key = GlobalKey.CARDSETTINGLIST;
             MangaCache.Remove(key);
-            GetCardSetting(true);
+            GetCardSettingList(true);
         }
 
         #endregion
@@ -1312,9 +1323,9 @@ namespace Hx.Components
         /// 获取卡券详细信息列表
         /// </summary>
         /// <returns></returns>
-        public List<CardpackInfo> GetCardlist()
+        public List<CardpackInfo> GetCardlist(int sid)
         {
-            CardSettingInfo setting = GetCardSetting(true);
+            CardSettingInfo setting = GetCardSetting(sid,true);
             string key = GlobalKey.CARDLIST + "_" + setting.AppID;
 
             List<CardpackInfo> cardlist = MangaCache.Get(key) as List<CardpackInfo>;
@@ -1327,7 +1338,7 @@ namespace Hx.Components
                     {
                         cardlist = new List<CardpackInfo>();
                         if (setting == null) setting = new CardSettingInfo();
-                        List<CardidInfo> cardidlist = GetCardidInfolist(true);
+                        List<CardidInfo> cardidlist = GetCardidInfolist(sid,true);
                         foreach (CardidInfo info in cardidlist)
                         {
                             CardpackInfo card = GetCardpack(setting.AppID, setting.AppSecret, info.Cardid);
@@ -1343,12 +1354,12 @@ namespace Hx.Components
             return cardlist;
         }
 
-        public void ReloadCardlist()
+        public void ReloadCardlist(int sid)
         {
-            CardSettingInfo setting = GetCardSetting(true);
+            CardSettingInfo setting = GetCardSetting(sid,true);
             string key = GlobalKey.CARDLIST + "_" + setting.AppID;
             MangaCache.Remove(key);
-            GetCardlist();
+            GetCardlist(sid);
         }
 
         /// <summary>
@@ -1395,14 +1406,14 @@ namespace Hx.Components
         /// </summary>
         /// <param name="fromCache"></param>
         /// <returns></returns>
-        public List<CardidInfo> GetCardidInfolist(bool fromCache = false)
+        public List<CardidInfo> GetCardidInfolist(int sid,bool fromCache = false)
         {
             if (!fromCache)
             {
-                return CommonDataProvider.Instance().GetCardidInfolist();
+                return CommonDataProvider.Instance().GetCardidInfolist(sid);
             }
 
-            string key = GlobalKey.CARDIDLIST;
+            string key = GlobalKey.CARDIDLIST + "_" + sid;
             List<CardidInfo> list = MangaCache.Get(key) as List<CardidInfo>;
             if (list == null)
             {
@@ -1411,7 +1422,7 @@ namespace Hx.Components
                     list = MangaCache.Get(key) as List<CardidInfo>;
                     if (list == null)
                     {
-                        list = CommonDataProvider.Instance().GetCardidInfolist();
+                        list = CommonDataProvider.Instance().GetCardidInfolist(sid);
 
                         MangaCache.Max(key, list);
                     }
@@ -1420,11 +1431,11 @@ namespace Hx.Components
             return list;
         }
 
-        public void ReloadCardidListCache()
+        public void ReloadCardidListCache(int sid)
         {
-            string key = GlobalKey.CARDIDLIST;
+            string key = GlobalKey.CARDIDLIST + "_" + sid;
             MangaCache.Remove(key);
-            GetCardidInfolist(true);
+            GetCardidInfolist(sid,true);
         }
 
         public void DeleteCardidInfo(string ids)
@@ -1451,19 +1462,19 @@ namespace Hx.Components
             CommonDataProvider.Instance().AddCardPullRecord(entity);
         }
 
-        public void PullCard(string openid)
+        public void PullCard(string openid,int sid)
         {
-            CommonDataProvider.Instance().PullCard(openid);
+            CommonDataProvider.Instance().PullCard(openid,sid);
         }
 
-        public List<CardPullRecordInfo> GetCardPullRecordList(bool fromCache = false)
+        public List<CardPullRecordInfo> GetCardPullRecordList(int sid,bool fromCache = false)
         {
             if (!fromCache)
             {
-                return CommonDataProvider.Instance().GetCardPullRecordList();
+                return CommonDataProvider.Instance().GetCardPullRecordList(sid);
             }
 
-            string key = GlobalKey.CARDPULLLIST;
+            string key = GlobalKey.CARDPULLLIST + "_" + sid;
             List<CardPullRecordInfo> list = MangaCache.Get(key) as List<CardPullRecordInfo>;
             if (list == null)
             {
@@ -1472,7 +1483,7 @@ namespace Hx.Components
                     list = MangaCache.Get(key) as List<CardPullRecordInfo>;
                     if (list == null)
                     {
-                        list = CommonDataProvider.Instance().GetCardPullRecordList();
+                        list = CommonDataProvider.Instance().GetCardPullRecordList(sid);
 
                         MangaCache.Max(key, list);
                     }
@@ -1481,16 +1492,16 @@ namespace Hx.Components
             return list;
         }
 
-        public void ReloadCardPullRecordListCache()
+        public void ReloadCardPullRecordListCache(int sid)
         {
-            string key = GlobalKey.CARDPULLLIST;
+            string key = GlobalKey.CARDPULLLIST + "_" + sid;
             MangaCache.Remove(key);
-            GetCardPullRecordList(true);
+            GetCardPullRecordList(sid,true);
         }
 
-        public void ClearCardPullRecord()
+        public void ClearCardPullRecord(int sid)
         {
-            CommonDataProvider.Instance().ClearCardPullRecord();
+            CommonDataProvider.Instance().ClearCardPullRecord(sid);
         }
 
         #endregion

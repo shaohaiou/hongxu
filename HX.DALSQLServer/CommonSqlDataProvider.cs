@@ -1548,42 +1548,54 @@ namespace HX.DALSQLServer
         {
             SerializerData data = entity.GetSerializerData();
             string sql = @"
-            IF EXISTS(SELECT * FROM HX_CardSetting)
+            IF EXISTS(SELECT * FROM HX_CardSetting WHERE [ID] = @ID)
             BEGIN
                 UPDATE HX_CardSetting SET
-                    [PropertyNames] = @PropertyNames
+                    [Name] = @Name
+                    ,[PropertyNames] = @PropertyNames
                     ,[PropertyValues] = @PropertyValues
+                WHERE [ID] = @ID
             END
             ELSE
             BEGIN
                 INSERT INTO HX_CardSetting(
-                    [PropertyNames]
+                    [Name]
+                    ,[PropertyNames]
                     ,[PropertyValues]
                 )VALUES(
-                    @PropertyNames
+                    @Name
+                    ,@PropertyNames
                     ,@PropertyValues)
             END
             ";
             SqlParameter[] p = 
             {
+                new SqlParameter("@ID",entity.ID),
+                new SqlParameter("@Name",entity.Name),
                 new SqlParameter("@PropertyNames",data.Keys),
                 new SqlParameter("@PropertyValues",data.Values)
             };
             SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql, p);
         }
 
-        public override CardSettingInfo GetCardSetting()
+        public override void DeleteCardSetting(string ids)
+        {
+            string sql = "DELETE FROM HX_CardSetting WHERE [ID] IN(" + ids + ")";
+            SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql);
+        }
+
+        public override List<CardSettingInfo> GetCardSettinglist()
         {
             string sql = "SELECT * FROM HX_CardSetting";
-            CardSettingInfo entity = null;
+            List<CardSettingInfo> list = new List<CardSettingInfo>();
             using (IDataReader reader = SqlHelper.ExecuteReader(_con, CommandType.Text, sql))
             {
-                if (reader.Read())
+                while (reader.Read())
                 {
-                    entity = PopulateCardSetting(reader);
+                    list.Add( PopulateCardSetting(reader));
                 }
             }
-            return entity;
+            return list;
         }
 
         #endregion
@@ -1594,7 +1606,8 @@ namespace HX.DALSQLServer
         {
             string sql = @"
                 INSERT INTO HX_CardPullRecords(
-                    [Openid]
+                    [SID]
+                    ,[Openid]
                     ,[UserName]
                     ,[Cardid]
                     ,[Cardtitle]
@@ -1603,7 +1616,8 @@ namespace HX.DALSQLServer
                     ,[PullResult]
                     ,[AddTime]
                 )VALUES(
-                    @Openid
+                    @SID
+                    ,@Openid
                     ,@UserName
                     ,@Cardid
                     ,@Cardtitle
@@ -1614,6 +1628,7 @@ namespace HX.DALSQLServer
             ";
             SqlParameter[] p = 
             {
+                new SqlParameter("@SID",entity.SID),
                 new SqlParameter("@Openid",entity.Openid),
                 new SqlParameter("@UserName",entity.UserName),
                 new SqlParameter("@Cardid",entity.Cardid),
@@ -1626,24 +1641,25 @@ namespace HX.DALSQLServer
             SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql, p);
         }
 
-        public override void PullCard(string openid)
+        public override void PullCard(string openid,int sid)
         {
             string sql = @"
                 UPDATE HX_CardPullRecords SET
                 [PullResult] = '2'
-                WHERE [Openid] = @Openid";
+                WHERE [Openid] = @Openid AND [SID] = @SID";
             SqlParameter[] p = 
             {
-                new SqlParameter("@Openid",openid)
+                new SqlParameter("@Openid",openid),
+                new SqlParameter("@SID",sid)
             };
             SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql, p);
         }
 
-        public override List<CardPullRecordInfo> GetCardPullRecordList()
+        public override List<CardPullRecordInfo> GetCardPullRecordList(int sid)
         {
             List<CardPullRecordInfo> list = new List<CardPullRecordInfo>();
-            string sql = "SELECT * FROM HX_CardPullRecords";
-            using (IDataReader reader = SqlHelper.ExecuteReader(_con, CommandType.Text, sql))
+            string sql = "SELECT * FROM HX_CardPullRecords WHERE [SID] = @SID";
+            using (IDataReader reader = SqlHelper.ExecuteReader(_con, CommandType.Text, sql,new SqlParameter("@SID",sid)))
             {
                 while (reader.Read())
                 {
@@ -1654,17 +1670,17 @@ namespace HX.DALSQLServer
             return list;
         }
 
-        public override void ClearCardPullRecord()
+        public override void ClearCardPullRecord(int sid)
         {
-            string sql = "DELETE FROM HX_CardPullRecords";
-            SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql);
+            string sql = "DELETE FROM HX_CardPullRecords WHERE [SID] = @SID";
+            SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql,new SqlParameter("@SID",sid));
         }
 
-        public override List<CardidInfo> GetCardidInfolist()
+        public override List<CardidInfo> GetCardidInfolist(int sid)
         {
             List<CardidInfo> list = new List<CardidInfo>();
-            string sql = "SELECT * FROM HX_CardidInfo";
-            using (IDataReader reader = SqlHelper.ExecuteReader(_con, CommandType.Text, sql))
+            string sql = "SELECT * FROM HX_CardidInfo WHERE [SID] = @SID";
+            using (IDataReader reader = SqlHelper.ExecuteReader(_con, CommandType.Text, sql, new SqlParameter("@SID", sid)))
             {
                 while (reader.Read())
                 {
@@ -1679,12 +1695,14 @@ namespace HX.DALSQLServer
         {
             string sql = @"
                 INSERT INTO HX_CardidInfo(
-                    [Cardid]
+                    [SID]
+                    ,[Cardid]
                     ,[Cardtitle]
                     ,[Award]
                     ,[Num]
                 )VALUES(
-                    @Cardid
+                    @SID
+                    ,@Cardid
                     ,@Cardtitle
                     ,@Award
                     ,@Num
@@ -1692,6 +1710,7 @@ namespace HX.DALSQLServer
             ";
             SqlParameter[] p = 
             {
+                new SqlParameter("@SID",entity.SID),
                 new SqlParameter("@Cardid",entity.Cardid),
                 new SqlParameter("@Cardtitle",entity.Cardtitle),
                 new SqlParameter("@Award",entity.Award),

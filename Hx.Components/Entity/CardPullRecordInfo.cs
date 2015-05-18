@@ -9,6 +9,8 @@ namespace Hx.Components.Entity
     {
         public int ID { get; set; }
 
+        public int SID { get; set; }
+
         public string Openid { get; set; }
 
         public string UserName { get; set; }

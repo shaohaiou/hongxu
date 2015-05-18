@@ -29,6 +29,31 @@ namespace Hx.BackAdmin.weixin
                 Response.End();
                 return;
             }
+            if (!HXContext.Current.AdminUser.Administrator)
+            {
+                int sid = GetInt("sid");
+                CardSettingInfo setting = WeixinActs.Instance.GetCardSetting(sid, true);
+                if (!setting.PowerUser.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries).Contains(AdminID.ToString()))
+                {
+                    Response.Clear();
+                    Response.Write("您没有权限操作！");
+                    Response.End();
+                }
+            }
+        }
+
+        private CardSettingInfo currentsetting = null;
+        private CardSettingInfo CurrentSetting
+        {
+            get
+            {
+                if (currentsetting == null)
+                {
+                    int sid = GetInt("sid");
+                    currentsetting = WeixinActs.Instance.GetCardSetting(sid);
+                }
+                return currentsetting;
+            }
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -41,29 +66,40 @@ namespace Hx.BackAdmin.weixin
 
         private void LoadData()
         {
-            CardSettingInfo setting = WeixinActs.Instance.GetCardSetting();
-            if (setting != null)
+            rpcg.DataSource = WeixinActs.Instance.GetCardSettingList(true);
+            rpcg.DataBind();
+            if (CurrentSetting != null)
             {
-                cbxSwitch.Checked = setting.Switch == 1;
-                txtAppID.Text = setting.AppID;
-                txtAppSecret.Text = setting.AppSecret;
-                txtAppName.Text = setting.AppName;
-                txtActRule.Text = setting.ActRule;
-                txtAwards.Text = setting.Awards;
-                if (!string.IsNullOrEmpty(setting.AppImgUrl))
-                    imgAppImg.Src = setting.AppImgUrl;
-                txtWinRate.Text = setting.WinRate.ToString();
-                if (!string.IsNullOrEmpty(setting.ShareImgUrl))
-                    imgpic.Src = setting.ShareImgUrl;
-                hdimage_pic.Value = setting.ShareImgUrl;
-                txtShareLinkUrl.Text = setting.ShareLinkUrl;
-                txtShareTitle.Text = setting.ShareTitle;
-                txtShareDesc.Text = setting.ShareDesc;
+                cbxSwitch.Checked = CurrentSetting.Switch == 1;
+                txtAppID.Text = CurrentSetting.AppID;
+                txtAppSecret.Text = CurrentSetting.AppSecret;
+                txtAppName.Text = CurrentSetting.AppName;
+                txtActRule.Text = CurrentSetting.ActRule;
+                txtAwards.Text = CurrentSetting.Awards;
+                if (!string.IsNullOrEmpty(CurrentSetting.AppImgUrl))
+                    imgAppImg.Src = CurrentSetting.AppImgUrl;
+                txtWinRate.Text = CurrentSetting.WinRate.ToString();
+                if (!string.IsNullOrEmpty(CurrentSetting.ShareImgUrl))
+                    imgpic.Src = CurrentSetting.ShareImgUrl;
+                hdimage_pic.Value = CurrentSetting.ShareImgUrl;
+                txtShareLinkUrl.Text = CurrentSetting.ShareLinkUrl;
+                txtShareTitle.Text = CurrentSetting.ShareTitle;
+                txtShareDesc.Text = CurrentSetting.ShareDesc;
+                hdnPowerUser.Value = CurrentSetting.PowerUser;
+                hdnName.Value = CurrentSetting.Name;
+            }
+            if (HXContext.Current.AdminUser.Administrator)
+            {
+                List<AdminInfo> adminlist = Admins.Instance.GetAllAdmins();
+                adminlist = adminlist.FindAll(a=>!a.Administrator && (a.UserRole & Components.Enumerations.UserRoleType.卡券活动管理员) > 0);
+                rptPowerUser.DataSource = adminlist;
+                rptPowerUser.DataBind();
             }
         }
 
         private void FillData(CardSettingInfo entity)
         {
+            entity.ID = GetInt("sid");
             entity.Switch = cbxSwitch.Checked ? 1 : 0;
             entity.AppID = txtAppID.Text;
             entity.AppSecret = txtAppSecret.Text;
@@ -71,11 +107,13 @@ namespace Hx.BackAdmin.weixin
             entity.Awards = txtAwards.Text;
             entity.AppImgUrl = hdnAppImg.Value;
             entity.AppName = txtAppName.Text;
-            entity.WinRate = DataConvert.SafeInt(txtWinRate.Text,100);
+            entity.WinRate = DataConvert.SafeInt(txtWinRate.Text, 100);
             entity.ShareImgUrl = hdimage_pic.Value;
             entity.ShareLinkUrl = txtShareLinkUrl.Text;
             entity.ShareTitle = txtShareTitle.Text;
             entity.ShareDesc = txtShareDesc.Text;
+            entity.PowerUser = hdnPowerUser.Value;
+            entity.Name = hdnName.Value;
         }
 
         protected void btSave_Click(object sender, EventArgs e)
@@ -86,7 +124,40 @@ namespace Hx.BackAdmin.weixin
             WeixinActs.Instance.AddCardSetting(setting);
             WeixinActs.Instance.ReloadCardSetting();
 
-            WriteSuccessMessage("保存成功！", "数据已经成功保存！", "~/weixin/cardmg.aspx");
+            WriteSuccessMessage("保存成功！", "数据已经成功保存！", "~/weixin/cardmg.aspx?sid=" + GetInt("sid"));
+        }
+
+        protected string SetPowerUser(string id)
+        {
+            string result = string.Empty;
+
+            if (CurrentSetting != null)
+            {
+                string[] powerusers = CurrentSetting.PowerUser.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
+                if (powerusers.Contains(id))
+                    result = "checked=\"checked\"";
+            }
+
+            return result;
+        }
+
+        protected string SetCardSettingStatus(string id)
+        {
+            string result = string.Empty;
+
+            if (!Admin.Administrator)
+            {
+                CardSettingInfo setting = WeixinActs.Instance.GetCardSetting(DataConvert.SafeInt(id), true);
+
+                if (setting != null)
+                {
+                    string[] powerusers = setting.PowerUser.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
+                    if (!powerusers.Contains(AdminID.ToString()))
+                        result = "style=\"display:none;\"";
+                }
+            }
+
+            return result;
         }
     }
 }

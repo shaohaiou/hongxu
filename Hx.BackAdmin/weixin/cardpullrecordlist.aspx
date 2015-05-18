@@ -1,7 +1,8 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="cardpullrecordlist.aspx.cs" Inherits="Hx.BackAdmin.weixin.cardpullrecordlist" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="cardpullrecordlist.aspx.cs"
+    Inherits="Hx.BackAdmin.weixin.cardpullrecordlist" %>
+
 <%@ Register Assembly="AspNetPager" Namespace="Wuqi.Webdiyer" TagPrefix="webdiyer" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>抽奖记录</title>
@@ -21,10 +22,20 @@
     <form id="form1" runat="server">
     <div class="ht_main">
         <ul class="xnav">
-            <li><a href="cardmg.aspx">活动设置</a></li>
-            <li><a href="cardlist.aspx">卡券管理</a></li>
-            <li class="current"><a href="cardpullrecordlist.aspx">抽奖记录</a></li>
+            <%if (Hx.Components.Web.HXContext.Current.AdminUser.Administrator)
+              { %><li><a href="cardsettinglist.aspx">卡券活动管理</a></li><%} %>
+            <asp:Repeater ID="rpcg" runat="server">
+                <ItemTemplate>
+                    <li <%# SetCardSettingStatus(Eval("ID").ToString()) %> <%#Eval("ID").ToString() == GetString("sid") ? "class=\"current\"" : string.Empty %>>
+                        <a href="cardmg.aspx?sid=<%#Eval("ID")%>">
+                            <%#Eval("Name")%></a></li></ItemTemplate>
+            </asp:Repeater>
         </ul>
+        <div class="flqh">
+            <span><a href="cardmg.aspx?sid=<%= GetInt("sid")%>">活动设置</a></span> 
+            <span><a href="cardlist.aspx?sid=<%= GetInt("sid")%>">卡券管理</a></span> 
+            <span class="dj"><a href="cardpullrecordlist.aspx?sid=<%= GetInt("sid")%>">抽奖记录</a></span>
+        </div>
         <table width="500" border="0" cellspacing="0" cellpadding="0" class="biaoge4" style="background-color: #f4f8fc;">
             <tr>
                 <td>

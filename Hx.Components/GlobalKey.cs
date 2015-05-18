@@ -57,7 +57,7 @@ namespace Hx.Components
         public static readonly string JITUANVOTE_LIST = "cache-jituanvote-list";   //集团投票活动所有投票信息缓存键值
         public static readonly string JITUANVOTESETTING = "cache-jituanvotesetting"; //集团投票活动设置缓存键值
 
-        public static readonly string CARDSETTING = "cache-cardsetting"; //卡券活动设置缓存键值
+        public static readonly string CARDSETTINGLIST = "cache-cardsetting-list"; //卡券活动设置列表缓存键值
         public static readonly string CARDOPENID = "session-cardopenid"; //卡券活动openid键值
         public static readonly string CARDLIST = "card-list"; //卡券列表缓存键值
         public static readonly string CARDPULLLIST = "cardpull-list"; //卡券抽奖记录列表缓存键值

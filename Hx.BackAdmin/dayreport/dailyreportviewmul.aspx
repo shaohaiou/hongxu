@@ -279,6 +279,11 @@
                         <%}else if(CurrentDep == DayReportDep.市场部) {%>
                         <asp:Button runat="server" ID="btnXSFollow" CssClass="an1" OnClick="btnXSFollow_Click"
                             Text="客源、线索进度下载" />
+                        <%}
+                          else if (CurrentDep == DayReportDep.销售部)
+                          {%>
+                        <asp:Button runat="server" ID="btnXSDayGather" CssClass="an1" OnClick="btnXSDayGather_Click"
+                            Text="销售日报汇总" />
                         <%} %>
                         <input type="button" name="btnExportExcel" id="btnExportExcel" value="导出Excel" onclick="exportExcel()"
                             class="an1" />

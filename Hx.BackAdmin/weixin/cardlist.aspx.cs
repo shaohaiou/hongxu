@@ -29,6 +29,18 @@ namespace Hx.BackAdmin.weixin
                 Response.End();
                 return;
             }
+            if (!HXContext.Current.AdminUser.Administrator)
+            {
+                int sid = GetInt("sid");
+                CardSettingInfo setting = WeixinActs.Instance.GetCardSetting(sid, true);
+                if (!setting.PowerUser.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries).Contains(AdminID.ToString()))
+                {
+                    Response.Clear();
+                    Response.Write("您没有权限操作！");
+                    Response.End();
+                }
+            }
+
         }
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -40,8 +52,11 @@ namespace Hx.BackAdmin.weixin
 
         private void LoadData()
         {
-            rptData.DataSource = WeixinActs.Instance.GetCardidInfolist(true);
+            int sid = GetInt("sid");
+            rptData.DataSource = WeixinActs.Instance.GetCardidInfolist(sid,true);
             rptData.DataBind();
+            rpcg.DataSource = WeixinActs.Instance.GetCardSettingList(true);
+            rpcg.DataBind();
         }
 
         protected void rptData_ItemDataBound(object sender, RepeaterItemEventArgs e)
@@ -123,10 +138,30 @@ namespace Hx.BackAdmin.weixin
                     }
                 }
             }
-            WeixinActs.Instance.ReloadCardidListCache();
-            WeixinActs.Instance.ReloadCardlist();
+            int sid = GetInt("sid");
+            WeixinActs.Instance.ReloadCardidListCache(sid);
+            WeixinActs.Instance.ReloadCardlist(sid);
 
-            WriteSuccessMessage("保存成功！", "数据已经成功保存！", string.IsNullOrEmpty(FromUrl) ? "~/weixin/cardlist.aspx" : FromUrl);
+            WriteSuccessMessage("保存成功！", "数据已经成功保存！", string.IsNullOrEmpty(FromUrl) ? ("~/weixin/cardlist.aspx?sid=" + GetInt("sid")) : FromUrl);
+        }
+
+        protected string SetCardSettingStatus(string id)
+        {
+            string result = string.Empty;
+
+            if (!Admin.Administrator)
+            {
+                CardSettingInfo setting = WeixinActs.Instance.GetCardSetting(DataConvert.SafeInt(id), true);
+
+                if (setting != null)
+                {
+                    string[] powerusers = setting.PowerUser.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
+                    if (!powerusers.Contains(AdminID.ToString()))
+                        result = "style=\"display:none;\"";
+                }
+            }
+
+            return result;
         }
 
     }

@@ -17,13 +17,14 @@ namespace Hx.BackAdmin.weixin
         private System.Web.Script.Serialization.JavaScriptSerializer json = new System.Web.Script.Serialization.JavaScriptSerializer();
         public string Openid { get; set; }
         public string Code { get; set; }
+        public int SID { get; set; }
         private CardSettingInfo currentsetting = null;
         protected CardSettingInfo CurrentSetting
         {
             get
             {
                 if (currentsetting == null)
-                    currentsetting = WeixinActs.Instance.GetCardSetting(true);
+                    currentsetting = WeixinActs.Instance.GetCardSetting(SID,true);
                 return currentsetting;
             }
         }
@@ -42,6 +43,7 @@ namespace Hx.BackAdmin.weixin
             if (!IsPostBack)
             {
                 Code = GetString("code");
+                SID = GetInt("sid",1);
                 if (!string.IsNullOrEmpty(Code))
                 {
                     Openid = WeixinActs.Instance.GetOpenid(CurrentSetting.AppID, CurrentSetting.AppSecret, Code);

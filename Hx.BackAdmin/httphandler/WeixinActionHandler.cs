@@ -73,6 +73,10 @@ namespace Hx.BackAdmin.HttpHandler
             {
                 CardPull();
             }
+            else if (action == "gb61")
+            {
+                GB61();
+            }
             else
             {
                 result = string.Format(result, "fail", "非法操作");
@@ -733,6 +737,42 @@ namespace Hx.BackAdmin.HttpHandler
                 else
                 {
                     result = string.Format(result, "fail", "openid为空");
+                }
+            }
+            catch (Exception ex)
+            {
+                ExpLog.Write(ex);
+                result = string.Format(result, "fail", "执行失败");
+            }
+        }
+
+        #endregion
+
+        #region 广本61活动
+
+        private void GB61()
+        {
+            try
+            {
+                string cname = WebHelper.GetString("cname");
+                string phone = WebHelper.GetString("phone");
+                string spec_name = WebHelper.GetString("spec_name");
+
+                if (!string.IsNullOrEmpty(cname) && !string.IsNullOrEmpty(phone) && !string.IsNullOrEmpty(spec_name))
+                {
+                    GB61Info info = new GB61Info() 
+                    { 
+                        CName = cname,
+                        Phone = phone,
+                        SpecName = spec_name,
+                        Status = 0
+                    };
+                    WeixinActs.Instance.AddGB61Info(info);
+                    result = string.Format(result, "success", "1");
+                }
+                else
+                {
+                    result = string.Format(result, "fail", "cname,phone,spec_name为空");
                 }
             }
             catch (Exception ex)

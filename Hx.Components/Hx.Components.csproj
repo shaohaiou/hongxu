@@ -96,6 +96,7 @@
     <Compile Include="Entity\DayReportUserInfo.cs" />
     <Compile Include="Entity\EscpgInfo.cs" />
     <Compile Include="Entity\EventLogEntry.cs" />
+    <Compile Include="Entity\GB61Info.cs" />
     <Compile Include="Entity\GlobalSettingInfo.cs" />
     <Compile Include="Entity\JcbUserInfo.cs" />
     <Compile Include="Entity\Job.cs" />

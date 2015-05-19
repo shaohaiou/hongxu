@@ -5,12 +5,13 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Hx.Components.BasePage;
-using Hx.Components.Entity;
 using Hx.Components.Web;
+using Hx.Components.Entity;
+using Hx.Components;
 
 namespace Hx.BackAdmin.weixin
 {
-    public partial class main : AdminBase
+    public partial class gb61list : AdminBase
     {
         protected override void Check()
         {
@@ -19,10 +20,7 @@ namespace Hx.BackAdmin.weixin
                 Response.Redirect("~/Login.aspx");
                 return;
             }
-            if (!HXContext.Current.AdminUser.Administrator 
-                && ((int)HXContext.Current.AdminUser.UserRole & (int)Components.Enumerations.UserRoleType.微信活动管理员) == 0
-                && ((int)HXContext.Current.AdminUser.UserRole & (int)Components.Enumerations.UserRoleType.二手车估价器管理员) == 0
-                && ((int)HXContext.Current.AdminUser.UserRole & (int)Components.Enumerations.UserRoleType.卡券活动管理员) == 0
+            if (!HXContext.Current.AdminUser.Administrator
                 && ((int)HXContext.Current.AdminUser.UserRole & (int)Components.Enumerations.UserRoleType.广本61活动) == 0)
             {
                 Response.Clear();
@@ -31,10 +29,28 @@ namespace Hx.BackAdmin.weixin
                 return;
             }
         }
-
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!IsPostBack)
+            {
+                LoadData();
+            }
+        }
 
+        private void LoadData()
+        {
+            int pageindex = GetInt("page", 1);
+            if (pageindex < 1)
+            {
+                pageindex = 1;
+            }
+            int total = 0;
+            List<GB61Info> list = WeixinActs.Instance.GetGB61InfoList().OrderByDescending(c => c.ID).ToList();
+            total = list.Count();
+            list = list.Skip((pageindex - 1) * search_fy.PageSize).Take(search_fy.PageSize).ToList<GB61Info>();
+            rptdata.DataSource = list;
+            rptdata.DataBind();
+            search_fy.RecordCount = total;
         }
     }
 }

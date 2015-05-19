@@ -1506,6 +1506,20 @@ namespace Hx.Components
 
         #endregion
 
+        #region 广本61活动
+
+        public void AddGB61Info(GB61Info entity)
+        {
+            CommonDataProvider.Instance().AddGB61Info(entity);
+        }
+
+        public List<GB61Info> GetGB61InfoList()
+        {
+            return CommonDataProvider.Instance().GetGB61InfoList();
+        }
+
+        #endregion
+
         #endregion
     }
 }

@@ -20,6 +20,7 @@
      <a href="jituanvotemg.aspx" target="ztk" id="jituanvotemg" runat="server">集团投票</a>
      <a href="escpgmg.aspx" target="ztk" id="escpgmg" runat="server">爱车估价器</a>
      <a href="cardsettinglist.aspx" target="ztk" id="cardmg" runat="server">卡券活动</a>
+     <a href="gb61list.aspx" target="ztk" id="gb61" runat="server">广本61活动</a>
 </div>
 
 <div class="r_sy" id="daohan">

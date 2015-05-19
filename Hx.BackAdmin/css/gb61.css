@@ -1,0 +1,75 @@
+﻿@media only screen and (max-width: 1200px) { html{ font-size: 34px; }}
+@media only screen and (max-width: 1100px) { html{ font-size: 32px; }}
+@media only screen and (max-width: 1000px) { html{ font-size: 30px; }}
+@media only screen and (max-width: 900px) { html{ font-size: 28px; }}
+@media only screen and (max-width: 800px) { html{ font-size: 24px; }}
+@media only screen and (max-width: 700px) { html{ font-size: 22px; }}
+@media only screen and (max-width: 600px) { html{ font-size: 22px; }}
+@media only screen and (max-width: 500px) { html{ font-size: 22px; }}
+@media only screen and (max-width: 470px) { html{ font-size: 18px; }}
+@media only screen and (max-width: 400px) { html{ font-size: 15px; }}
+@media only screen and (max-width: 320px) { html{ font-size: 13px; }}
+
+
+html,body{height: 100%; width:100%; overflow:hidden; background:#222}
+body{margin: 0;font-size:1.0em;line-height: 1.2em;position: relative;font-family:"Microsoft YaHei","Helvetica Neue",Helvetica,STHeiTi,sans-serif;}
+
+
+body,ul,dl,dd,h1,h2,h3,h4,h5,h6,p,form,ol{margin:0}
+ul,ol{padding:0}
+table,td,th{border-collapse:collapse}
+ol,ul,li{list-style:none}
+h1{font-size:2em}
+h2{font-size:1.5em}
+h3{font-size:1em}
+img,input,textarea{border:0;vertical-align:middle}
+a,a:hover,a:active{outline:0;text-decoration:none}
+a,img{-webkit-touch-callout:none}
+a,input{-webkit-tap-highlight-color:rgba(0,0,0,0)}
+::-webkit-scrollbar{width:0}
+.clearfix{zoom:1}
+.red{ color:#c00}
+
+.input{ border:#222 1px solid; background:#fff;-moz-border-radius:3px; -webkit-border-radius:3px; border-radius:3px; cursor:text; padding:.8em; line-height:2.2em; width:90%}
+.form-wrap { width:90%; margin:0 5%; padding-top:6%; margin-bottom:5%}
+.form-wrap dl{ height:3em; margin-bottom:1em}
+.form-wrap dl dt{ float:left; width:20%; line-height:3em; color:#000}
+.form-wrap dl dd{ float:left; width:80%}
+
+
+#wraper{ width:100%; margin:0 auto; height:100%; background:url(../images/weixin/gb61/bg.png) no-repeat;background-size:100% 100%;}
+.topic{ height:46%; }
+
+.main{ width:90%; margin:0 5%; overflow:hidden; position:relative; z-index:2; height:54%}
+.main-btn{ width:100%; height:12%; margin-top:2%; line-height:2.4em; clear:both}
+.main-btn .btn{ display:block; background:#c00; height:100%; width:60%; color:#fff; text-align:center; margin:0 auto;-moz-border-radius:4px; -webkit-border-radius:4px; border-radius:4px;}
+.main-btn .btn.checked{ background:#999}
+
+.main .main-inner{ width:300%;height:100%; overflow:hidden}
+.main .main-inner .mod{ width:33.33%; float:left; height:100%;position:relative}
+
+.mod-title{ text-align:center; height:1.7em; margin-bottom:1em; color:#fff; background:rgba(0,0,0,0.6); font-weight:100}
+
+.info{ padding-top:48%; color:#333;}
+
+.mod-list{ width:100%; overflow:hidden}
+.mod-list li{ width:33.3%; float:left;  text-align:center; height:2.4em; margin-bottom:.6em;}
+.mod-list li div{height:2.4em; line-height:2.4em; width:84%;background:#fff; margin:0 auto;border-radius:3px; overflow:hidden}
+.mod-list li div span p{ height:2.8em}
+.mod-list li div span i{ display:block; clear:both; font-style:normal; height:1em; overflow:hidden; padding-bottom:.4em}
+.mod-list li div span i.b{ font-weight:bold}
+.mod-list li.selected div{ background:#00448d; color:#fff}
+.mod-list li.selected span{ color:#d2e0ee;border-top:#1f5d9f 1px solid;}
+
+.mod-list li b,
+.mod-list li span{ display:block; clear:both; padding-top:0.4em;}
+
+.mod-list li b{ height:2.4em;line-height:1.8em; font-size:.9em; font-weight:100}
+.mod-list li span{ font-size:0.8em; line-height:.9em; border-top:#ddd 1px solid; color:#888; overflow:hidden; height:1em}
+
+.share-btn{ height:2em; line-height:2em; padding:0 2em; background:#ccc; position:absolute; bottom:14%; right:0;border-radius:1em; font-size:.8em; color:#339 }
+
+.tipDiv{ width:60%; height:60%; background:url(../images/weixin/gb61/sh.png) no-repeat; background-size:100%; position:absolute; z-index:332; top:3%; right:5%}
+.shadow{position:absolute; z-index:52; top:0; right:0; width:100%; height:100%; background:#000;filter:alpha(opacity=80); /*IE滤镜，透明度50%*/
+-moz-opacity:0.8; /*Firefox私有，透明度50%*/
+opacity:0.8;/*其他，透明度50%*/}

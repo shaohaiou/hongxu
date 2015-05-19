@@ -1750,6 +1750,52 @@ namespace HX.DALSQLServer
 
         #endregion
 
+        #region 广本61活动
+
+        public override void AddGB61Info(GB61Info entity)
+        {
+            string sql = @"
+            IF NOT EXISTS(SELECT * FROM HX_GB61 WHERE [Phone] = @Phone)
+            BEGIN
+                INSERT INTO HX_GB61(
+                    [CName]
+                    ,[Phone]
+                    ,[SpecName]
+                    ,[Status]
+                )VALUES(
+                    @CName
+                    ,@Phone
+                    ,@SpecName
+                    ,@Status)
+            END
+            ";
+            SqlParameter[] p = 
+            {
+                new SqlParameter("@CName",entity.CName),
+                new SqlParameter("@Phone",entity.Phone),
+                new SqlParameter("@SpecName",entity.SpecName),
+                new SqlParameter("@Status",entity.Status)
+            };
+            SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql, p);
+        }
+
+        public override List<GB61Info> GetGB61InfoList()
+        {
+            List<GB61Info> list = new List<GB61Info>();
+            string sql = "SELECT * FROM HX_GB61";
+            using (IDataReader reader = SqlHelper.ExecuteReader(_con, CommandType.Text, sql))
+            {
+                while (reader.Read())
+                {
+                    list.Add(PopulateGB61Info(reader));
+                }
+            }
+
+            return list;
+        }
+
+        #endregion
+
         #endregion
 
         #region 招聘管理

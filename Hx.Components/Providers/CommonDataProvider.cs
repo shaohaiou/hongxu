@@ -788,6 +788,28 @@ namespace Hx.Components.Providers
 
         #endregion
 
+        #region 广本61活动
+
+        public abstract void AddGB61Info(GB61Info entity);
+
+        public abstract List<GB61Info> GetGB61InfoList();
+
+        protected GB61Info PopulateGB61Info(IDataReader reader)
+        {
+            GB61Info entity = new GB61Info()
+            {
+                ID = DataConvert.SafeInt(reader["ID"]),
+                CName = reader["CName"] as string,
+                Phone = reader["Phone"] as string,
+                SpecName = reader["SpecName"] as string,
+                Status = DataConvert.SafeInt(reader["CName"]),
+            };
+
+            return entity;
+        }
+
+        #endregion
+
         #endregion
 
         #endregion

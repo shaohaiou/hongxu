@@ -27,3 +27,7 @@ img{margin:0;padding:0;border:0;}
 #txttitle{width: 100%;height: 6.5%;text-align: center;font-size: 90%;color: #faea9d;font-weight: bold;}
 .imgzj{margin: 0 auto;width: 30%;height: 30%;margin-top: 8%;display: block;}
 #btnpull{width: 76%;display: block;margin: 0 auto;margin-top: 10%;height: 14%;}
+
+.attention-content{width: 100%;position: relative;background: #fff;height: 24%;}
+.attention-title{font-size: 1.2em;display: block;padding: 2px 0 0 4px;background: #ccc;color: #444;font-weight: bold;}
+.attention-msg{text-align: center;vertical-align: middle;font-size: 80%;}

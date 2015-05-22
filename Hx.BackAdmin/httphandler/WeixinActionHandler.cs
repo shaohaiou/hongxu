@@ -574,7 +574,7 @@ namespace Hx.BackAdmin.HttpHandler
                         Dictionary<string, string> openinfo = WeixinActs.Instance.GetOpeninfo(accesstoken, openid);
                         if (!openinfo.Keys.Contains("subscribe") || openinfo["subscribe"] == "0")
                         {
-                            result = string.Format(result, "fail", string.Format("请您先关注{0}公众号，再从公众号进入此活动！", setting.AppName));
+                            result = string.Format(result, "attention", string.Format("{0}|{1}", setting.AppName, setting.AppNumber));
                             return;
                         }
                         List<CardPullRecordInfo> listrecord = WeixinActs.Instance.GetCardPullRecordList(sid,true);

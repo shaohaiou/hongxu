@@ -58,6 +58,15 @@ namespace Hx.BackAdmin.weixin {
         protected global::System.Web.UI.WebControls.TextBox txtAppSecret;
         
         /// <summary>
+        /// txtAppNumber 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtAppNumber;
+        
+        /// <summary>
         /// txtAppName 控件。
         /// </summary>
         /// <remarks>
@@ -65,6 +74,15 @@ namespace Hx.BackAdmin.weixin {
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtAppName;
+        
+        /// <summary>
+        /// txtAttentionUrl 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtAttentionUrl;
         
         /// <summary>
         /// hdnAppImg 控件。
@@ -83,6 +101,24 @@ namespace Hx.BackAdmin.weixin {
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlImage imgAppImg;
+        
+        /// <summary>
+        /// hdnBgImg 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hdnBgImg;
+        
+        /// <summary>
+        /// imgBgImg 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlImage imgBgImg;
         
         /// <summary>
         /// txtActRule 控件。

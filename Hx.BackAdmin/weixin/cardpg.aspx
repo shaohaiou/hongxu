@@ -19,8 +19,19 @@
     <script src="../js/jQuery-eraser-0.4.2.js" type="text/javascript"></script>
 </head>
 <body>
-    <div class="main">
-        <img class="bg" src="../images/weixin/card/cardbg.png" />
+    <div class="m-flay" id="attention" style="position: relative;">
+        <div class="attention">
+            <div class="attention-content">
+                <span class="attention-title">请先关注我们再参与活动</span>
+                <div class="attention-msg" id="attention-msg">
+                    <img src="<%=CurrentSetting.AppImgUrl %>" style="width: 40%;" /><br />
+                    长按二维码图片即可关注
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="main" id="main">
+        <img class="bg" src="<%=string.IsNullOrEmpty(CurrentSetting.BgImgUrl) ? "../images/weixin/card/cardbg.png" : CurrentSetting.BgImgUrl %>" />
         <div class="m-content">
             <div class="card">
                 <img id="imgcard" src="../images/weixin/card/original.png" />
@@ -37,7 +48,7 @@
                 <%=CurrentSetting.ActRule.Replace("\r", "<br>").Replace(" ", "&nbsp;")%>
             </div>
         </div>
-        <div class="m-flay">
+        <div class="m-flay" id="pull-flay">
             <div class="m-flaybg">
             </div>
             <div class="pullcard">
@@ -220,9 +231,16 @@
                                 completeRatio: .4,
                                 completeFunction: function(){
                                     if(cardid != "")
-                                        $(".m-flay").show();
+                                        $("#pull-flay").show();
                                 }
                             });
+                        }
+                        else if(data.Value == "attention"){
+                            if("<%=CurrentSetting.AttentionUrl %>" != ""){
+                                location.href = "<%=CurrentSetting.AttentionUrl %>";
+                            }else{
+                                $("#attention").show();
+                            }
                         }
                         else {
                             alert(data.Msg);

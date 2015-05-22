@@ -43,7 +43,7 @@ namespace Hx.BackAdmin.weixin
         }
 
         private CardSettingInfo currentsetting = null;
-        private CardSettingInfo CurrentSetting
+        protected CardSettingInfo CurrentSetting
         {
             get
             {
@@ -73,11 +73,15 @@ namespace Hx.BackAdmin.weixin
                 cbxSwitch.Checked = CurrentSetting.Switch == 1;
                 txtAppID.Text = CurrentSetting.AppID;
                 txtAppSecret.Text = CurrentSetting.AppSecret;
+                txtAppNumber.Text = CurrentSetting.AppNumber;
                 txtAppName.Text = CurrentSetting.AppName;
                 txtActRule.Text = CurrentSetting.ActRule;
                 txtAwards.Text = CurrentSetting.Awards;
+                txtAttentionUrl.Text = CurrentSetting.AttentionUrl;
                 if (!string.IsNullOrEmpty(CurrentSetting.AppImgUrl))
                     imgAppImg.Src = CurrentSetting.AppImgUrl;
+                if (!string.IsNullOrEmpty(CurrentSetting.BgImgUrl))
+                    imgBgImg.Src = CurrentSetting.BgImgUrl;
                 txtWinRate.Text = CurrentSetting.WinRate.ToString();
                 if (!string.IsNullOrEmpty(CurrentSetting.ShareImgUrl))
                     imgpic.Src = CurrentSetting.ShareImgUrl;
@@ -103,9 +107,12 @@ namespace Hx.BackAdmin.weixin
             entity.Switch = cbxSwitch.Checked ? 1 : 0;
             entity.AppID = txtAppID.Text;
             entity.AppSecret = txtAppSecret.Text;
+            entity.AppNumber = txtAppNumber.Text;
             entity.ActRule = txtActRule.Text;
             entity.Awards = txtAwards.Text;
             entity.AppImgUrl = hdnAppImg.Value;
+            entity.AttentionUrl = txtAttentionUrl.Text;
+            entity.BgImgUrl = hdnBgImg.Value;
             entity.AppName = txtAppName.Text;
             entity.WinRate = DataConvert.SafeInt(txtWinRate.Text, 100);
             entity.ShareImgUrl = hdimage_pic.Value;

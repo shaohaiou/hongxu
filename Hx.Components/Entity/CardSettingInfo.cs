@@ -57,6 +57,16 @@ namespace Hx.Components.Entity
         }
 
         /// <summary>
+        /// 微信号
+        /// </summary>
+        [JsonIgnore]
+        public string AppNumber
+        {
+            get { return GetString("AppNumber", ""); }
+            set { SetExtendedAttribute("AppNumber", value); }
+        }
+
+        /// <summary>
         /// 公众号名称
         /// </summary>
         [JsonIgnore]
@@ -74,6 +84,26 @@ namespace Hx.Components.Entity
         {
             get { return GetString("AppImgUrl", ""); }
             set { SetExtendedAttribute("AppImgUrl", value); }
+        }
+
+        /// <summary>
+        /// 关注引导页面
+        /// </summary>
+        [JsonIgnore]
+        public string AttentionUrl
+        {
+            get { return GetString("AttentionUrl", ""); }
+            set { SetExtendedAttribute("AttentionUrl", value); }
+        }
+
+        /// <summary>
+        /// 活动背景图
+        /// </summary>
+        [JsonIgnore]
+        public string BgImgUrl
+        {
+            get { return GetString("BgImgUrl", ""); }
+            set { SetExtendedAttribute("BgImgUrl", value); }
         }
 
         /// <summary>

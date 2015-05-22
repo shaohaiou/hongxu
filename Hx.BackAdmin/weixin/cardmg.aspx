@@ -50,6 +50,9 @@
             $(".cbxPowerUser").click(function () {
                 setpoweruser();
             });
+            $("#txtAppID").change(function () {
+                $("#txtUrl").val("https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + $(this).val() + "&redirect_uri=http%3A%2F%2Frb.hongxu.cn%2Fweixin%2Fcardpg.aspx%3Fwechat_card_js=1%26sid=<%=CurrentSetting.ID%>&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect");
+            });
         })
 
         function setpoweruser() {
@@ -99,6 +102,19 @@
                 </tr>
                 <tr>
                     <td class="bg1">
+                        推广链接：
+                    </td>
+                    <td>
+                        <%if (!string.IsNullOrEmpty(CurrentSetting.AppID))
+                          { %>
+                        <input type="text" id="txtUrl" onclick="javascript:this.select();" value="https://open.weixin.qq.com/connect/oauth2/authorize?appid=<%=CurrentSetting.AppID%>&redirect_uri=http%3A%2F%2Frb.hongxu.cn%2Fweixin%2Fcardpg.aspx%3Fwechat_card_js=1%26sid=<%=CurrentSetting.ID%>&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect" class="srk1" />
+                        <%}else{ %>
+                        <input type="text" id="txtUrl" onclick="javascript:this.select();" value="" class="srk1" />
+                        <%} %>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bg1">
                         AppID：
                     </td>
                     <td>
@@ -113,12 +129,28 @@
                         <asp:TextBox runat="server" ID="txtAppSecret" CssClass="srk1"></asp:TextBox>
                     </td>
                 </tr>
-                <tr>
+                <tr style="display:none;">
+                    <td class="bg1">
+                        微信号：
+                    </td>
+                    <td>
+                        <asp:TextBox runat="server" ID="txtAppNumber" CssClass="srk1"></asp:TextBox>
+                    </td>
+                </tr>
+                <tr style="display:none;">
                     <td class="bg1">
                         公众号名称：
                     </td>
                     <td>
                         <asp:TextBox runat="server" ID="txtAppName" CssClass="srk1"></asp:TextBox>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bg1">
+                        关注引导页面：
+                    </td>
+                    <td>
+                        <asp:TextBox runat="server" ID="txtAttentionUrl" CssClass="srk1"></asp:TextBox>
                     </td>
                 </tr>
                 <tr>
@@ -129,6 +161,17 @@
                         <input id="hdnAppImg" runat="server" type="hidden" />
                         <input type="button" class="uploadbtpic an3" value="上传图片" /><br />
                         <img src="../images/fm.jpg" alt="图片" id="imgAppImg" style="width: 160px; height: 160px;"
+                            runat="server" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bg1">
+                        活动背景图：
+                    </td>
+                    <td>
+                        <input id="hdnBgImg" runat="server" type="hidden" />
+                        <input type="button" class="uploadbtpic an3" value="上传图片" /><br />
+                        <img src="../images/weixin/card/cardbg.png" alt="图片" id="imgBgImg" style="width:320px; height: 567px;"
                             runat="server" />
                     </td>
                 </tr>

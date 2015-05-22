@@ -464,6 +464,15 @@ namespace Hx.BackAdmin.dayreport
 
                 #endregion
 
+                #region 完成率
+
+                for (int i = 0; i < rows.Length; i++)
+                {
+                    rows[i]["完成率"] = DataConvert.SafeDecimal(rows[i]["目标值"]) == 0 ? string.Empty : Math.Round(DataConvert.SafeDecimal(rows[i]["合计"]) * 100 / DataConvert.SafeDecimal(rows[i]["目标值"]), 0).ToString();
+                }
+
+                #endregion
+
                 foreach (DataRow row in rows)
                 {
                     tbl.Rows.Add(row);
@@ -3762,7 +3771,7 @@ namespace Hx.BackAdmin.dayreport
                     HSSFRow row = (HSSFRow)sheet.CreateRow(index);
                     row.CreateCell(0).SetCellValue(drow["店名"].ToString());
                     row.CreateCell(1).SetCellValue(string.Empty);
-                    row.CreateCell(2).SetCellValue(string.IsNullOrEmpty(drow["展厅成交率目标值"].ToString()) ? string.Empty : (drow["展厅成交率目标值"].ToString()));
+                    row.CreateCell(2).SetCellValue(string.IsNullOrEmpty(drow["展厅成交率目标值"].ToString()) ? string.Empty : (drow["展厅成交率目标值"].ToString() + "%"));
                     row.CreateCell(3).SetCellValue(string.IsNullOrEmpty(drow["展厅成交率实际"].ToString()) ? string.Empty : (drow["展厅成交率实际"].ToString() + "%"));
                     row.CreateCell(4).SetCellValue(drow["展厅订单台数目标值"].ToString());
                     row.CreateCell(5).SetCellValue(drow["展厅订单台数合计"].ToString());

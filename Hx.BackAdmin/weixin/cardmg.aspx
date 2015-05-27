@@ -1,11 +1,13 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="cardmg.aspx.cs" Inherits="Hx.BackAdmin.weixin.cardmg" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="cardmg.aspx.cs" Inherits="Hx.BackAdmin.weixin.cardmg" ValidateRequest="false" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>活动设置</title>
     <link href="../css/admin.css" rel="stylesheet" type="text/css" />
-    <script src="../js/jquery-1.3.2.min.js" type="text/javascript"></script>
+    <link href="../css/spectrum.css" rel="stylesheet" type="text/css" />
+    <script src="../js/jquery-1.9.1.js" type="text/javascript"></script>
+    <script src="../js/spectrum.js" type="text/javascript"></script>
     <script src="../js/ajaxupload.js" type="text/javascript"></script>
     <script type="text/javascript">
         $(function () {
@@ -52,6 +54,16 @@
             });
             $("#txtAppID").change(function () {
                 $("#txtUrl").val("https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + $(this).val() + "&redirect_uri=http%3A%2F%2Frb.hongxu.cn%2Fweixin%2Fcardpg.aspx%3Fwechat_card_js=1%26sid=<%=CurrentSetting.ID%>&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect");
+            });
+            $("#txtColorRule").spectrum({
+                change: function (color) {
+                    $("#txtColorRule").val(color.toHexString());
+                } 
+            });
+            $("#txtColorAward").spectrum({
+                change: function (color) {
+                    $("#txtColorAward").val(color.toHexString());
+                }
             });
         })
 
@@ -177,6 +189,22 @@
                 </tr>
                 <tr>
                     <td class="bg1">
+                        奖项设置：
+                    </td>
+                    <td>
+                        <asp:TextBox ID="txtAwards" runat="server" TextMode="MultiLine" Rows="6" CssClass="w300"></asp:TextBox>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bg1">
+                        字体颜色：
+                    </td>
+                    <td>
+                        <asp:TextBox ID="txtColorAward" runat="server" value="#ffef8b"></asp:TextBox>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bg1">
                         活动规则：
                     </td>
                     <td>
@@ -185,10 +213,10 @@
                 </tr>
                 <tr>
                     <td class="bg1">
-                        奖项设置：
+                        字体颜色：
                     </td>
                     <td>
-                        <asp:TextBox ID="txtAwards" runat="server" TextMode="MultiLine" Rows="6" CssClass="w300"></asp:TextBox>
+                        <asp:TextBox ID="txtColorRule" runat="server" value="#fff"></asp:TextBox>
                     </td>
                 </tr>
                 <tr>

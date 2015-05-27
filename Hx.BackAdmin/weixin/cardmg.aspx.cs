@@ -76,12 +76,18 @@ namespace Hx.BackAdmin.weixin
                 txtAppNumber.Text = CurrentSetting.AppNumber;
                 txtAppName.Text = CurrentSetting.AppName;
                 txtActRule.Text = CurrentSetting.ActRule;
+                if (!string.IsNullOrEmpty(CurrentSetting.ColorRule))
+                    txtColorRule.Text = CurrentSetting.ColorRule;
                 txtAwards.Text = CurrentSetting.Awards;
+                if (!string.IsNullOrEmpty(CurrentSetting.ColorAwards))
+                    txtColorAward.Text = CurrentSetting.ColorAwards;
                 txtAttentionUrl.Text = CurrentSetting.AttentionUrl;
                 if (!string.IsNullOrEmpty(CurrentSetting.AppImgUrl))
                     imgAppImg.Src = CurrentSetting.AppImgUrl;
+                hdnAppImg.Value = CurrentSetting.AppImgUrl;
                 if (!string.IsNullOrEmpty(CurrentSetting.BgImgUrl))
                     imgBgImg.Src = CurrentSetting.BgImgUrl;
+                hdnBgImg.Value = CurrentSetting.BgImgUrl;
                 txtWinRate.Text = CurrentSetting.WinRate.ToString();
                 if (!string.IsNullOrEmpty(CurrentSetting.ShareImgUrl))
                     imgpic.Src = CurrentSetting.ShareImgUrl;
@@ -109,7 +115,9 @@ namespace Hx.BackAdmin.weixin
             entity.AppSecret = txtAppSecret.Text;
             entity.AppNumber = txtAppNumber.Text;
             entity.ActRule = txtActRule.Text;
+            entity.ColorRule = txtColorRule.Text;
             entity.Awards = txtAwards.Text;
+            entity.ColorAwards = txtColorAward.Text;
             entity.AppImgUrl = hdnAppImg.Value;
             entity.AttentionUrl = txtAttentionUrl.Text;
             entity.BgImgUrl = hdnBgImg.Value;

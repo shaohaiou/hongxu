@@ -81,6 +81,7 @@ namespace Hx.BackAdmin.weixin
 
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
+            int sid = GetInt("sid");
             string delIds = hdnDelIds.Value;
             if (!string.IsNullOrEmpty(delIds))
             {
@@ -101,6 +102,7 @@ namespace Hx.BackAdmin.weixin
                     {
                         CardidInfo entity = new CardidInfo
                         {
+                            SID = sid,
                             Cardid = cardid,
                             Cardtitle = cardtitle,
                             Award = award,
@@ -127,6 +129,7 @@ namespace Hx.BackAdmin.weixin
                         {
                             CardidInfo entity = new CardidInfo
                             {
+                                SID = sid,
                                 ID = id,
                                 Cardid = txtCardid.Text,
                                 Cardtitle = txtCardtitle.Text,
@@ -138,7 +141,6 @@ namespace Hx.BackAdmin.weixin
                     }
                 }
             }
-            int sid = GetInt("sid");
             WeixinActs.Instance.ReloadCardidListCache(sid);
             WeixinActs.Instance.ReloadCardlist(sid);
 

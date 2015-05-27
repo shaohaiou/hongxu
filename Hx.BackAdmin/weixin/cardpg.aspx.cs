@@ -9,6 +9,7 @@ using Hx.Components;
 using Hx.Tools.Web;
 using Hx.Components.Entity;
 using Hx.Tools;
+using System.Text.RegularExpressions;
 
 namespace Hx.BackAdmin.weixin
 {
@@ -54,6 +55,17 @@ namespace Hx.BackAdmin.weixin
                     //}
                 }
             }
+        }
+
+        protected string RecoverHtml(string str)
+        {
+            Regex r = new Regex(@"<.+?>");
+            string result = r.Replace(str, new MatchEvaluator(delegate(Match m) 
+            {
+                return m.Groups[0].Value.Replace("&nbsp;"," ");
+            }));
+
+            return result;
         }
 
         /// <summary>

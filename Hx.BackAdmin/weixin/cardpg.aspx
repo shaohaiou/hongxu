@@ -17,6 +17,14 @@
     <script src="../js/jquery-1.3.2.min.js" type="text/javascript"></script>
     <script src="../js/jweixin-1.0.0.js" type="text/javascript"></script>
     <script src="../js/jQuery-eraser-0.4.2.js" type="text/javascript"></script>
+    <%if (!string.IsNullOrEmpty(CurrentSetting.ColorRule))
+      {%>
+    <style type="text/css">
+    .rule{color:<%=CurrentSetting.ColorRule%>!important;}
+    .rule a{color:<%=CurrentSetting.ColorRule%>!important;}
+    .rule a:visited{color:<%=CurrentSetting.ColorRule%>!important;}
+    </style>
+    <%} %>
 </head>
 <body>
     <div class="m-flay" id="attention" style="position: relative;">
@@ -37,15 +45,15 @@
                 <img id="imgcard" src="../images/weixin/card/original.png" />
                 <img id="imgcardflay" src="../images/weixin/card/original.png" />
             </div>
-            <div class="award">
+            <div class="award" <%= string.IsNullOrEmpty(CurrentSetting.ColorAwards) ? string.Empty : ("style=\"color:" + CurrentSetting.ColorAwards + "!important;\"") %>>
                 <div class="awardtop">
                     &nbsp;</div>
-                <%=CurrentSetting.Awards.Replace("\r", "<br>").Replace(" ", "&nbsp;")%>
+                <%=RecoverHtml(CurrentSetting.Awards.Replace("\r", "<br>").Replace(" ", "&nbsp;"))%>
             </div>
             <div class="rule">
                 <div class="ruletop">
                     &nbsp;</div>
-                <%=CurrentSetting.ActRule.Replace("\r", "<br>").Replace(" ", "&nbsp;")%>
+                <%=RecoverHtml(CurrentSetting.ActRule.Replace("\r", "<br>").Replace(" ", "&nbsp;"))%>
             </div>
         </div>
         <div class="m-flay" id="pull-flay">
@@ -212,7 +220,8 @@
                                                             }
                                                           ],
                                                           success: function (res) {
-                                                            alert('已添加卡券：' + JSON.stringify(res.cardList));
+//                                                            alert('已添加卡券：' + JSON.stringify(res.cardList));
+                                                              alert('卡券已成功领取，请前往：我 -> 卡包 查看卡券。');
                                                           }
                                                         });
                                                     }

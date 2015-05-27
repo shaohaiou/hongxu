@@ -121,6 +121,24 @@ namespace Hx.BackAdmin.weixin {
         protected global::System.Web.UI.HtmlControls.HtmlImage imgBgImg;
         
         /// <summary>
+        /// txtAwards 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtAwards;
+        
+        /// <summary>
+        /// txtColorAward 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtColorAward;
+        
+        /// <summary>
         /// txtActRule 控件。
         /// </summary>
         /// <remarks>
@@ -130,13 +148,13 @@ namespace Hx.BackAdmin.weixin {
         protected global::System.Web.UI.WebControls.TextBox txtActRule;
         
         /// <summary>
-        /// txtAwards 控件。
+        /// txtColorRule 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtAwards;
+        protected global::System.Web.UI.WebControls.TextBox txtColorRule;
         
         /// <summary>
         /// txtWinRate 控件。

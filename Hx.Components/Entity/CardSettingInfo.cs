@@ -107,6 +107,26 @@ namespace Hx.Components.Entity
         }
 
         /// <summary>
+        /// 奖项设置
+        /// </summary>
+        [JsonIgnore]
+        public string Awards
+        {
+            get { return GetString("Awards", ""); }
+            set { SetExtendedAttribute("Awards", value); }
+        }
+
+        /// <summary>
+        /// 奖项设置字体颜色
+        /// </summary>
+        [JsonIgnore]
+        public string ColorAwards
+        {
+            get { return GetString("ColorAwards", ""); }
+            set { SetExtendedAttribute("ColorAwards", value); }
+        }
+
+        /// <summary>
         /// 活动规则
         /// </summary>
         [JsonIgnore]
@@ -117,13 +137,13 @@ namespace Hx.Components.Entity
         }
 
         /// <summary>
-        /// 奖项设置
+        /// 活动规则字体颜色
         /// </summary>
         [JsonIgnore]
-        public string Awards
+        public string ColorRule
         {
-            get { return GetString("Awards", ""); }
-            set { SetExtendedAttribute("Awards", value); }
+            get { return GetString("ColorRule", ""); }
+            set { SetExtendedAttribute("ColorRule", value); }
         }
 
 

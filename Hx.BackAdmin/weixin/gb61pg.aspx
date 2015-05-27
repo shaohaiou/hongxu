@@ -11,8 +11,9 @@
     <script type="text/javascript">        
         $(function () {
             $(".begin-btn").bind('click', function () {
-                $(".main-inner").stop().animate({ "margin-left": "-100%" }, 200);
-
+//                $(".main-inner").stop().animate({ "margin-left": "-100%" }, 200);
+                $("#spec_name").val("111");
+                $(".main-inner").stop().animate({ "margin-left": "-200%" }, 200);
             });
 
             $(".mod-list li").each(function () {
@@ -101,7 +102,7 @@
             <div class="main-inner">
                 <div class="mod">
                     <div class="info">
-                        1、活动日预约订车客户购车送车（注：+10元送儿童安全座椅或儿童自行车）<br />2、"你游园，我送礼"来店客户参加游园活动即可抽奖，人人中奖；趣味无限，惊喜不断！</div>
+                        1、活动日预约订车客户+10元送市场价550元儿童座椅或市场价560元山地自行车（不折现）<br />2、"你游园，我送礼"来店客户参加游园活动即可抽奖，人人中奖；趣味无限，惊喜不断！</div>
                     <div class="main-btn">
                         <a href="javascript:void(0)" class="btn begin-btn">我要报名</a></div>
                 </div>

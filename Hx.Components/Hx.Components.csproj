@@ -102,6 +102,7 @@
     <Compile Include="Entity\Job.cs" />
     <Compile Include="Entity\JobOfferInfo.cs" />
     <Compile Include="Entity\MonthlyTargetInfo.cs" />
+    <Compile Include="Entity\MonthTargetHistoryInfo.cs" />
     <Compile Include="Entity\PromaryInfo.cs" />
     <Compile Include="Entity\ShowUrl.cs" />
     <Compile Include="Entity\WeixinActCommentInfo.cs" />

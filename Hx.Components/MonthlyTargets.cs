@@ -81,5 +81,15 @@ namespace Hx.Components
             query.MonthUnique = entity.MonthUnique.Substring(0, 4);
             ReloadMonthTargetListCache(query);
         }
+
+        public void CreateHistory(MonthlyTargetHistoryInfo entity)
+        {
+            CommonDataProvider.Instance().CreateMonthlyTargetHistory(entity);
+        }
+
+        public List<MonthlyTargetHistoryInfo> GetHistorys(int pageindex, int pagesize, MonthlyTargetHistoryQuery query, ref int recordcount)
+        {
+            return CommonDataProvider.Instance().GetMonthlyTargetHistoryList(pageindex, pagesize, query, ref recordcount);
+        }
     }
 }

@@ -54,7 +54,7 @@ namespace Hx.BackAdmin.dayreport
             {
                 pageindex = 1;
             }
-            int pagesize = GetInt("pagesize", 10);
+            int pagesize = GetInt("pagesize", search_fy.PageSize);
             int total = 0;
             List<DayReportUserInfo> userlist = DayReportUsers.Instance.GetList(true);
             if (GetInt("corp") > 0)

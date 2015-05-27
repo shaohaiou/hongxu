@@ -102,7 +102,7 @@
     <Compile Include="Entity\Job.cs" />
     <Compile Include="Entity\JobOfferInfo.cs" />
     <Compile Include="Entity\MonthlyTargetInfo.cs" />
-    <Compile Include="Entity\MonthTargetHistoryInfo.cs" />
+    <Compile Include="Entity\MonthlyTargetHistoryInfo.cs" />
     <Compile Include="Entity\PromaryInfo.cs" />
     <Compile Include="Entity\ShowUrl.cs" />
     <Compile Include="Entity\WeixinActCommentInfo.cs" />
@@ -148,6 +148,7 @@
     <Compile Include="Query\DailyReportHistoryQuery.cs" />
     <Compile Include="Query\DailyReportQuery.cs" />
     <Compile Include="Query\EventLogQuery.cs" />
+    <Compile Include="Query\MonthlyTargetHistoryQuery.cs" />
     <Compile Include="Query\MonthTargetQuery.cs" />
     <Compile Include="Query\WeixinActQuery.cs" />
     <Compile Include="Query\JituanvoteQuery.cs" />

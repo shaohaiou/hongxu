@@ -10,7 +10,7 @@ namespace Hx.Components.Entity
     {
         public int ID { get; set; }
 
-        public string DayUnique { get; set; }
+        public string MonthUnique { get; set; }
 
         public MonthlyTargetInfo Modify { get; set; }
 

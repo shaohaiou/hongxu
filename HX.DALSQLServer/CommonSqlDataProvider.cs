@@ -988,6 +988,69 @@ namespace HX.DALSQLServer
 
         #endregion
 
+        #region 月度目标录入记录
+
+        public override List<MonthlyTargetHistoryInfo> GetMonthlyTargetHistoryList(int pageindex, int pagesize, MonthlyTargetHistoryQuery query, ref int recordcount)
+        {
+            List<MonthlyTargetHistoryInfo> list = new List<MonthlyTargetHistoryInfo>();
+            SqlParameter p;
+            using (IDataReader reader = CommonPageSql.GetDataReaderByPager(_con, pageindex, pagesize, query, out p))
+            {
+                while (reader.Read())
+                {
+                    list.Add(PopulateMonthlyTargetHistory(reader));
+                }
+            }
+            recordcount = DataConvert.SafeInt(p.Value);
+
+            return list;
+        }
+
+        public override void CreateMonthlyTargetHistory(MonthlyTargetHistoryInfo entity)
+        {
+            string sql = @"
+                INSERT INTO HX_MonthlyTargetHistory(
+                    [PropertyNames]
+                    ,[PropertyValues]
+                    ,[MonthUnique]
+                    ,[ReportDepartment]
+                    ,[ReportCorporationID]
+                    ,[CreatorCorporationID]
+                    ,[CreatorCorporationName]
+                    ,[CreatorDepartment]
+                    ,[Creator]
+                    ,[CreateTime]
+                )VALUES(
+                    @PropertyNames
+                    ,@PropertyValues
+                    ,@MonthUnique
+                    ,@ReportDepartment
+                    ,@ReportCorporationID
+                    ,@CreatorCorporationID
+                    ,@CreatorCorporationName
+                    ,@CreatorDepartment
+                    ,@Creator
+                    ,GETDATE()
+                )";
+            SerializerData data = entity.Modify.GetSerializerData();
+            SqlParameter[] p = 
+            {
+                new SqlParameter("@MonthUnique",entity.MonthUnique),
+                new SqlParameter("@ReportDepartment",entity.ReportDepartment),
+                new SqlParameter("@ReportCorporationID",entity.ReportCorporationID),
+                new SqlParameter("@CreatorCorporationID",entity.CreatorCorporationID),
+                new SqlParameter("@CreatorCorporationName",entity.CreatorCorporationName),
+                new SqlParameter("@CreatorDepartment",entity.CreatorDepartment),
+                new SqlParameter("@Creator",entity.Creator),
+                new SqlParameter("@PropertyNames", data.Keys),
+				new SqlParameter("@PropertyValues", data.Values)
+            };
+
+            SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql, p);
+        }
+
+        #endregion
+
         #region 微信活动
 
         #region 测试活动

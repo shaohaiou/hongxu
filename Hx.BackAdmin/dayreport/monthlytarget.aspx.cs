@@ -359,6 +359,19 @@ namespace Hx.BackAdmin.dayreport
 
                 MonthlyTargets.Instance.CreateAndUpdate(target);
 
+                MonthlyTargetInfo monthlytargetmodify = new MonthlyTargetInfo();
+                FillData(monthlytargetmodify);
+                MonthlyTargetHistoryInfo targethistory = new MonthlyTargetHistoryInfo();
+                targethistory.MonthUnique = target.MonthUnique;
+                targethistory.Modify = monthlytargetmodify;
+                targethistory.Creator = CurrentUser.UserName;
+                targethistory.CreatorCorporationID = CurrentUser.CorporationID;
+                targethistory.CreatorCorporationName = CurrentUser.CorporationName;
+                targethistory.CreatorDepartment = CurrentUser.DayReportDep;
+                targethistory.ReportDepartment = CurrentDep;
+                targethistory.ReportCorporationID = DataConvert.SafeInt(ddlCorp.SelectedValue);
+                MonthlyTargets.Instance.CreateHistory(targethistory);
+
                 WriteSuccessMessage("保存成功！", "数据已经成功保存！", string.IsNullOrEmpty(FromUrl) ? UrlDecode(CurrentUrl) : FromUrl);
             }
         }

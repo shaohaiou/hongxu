@@ -477,6 +477,39 @@ namespace Hx.Components.Providers
 
         #endregion
 
+        #region 月度目标录入记录
+
+        public abstract void CreateMonthlyTargetHistory(MonthlyTargetHistoryInfo entity);
+
+        public abstract List<MonthlyTargetHistoryInfo> GetMonthlyTargetHistoryList(int pageindex, int pagesize, MonthlyTargetHistoryQuery query, ref int recordcount);
+
+        protected MonthlyTargetHistoryInfo PopulateMonthlyTargetHistory(IDataReader reader)
+        {
+            MonthlyTargetHistoryInfo entity = new MonthlyTargetHistoryInfo
+            {
+                ID = DataConvert.SafeInt(reader["ID"]),
+                MonthUnique = reader["MonthUnique"] as string,
+                CreatorCorporationID = DataConvert.SafeInt(reader["CreatorCorporationID"]),
+                CreatorCorporationName = reader["CreatorCorporationName"] as string,
+                CreatorDepartment = (DayReportDep)(byte)reader["CreatorDepartment"],
+                Creator = reader["Creator"] as string,
+                CreateTime = DataConvert.SafeDate(reader["CreateTime"]),
+                ReportDepartment = (DayReportDep)(byte)reader["ReportDepartment"],
+                ReportCorporationID = DataConvert.SafeInt(reader["ReportCorporationID"])
+            };
+
+            MonthlyTargetInfo mondify = new MonthlyTargetInfo();
+            SerializerData data = new SerializerData();
+            data.Keys = reader["PropertyNames"] as string;
+            data.Values = reader["PropertyValues"] as string;
+            mondify.SetSerializerData(data);
+            entity.Modify = mondify;
+
+            return entity;
+        }
+
+        #endregion
+
         #region 微信活动
 
         #region 测试活动

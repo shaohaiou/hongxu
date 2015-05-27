@@ -107,6 +107,7 @@
     <Content Include="dayreport\main_i.aspx" />
     <Content Include="dayreport\main_is.aspx" />
     <Content Include="dayreport\main_s.aspx" />
+    <Content Include="dayreport\monthlytargethistorymg.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="global\bankingmg.aspx" />
@@ -663,6 +664,13 @@
     </Compile>
     <Compile Include="dayreport\main_s.aspx.designer.cs">
       <DependentUpon>main_s.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="dayreport\monthlytargethistorymg.aspx.cs">
+      <DependentUpon>monthlytargethistorymg.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="dayreport\monthlytargethistorymg.aspx.designer.cs">
+      <DependentUpon>monthlytargethistorymg.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

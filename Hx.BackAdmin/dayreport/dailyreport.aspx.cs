@@ -634,6 +634,17 @@ namespace Hx.BackAdmin.dayreport
                         target.CWlcxj = txtCWlcxj.Text;
                         target.CWycdkdq = hdnCWycdkdq.Value;
                         MonthlyTargets.Instance.CreateAndUpdate(target);
+
+                        MonthlyTargetHistoryInfo targethistory = new MonthlyTargetHistoryInfo();
+                        targethistory.MonthUnique = target.MonthUnique;
+                        targethistory.Modify = target;
+                        targethistory.Creator = CurrentUser.UserName;
+                        targethistory.CreatorCorporationID = CurrentUser.CorporationID;
+                        targethistory.CreatorCorporationName = CurrentUser.CorporationName;
+                        targethistory.CreatorDepartment = CurrentUser.DayReportDep;
+                        targethistory.ReportDepartment = CurrentDep;
+                        targethistory.ReportCorporationID = DataConvert.SafeInt(ddlCorp.SelectedValue);
+                        MonthlyTargets.Instance.CreateHistory(targethistory);
                     }
 
                     #endregion
@@ -687,6 +698,17 @@ namespace Hx.BackAdmin.dayreport
                         target.XZsywcl = string.Join("|", new string[] { txtXZsywcl1.Text, txtXZsywcl2.Text, txtXZsywcl3.Text, txtXZsywcl4.Text, txtXZsywcl5.Text, txtXZsywcl6.Text, txtXZsywcl7.Text, });
                         target.XZwz = string.Join("|", new string[] { txtXZwz1.Text, txtXZwz2.Text, txtXZwz3.Text, txtXZwz4.Text, txtXZwz5.Text, txtXZwz6.Text, txtXZwz7.Text, });
                         MonthlyTargets.Instance.CreateAndUpdate(target);
+
+                        MonthlyTargetHistoryInfo targethistory = new MonthlyTargetHistoryInfo();
+                        targethistory.MonthUnique = target.MonthUnique;
+                        targethistory.Modify = target;
+                        targethistory.Creator = CurrentUser.UserName;
+                        targethistory.CreatorCorporationID = CurrentUser.CorporationID;
+                        targethistory.CreatorCorporationName = CurrentUser.CorporationName;
+                        targethistory.CreatorDepartment = CurrentUser.DayReportDep;
+                        targethistory.ReportDepartment = CurrentDep;
+                        targethistory.ReportCorporationID = DataConvert.SafeInt(ddlCorp.SelectedValue);
+                        MonthlyTargets.Instance.CreateHistory(targethistory);
                     }
 
                     #endregion

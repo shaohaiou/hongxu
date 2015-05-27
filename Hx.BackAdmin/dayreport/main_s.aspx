@@ -21,6 +21,7 @@
      <a href="dayreportmodulemg.aspx" target="ztk" id="modulemg" runat="server">日报栏目</a>
      <a href="dayreporthistorymg.aspx" target="ztk" id="historymg" runat="server">录入记录</a>
      <a href="dayreportcheckhistorymg.aspx" target="ztk" id="checkhistorymg" runat="server">审核记录</a>
+     <a href="monthlytargethistorymg.aspx" target="ztk" id="targethistorymg" runat="server">目标录入记录</a>
 </div>
 
 <div class="r_sy" id="daohan">

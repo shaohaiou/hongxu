@@ -2,6 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Collections.Generic;
+using System.Drawing;
 
 namespace HX.Tools
 {
@@ -40,6 +41,21 @@ namespace HX.Tools
 
         [DllImport("User32.dll ", CharSet = CharSet.Auto)]
         public static extern bool SetWindowText(IntPtr hwnd, string lpString);
+        /// <summary>
+        /// 返回包含了指定点的窗口的句柄。忽略屏蔽、隐藏以及透明窗口
+        /// </summary>
+        /// <param name="Point">指定的鼠标坐标</param>
+        /// <returns>鼠标坐标处的窗口句柄，如果没有，返回</returns>
+        [DllImport("user32.dll")]
+        internal static extern IntPtr WindowFromPoint(Point Point);
+
+        /// <summary>
+        /// 获取鼠标处的坐标
+        /// </summary>
+        /// <param name="lpPoint">随同指针在屏幕像素坐标中的位置载入的一个结构</param>
+        /// <returns>非零表示成功，零表示失败</returns>
+        [DllImport("user32.dll")]
+        internal static extern bool GetCursorPos(out Point lpPoint);
 
         private static int WM_SETTEXT = 0x000C;
         private static uint WM_LBUTTONDOWN = 0x201; //Left mousebutton down

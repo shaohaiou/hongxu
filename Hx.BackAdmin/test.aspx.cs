@@ -9,6 +9,7 @@ using System.Data.SqlClient;
 using System.Text.RegularExpressions;
 using Hx.Components.Entity;
 using Hx.Components;
+using Hx.Tools.Web;
 
 namespace Hx.BackAdmin
 {
@@ -16,7 +17,9 @@ namespace Hx.BackAdmin
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            Response.Write(Server.UrlEncode("http://bj.hongxu.cn/weixin/act.aspx?wechat_card_js=1&sid=2"));
+            //Response.Write(Server.UrlEncode("http://bj.hongxu.cn/weixin/act.aspx?wechat_card_js=1&sid=2"));
+            Response.Write(WebHelper.GetClientsIP());
+            Response.End();
             //string s = string.Empty;
             //s.GetHashCode();
             //Response.Write(FormatNum(""));

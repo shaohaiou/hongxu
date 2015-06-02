@@ -3676,6 +3676,7 @@ namespace Hx.BackAdmin.dayreport
 
                 #region 表数据
 
+                DataRow[] rows = new DataRow[13];
                 #region 销售数据
 
                 DateTime day = DataConvert.SafeDate(txtDate.Text + "-01");
@@ -3709,13 +3710,15 @@ namespace Hx.BackAdmin.dayreport
                 decimal mbewxstc = 0;
                 decimal hjtppjctc = 0;
                 decimal mbtppjctc = 0;
+                DailyReportModuleInfo m;
                 if (CurrentCorporation != null && CurrentCorporation.DailyreportTpp == 1)
                 {
+                    m = rlist_xs.Find(l => l.Name == "他品牌交车台次");
                     data.DefaultView.RowFilter = "项目='他品牌交车台次'";
-                    hjtppjctc = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
-                    mbtppjctc = DataConvert.SafeDecimal(data.DefaultView[0]["目标值"]);
+                    hjtppjctc = m == null ? 0 : Math.Round(data_xs.Sum(d => d.ContainsKey(m.ID.ToString()) ? DataConvert.SafeDecimal(d[m.ID.ToString()]) : 0), 0);
+                    mbtppjctc = targetdata_xs.ContainsKey(m.ID.ToString()) ? DataConvert.SafeDecimal(targetdata_xs[m.ID.ToString()]) : 0;
                 }
-                DailyReportModuleInfo m = rlist_xs.Find(l => l.Name == "展厅交车台数");
+                m = rlist_xs.Find(l => l.Name == "展厅交车台数");
                 hjztjcts = m == null ? 0 : Math.Round(data_xs.Sum(d => d.ContainsKey(m.ID.ToString()) ? DataConvert.SafeDecimal(d[m.ID.ToString()]) : 0), 0);
                 mbztjcts = targetdata_xs.ContainsKey(m.ID.ToString()) ? DataConvert.SafeDecimal(targetdata_xs[m.ID.ToString()]) : 0;
                 m = rlist_xs.Find(l => l.Name == "二网销售台次");
@@ -3726,7 +3729,6 @@ namespace Hx.BackAdmin.dayreport
                 decimal mbzxstc = mbztjcts + hjewxstc + hjtppjctc;
                 #endregion
 
-                DataRow[] rows = new DataRow[13];
 
                 data.DefaultView.RowFilter = "项目='新车展厅销售量'";
                 decimal hjxcztxsl = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);

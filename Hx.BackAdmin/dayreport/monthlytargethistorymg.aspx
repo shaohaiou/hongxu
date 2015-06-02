@@ -15,7 +15,7 @@
         var showdetailid = "0";
         $(function () {
             $("#txtDate").click(function () {
-                WdatePicker({ 'readOnly': 'true', dateFmt: 'yyyy-MM-dd' });
+                WdatePicker({ 'readOnly': 'true', dateFmt: 'yyyy-MM', isShowToday: false, isShowClear: false });
             });
 
             $(".btnDetail").click(function () {

@@ -18,5 +18,7 @@ namespace Hx.Components.Entity
         public string Award { get; set; }
 
         public int Num { get; set; }
+
+        public string ImgUrl { get; set; }
     }
 }

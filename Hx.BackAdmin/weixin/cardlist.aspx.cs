@@ -98,6 +98,7 @@ namespace Hx.BackAdmin.weixin
                     string cardtitle = Request["txtCardtitle" + i];
                     string award = Request["txtAward" + i];
                     int num = DataConvert.SafeInt(Request["txtNum" + i]);
+                    string imgurl = Request["hdnImgUrl" + i];
                     if (!string.IsNullOrEmpty(cardid + cardtitle + award))
                     {
                         CardidInfo entity = new CardidInfo
@@ -107,6 +108,7 @@ namespace Hx.BackAdmin.weixin
                             Cardtitle = cardtitle,
                             Award = award,
                             Num = num,
+                            ImgUrl = imgurl
                         };
                         WeixinActs.Instance.AddCardidInfo(entity);
                     }
@@ -122,6 +124,7 @@ namespace Hx.BackAdmin.weixin
                     System.Web.UI.WebControls.TextBox txtAward = (System.Web.UI.WebControls.TextBox)item.FindControl("txtAward");
                     System.Web.UI.WebControls.TextBox txtNum = (System.Web.UI.WebControls.TextBox)item.FindControl("txtNum");
                     System.Web.UI.HtmlControls.HtmlInputHidden hdnID = (System.Web.UI.HtmlControls.HtmlInputHidden)item.FindControl("hdnID");
+                    System.Web.UI.HtmlControls.HtmlInputHidden hdnImgUrl = (System.Web.UI.HtmlControls.HtmlInputHidden)item.FindControl("hdnImgUrl");
                     if (hdnID != null)
                     {
                         int id = DataConvert.SafeInt(hdnID.Value);
@@ -134,7 +137,8 @@ namespace Hx.BackAdmin.weixin
                                 Cardid = txtCardid.Text,
                                 Cardtitle = txtCardtitle.Text,
                                 Award = txtAward.Text,
-                                Num = DataConvert.SafeInt(txtNum.Text)
+                                Num = DataConvert.SafeInt(txtNum.Text),
+                                ImgUrl = hdnImgUrl.Value
                             };
                             WeixinActs.Instance.UpdateCardidInfo(entity);
                         }

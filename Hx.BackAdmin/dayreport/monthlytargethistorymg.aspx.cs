@@ -118,62 +118,22 @@ namespace Hx.BackAdmin.dayreport
         protected string GetDetail(object history)
         {
             string result = string.Empty;
-            CurrentHistory = (MonthlyTargetHistoryInfo)history;
-            Dictionary<string, string> data = new Dictionary<string, string>();
             try
             {
-                data = json.Deserialize<Dictionary<string, string>>(CurrentHistory.Detail);
-            }
-            catch { };
-            if (data.Count > 0)
-            {
+                CurrentHistory = (MonthlyTargetHistoryInfo)history;
+                if (CurrentHistory == null) return string.Empty;
+                Dictionary<string, string> data = new Dictionary<string, string>();
+                try
+                {
+                    data = json.Deserialize<Dictionary<string, string>>(CurrentHistory.Detail);
+                }
+                catch { };
                 CorporationInfo corp = Corporations.Instance.GetModel(DataConvert.SafeInt(CurrentHistory.ReportCorporationID), true);
                 if (corp != null)
                 {
                     result += "<div><span>公司:</span>" + corp.Name + "</div>";
                 }
                 result += "<div><span>部门:</span>" + CurrentHistory.ReportDepartment + "</div>";
-                #region 销售部
-                
-                if (CurrentHistory.CreatorDepartment == DayReportDep.销售部)
-                {
-                    result += "<div><span>在途车辆:</span>" + CurrentHistory.Modify.XSztcl + "</div>";
-                    result += "<div><span>车辆平均单价:</span>" + CurrentHistory.Modify.XSclpjdj + "</div>";
-                    result += "<div><span>周转天数:</span>" + CurrentHistory.Modify.XSzzts + "</div>";
-                    result += "<div><span>展厅占比:</span>" + CurrentHistory.Modify.XSztzb + "</div>";
-                    result += "<div><span>展厅留档率:</span>" + CurrentHistory.Modify.XSztldl + "</div>";
-                    result += "<div><span>展厅成交率:</span>" + CurrentHistory.Modify.XSztcjl + "</div>";
-                    result += "<div><span>上牌率:</span>" + CurrentHistory.Modify.XSspl + "</div>";
-                    result += "<div><span>展厅保险率:</span>" + CurrentHistory.Modify.XSztbxl + "</div>";
-                    result += "<div><span>美容交车率:</span>" + CurrentHistory.Modify.XSmrjcl + "</div>";
-                    result += "<div><span>延保渗透率:</span>" + CurrentHistory.Modify.XSybstl + "</div>";
-                    result += "<div><span>展厅精品前装率:</span>" + CurrentHistory.Modify.XSztjpqzl + "</div>";
-                    result += "<div><span>按揭率:</span>" + CurrentHistory.Modify.XSajl + "</div>";
-                    result += "<div><span>免费保养渗透率:</span>" + CurrentHistory.Modify.XSmfbystl + "</div>";
-                    result += "<div><span>总销售台次:</span>" + CurrentHistory.Modify.XSzxstc + "</div>";
-                    result += "<div><span>上牌单台:</span>" + CurrentHistory.Modify.XSspdt + "</div>";
-                    result += "<div><span>展厅保险单台:</span>" + CurrentHistory.Modify.XSztbxdt + "</div>";
-                    result += "<div><span>美容单台:</span>" + CurrentHistory.Modify.XSmrdt + "</div>";
-                    result += "<div><span>展厅精品平均单台:</span>" + CurrentHistory.Modify.XSztjppjdt + "</div>";
-                    result += "<div><span>二网精品平均单台:</span>" + CurrentHistory.Modify.XSewjppjdt + "</div>";
-                    result += "<div><span>销售置换台次:</span>" + CurrentHistory.Modify.XSxszhtc + "</div>";
-                    result += "<div><span>按揭平均单台:</span>" + CurrentHistory.Modify.XSajpjdt + "</div>";
-                    result += "<div><span>免费保养单台:</span>" + CurrentHistory.Modify.XSmfbydt + "</div>";
-                    result += "<div><span>他品牌销售台次:</span>" + CurrentHistory.Modify.XStppxstc + "</div>";
-                    result += "<div><span>他品牌单车毛利:</span>" + CurrentHistory.Modify.XStppdcml + "</div>";
-                    result += "<div><span>他品牌综合毛利:</span>" + CurrentHistory.Modify.XStppzhml + "</div>";
-                    result += "<div><span>他品牌平均单台:</span>" + CurrentHistory.Modify.XStpppjdt + "</div>";
-                }
-
-                #endregion
-                #region 市场部
-
-                if (CurrentHistory.CreatorDepartment == DayReportDep.市场部)
-                {
-                    result += "<div><span>上月粉丝量:</span>" + CurrentHistory.Modify.SCsyfsl + "</div>";
-                    result += "<div><span>首次到访达成率:</span>" + CurrentHistory.Modify.SCscdfdcl + "</div>";
-                }
-                #endregion
                 #region 财务部
                 if (CurrentHistory.CreatorDepartment == DayReportDep.财务部)
                 {
@@ -197,48 +157,63 @@ namespace Hx.BackAdmin.dayreport
                     result += "<div><span>银承、贷款到期:</span>" + CurrentHistory.Modify.CWycdkdq + "</div>";
                 }
                 #endregion
-                #region 行政部
-                
-                if (CurrentHistory.CreatorDepartment == DayReportDep.行政部)
+                if (data.Count > 0)
                 {
-                    result += "<div><span>第一周迟到人数:</span>" + CurrentHistory.Modify.SCsyfsl + "</div>";
-                    result += "<div><span>第二周迟到人数:</span>" + CurrentHistory.Modify.SCscdfdcl + "</div>";
-                    result += "<div><span>第三周迟到人数:</span>" + CurrentHistory.Modify.SCscdfdcl + "</div>";
-                    result += "<div><span>第四周迟到人数:</span>" + CurrentHistory.Modify.SCscdfdcl + "</div>";
-                    result += "<div><span>第一周请假人数:</span>" + CurrentHistory.Modify.SCscdfdcl + "</div>";
-                    result += "<div><span>第二周请假人数:</span>" + CurrentHistory.Modify.SCscdfdcl + "</div>";
-                    result += "<div><span>第三周请假人数:</span>" + CurrentHistory.Modify.SCscdfdcl + "</div>";
-                    result += "<div><span>第四周请假人数:</span>" + CurrentHistory.Modify.SCscdfdcl + "</div>";
-                    result += "<div><span>第一周旷工人数:</span>" + CurrentHistory.Modify.SCscdfdcl + "</div>";
-                    result += "<div><span>第二周旷工人数:</span>" + CurrentHistory.Modify.SCscdfdcl + "</div>";
-                    result += "<div><span>第三周旷工人数:</span>" + CurrentHistory.Modify.SCscdfdcl + "</div>";
-                    result += "<div><span>第四周旷工人数:</span>" + CurrentHistory.Modify.SCscdfdcl + "</div>";
-                    result += "<div><span>第一周出差培训人次:</span>" + CurrentHistory.Modify.SCscdfdcl + "</div>";
-                    result += "<div><span>第二周出差培训人次:</span>" + CurrentHistory.Modify.SCscdfdcl + "</div>";
-                    result += "<div><span>第三周出差培训人次:</span>" + CurrentHistory.Modify.SCscdfdcl + "</div>";
-                    result += "<div><span>第四周出差培训人次:</span>" + CurrentHistory.Modify.SCscdfdcl + "</div>";
-                    result += "<div><span>第一周安全事故损失额:</span>" + CurrentHistory.Modify.SCscdfdcl + "</div>";
-                    result += "<div><span>第二周安全事故损失额:</span>" + CurrentHistory.Modify.SCscdfdcl + "</div>";
-                    result += "<div><span>第三周安全事故损失额:</span>" + CurrentHistory.Modify.SCscdfdcl + "</div>";
-                    result += "<div><span>第四周安全事故损失额:</span>" + CurrentHistory.Modify.SCscdfdcl + "</div>";
-                    result += "<div><span>第一周车辆违章次数:</span>" + CurrentHistory.Modify.SCscdfdcl + "</div>";
-                    result += "<div><span>第二周车辆违章次数:</span>" + CurrentHistory.Modify.SCscdfdcl + "</div>";
-                    result += "<div><span>第三周车辆违章次数:</span>" + CurrentHistory.Modify.SCscdfdcl + "</div>";
-                    result += "<div><span>第四周车辆违章次数:</span>" + CurrentHistory.Modify.SCscdfdcl + "</div>";
-                    result += "<div><span>车牌、负责人:</span>" + CurrentHistory.Modify.SCscdfdcl + "</div>";
-                    result += "<div><span>上月未处理:</span>" + CurrentHistory.Modify.SCscdfdcl + "</div>";
-                    result += "<div><span>违章:</span>" + CurrentHistory.Modify.SCscdfdcl + "</div>";
-                }
-                #endregion
-                List<DailyReportModuleInfo> mlist = DayReportModules.Instance.GetList(CurrentHistory.ReportDepartment, true).OrderBy(l => l.Sort).ToList();
-                foreach (DailyReportModuleInfo m in mlist)
-                {
-                    if (data.Keys.Contains(m.ID.ToString()))
+                    #region 销售部
+
+                    if (CurrentHistory.CreatorDepartment == DayReportDep.销售部)
                     {
-                        result += "<div><span>" + m.Name + ":</span>" + data[m.ID.ToString()] + "</div>";
+                        result += "<div><span>在途车辆:</span>" + CurrentHistory.Modify.XSztcl + "</div>";
+                        result += "<div><span>车辆平均单价:</span>" + CurrentHistory.Modify.XSclpjdj + "</div>";
+                        result += "<div><span>周转天数:</span>" + CurrentHistory.Modify.XSzzts + "</div>";
+                        result += "<div><span>展厅占比:</span>" + CurrentHistory.Modify.XSztzb + "</div>";
+                        result += "<div><span>展厅留档率:</span>" + CurrentHistory.Modify.XSztldl + "</div>";
+                        result += "<div><span>展厅成交率:</span>" + CurrentHistory.Modify.XSztcjl + "</div>";
+                        result += "<div><span>上牌率:</span>" + CurrentHistory.Modify.XSspl + "</div>";
+                        result += "<div><span>展厅保险率:</span>" + CurrentHistory.Modify.XSztbxl + "</div>";
+                        result += "<div><span>美容交车率:</span>" + CurrentHistory.Modify.XSmrjcl + "</div>";
+                        result += "<div><span>延保渗透率:</span>" + CurrentHistory.Modify.XSybstl + "</div>";
+                        result += "<div><span>展厅精品前装率:</span>" + CurrentHistory.Modify.XSztjpqzl + "</div>";
+                        result += "<div><span>按揭率:</span>" + CurrentHistory.Modify.XSajl + "</div>";
+                        result += "<div><span>免费保养渗透率:</span>" + CurrentHistory.Modify.XSmfbystl + "</div>";
+                        result += "<div><span>总销售台次:</span>" + CurrentHistory.Modify.XSzxstc + "</div>";
+                        result += "<div><span>上牌单台:</span>" + CurrentHistory.Modify.XSspdt + "</div>";
+                        result += "<div><span>展厅保险单台:</span>" + CurrentHistory.Modify.XSztbxdt + "</div>";
+                        result += "<div><span>美容单台:</span>" + CurrentHistory.Modify.XSmrdt + "</div>";
+                        result += "<div><span>展厅精品平均单台:</span>" + CurrentHistory.Modify.XSztjppjdt + "</div>";
+                        result += "<div><span>二网精品平均单台:</span>" + CurrentHistory.Modify.XSewjppjdt + "</div>";
+                        result += "<div><span>销售置换台次:</span>" + CurrentHistory.Modify.XSxszhtc + "</div>";
+                        result += "<div><span>按揭平均单台:</span>" + CurrentHistory.Modify.XSajpjdt + "</div>";
+                        result += "<div><span>免费保养单台:</span>" + CurrentHistory.Modify.XSmfbydt + "</div>";
+                        result += "<div><span>他品牌销售台次:</span>" + CurrentHistory.Modify.XStppxstc + "</div>";
+                        result += "<div><span>他品牌单车毛利:</span>" + CurrentHistory.Modify.XStppdcml + "</div>";
+                        result += "<div><span>他品牌综合毛利:</span>" + CurrentHistory.Modify.XStppzhml + "</div>";
+                        result += "<div><span>他品牌平均单台:</span>" + CurrentHistory.Modify.XStpppjdt + "</div>";
+                    }
+
+                    #endregion
+                    #region 市场部
+
+                    if (CurrentHistory.CreatorDepartment == DayReportDep.市场部)
+                    {
+                        result += "<div><span>上月粉丝量:</span>" + CurrentHistory.Modify.SCsyfsl + "</div>";
+                        result += "<div><span>首次到访达成率:</span>" + CurrentHistory.Modify.SCscdfdcl + "</div>";
+                    }
+                    #endregion
+                    if (CurrentHistory.CreatorDepartment != DayReportDep.财务部)
+                    {
+                        List<DailyReportModuleInfo> mlist = DayReportModules.Instance.GetList(CurrentHistory.ReportDepartment, true).OrderBy(l => l.Sort).ToList();
+                        foreach (DailyReportModuleInfo m in mlist)
+                        {
+                            if (data.Keys.Contains(m.ID.ToString()))
+                            {
+                                result += "<div><span>" + m.Name + ":</span>" + data[m.ID.ToString()] + "</div>";
+                            }
+                        }
                     }
                 }
             }
+            catch { }
             return result;
         }
 

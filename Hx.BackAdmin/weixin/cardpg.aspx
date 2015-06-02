@@ -17,11 +17,21 @@
     <script src="../js/jquery-1.3.2.min.js" type="text/javascript"></script>
     <script src="../js/jweixin-1.0.0.js" type="text/javascript"></script>
     <script src="../js/jQuery-eraser-0.4.2.js" type="text/javascript"></script>
+    <%if (!string.IsNullOrEmpty(CurrentSetting.ColorAwards))
+      {%>
+    <style type="text/css">
+    .award{color:<%=CurrentSetting.ColorAwards%>!important;}
+    .award a{color:<%=CurrentSetting.ColorAwards%>!important;}
+    .award a:link{color:<%=CurrentSetting.ColorAwards%>!important;}
+    .award a:visited{color:<%=CurrentSetting.ColorAwards%>!important;}
+    </style>
+    <%} %>
     <%if (!string.IsNullOrEmpty(CurrentSetting.ColorRule))
       {%>
     <style type="text/css">
     .rule{color:<%=CurrentSetting.ColorRule%>!important;}
     .rule a{color:<%=CurrentSetting.ColorRule%>!important;}
+    .rule a:link{color:<%=CurrentSetting.ColorRule%>!important;}
     .rule a:visited{color:<%=CurrentSetting.ColorRule%>!important;}
     </style>
     <%} %>
@@ -79,7 +89,7 @@
 </body>
 <script type="text/javascript">    
     var openid = "<%= Openid %>";
-    var sid = <%= SID %>
+    var sid = <%= SID %>;
     var cardid = "";
     var timestamp = "";
     var signature = "";
@@ -111,7 +121,7 @@
             
             // 微信分享的数据
             var wxData = {
-                "imgUrl": '<%= CurrentDomain %><%=CurrentSetting == null ? string.Empty : CurrentSetting.ShareImgUrl %>',
+                "imgUrl": 'http://<%= CurrentDomain %><%=CurrentSetting == null ? string.Empty : CurrentSetting.ShareImgUrl %>',
                 "link": '<%=CurrentSetting == null ? string.Empty : CurrentSetting.ShareLinkUrl %>',
                 "desc": '<%=CurrentSetting == null ? string.Empty : CurrentSetting.ShareDesc %>',
                 "title": '<%=CurrentSetting == null ? string.Empty : CurrentSetting.ShareTitle %>'

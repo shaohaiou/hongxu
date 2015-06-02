@@ -813,7 +813,8 @@ namespace Hx.Components.Providers
                 Cardid = reader["Cardid"] as string,
                 Cardtitle = reader["Cardtitle"] as string,
                 Award = reader["Award"] as string,
-                Num = DataConvert.SafeInt(reader["Num"])
+                Num = DataConvert.SafeInt(reader["Num"]),
+                ImgUrl = reader["ImgUrl"] as string
             };
 
             return entity;

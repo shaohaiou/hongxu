@@ -102,7 +102,7 @@ namespace Hx.Components.Query
             }
             if (!string.IsNullOrEmpty(MonthUnique))
             {
-                query.Add(string.Format("[DayUnique] = '{0}'", MonthUnique));
+                query.Add(string.Format("[MonthUnique] = '{0}'", MonthUnique));
             }
 
             return string.Join(" AND ", query);

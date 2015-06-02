@@ -1763,12 +1763,14 @@ namespace HX.DALSQLServer
                     ,[Cardtitle]
                     ,[Award]
                     ,[Num]
+                    ,[ImgUrl]
                 )VALUES(
                     @SID
                     ,@Cardid
                     ,@Cardtitle
                     ,@Award
                     ,@Num
+                    ,@ImgUrl
                 )
             ";
             SqlParameter[] p = 
@@ -1778,6 +1780,7 @@ namespace HX.DALSQLServer
                 new SqlParameter("@Cardtitle",entity.Cardtitle),
                 new SqlParameter("@Award",entity.Award),
                 new SqlParameter("@Num",entity.Num),
+                new SqlParameter("@ImgUrl",entity.ImgUrl),
             };
             SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql, p);
         }
@@ -1796,6 +1799,7 @@ namespace HX.DALSQLServer
                     ,[Cardtitle] = @Cardtitle
                     ,[Award] = @Award
                     ,[Num] = @Num
+                    ,[ImgUrl] = @ImgUrl
                 WHERE [ID] = @ID
             ";
             SqlParameter[] p = 
@@ -1805,6 +1809,7 @@ namespace HX.DALSQLServer
                 new SqlParameter("@Cardtitle",entity.Cardtitle),
                 new SqlParameter("@Award",entity.Award),
                 new SqlParameter("@Num",entity.Num),
+                new SqlParameter("@ImgUrl",entity.ImgUrl),
             };
             SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql, p);
         }

@@ -13,10 +13,14 @@ img{margin:0;padding:0;border:0;}
 #imgcard{width: 100%;margin-top: 60.5%;}
 #imgcardflay{width: 100%;margin-top: -48.5%;}
 .award{width: 80%;margin: 0 auto;color: #ffef8b;font-size: 80%;height:28%;}
+.award a{text-decoration:none;}
+.award a:link{color: #ffef8b;}
+.award a:visited{color: #ffef8b;}
 .awardtop{height: 44%;}
 .rule{width: 80%;margin: 0 auto;color: #fff;font-size: 80%;height:22.5%;}
 .ruletop{height: 32%;}
 .rule a{text-decoration:none;}
+.rule a:link{color:#fff;}
 .rule a:visited{color:#fff;}
 
 .m-flay{position: absolute;top: 0;width: 100%;height: 100%;z-index: 10;display:none;}

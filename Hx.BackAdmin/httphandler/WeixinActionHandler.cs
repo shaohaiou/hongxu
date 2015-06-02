@@ -603,6 +603,7 @@ namespace Hx.BackAdmin.HttpHandler
                                     if (cardpack.card.base_info != null && cardidinfolist.Exists(c => c.Cardid == cardpack.card.base_info.id))
                                     {
                                         int kuc = cardidinfolist.Find(c => c.Cardid == cardpack.card.base_info.id).Num;
+                                        string imgurl = cardidinfolist.Find(c => c.Cardid == cardpack.card.base_info.id).ImgUrl;
                                         for (int j = 0; j < kuc; j++)
                                         {
                                             List<string> signaturevalues = new List<string>() 
@@ -614,7 +615,7 @@ namespace Hx.BackAdmin.HttpHandler
                                             signaturevalues = signaturevalues.OrderBy(s => s.Substring(0,1)).ToList();
                                             string signature = EncryptString.SHA1_Hash(string.Format("{0}{1}{2}", signaturevalues[0], signaturevalues[1], signaturevalues[2]));
                                             string awardname = cardidinfolist.Find(c => c.Cardid == cardpack.card.base_info.id).Award;
-                                            cardids.Add(i, cardpack.card.base_info.id + "|" + cardpack.card.base_info.title + "|" + awardname + "|" + cardpack.card.base_info.logo_url + "|" + timestamp + "|" + signature);
+                                            cardids.Add(i, cardpack.card.base_info.id + "|" + cardpack.card.base_info.title + "|" + awardname + "|" + imgurl + "|" + timestamp + "|" + signature);
                                             i++;
                                         }
                                     }

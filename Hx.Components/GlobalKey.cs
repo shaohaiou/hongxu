@@ -58,10 +58,16 @@ namespace Hx.Components
         public static readonly string JITUANVOTESETTING = "cache-jituanvotesetting"; //集团投票活动设置缓存键值
 
         public static readonly string CARDSETTINGLIST = "cache-cardsetting-list"; //卡券活动设置列表缓存键值
-        public static readonly string CARDOPENID = "session-cardopenid"; //卡券活动openid键值
-        public static readonly string CARDLIST = "card-list"; //卡券列表缓存键值
-        public static readonly string CARDPULLLIST = "cardpull-list"; //卡券抽奖记录列表缓存键值
-        public static readonly string CARDIDLIST = "cardid-list"; //卡券抽奖记录列表缓存键值
+        public static readonly string CARDLIST = "cache-card-list"; //卡券列表缓存键值
+        public static readonly string CARDPULLLIST = "cache-cardpull-list"; //卡券抽奖记录列表缓存键值
+        public static readonly string CARDIDLIST = "cache-cardid-list"; //卡券抽奖记录列表缓存键值
+
+        public static readonly string VOTESETTINGLIST = "cache-votesetting-list"; //投票活动设置列表缓存键值
+        public static readonly string VOTEOPENID = "session-cardopenid"; //投票活动openid键值
+        public static readonly string VOTELIST = "cache-vote-list"; //投票列表缓存键值
+        public static readonly string VOTERECORDLIST = "cache-voterecord-list"; //投票记录列表缓存键值
+        public static readonly string VOTERECORDLISTCACHE = "cache-voterecordcache-list"; //投票记录临时列表缓存键值
+        public static readonly string VOTEPOTHUNTERLIST = "cache-votepothunter-list"; //卡券抽奖记录列表缓存键值
 
         public static readonly string WEIXINACTCOMMENT_LIST = "cache-weixincomment-list"; //微信活动评论列表缓存键值
 

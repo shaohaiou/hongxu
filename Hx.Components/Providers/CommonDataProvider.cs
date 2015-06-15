@@ -822,6 +822,91 @@ namespace Hx.Components.Providers
 
         #endregion
 
+        #endregion
+
+        #region 投票活动
+
+        #region 活动设置
+
+        public abstract void AddVoteSetting(VoteSettingInfo entity);
+
+        public abstract void DeleteVoteSetting(string ids);
+
+        public abstract List<VoteSettingInfo> GetVoteSettinglist();
+
+        protected VoteSettingInfo PopulateVoteSetting(IDataReader reader)
+        {
+            VoteSettingInfo entity = new VoteSettingInfo()
+            {
+                ID = DataConvert.SafeInt(reader["ID"]),
+                Name = reader["Name"] as string
+            };
+            SerializerData data = new SerializerData();
+            data.Keys = reader["PropertyNames"] as string;
+            data.Values = reader["PropertyValues"] as string;
+            entity.SetSerializerData(data);
+
+            return entity;
+        }
+
+        #endregion
+
+        #region 选手管理
+
+        public abstract bool AddVotePothunterInfo(VotePothunterInfo entity);
+
+        public abstract void DelVotePothunterInfo(string ids);
+
+        public abstract List<VotePothunterInfo> GetVotePothunterList();
+
+        protected VotePothunterInfo PopulateVotePothunterInfo(IDataReader reader)
+        {
+            VotePothunterInfo entity = new VotePothunterInfo
+            {
+                ID = DataConvert.SafeInt(reader["ID"])
+            };
+
+            SerializerData data = new SerializerData();
+            data.Keys = reader["PropertyNames"] as string;
+            data.Values = reader["PropertyValues"] as string;
+            entity.SetSerializerData(data);
+
+            return entity;
+        }
+
+        #endregion
+
+        #region 投票记录
+
+        public abstract List<VoteRecordInfo> GetVoteRecordList(int pageindex, int pagesize, VoteRecordQuery query, ref int recordcount);
+
+        public abstract bool AddVoteRecordInfo(VoteRecordInfo entity);
+
+        protected VoteRecordInfo PopulateVoteRecord(IDataReader reader)
+        {
+            VoteRecordInfo entity = new VoteRecordInfo
+            {
+                ID = DataConvert.SafeInt(reader["ID"]),
+                SID = DataConvert.SafeInt(reader["SID"]),
+                AthleteID = DataConvert.SafeInt(reader["AthleteID"]),
+                AthleteName = reader["AthleteName"] as string,
+                SerialNumber = DataConvert.SafeInt(reader["SerialNumber"]),
+                Voter = reader["Voter"] as string,
+                AddTime = DataConvert.SafeDate(reader["AddTime"])
+            };
+
+            SerializerData data = new SerializerData();
+            data.Keys = reader["PropertyNames"] as string;
+            data.Values = reader["PropertyValues"] as string;
+            entity.SetSerializerData(data);
+
+            return entity;
+        }
+
+        #endregion
+
+        #endregion
+
         #region 广本61活动
 
         public abstract void AddGB61Info(GB61Info entity);
@@ -841,8 +926,6 @@ namespace Hx.Components.Providers
 
             return entity;
         }
-
-        #endregion
 
         #endregion
 

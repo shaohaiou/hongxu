@@ -80,14 +80,14 @@ namespace Hx.BackAdmin
                 JobOffers.Instance.ReloadJobOfferListCache();
                 CorpMiens.Instance.ReloadCorpMienListCache();
 
-                BenzvoteSettingInfo benzvotesetting = WeixinActs.Instance.GetBenzvoteSetting();
+                BenzvoteSettingInfo benzvotesetting = WeixinActs.Instance.GetBenzvoteSetting(true);
                 if (benzvotesetting != null && benzvotesetting.Switch == 1)
                 {
                     WeixinActs.Instance.ReloadBenzvoteSetting();
                     WeixinActs.Instance.ReloadAllBenzvote();
                     WeixinActs.Instance.ReloadBenzvotePothunterListCache();
                 }
-                JituanvoteSettingInfo jituanvotesetting = WeixinActs.Instance.GetJituanvoteSetting();
+                JituanvoteSettingInfo jituanvotesetting = WeixinActs.Instance.GetJituanvoteSetting(true);
                 if (jituanvotesetting != null && jituanvotesetting.Switch == 1)
                 {
                     WeixinActs.Instance.ReloadJituanvoteSetting();
@@ -98,11 +98,17 @@ namespace Hx.BackAdmin
                 {
                     WeixinActs.Instance.ReloadComments();
                 }
-                List<CardSettingInfo> cslist = WeixinActs.Instance.GetCardSettingList();
+                List<CardSettingInfo> cslist = WeixinActs.Instance.GetCardSettingList(true);
                 foreach (CardSettingInfo setting in cslist.FindAll(c => c.Switch == 1))
                 {
                     WeixinActs.Instance.ReloadCardlist(setting.ID);
                     WeixinActs.Instance.ReloadCardPullRecordListCache(setting.ID);
+                }
+                List<VoteSettingInfo> vslist = WeixinActs.Instance.GetVoteSettingList(true);
+                foreach (VoteSettingInfo setting in vslist.FindAll(c => c.Switch == 1))
+                {
+                    WeixinActs.Instance.ReloadVotePothunterList(setting.ID);
+                    WeixinActs.Instance.ReloadVoteRecordList(setting.ID);
                 }
             }
             catch { }

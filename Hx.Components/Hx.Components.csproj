@@ -105,6 +105,9 @@
     <Compile Include="Entity\MonthlyTargetHistoryInfo.cs" />
     <Compile Include="Entity\PromaryInfo.cs" />
     <Compile Include="Entity\ShowUrl.cs" />
+    <Compile Include="Entity\VotePothunterInfo.cs" />
+    <Compile Include="Entity\VoteRecordInfo.cs" />
+    <Compile Include="Entity\VoteSettingInfo.cs" />
     <Compile Include="Entity\WeixinActCommentInfo.cs" />
     <Compile Include="Entity\WeixinActInfo.cs" />
     <Compile Include="Entity\JituanvotePothunterInfo.cs" />
@@ -150,6 +153,7 @@
     <Compile Include="Query\EventLogQuery.cs" />
     <Compile Include="Query\MonthlyTargetHistoryQuery.cs" />
     <Compile Include="Query\MonthTargetQuery.cs" />
+    <Compile Include="Query\VoteRecordQuery.cs" />
     <Compile Include="Query\WeixinActQuery.cs" />
     <Compile Include="Query\JituanvoteQuery.cs" />
     <Compile Include="Web\HXContext.cs" />

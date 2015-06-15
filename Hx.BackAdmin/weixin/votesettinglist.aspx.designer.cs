@@ -10,69 +10,69 @@
 namespace Hx.BackAdmin.weixin {
     
     
-    public partial class main_s {
+    public partial class votesettinglist {
         
         /// <summary>
-        /// weixinactmg 控件。
+        /// Head1 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor weixinactmg;
+        protected global::System.Web.UI.HtmlControls.HtmlHead Head1;
         
         /// <summary>
-        /// benzvotemg 控件。
+        /// form1 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor benzvotemg;
+        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
         
         /// <summary>
-        /// jituanvotemg 控件。
+        /// rpcg 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor jituanvotemg;
+        protected global::System.Web.UI.WebControls.Repeater rpcg;
         
         /// <summary>
-        /// escpgmg 控件。
+        /// rptData 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor escpgmg;
+        protected global::System.Web.UI.WebControls.Repeater rptData;
         
         /// <summary>
-        /// cardmg 控件。
+        /// hdnAddCount 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor cardmg;
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hdnAddCount;
         
         /// <summary>
-        /// votemg 控件。
+        /// hdnDelIds 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor votemg;
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hdnDelIds;
         
         /// <summary>
-        /// gb61 控件。
+        /// btnSubmit 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor gb61;
+        protected global::System.Web.UI.WebControls.Button btnSubmit;
     }
 }

@@ -447,6 +447,13 @@
     <Content Include="weixin\jituanvotemg.aspx" />
     <Content Include="weixin\main.aspx" />
     <Content Include="weixin\main_s.aspx" />
+    <Content Include="weixin\votemg.aspx" />
+    <Content Include="weixin\votepg.aspx" />
+    <Content Include="weixin\votepothunterdetail.aspx" />
+    <Content Include="weixin\votepothunteredit.aspx" />
+    <Content Include="weixin\votepothunterlist.aspx" />
+    <Content Include="weixin\voterecordlist.aspx" />
+    <Content Include="weixin\votesettinglist.aspx" />
     <Content Include="weixin\weixinactmg.aspx" />
     <Content Include="weixin\jituanvotepothunteredit.aspx" />
     <Content Include="weixin\jituanvotelist.aspx" />
@@ -1073,6 +1080,55 @@
     </Compile>
     <Compile Include="weixin\main_s.aspx.designer.cs">
       <DependentUpon>main_s.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="weixin\votemg.aspx.cs">
+      <DependentUpon>votemg.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="weixin\votemg.aspx.designer.cs">
+      <DependentUpon>votemg.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="weixin\votepg.aspx.cs">
+      <DependentUpon>votepg.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="weixin\votepg.aspx.designer.cs">
+      <DependentUpon>votepg.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="weixin\votepothunterdetail.aspx.cs">
+      <DependentUpon>votepothunterdetail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="weixin\votepothunterdetail.aspx.designer.cs">
+      <DependentUpon>votepothunterdetail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="weixin\votepothunteredit.aspx.cs">
+      <DependentUpon>votepothunteredit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="weixin\votepothunteredit.aspx.designer.cs">
+      <DependentUpon>votepothunteredit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="weixin\votepothunterlist.aspx.cs">
+      <DependentUpon>votepothunterlist.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="weixin\votepothunterlist.aspx.designer.cs">
+      <DependentUpon>votepothunterlist.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="weixin\voterecordlist.aspx.cs">
+      <DependentUpon>voterecordlist.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="weixin\voterecordlist.aspx.designer.cs">
+      <DependentUpon>voterecordlist.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="weixin\votesettinglist.aspx.cs">
+      <DependentUpon>votesettinglist.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="weixin\votesettinglist.aspx.designer.cs">
+      <DependentUpon>votesettinglist.aspx</DependentUpon>
     </Compile>
     <Compile Include="weixin\weixinactmg.aspx.cs">
       <DependentUpon>weixinactmg.aspx</DependentUpon>

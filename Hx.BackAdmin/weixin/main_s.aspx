@@ -16,10 +16,11 @@
 <body style="background:url(../images/xdd.gif) repeat-x;">
 <div class="right_nav">
      <a href="weixinactmg.aspx" target="ztk" id="weixinactmg" runat="server" class="current">测试活动</a>
-     <a href="benzvotemg.aspx" target="ztk" id="benzvotemg" runat="server">奔驰投票</a>
-     <a href="jituanvotemg.aspx" target="ztk" id="jituanvotemg" runat="server">集团投票</a>
+     <a href="benzvotemg.aspx" target="ztk" id="benzvotemg" runat="server" class="hide">奔驰投票</a>
+     <a href="jituanvotemg.aspx" target="ztk" id="jituanvotemg" runat="server" class="hide">集团投票</a>
      <a href="escpgmg.aspx" target="ztk" id="escpgmg" runat="server">爱车估价器</a>
      <a href="cardsettinglist.aspx" target="ztk" id="cardmg" runat="server">卡券活动</a>
+     <a href="votesettinglist.aspx" target="ztk" id="votemg" runat="server">投票活动</a>
      <a href="gb61list.aspx" target="ztk" id="gb61" runat="server">广本61活动</a>
 </div>
 

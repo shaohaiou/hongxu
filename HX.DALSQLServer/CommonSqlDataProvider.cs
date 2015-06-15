@@ -1818,6 +1818,190 @@ namespace HX.DALSQLServer
 
         #endregion
 
+        #region 投票活动
+
+        #region 活动设置
+
+        public override void AddVoteSetting(VoteSettingInfo entity)
+        {
+            SerializerData data = entity.GetSerializerData();
+            string sql = @"
+            IF EXISTS(SELECT * FROM HX_VoteSetting WHERE [ID] = @ID)
+            BEGIN
+                UPDATE HX_VoteSetting SET
+                    [Name] = @Name
+                    ,[PropertyNames] = @PropertyNames
+                    ,[PropertyValues] = @PropertyValues
+                WHERE [ID] = @ID
+            END
+            ELSE
+            BEGIN
+                INSERT INTO HX_VoteSetting(
+                    [Name]
+                    ,[PropertyNames]
+                    ,[PropertyValues]
+                )VALUES(
+                    @Name
+                    ,@PropertyNames
+                    ,@PropertyValues)
+            END
+            ";
+            SqlParameter[] p = 
+            {
+                new SqlParameter("@ID",entity.ID),
+                new SqlParameter("@Name",entity.Name),
+                new SqlParameter("@PropertyNames",data.Keys),
+                new SqlParameter("@PropertyValues",data.Values)
+            };
+            SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql, p);
+        }
+
+        public override void DeleteVoteSetting(string ids)
+        {
+            string sql = "DELETE FROM HX_VoteSetting WHERE [ID] IN(" + ids + ")";
+            SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql);
+        }
+
+        public override List<VoteSettingInfo> GetVoteSettinglist()
+        {
+            string sql = "SELECT * FROM HX_VoteSetting";
+            List<VoteSettingInfo> list = new List<VoteSettingInfo>();
+            using (IDataReader reader = SqlHelper.ExecuteReader(_con, CommandType.Text, sql))
+            {
+                while (reader.Read())
+                {
+                    list.Add(PopulateVoteSetting(reader));
+                }
+            }
+            return list;
+        }
+
+        #endregion
+
+        #region 选手管理
+
+        public override bool AddVotePothunterInfo(VotePothunterInfo entity)
+        {
+            SerializerData data = entity.GetSerializerData();
+            string sql = @"
+            IF EXISTS(SELECT * FROM HX_VotePothunter WHERE @ID > 0)
+            BEGIN
+                UPDATE HX_VotePothunter SET
+                    [PropertyNames] = @PropertyNames
+                    ,[PropertyValues] = @PropertyValues
+                WHERE ID = @ID
+            END
+            ELSE
+            BEGIN
+                INSERT INTO HX_VotePothunter(
+                    [PropertyNames]
+                    ,[PropertyValues]
+                )VALUES(
+                    @PropertyNames
+                    ,@PropertyValues)
+            END
+            ";
+            SqlParameter[] p = 
+            {
+                new SqlParameter("@PropertyNames",data.Keys),
+                new SqlParameter("@PropertyValues",data.Values),
+                new SqlParameter("@ID",entity.ID)
+            };
+            int result = SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql, p);
+            if (result > 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public override void DelVotePothunterInfo(string ids)
+        {
+            string sql = "DELETE FROM HX_VotePothunter WHERE ID IN (" + ids + ")";
+            SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql);
+        }
+
+        public override List<VotePothunterInfo> GetVotePothunterList()
+        {
+            List<VotePothunterInfo> list = new List<VotePothunterInfo>();
+            string sql = "SELECT * FROM HX_VotePothunter";
+            using (IDataReader reader = SqlHelper.ExecuteReader(_con, CommandType.Text, sql))
+            {
+                while (reader.Read())
+                {
+                    list.Add(PopulateVotePothunterInfo(reader));
+                }
+            }
+
+            return list;
+        }
+
+        #endregion
+
+        #region 投票记录
+
+        public override List<VoteRecordInfo> GetVoteRecordList(int pageindex, int pagesize, VoteRecordQuery query, ref int recordcount)
+        {
+            List<VoteRecordInfo> list = new List<VoteRecordInfo>();
+            SqlParameter p;
+            using (IDataReader reader = CommonPageSql.GetDataReaderByPager(_con, pageindex, pagesize, query, out p))
+            {
+                while (reader.Read())
+                {
+                    list.Add(PopulateVoteRecord(reader));
+                }
+            }
+            recordcount = DataConvert.SafeInt(p.Value);
+
+            return list;
+        }
+
+        public override bool AddVoteRecordInfo(VoteRecordInfo entity)
+        {
+            SerializerData data = entity.GetSerializerData();
+            string sql = @"
+                INSERT INTO HX_VoteRecord(
+                    [SID]
+                    ,[AthleteID]
+                    ,[AthleteName]
+                    ,[SerialNumber]
+                    ,[Voter]
+                    ,[AddTime]
+                    ,[PropertyNames]
+                    ,[PropertyValues]
+                )VALUES(
+                    @SID
+                    ,@AthleteID
+                    ,@AthleteName
+                    ,@SerialNumber
+                    ,@Voter
+                    ,@AddTime
+                    ,@PropertyNames
+                    ,@PropertyValues)
+            ";
+            SqlParameter[] p = 
+            {
+                new SqlParameter("@SID",entity.SID),
+                new SqlParameter("@AthleteID",entity.AthleteID),
+                new SqlParameter("@AthleteName",entity.AthleteName),
+                new SqlParameter("@SerialNumber",entity.SerialNumber),
+                new SqlParameter("@Voter",entity.Voter),
+                new SqlParameter("@AddTime",entity.AddTime),
+                new SqlParameter("@PropertyNames",data.Keys),
+                new SqlParameter("@PropertyValues",data.Values),
+            };
+            int result = SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql, p);
+            if (result > 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        #endregion
+
+        #endregion
+
         #region 广本61活动
 
         public override void AddGB61Info(GB61Info entity)

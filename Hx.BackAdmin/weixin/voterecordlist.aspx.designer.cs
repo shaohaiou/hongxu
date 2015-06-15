@@ -10,69 +10,69 @@
 namespace Hx.BackAdmin.weixin {
     
     
-    public partial class main_s {
+    public partial class voterecordlist {
         
         /// <summary>
-        /// weixinactmg 控件。
+        /// Head1 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor weixinactmg;
+        protected global::System.Web.UI.HtmlControls.HtmlHead Head1;
         
         /// <summary>
-        /// benzvotemg 控件。
+        /// form1 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor benzvotemg;
+        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
         
         /// <summary>
-        /// jituanvotemg 控件。
+        /// rpcg 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor jituanvotemg;
+        protected global::System.Web.UI.WebControls.Repeater rpcg;
         
         /// <summary>
-        /// escpgmg 控件。
+        /// txtAthleteName 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor escpgmg;
+        protected global::System.Web.UI.WebControls.TextBox txtAthleteName;
         
         /// <summary>
-        /// cardmg 控件。
+        /// txtSerialNumber 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor cardmg;
+        protected global::System.Web.UI.WebControls.TextBox txtSerialNumber;
         
         /// <summary>
-        /// votemg 控件。
+        /// rptdata 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor votemg;
+        protected global::System.Web.UI.WebControls.Repeater rptdata;
         
         /// <summary>
-        /// gb61 控件。
+        /// search_fy 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor gb61;
+        protected global::Wuqi.Webdiyer.AspNetPager search_fy;
     }
 }

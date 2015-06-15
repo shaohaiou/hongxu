@@ -1506,6 +1506,350 @@ namespace Hx.Components
 
         #endregion
 
+        #endregion
+
+        #region 投票活动
+
+        private static object sync_vote = new object();
+
+        #region 活动设置
+
+        public void AddVoteSetting(VoteSettingInfo entity)
+        {
+            CommonDataProvider.Instance().AddVoteSetting(entity);
+        }
+
+        public void DeleteVoteSetting(string ids)
+        {
+            CommonDataProvider.Instance().DeleteVoteSetting(ids);
+        }
+
+        public List<VoteSettingInfo> GetVoteSettingList(bool fromCache = false)
+        {
+            if (!fromCache)
+            {
+                return CommonDataProvider.Instance().GetVoteSettinglist();
+            }
+            string key = GlobalKey.VOTESETTINGLIST;
+            List<VoteSettingInfo> list = MangaCache.Get(key) as List<VoteSettingInfo>;
+            if (list == null)
+            {
+                lock (sync_creater)
+                {
+                    list = MangaCache.Get(key) as List<VoteSettingInfo>;
+                    if (list == null)
+                    {
+                        list = CommonDataProvider.Instance().GetVoteSettinglist();
+
+                        MangaCache.Max(key, list);
+                    }
+                }
+            }
+            return list;
+        }
+
+        public VoteSettingInfo GetVoteSetting(int id, bool fromCache = false)
+        {
+            List<VoteSettingInfo> list = GetVoteSettingList(fromCache);
+
+            return list.Find(c => c.ID == id);
+        }
+
+        public void ReloadVoteSetting()
+        {
+            string key = GlobalKey.VOTESETTINGLIST;
+            MangaCache.Remove(key);
+            GetVoteSettingList(true);
+        }
+
+        #endregion
+
+        #region 选手管理
+
+        /// <summary>
+        /// 添加/编辑参赛选手
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public bool AddVotePothunterInfo(VotePothunterInfo entity)
+        {
+            return CommonDataProvider.Instance().AddVotePothunterInfo(entity);
+        }
+
+        /// <summary>
+        /// 删除参赛选手
+        /// </summary>
+        /// <param name="ids"></param>
+        /// <returns></returns>
+        public void DelVotePothunterInfo(int sid,string ids)
+        {
+            CommonDataProvider.Instance().DelVotePothunterInfo(ids);
+            ReloadVotePothunterList(sid);
+        }
+
+        public VotePothunterInfo GetVotePothunterInfo(int id, bool fromCache = false)
+        {
+            VotePothunterInfo entity = null;
+
+            List<VotePothunterInfo> list = GetVotePothunterList(fromCache);
+            if (list.Exists(l => l.ID == id))
+            {
+                entity = list.Find(l => l.ID == id);
+            }
+
+            return entity;
+        }
+
+        public List<VotePothunterInfo> GetVotePothunterList(int sid, bool fromCache = false)
+        {
+            List<VotePothunterInfo> list = GetVotePothunterList(fromCache);
+            if (!fromCache)
+            {
+                list = ReorderVotePothunter(list.FindAll(p => p.SID == sid)).OrderBy(b => b.SerialNumber).ToList();
+                return list;
+            }
+            string key = GlobalKey.VOTEPOTHUNTERLIST + "_" + sid;
+            list = MangaCache.Get(key) as List<VotePothunterInfo>;
+            if (list == null)
+            {
+                lock (sync_creater)
+                {
+                    list = MangaCache.Get(key) as List<VotePothunterInfo>;
+                    if (list == null)
+                    {
+                        list = CommonDataProvider.Instance().GetVotePothunterList();
+                        list = ReorderVotePothunter(list.FindAll(p=>p.SID == sid)).OrderBy(b => b.SerialNumber).ToList();
+                        MangaCache.Max(key, list);
+                    }
+                }
+            }
+            
+            return list;
+        }
+
+        private List<VotePothunterInfo> GetVotePothunterList(bool fromCache = false)
+        {
+            if (!fromCache)
+            {
+                List<VotePothunterInfo> slist = CommonDataProvider.Instance().GetVotePothunterList();
+                return slist;
+            }
+
+            string key = GlobalKey.VOTEPOTHUNTERLIST;
+            List<VotePothunterInfo> list = MangaCache.Get(key) as List<VotePothunterInfo>;
+            if (list == null)
+            {
+                lock (sync_creater)
+                {
+                    list = MangaCache.Get(key) as List<VotePothunterInfo>;
+                    if (list == null)
+                    {
+                        list = CommonDataProvider.Instance().GetVotePothunterList();
+
+                        MangaCache.Max(key, list);
+                    }
+                }
+            }
+            return list;
+        }
+
+        public void ReloadVotePothunterList(int sid)
+        {
+            string key = GlobalKey.VOTEPOTHUNTERLIST + "_" + sid;
+            MangaCache.Remove(key);
+            key = GlobalKey.VOTEPOTHUNTERLIST;
+            MangaCache.Remove(key);
+            GetVotePothunterList(sid,true);
+        }
+
+        /// <summary>
+        /// 对选手排名
+        /// </summary>
+        /// <param name="list"></param>
+        /// <returns></returns>
+        public List<VotePothunterInfo> ReorderVotePothunter(List<VotePothunterInfo> list)
+        {
+            if (list != null)
+            {
+                list = list.OrderByDescending(b => b.Ballot).ToList(); ;
+                for (int i = 0; i < list.Count; i++)
+                {
+                    list[i].Order = list.IndexOf(list[i]) + 1;
+                }
+            }
+
+            return list;
+        }
+
+        #endregion
+
+        #region 投票记录管理
+
+        /// <summary>
+        /// 分页获取投票信息
+        /// </summary>
+        /// <param name="pageindex"></param>
+        /// <param name="pagesize"></param>
+        /// <param name="query"></param>
+        /// <param name="recordcount"></param>
+        /// <returns></returns>
+        public List<VoteRecordInfo> GetVoteRecordList(int pageindex, int pagesize, VoteRecordQuery query, ref int recordcount)
+        {
+            return CommonDataProvider.Instance().GetVoteRecordList(pageindex, pagesize, query, ref recordcount);
+        }
+
+        public bool AddVoteRecordInfo(VoteRecordInfo entity)
+        {
+            return CommonDataProvider.Instance().AddVoteRecordInfo(entity);
+        }
+
+        /// <summary>
+        /// 获取投票信息
+        /// </summary>
+        /// <returns></returns>
+        public Dictionary<string, DateTime> GetVoteRecordList(int sid)
+        {
+            string key = GlobalKey.VOTERECORDLIST + "_" + sid;
+            Dictionary<string, DateTime> result = MangaCache.Get(key) as Dictionary<string, DateTime>;
+            if (result == null)
+            {
+                lock (sync_vote)
+                {
+                    result = MangaCache.Get(key) as Dictionary<string, DateTime>;
+                    if (result == null)
+                    {
+                        VoteRecordQuery query = new VoteRecordQuery();
+                        query.SID = sid;
+                        int recordcount = 0;
+                        List<VoteRecordInfo> blist = GetVoteRecordList(1, int.MaxValue, query, ref recordcount);
+                        result = new Dictionary<string, DateTime>();
+                        foreach (VoteRecordInfo v in blist)
+                        {
+                            if (!result.Keys.Contains(v.AthleteID + "_" + v.Openid))
+                                result.Add(v.AthleteID + "_" + v.Openid, v.AddTime);
+                        }
+                        MangaCache.Max(key, result);
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        public void ReloadVoteRecordList(int sid)
+        {
+            string key = GlobalKey.VOTERECORDLIST;
+            MangaCache.Remove(key);
+            GetVoteRecordList(sid);
+        }
+
+        public List<VoteRecordInfo> GetVoteRecordsCache(int sid)
+        {
+            string key = GlobalKey.VOTERECORDLISTCACHE + "_" + sid;
+            List<VoteRecordInfo> result = MangaCache.Get(key) as List<VoteRecordInfo>;
+            if (result == null)
+            {
+                lock (sync_vote)
+                {
+                    result = MangaCache.Get(key) as List<VoteRecordInfo>;
+                    if (result == null)
+                    {
+                        result = new List<VoteRecordInfo>();
+                        MangaCache.Max(key, result);
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        public string Vote(VoteRecordInfo vote)
+        {
+            try
+            {
+                lock (sync_vote)
+                {
+                    Dictionary<string, DateTime> VoteRecords = GetVoteRecordList(vote.SID);
+                    VoteRecords.Add(vote.AthleteID + "_" + vote.Openid, vote.AddTime);
+                    List<VoteRecordInfo> VoteRecordsCache = GetVoteRecordsCache(vote.SID);
+                    VoteRecordsCache.Add(vote);
+                }
+
+                return string.Empty;
+            }
+            catch (Exception ex)
+            {
+                ExpLog.Write(ex);
+                return "发生错误";
+            }
+        }
+
+        public string CheckVote(int sid,string openid, string id)
+        {
+            VoteSettingInfo setting = GetVoteSetting(sid,true);
+            if (setting != null && setting.Switch == 0)
+            {
+                return "该活动已结束";
+            }
+
+            lock (sync_vote)
+            {
+                Dictionary<string, DateTime> VoteRecordList = GetVoteRecordList(sid);
+                if (VoteRecordList != null)
+                {
+                    if (VoteRecordList.Keys.Contains(id + "_" + openid))
+                    {
+                        return "您已经为他/她投过票了。";
+                    }
+                    List<KeyValuePair<string, DateTime>> votes = VoteRecordList.Where(b => b.Key.EndsWith("_" + openid) && b.Value > DateTime.Today).ToList();
+                    if (votes.Count > 0)
+                    {
+                        DateTime ftime = votes.Min(b => b.Value);
+                        int minutes = setting == null ? 30 : setting.OverdueMinutes;
+                        if (minutes > 0 && DateTime.Now.AddMinutes(-1 * minutes) > ftime)
+                        {
+                            return "您今日的点赞期已过，请明日再投。";
+                        }
+                        if (setting != null && setting.VoteTimes > 0 && votes.Count >= setting.VoteTimes)
+                        {
+                            return "您的点赞次数已经用完。";
+                        }
+                    }
+                }
+            }
+
+            return string.Empty;
+        }
+
+        public void VoteRecordAccount(int sid)
+        {
+            List<VoteRecordInfo> votes = new List<VoteRecordInfo>();
+            lock (sync_vote)
+            {
+                List<VoteRecordInfo> VoteRecordsCache = GetVoteRecordsCache(sid);
+                if (VoteRecordsCache.Count > 0)
+                {
+                    votes.AddRange(VoteRecordsCache);
+                    VoteRecordsCache.Clear();
+                }
+            }
+            List<VotePothunterInfo> plist = GetVotePothunterList(sid,true);
+            foreach (VoteRecordInfo vote in votes)
+            {
+                if (plist.Exists(p => p.ID == vote.AthleteID))
+                {
+                    VotePothunterInfo pinfo = plist.Find(p => p.ID == vote.AthleteID);
+                    pinfo.Ballot++;
+                    if (AddVoteRecordInfo(vote))
+                        AddVotePothunterInfo(pinfo);
+                }
+            }
+        }
+
+        #endregion
+
+        #endregion
+
         #region 广本61活动
 
         public void AddGB61Info(GB61Info entity)
@@ -1517,8 +1861,6 @@ namespace Hx.Components
         {
             return CommonDataProvider.Instance().GetGB61InfoList();
         }
-
-        #endregion
 
         #endregion
     }

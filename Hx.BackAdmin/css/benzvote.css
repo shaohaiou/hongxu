@@ -49,3 +49,8 @@ ul{margin:0; padding:0; list-style:none;}li{margin:0; padding:0; list-style:none
 .dflay img{width:100%;}
 .nav{width: 93%;margin: 0 auto;padding: 1% 0;}
 .nav img{width:10%}
+
+.m-flay{position: absolute;top: 0;width: 100%;height: 100%;z-index: 10;display:none;}
+.attention-content{width: 100%;position: relative;background: #fff;height: 24%;}
+.attention-title{font-size: 1.2em;display: block;padding: 2px 0 0 4px;background: #ccc;color: #444;font-weight: bold;}
+.attention-msg{text-align: center;vertical-align: middle;font-size: 80%;}

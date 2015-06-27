@@ -189,6 +189,7 @@
     <Content Include="images\weixin\card\ydj.png" />
     <Content Include="images\weixin\card\zj.png" />
     <Content Include="images\weixin\card\zjbg.png" />
+    <Content Include="images\weixin\card\zjl.png" />
     <Content Include="images\weixin\escpg\btnsubmit.png" />
     <Content Include="images\weixin\escpg\ewm.png" />
     <Content Include="images\weixin\escpg\head.png" />
@@ -447,6 +448,7 @@
     <Content Include="weixin\jituanvotemg.aspx" />
     <Content Include="weixin\main.aspx" />
     <Content Include="weixin\main_s.aspx" />
+    <Content Include="weixin\votecommentmg.aspx" />
     <Content Include="weixin\votemg.aspx" />
     <Content Include="weixin\votepg.aspx" />
     <Content Include="weixin\votepothunterdetail.aspx" />
@@ -1080,6 +1082,13 @@
     </Compile>
     <Compile Include="weixin\main_s.aspx.designer.cs">
       <DependentUpon>main_s.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="weixin\votecommentmg.aspx.cs">
+      <DependentUpon>votecommentmg.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="weixin\votecommentmg.aspx.designer.cs">
+      <DependentUpon>votecommentmg.aspx</DependentUpon>
     </Compile>
     <Compile Include="weixin\votemg.aspx.cs">
       <DependentUpon>votemg.aspx</DependentUpon>

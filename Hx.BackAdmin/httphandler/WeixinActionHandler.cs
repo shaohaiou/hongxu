@@ -77,6 +77,22 @@ namespace Hx.BackAdmin.HttpHandler
             {
                 Votetoupiao();
             }
+            else if (action == "votecomment")
+            {
+                VoteComment();
+            }
+            else if (action == "votecommentpraise")
+            {
+                VoteCommentPraise();
+            }
+            else if (action == "votecommentbelittle")
+            {
+                VoteCommentBelittle();
+            }
+            else if (action == "getvotecommentmore")
+            {
+                GetVoteCommentMore();
+            }
             else if (action == "gb61")
             {
                 GB61();
@@ -576,7 +592,7 @@ namespace Hx.BackAdmin.HttpHandler
                     {
                         string accesstoken = WeixinActs.Instance.GetAccessToken(setting.AppID, setting.AppSecret);
                         Dictionary<string, string> openinfo = WeixinActs.Instance.GetOpeninfo(accesstoken, openid);
-                        if (!openinfo.Keys.Contains("subscribe") || openinfo["subscribe"] == "0")
+                        if (setting.MustAttention == 1 && (!openinfo.Keys.Contains("subscribe") || openinfo["subscribe"] == "0"))
                         {
                             result = string.Format(result, "attention", string.Format("{0}|{1}", setting.AppName, setting.AppNumber));
                             return;
@@ -830,6 +846,217 @@ namespace Hx.BackAdmin.HttpHandler
                 result = string.Format(result, "fail", "执行失败");
             }
         }
+
+        #region 评论
+
+        private void VoteComment()
+        {
+            try
+            {
+                string openid = WebHelper.GetString("openid");
+                string id = WebHelper.GetString("id");
+                int sid = WebHelper.GetInt("sid");
+                string comment = WebHelper.GetString("comment");
+
+                if (!string.IsNullOrEmpty(openid) && !string.IsNullOrEmpty(id) && !string.IsNullOrEmpty(comment))
+                {
+                    string votecheckresult = WeixinActs.Instance.CheckVoteComment(sid);
+                    if (!string.IsNullOrEmpty(votecheckresult))
+                    {
+                        result = string.Format(result, "fail", votecheckresult);
+                        return;
+                    }
+
+                    VoteSettingInfo setting = WeixinActs.Instance.GetVoteSetting(sid, true);
+                    string access_token = WeixinActs.Instance.GetAccessToken(setting.AppID,setting.AppSecret);
+
+                    if (!string.IsNullOrEmpty(access_token))
+                    {
+                        Dictionary<string, string> dic_openinfo = WeixinActs.Instance.GetOpeninfo(access_token, openid);
+                        if (!dic_openinfo.ContainsKey("errcode"))
+                        {
+                            int pid = DataConvert.SafeInt(id);
+                            VotePothunterInfo pinfo = WeixinActs.Instance.GetVotePothunterInfo(pid, true);
+                            if (pinfo == null)
+                                result = string.Format(result, "fail", "不存在此选手");
+                            else
+                            {
+                                string commenter = dic_openinfo.ContainsKey("nickname") ? dic_openinfo["nickname"] : string.Empty;
+                                VoteCommentInfo entity = new VoteCommentInfo()
+                                {
+                                    AthleteID = pid,
+                                    Commenter = commenter,
+                                    PraiseNum = 0,
+                                    BelittleNum = 0,
+                                    Comment = comment,
+                                    AddTime = DateTime.Now,
+                                    CheckStatus = 0
+                                };
+
+                                string rcode = string.Empty;
+                                lock (sync_helper)
+                                {
+                                    rcode = WeixinActs.Instance.VoteCommentPost(entity);
+                                }
+                                if (string.IsNullOrEmpty(rcode))
+                                    result = string.Format(result, "success", entity.ID + "," + (string.IsNullOrEmpty(commenter) ? "匿名" : commenter));
+                                else
+                                    result = string.Format(result, "fail", rcode);
+                            }
+                        }
+                        else
+                        {
+                            result = string.Format(result, "fail", "用户信息获取失败");
+                        }
+                    }
+                    else
+                        result = string.Format(result, "fail", "access_token获取失败");
+                }
+                else
+                {
+                    result = string.Format(result, "fail", "openid,vopenid,chat为空");
+                }
+            }
+            catch (Exception ex)
+            {
+                ExpLog.Write(ex);
+                result = string.Format(result, "fail", "执行失败");
+            }
+
+        }
+
+        private void VoteCommentPraise()
+        {
+            try
+            {
+                string openid = WebHelper.GetString("openid");
+                string id = WebHelper.GetString("id");
+                int sid = WebHelper.GetInt("sid");
+
+                if (!string.IsNullOrEmpty(openid) && !string.IsNullOrEmpty(id))
+                {
+                    string votecheckresult = WeixinActs.Instance.CheckVoteComment(sid);
+                    if (!string.IsNullOrEmpty(votecheckresult))
+                    {
+                        result = string.Format(result, "fail", votecheckresult);
+                        return;
+                    }
+
+                    string rcode = string.Empty;
+                    lock (sync_helper)
+                    {
+                        rcode = WeixinActs.Instance.VoteCommentPraise(DataConvert.SafeInt(id));
+                    }
+                    if (string.IsNullOrEmpty(rcode))
+                        result = string.Format(result, "success", string.Empty);
+                    else
+                        result = string.Format(result, "fail", rcode);
+                }
+            }
+            catch (Exception ex)
+            {
+                ExpLog.Write(ex);
+                result = string.Format(result, "fail", "执行失败");
+            }
+        }
+
+        private void VoteCommentBelittle()
+        {
+            try
+            {
+                string openid = WebHelper.GetString("openid");
+                string id = WebHelper.GetString("id");
+                int sid = WebHelper.GetInt("sid");
+
+                if (!string.IsNullOrEmpty(openid) && !string.IsNullOrEmpty(id))
+                {
+                    string votecheckresult = WeixinActs.Instance.CheckVoteComment(sid);
+                    if (!string.IsNullOrEmpty(votecheckresult))
+                    {
+                        result = string.Format(result, "fail", votecheckresult);
+                        return;
+                    }
+
+                    string rcode = string.Empty;
+                    lock (sync_helper)
+                    {
+                        rcode = WeixinActs.Instance.VoteCommentBelittle(DataConvert.SafeInt(id));
+                    }
+                    if (string.IsNullOrEmpty(rcode))
+                        result = string.Format(result, "success", string.Empty);
+                    else
+                        result = string.Format(result, "fail", rcode);
+                }
+            }
+            catch (Exception ex)
+            {
+                ExpLog.Write(ex);
+                result = string.Format(result, "fail", "执行失败");
+            }
+        }
+
+        private void GetVoteCommentMore()
+        {
+            try
+            {
+                string openid = WebHelper.GetString("openid");
+                string id = WebHelper.GetString("id");
+                int sid = WebHelper.GetInt("sid");
+                int pageindex = WebHelper.GetInt("pageindex");
+
+                if (!string.IsNullOrEmpty(openid) && !string.IsNullOrEmpty(id))
+                {
+                    string votecheckresult = WeixinActs.Instance.CheckVoteComment(sid);
+                    if (!string.IsNullOrEmpty(votecheckresult))
+                    {
+                        result = string.Format(result, "fail", votecheckresult);
+                        return;
+                    }
+
+                    string rcode = string.Empty;
+                    StringBuilder htmlstr = new StringBuilder();
+                    try
+                    {
+                        List<VoteCommentInfo> listcomment = WeixinActs.Instance.GetVoteComments(DataConvert.SafeInt(id),true);
+                        List<VoteCommentInfo> source = listcomment.FindAll(c=>c.CheckStatus == 1).OrderByDescending(c => c.ID).ToList();
+                        int skipcount = 8 * (pageindex - 1);
+                        if (source.Count > skipcount)
+                        {
+                            source = source.OrderBy(c => c.ID).ToList().Skip(skipcount).ToList();
+                            source = source.Count > 8 ? source.Take(8).ToList() : source;
+                        }
+                        foreach (VoteCommentInfo entity in source)
+                        {
+                            htmlstr.Append("<tr>");
+                            htmlstr.Append("<td><p>" + entity.Comment.Replace("\r", " ").Replace("\n", " ").Replace("\"", " ") + "</p>");
+                            htmlstr.Append("<div class='dvcommentinfo'>");
+                            htmlstr.Append("<span>" + entity.AddTime.ToString("HH:mm:ss") + "</span> <span>");
+                            htmlstr.Append((string.IsNullOrEmpty(entity.Commenter) ? "匿名" : entity.Commenter) + "</span></div>");
+                            htmlstr.Append("<div class='dvcommentopt'>");
+                            htmlstr.Append("<a href='javascript:void(0);' class='btnPraise' val='" + entity.ID + "'>鲜花</a>(<span");
+                            htmlstr.Append(" id='spPraise" + entity.ID + "'>" + entity.PraiseNum + "</span>) <a href='javascript:void(0);'");
+                            htmlstr.Append(" class='btnBelittle' val='" + entity.ID + "'>鸡蛋</a>(<span id='spBelittle" + entity.ID + "'>" + entity.BelittleNum + "</span>)");
+                            htmlstr.Append("</div></td></tr>");
+                        }
+                    }
+                    catch
+                    {
+                        rcode = "发生错误";
+                    }
+                    if (string.IsNullOrEmpty(rcode))
+                        result = string.Format(result, "success", htmlstr.ToString());
+                    else
+                        result = string.Format(result, "fail", rcode);
+                }
+            }
+            catch (Exception ex)
+            {
+                ExpLog.Write(ex);
+                result = string.Format(result, "fail", "执行失败");
+            }
+        }
+
+        #endregion
 
         #endregion
 

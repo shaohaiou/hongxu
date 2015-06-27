@@ -93,7 +93,8 @@
         <div class="flqh">
             <span class="dj"><a href="votemg.aspx?sid=<%= GetInt("sid")%>">活动设置</a></span> <span>
                 <a href="votepothunterlist.aspx?sid=<%= GetInt("sid")%>">选手管理</a></span> <span><a
-                    href="voterecordlist.aspx?sid=<%= GetInt("sid")%>">投票记录</a></span>
+                    href="voterecordlist.aspx?sid=<%= GetInt("sid")%>">投票记录</a></span><span><a
+                    href="votecommentmg.aspx?sid=<%= GetInt("sid")%>">评论管理</a></span>
         </div>
         <table width="100%" border="0" cellspacing="0" cellpadding="0" class="biaoge3">
             <caption class="bt2">
@@ -170,7 +171,7 @@
                     <td>
                         <input id="hdnAppImg" runat="server" type="hidden" />
                         <input type="button" class="uploadbtpic an3" value="上传图片" /><br />
-                        <img src="../images/fm.jpg" alt="图片" id="imgAppImg" style="width: 160px; height: 160px;"
+                        <img src="../images/fm.jpg" alt="图片" id="imgAppImg" style="width: auto; height: auto;"
                             runat="server" />
                     </td>
                 </tr>
@@ -181,7 +182,7 @@
                     <td>
                         <input id="hdnPageHeadImg" runat="server" type="hidden" />
                         <input type="button" class="uploadbtpic an3" value="上传图片" /><br />
-                        <img src="../images/fm.jpg" alt="图片" id="imgPageHeadImg" style="width: 460px; height: 240px;"
+                        <img src="../images/fm.jpg" alt="图片" id="imgPageHeadImg" style="width: auto; height: auto;"
                             runat="server" />
                     </td>
                 </tr>
@@ -290,6 +291,106 @@
                     </td>
                     <td>
                         <asp:TextBox ID="txtShareDesc" runat="server" TextMode="MultiLine" Rows="6" CssClass="w300"></asp:TextBox>
+                    </td>
+                </tr>
+                <tr style="background-color: #ccc; color: Black; font-weight: bold;">
+                    <td colspan="2">
+                        广告位
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bg1">
+                        广告位1图片：
+                    </td>
+                    <td>
+                        <input id="hdnAD1Path" runat="server" type="hidden" />
+                        <input type="button" value="上传图片" class="an3 uploadbtpic" /><br />
+                        <img src="../images/fm.jpg" alt="图片" id="imgAD1Path" style="width:auto;height:auto;"
+                            runat="server" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bg1">
+                        广告位1超链接：
+                    </td>
+                    <td>
+                        <asp:TextBox runat="server" ID="txtAD1Url" CssClass="srk1"></asp:TextBox>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bg1">
+                        广告位2图片：
+                    </td>
+                    <td>
+                        <input id="hdnAD2Path" runat="server" type="hidden" />
+                        <input type="button" value="上传图片" class="an3 uploadbtpic" /><br />
+                        <img src="../images/fm.jpg" alt="图片" id="imgAD2Path" style="width:auto;height:auto;"
+                            runat="server" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bg1">
+                        广告位2超链接：
+                    </td>
+                    <td>
+                        <asp:TextBox runat="server" ID="txtAD2Url" CssClass="srk1"></asp:TextBox>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bg1">
+                        广告位3图片：
+                    </td>
+                    <td>
+                        <input id="hdnAD3Path" runat="server" type="hidden" />
+                        <input type="button" value="上传图片" class="an3 uploadbtpic" /><br />
+                        <img src="../images/fm.jpg" alt="图片" id="imgAD3Path" style="width:auto;height:auto;"
+                            runat="server" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bg1">
+                        广告位3超链接：
+                    </td>
+                    <td>
+                        <asp:TextBox runat="server" ID="txtAD3Url" CssClass="srk1"></asp:TextBox>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bg1">
+                        广告位4图片：
+                    </td>
+                    <td>
+                        <input id="hdnAD4Path" runat="server" type="hidden" />
+                        <input type="button" value="上传图片" class="an3 uploadbtpic" /><br />
+                        <img src="../images/fm.jpg" alt="图片" id="imgAD4Path" style="width:auto;height:auto;"
+                            runat="server" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bg1">
+                        广告位4超链接：
+                    </td>
+                    <td>
+                        <asp:TextBox runat="server" ID="txtAD4Url" CssClass="srk1"></asp:TextBox>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bg1">
+                        广告位5图片：
+                    </td>
+                    <td>
+                        <input id="hdnAD5Path" runat="server" type="hidden" />
+                        <input type="button" value="上传图片" class="an3 uploadbtpic" /><br />
+                        <img src="../images/fm.jpg" alt="图片" id="imgAD5Path" style="width:auto;height:auto;"
+                            runat="server" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bg1">
+                        广告位5超链接：
+                    </td>
+                    <td>
+                        <asp:TextBox runat="server" ID="txtAD5Url" CssClass="srk1"></asp:TextBox>
                     </td>
                 </tr>
                 <tr>

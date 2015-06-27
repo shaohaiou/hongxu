@@ -44,7 +44,18 @@ namespace Hx.BackAdmin.weixin
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
-                LoadData();
+            {
+                if (GetString("action") == "del")
+                {
+                    WeixinActs.Instance.DeleteCardPullRecord(GetInt("id"));
+                    WeixinActs.Instance.ReloadCardPullRecordListCache(GetInt("sid"));
+                    ResponseRedirect(FromUrl);
+                }
+                else
+                {
+                    LoadData();
+                }
+            }
         }
 
         private void LoadData()

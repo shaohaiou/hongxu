@@ -71,6 +71,7 @@ namespace Hx.BackAdmin.weixin
             if (CurrentSetting != null)
             {
                 cbxSwitch.Checked = CurrentSetting.Switch == 1;
+                cbxMustAttention.Checked = CurrentSetting.MustAttention == 1;
                 txtAppID.Text = CurrentSetting.AppID;
                 txtAppSecret.Text = CurrentSetting.AppSecret;
                 txtAppNumber.Text = CurrentSetting.AppNumber;
@@ -111,6 +112,7 @@ namespace Hx.BackAdmin.weixin
         {
             entity.ID = GetInt("sid");
             entity.Switch = cbxSwitch.Checked ? 1 : 0;
+            entity.MustAttention = cbxMustAttention.Checked ? 1 : 0;
             entity.AppID = txtAppID.Text;
             entity.AppSecret = txtAppSecret.Text;
             entity.AppNumber = txtAppNumber.Text;

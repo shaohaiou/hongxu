@@ -114,6 +114,14 @@
                 </tr>
                 <tr>
                     <td class="bg1">
+                        必须关注：
+                    </td>
+                    <td>
+                        <asp:CheckBox runat="server" ID="cbxMustAttention" Text="开启" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bg1">
                         推广链接：
                     </td>
                     <td>

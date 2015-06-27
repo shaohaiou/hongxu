@@ -113,6 +113,7 @@
     <Compile Include="Entity\JituanvotePothunterInfo.cs" />
     <Compile Include="Entity\JituanvoteSettingInfo.cs" />
     <Compile Include="Entity\JituanvoteInfo.cs" />
+    <Compile Include="Entity\VoteCommentInfo.cs" />
     <Compile Include="Enumerations\ApplicationType.cs" />
     <Compile Include="Enumerations\CFBuyType.cs" />
     <Compile Include="Enumerations\CFCardInfo.cs" />

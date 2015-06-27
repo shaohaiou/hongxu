@@ -20,8 +20,6 @@ namespace Hx.BackAdmin.weixin
         protected int PageIndex = 1;
         protected int PageSize = 30;
         protected int PageCount = 1;
-        private string subscribe = "0";
-        public string Subscribe { get { return subscribe; } }
         public bool NeedAttention { get; set; }
         private VoteSettingInfo currentsetting = null;
         protected VoteSettingInfo CurrentSetting
@@ -81,15 +79,17 @@ namespace Hx.BackAdmin.weixin
                     if (!string.IsNullOrEmpty(Openid))
                     {
                         Session[GlobalKey.VOTEOPENID] = Openid;
-                        string accesstoken = WeixinActs.Instance.GetAccessToken(CurrentSetting.AppID, CurrentSetting.AppSecret);
-                        Dictionary<string, string> openinfo = WeixinActs.Instance.GetOpeninfo(accesstoken, Openid);
-                        if (!openinfo.Keys.Contains("subscribe") || openinfo["subscribe"] == "0")
-                        {
-                            NeedAttention = true;
-                        }
                     }
                 }
-
+                if (!string.IsNullOrEmpty(Openid))
+                {
+                    string accesstoken = WeixinActs.Instance.GetAccessToken(CurrentSetting.AppID, CurrentSetting.AppSecret);
+                    Dictionary<string, string> openinfo = WeixinActs.Instance.GetOpeninfo(accesstoken, Openid);
+                    if (!openinfo.Keys.Contains("subscribe") || openinfo["subscribe"] == "0")
+                    {
+                        NeedAttention = true;
+                    }
+                }
                 LoadData();
             }
         }
@@ -111,6 +111,29 @@ namespace Hx.BackAdmin.weixin
             rptData.DataBind();
 
             PageCount = (total % PageSize > 0 ? 1 : 0) + total / PageSize;
+        }
+
+        protected void rptData_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            {
+                VotePothunterInfo entity = (VotePothunterInfo)e.Item.DataItem;
+                Repeater rptCommentFirstOne = (Repeater)e.Item.FindControl("rptCommentFirstOne");
+                Repeater rptCommentMore = (Repeater)e.Item.FindControl("rptCommentMore");
+                List<VoteCommentInfo> listComment = WeixinActs.Instance.GetVoteComments(entity.ID, true);
+                List<VoteCommentInfo> source = listComment.FindAll(c=>c.CheckStatus == 1).OrderByDescending(c => c.ID).ToList();
+                if (rptCommentFirstOne != null)
+                {
+                    rptCommentFirstOne.DataSource = source.Count > 1 ? source.Take(1) : source;
+                    rptCommentFirstOne.DataBind();
+                }
+                if (rptCommentMore != null && source.Count > 1)
+                {
+                    source = source.Skip(1).ToList();
+                    rptCommentMore.DataSource = source.Count > 4 ? source.Take(4) : source;
+                    rptCommentMore.DataBind();
+                }
+            }
         }
 
         /// <summary>

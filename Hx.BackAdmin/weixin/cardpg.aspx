@@ -200,7 +200,7 @@
                                 $("#txtsignature").text(signature);
                                 $("#txtcardid").text(cardid);
 
-                                var imgname = "";
+                                var imgname = "zjl.png";
                                 if(award == "特等奖") imgname = "tdj.png";
                                 if(award == "一等奖") imgname = "ydj.png";
                                 if(award == "二等奖") imgname = "edj.png";

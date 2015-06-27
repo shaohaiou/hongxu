@@ -786,6 +786,8 @@ namespace Hx.Components.Providers
 
         public abstract void ClearCardPullRecord(int sid);
 
+        public abstract void DeleteCardPullRecord(int id);
+
         protected CardPullRecordInfo PopulateCardPullRecord(IDataReader reader)
         {
             CardPullRecordInfo entity = new CardPullRecordInfo() 
@@ -815,6 +817,35 @@ namespace Hx.Components.Providers
                 Award = reader["Award"] as string,
                 Num = DataConvert.SafeInt(reader["Num"]),
                 ImgUrl = reader["ImgUrl"] as string
+            };
+
+            return entity;
+        }
+
+        #endregion
+
+        #region 评论管理
+
+        public abstract int CreateAndUpdateVoteComment(VoteCommentInfo entity);
+
+        public abstract void DelVoteCommentInfo(int id);
+
+        public abstract void CheckVoteCommentStatus(string ids);
+
+        public abstract List<VoteCommentInfo> GetVoteComments(int aid);
+
+        protected VoteCommentInfo PopulateVoteCommentInfo(IDataReader reader)
+        {
+            VoteCommentInfo entity = new VoteCommentInfo()
+            {
+                ID = DataConvert.SafeInt(reader["ID"]),
+                AthleteID = DataConvert.SafeInt(reader["AthleteID"]),
+                Commenter = reader["Commenter"] as string,
+                PraiseNum = DataConvert.SafeInt(reader["PraiseNum"]),
+                BelittleNum = DataConvert.SafeInt(reader["BelittleNum"]),
+                Comment = reader["Comment"] as string,
+                AddTime = DataConvert.SafeDate(reader["AddTime"]),
+                CheckStatus = DataConvert.SafeInt(reader["CheckStatus"])
             };
 
             return entity;

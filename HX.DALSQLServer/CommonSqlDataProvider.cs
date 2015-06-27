@@ -1739,6 +1739,12 @@ namespace HX.DALSQLServer
             SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql,new SqlParameter("@SID",sid));
         }
 
+        public override void DeleteCardPullRecord(int id)
+        {
+            string sql = "DELETE FROM HX_CardPullRecords WHERE [ID] = @ID";
+            SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql,new SqlParameter("@ID",id));
+        }
+
         public override List<CardidInfo> GetCardidInfolist(int sid)
         {
             List<CardidInfo> list = new List<CardidInfo>();
@@ -1996,6 +2002,82 @@ namespace HX.DALSQLServer
                 return true;
             }
             return false;
+        }
+
+        #endregion
+
+        #region 评论管理
+
+        public override int CreateAndUpdateVoteComment(VoteCommentInfo entity)
+        {
+            string sql = @"
+            IF @ID = 0
+            BEGIN
+                INSERT INTO HX_VoteComments(
+                    [AthleteID]
+                    ,[Commenter]
+                    ,[PraiseNum]
+                    ,[BelittleNum]
+                    ,[Comment]
+                    ,[AddTime]
+                    ,[CheckStatus]) VALUES (
+                    @AthleteID
+                    ,@Commenter
+                    ,@PraiseNum
+                    ,@BelittleNum
+                    ,@Comment
+                    ,@AddTime
+                    ,@CheckStatus)
+                ;SELECT @@IDENTITY
+            END
+            ELSE 
+            BEGIN
+                UPDATE HX_VoteComments SET
+                [PraiseNum] = @PraiseNum
+                ,[BelittleNum] = @BelittleNum
+                WHERE [ID] = @ID
+                ;SELECT @ID
+            END";
+            SqlParameter[] p = 
+            {
+                new SqlParameter("@ID",entity.ID),
+                new SqlParameter("@AthleteID",entity.AthleteID),
+                new SqlParameter("@Commenter",entity.Commenter),
+                new SqlParameter("@PraiseNum",entity.PraiseNum),
+                new SqlParameter("@BelittleNum",entity.BelittleNum),
+                new SqlParameter("@Comment",entity.Comment),
+                new SqlParameter("@AddTime",entity.AddTime),
+                new SqlParameter("@CheckStatus",entity.CheckStatus)
+            };
+            entity.ID = DataConvert.SafeInt(SqlHelper.ExecuteScalar(_con, CommandType.Text, sql, p));
+            return entity.ID;
+        }
+
+        public override void DelVoteCommentInfo(int id)
+        {
+            string sql = "DELETE FROM HX_VoteComments WHERE [ID] = @ID";
+            SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql, new SqlParameter("@ID", id));
+        }
+
+        public override void CheckVoteCommentStatus(string ids)
+        {
+            string sql = "UPDATE HX_VoteComments SET [CheckStatus] = 1 WHERE [ID] IN(" + ids + ")";
+            SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql);
+        }
+
+        public override List<VoteCommentInfo> GetVoteComments(int aid)
+        {
+            List<VoteCommentInfo> list = new List<VoteCommentInfo>();
+            string sql = "SELECT * FROM HX_VoteComments WHERE [AthleteID]=@AthleteID";
+            using (IDataReader reader = SqlHelper.ExecuteReader(_con, CommandType.Text, sql, new SqlParameter("@AthleteID", aid)))
+            {
+                while (reader.Read())
+                {
+                    list.Add(PopulateVoteCommentInfo(reader));
+                }
+            }
+
+            return list;
         }
 
         #endregion

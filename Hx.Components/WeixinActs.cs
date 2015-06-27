@@ -1301,11 +1301,11 @@ namespace Hx.Components
             return list;
         }
 
-        public CardSettingInfo GetCardSetting(int id,bool fromCache = false)
+        public CardSettingInfo GetCardSetting(int id, bool fromCache = false)
         {
             List<CardSettingInfo> list = GetCardSettingList(fromCache);
 
-            return list.Find(c=>c.ID == id);
+            return list.Find(c => c.ID == id);
         }
 
         public void ReloadCardSetting()
@@ -1325,7 +1325,7 @@ namespace Hx.Components
         /// <returns></returns>
         public List<CardpackInfo> GetCardlist(int sid)
         {
-            CardSettingInfo setting = GetCardSetting(sid,true);
+            CardSettingInfo setting = GetCardSetting(sid, true);
             string key = GlobalKey.CARDLIST + "_" + setting.AppID;
 
             List<CardpackInfo> cardlist = MangaCache.Get(key) as List<CardpackInfo>;
@@ -1338,7 +1338,7 @@ namespace Hx.Components
                     {
                         cardlist = new List<CardpackInfo>();
                         if (setting == null) setting = new CardSettingInfo();
-                        List<CardidInfo> cardidlist = GetCardidInfolist(sid,true);
+                        List<CardidInfo> cardidlist = GetCardidInfolist(sid, true);
                         foreach (CardidInfo info in cardidlist)
                         {
                             CardpackInfo card = GetCardpack(setting.AppID, setting.AppSecret, info.Cardid);
@@ -1356,7 +1356,7 @@ namespace Hx.Components
 
         public void ReloadCardlist(int sid)
         {
-            CardSettingInfo setting = GetCardSetting(sid,true);
+            CardSettingInfo setting = GetCardSetting(sid, true);
             string key = GlobalKey.CARDLIST + "_" + setting.AppID;
             MangaCache.Remove(key);
             GetCardlist(sid);
@@ -1406,7 +1406,7 @@ namespace Hx.Components
         /// </summary>
         /// <param name="fromCache"></param>
         /// <returns></returns>
-        public List<CardidInfo> GetCardidInfolist(int sid,bool fromCache = false)
+        public List<CardidInfo> GetCardidInfolist(int sid, bool fromCache = false)
         {
             if (!fromCache)
             {
@@ -1435,7 +1435,7 @@ namespace Hx.Components
         {
             string key = GlobalKey.CARDIDLIST + "_" + sid;
             MangaCache.Remove(key);
-            GetCardidInfolist(sid,true);
+            GetCardidInfolist(sid, true);
         }
 
         public void DeleteCardidInfo(string ids)
@@ -1462,12 +1462,12 @@ namespace Hx.Components
             CommonDataProvider.Instance().AddCardPullRecord(entity);
         }
 
-        public void PullCard(string openid,int sid)
+        public void PullCard(string openid, int sid)
         {
-            CommonDataProvider.Instance().PullCard(openid,sid);
+            CommonDataProvider.Instance().PullCard(openid, sid);
         }
 
-        public List<CardPullRecordInfo> GetCardPullRecordList(int sid,bool fromCache = false)
+        public List<CardPullRecordInfo> GetCardPullRecordList(int sid, bool fromCache = false)
         {
             if (!fromCache)
             {
@@ -1496,12 +1496,17 @@ namespace Hx.Components
         {
             string key = GlobalKey.CARDPULLLIST + "_" + sid;
             MangaCache.Remove(key);
-            GetCardPullRecordList(sid,true);
+            GetCardPullRecordList(sid, true);
         }
 
         public void ClearCardPullRecord(int sid)
         {
             CommonDataProvider.Instance().ClearCardPullRecord(sid);
+        }
+
+        public void DeleteCardPullRecord(int id)
+        {
+            CommonDataProvider.Instance().DeleteCardPullRecord(id);
         }
 
         #endregion
@@ -1581,7 +1586,7 @@ namespace Hx.Components
         /// </summary>
         /// <param name="ids"></param>
         /// <returns></returns>
-        public void DelVotePothunterInfo(int sid,string ids)
+        public void DelVotePothunterInfo(int sid, string ids)
         {
             CommonDataProvider.Instance().DelVotePothunterInfo(ids);
             ReloadVotePothunterList(sid);
@@ -1618,12 +1623,12 @@ namespace Hx.Components
                     if (list == null)
                     {
                         list = CommonDataProvider.Instance().GetVotePothunterList();
-                        list = ReorderVotePothunter(list.FindAll(p=>p.SID == sid)).OrderBy(b => b.SerialNumber).ToList();
                         MangaCache.Max(key, list);
                     }
                 }
             }
-            
+            list = ReorderVotePothunter(list.FindAll(p => p.SID == sid)).OrderBy(b => b.SerialNumber).ToList();
+
             return list;
         }
 
@@ -1659,7 +1664,7 @@ namespace Hx.Components
             MangaCache.Remove(key);
             key = GlobalKey.VOTEPOTHUNTERLIST;
             MangaCache.Remove(key);
-            GetVotePothunterList(sid,true);
+            GetVotePothunterList(sid, true);
         }
 
         /// <summary>
@@ -1770,7 +1775,10 @@ namespace Hx.Components
                 lock (sync_vote)
                 {
                     Dictionary<string, DateTime> VoteRecords = GetVoteRecordList(vote.SID);
-                    VoteRecords.Add(vote.AthleteID + "_" + vote.Openid, vote.AddTime);
+                    if (VoteRecords.Keys.Contains(vote.AthleteID + "_" + vote.Openid))
+                        VoteRecords[vote.AthleteID + "_" + vote.Openid] = vote.AddTime;
+                    else
+                        VoteRecords.Add(vote.AthleteID + "_" + vote.Openid, vote.AddTime);
                     List<VoteRecordInfo> VoteRecordsCache = GetVoteRecordsCache(vote.SID);
                     VoteRecordsCache.Add(vote);
                 }
@@ -1784,9 +1792,9 @@ namespace Hx.Components
             }
         }
 
-        public string CheckVote(int sid,string openid, string id)
+        public string CheckVote(int sid, string openid, string id)
         {
-            VoteSettingInfo setting = GetVoteSetting(sid,true);
+            VoteSettingInfo setting = GetVoteSetting(sid, true);
             if (setting != null && setting.Switch == 0)
             {
                 return "该活动已结束";
@@ -1797,22 +1805,22 @@ namespace Hx.Components
                 Dictionary<string, DateTime> VoteRecordList = GetVoteRecordList(sid);
                 if (VoteRecordList != null)
                 {
-                    if (VoteRecordList.Keys.Contains(id + "_" + openid))
-                    {
-                        return "您已经为他/她投过票了。";
-                    }
                     List<KeyValuePair<string, DateTime>> votes = VoteRecordList.Where(b => b.Key.EndsWith("_" + openid) && b.Value > DateTime.Today).ToList();
                     if (votes.Count > 0)
                     {
+                        if (votes.Exists(v=>v.Key == (id + "_" + openid)))
+                        {
+                            return "您今天已经为他/她投过票了。";
+                        }
                         DateTime ftime = votes.Min(b => b.Value);
                         int minutes = setting == null ? 30 : setting.OverdueMinutes;
                         if (minutes > 0 && DateTime.Now.AddMinutes(-1 * minutes) > ftime)
                         {
-                            return "您今日的点赞期已过，请明日再投。";
+                            return "您今天的点赞期已过，请明日再投。";
                         }
                         if (setting != null && setting.VoteTimes > 0 && votes.Count >= setting.VoteTimes)
                         {
-                            return "您的点赞次数已经用完。";
+                            return "您今天的点赞次数已经用完。";
                         }
                     }
                 }
@@ -1833,7 +1841,7 @@ namespace Hx.Components
                     VoteRecordsCache.Clear();
                 }
             }
-            List<VotePothunterInfo> plist = GetVotePothunterList(sid,true);
+            List<VotePothunterInfo> plist = GetVotePothunterList(sid, true);
             foreach (VoteRecordInfo vote in votes)
             {
                 if (plist.Exists(p => p.ID == vote.AthleteID))
@@ -1845,6 +1853,388 @@ namespace Hx.Components
                 }
             }
         }
+
+        #endregion
+
+        #region 评论管理
+
+        private static object sync_votecomment = new object();
+
+        public int CreateAndUpdateVoteComment(VoteCommentInfo entity)
+        {
+            return CommonDataProvider.Instance().CreateAndUpdateVoteComment(entity);
+        }
+
+        public void DelVoteCommentInfo(int id)
+        {
+            CommonDataProvider.Instance().DelVoteCommentInfo(id);
+        }
+
+        public void CheckVoteCommentStatus(string ids)
+        {
+            CommonDataProvider.Instance().CheckVoteCommentStatus(ids);
+        }
+
+        public List<VoteCommentInfo> GetVoteComments(int aid, bool fromCache = false)
+        {
+            if (!fromCache)
+                return CommonDataProvider.Instance().GetVoteComments(aid);
+
+            string key = GlobalKey.VOTECOMMENT_LIST + "_" + aid;
+            List<VoteCommentInfo> list = MangaCache.Get(key) as List<VoteCommentInfo>;
+            if (list == null)
+            {
+                lock (sync_votecomment)
+                {
+                    list = MangaCache.Get(key) as List<VoteCommentInfo>;
+                    if (list == null)
+                    {
+                        list = CommonDataProvider.Instance().GetVoteComments(aid);
+
+                        MangaCache.Max(key, list);
+                    }
+                }
+            }
+            return list;
+        }
+
+        public void ReloadVoteCommentsCache(int aid)
+        {
+            string key = GlobalKey.VOTECOMMENT_LIST + "_" + aid;
+            MangaCache.Remove(key);
+            GetVoteComments(aid, true);
+        }
+
+        public string CheckVoteComment(int sid)
+        {
+            VoteSettingInfo setting = GetVoteSetting(sid, true);
+            if (setting != null && setting.Switch == 0)
+            {
+                return "该活动已结束";
+            }
+
+            return string.Empty;
+        }
+
+        /// <summary>
+        /// 提交评论
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public string VoteCommentPost(VoteCommentInfo entity)
+        {
+            try
+            {
+                List<VoteCommentInfo> list = GetVoteComments(entity.AthleteID, true);
+                lock (sync_votecomment)
+                {
+                    int id = CreateAndUpdateVoteComment(entity);
+                    if (id > 0)
+                    {
+                        string key = GlobalKey.VOTECOMMENT_LIST + "_" + entity.AthleteID;
+                        entity.ID = id;
+                        list.Add(entity);
+                        MangaCache.Max(key, list);
+
+                        VoteCommentCount(entity.AthleteID);
+                    }
+                }
+
+                return string.Empty;
+            }
+            catch (Exception ex)
+            {
+                ExpLog.Write(ex);
+                return "发生错误";
+            }
+        }
+
+        /// <summary>
+        /// 献鲜花
+        /// </summary>
+        /// <param name="id">评论ID</param>
+        /// <returns></returns>
+        public string VoteCommentPraise(int id)
+        {
+            try
+            {
+                if (id > 0)
+                {
+                    VoteCommentPraiseCount(id);
+                }
+
+                return string.Empty;
+            }
+            catch (Exception ex)
+            {
+                ExpLog.Write(ex);
+                return "发生错误";
+            }
+        }
+
+        /// <summary>
+        /// 砸鸡蛋
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public string VoteCommentBelittle(int id)
+        {
+            try
+            {
+                if (id > 0)
+                {
+                    VoteCommentBelittleCount(id);
+                }
+
+                return string.Empty;
+            }
+            catch (Exception ex)
+            {
+                ExpLog.Write(ex);
+                return "发生错误";
+            }
+        }
+
+        #region 被评论计数
+
+        private static object sync_votecommentcounter = new object();
+        private static object sync_votecommentcountercreater = new object();
+
+        private List<KeyValuePair<string, int>> _votecommentCounter = null;
+        public List<KeyValuePair<string, int>> VoteCommentCounter
+        {
+            get
+            {
+                if (_votecommentCounter == null)
+                {
+                    lock (sync_votecommentcountercreater)
+                    {
+                        _votecommentCounter = new List<KeyValuePair<string, int>>();
+                    }
+                }
+                return _votecommentCounter;
+            }
+            set
+            {
+                _votecommentCounter = value;
+            }
+        }
+
+        /// <summary>
+        /// 评论计数
+        /// </summary>
+        /// <param name="pid">选手ID</param>
+        public void VoteCommentCount(int pid)
+        {
+            try
+            {
+                lock (sync_votecommentcounter)
+                {
+                    string key = pid.ToString();
+                    if (VoteCommentCounter.Exists(c => c.Key == key))
+                        VoteCommentCounter[VoteCommentCounter.FindIndex(c => c.Key == key)] = new KeyValuePair<string, int>(key, VoteCommentCounter.Find(c => c.Key == key).Value + 1);
+                    else
+                        VoteCommentCounter.Add(new KeyValuePair<string, int>(key, 1));
+                }
+            }
+            catch (Exception ex)
+            {
+                ExpLog.Write(ex);
+            }
+        }
+
+        /// <summary>
+        /// 评论计数结算
+        /// </summary>
+        public void VoteCommentCountAccount()
+        {
+            List<KeyValuePair<string, int>> counters = new List<KeyValuePair<string, int>>();
+            lock (sync_votecommentcounter)
+            {
+                if (VoteCommentCounter.Count > 0)
+                {
+                    counters.AddRange(VoteCommentCounter);
+                    VoteCommentCounter.Clear();
+                }
+            }
+            List<VotePothunterInfo> plist = GetVotePothunterList(true);
+            foreach (KeyValuePair<string, int> counter in counters)
+            {
+                int pid = DataConvert.SafeInt(counter.Key);
+                if (plist.Exists(p => p.ID == pid))
+                {
+                    VotePothunterInfo pinfo = plist.Find(p => p.ID == pid);
+                    pinfo.Comments += counter.Value;
+                    AddVotePothunterInfo(pinfo);
+                }
+            }
+        }
+
+        #endregion
+
+        #region 献鲜花计数
+
+
+        private static object sync_votecommentpraisecounter = new object();
+        private static object sync_votecommentpraisecountercreater = new object();
+
+        private List<KeyValuePair<string, int>> _votecommentpraiseCounter = null;
+        public List<KeyValuePair<string, int>> VoteCommentPraiseCounter
+        {
+            get
+            {
+                if (_votecommentpraiseCounter == null)
+                {
+                    lock (sync_votecommentpraisecountercreater)
+                    {
+                        _votecommentpraiseCounter = new List<KeyValuePair<string, int>>();
+                    }
+                }
+                return _votecommentpraiseCounter;
+            }
+            set
+            {
+                _votecommentpraiseCounter = value;
+            }
+        }
+
+        /// <summary>
+        /// 评论鲜花计数
+        /// </summary>
+        /// <param name="id">评论ID</param>
+        public void VoteCommentPraiseCount(int id)
+        {
+            try
+            {
+                lock (sync_votecommentpraisecounter)
+                {
+                    string key = id.ToString();
+                    if (VoteCommentPraiseCounter.Exists(c => c.Key == key))
+                        VoteCommentPraiseCounter[VoteCommentPraiseCounter.FindIndex(c => c.Key == key)] = new KeyValuePair<string, int>(key, VoteCommentPraiseCounter.Find(c => c.Key == key).Value + 1);
+                    else
+                        VoteCommentPraiseCounter.Add(new KeyValuePair<string, int>(key, 1));
+                }
+            }
+            catch (Exception ex)
+            {
+                ExpLog.Write(ex);
+            }
+        }
+
+        /// <summary>
+        /// 鲜花计数结算
+        /// </summary>
+        public void VoteCommentPraiseCountAccount(int sid)
+        {
+            List<KeyValuePair<string, int>> counters = new List<KeyValuePair<string, int>>();
+            lock (sync_votecommentpraisecounter)
+            {
+                if (VoteCommentPraiseCounter.Count > 0)
+                {
+                    counters.AddRange(VoteCommentPraiseCounter);
+                    VoteCommentPraiseCounter.Clear();
+                }
+            }
+            List<VotePothunterInfo> plist = GetVotePothunterList(sid);
+            foreach (VotePothunterInfo pinfo in plist)
+            {
+                List<VoteCommentInfo> commentlist = GetVoteComments(pinfo.ID, true);
+                foreach (KeyValuePair<string, int> counter in counters)
+                {
+                    int id = DataConvert.SafeInt(counter.Key);
+                    if (commentlist.Exists(p => p.ID == id))
+                    {
+                        VoteCommentInfo cinfo = commentlist.Find(p => p.ID == id);
+                        cinfo.PraiseNum += counter.Value;
+                        CreateAndUpdateVoteComment(cinfo);
+                    }
+                }
+            }
+        }
+
+        #endregion
+
+        #region 砸鸡蛋计数
+
+
+        private static object sync_votecommentbelittlecounter = new object();
+        private static object sync_votecommentbelittlecountercreater = new object();
+
+        private List<KeyValuePair<string, int>> _votecommentbelittleCounter = null;
+        public List<KeyValuePair<string, int>> VoteCommentBelittleCounter
+        {
+            get
+            {
+                if (_votecommentbelittleCounter == null)
+                {
+                    lock (sync_votecommentbelittlecountercreater)
+                    {
+                        _votecommentbelittleCounter = new List<KeyValuePair<string, int>>();
+                    }
+                }
+                return _votecommentbelittleCounter;
+            }
+            set
+            {
+                _votecommentbelittleCounter = value;
+            }
+        }
+
+        /// <summary>
+        /// 评论鸡蛋计数
+        /// </summary>
+        /// <param name="id">评论ID</param>
+        public void VoteCommentBelittleCount(int id)
+        {
+            try
+            {
+                lock (sync_votecommentbelittlecounter)
+                {
+                    string key = id.ToString();
+                    if (VoteCommentBelittleCounter.Exists(c => c.Key == key))
+                        VoteCommentBelittleCounter[VoteCommentBelittleCounter.FindIndex(c => c.Key == key)] = new KeyValuePair<string, int>(key, VoteCommentBelittleCounter.Find(c => c.Key == key).Value + 1);
+                    else
+                        VoteCommentBelittleCounter.Add(new KeyValuePair<string, int>(key, 1));
+                }
+            }
+            catch (Exception ex)
+            {
+                ExpLog.Write(ex);
+            }
+        }
+
+        /// <summary>
+        /// 鸡蛋计数结算
+        /// </summary>
+        public void VoteCommentBelittleCountAccount(int sid)
+        {
+            List<KeyValuePair<string, int>> counters = new List<KeyValuePair<string, int>>();
+            lock (sync_votecommentbelittlecounter)
+            {
+                if (VoteCommentBelittleCounter.Count > 0)
+                {
+                    counters.AddRange(VoteCommentBelittleCounter);
+                    VoteCommentBelittleCounter.Clear();
+                }
+            }
+            List<VotePothunterInfo> plist = GetVotePothunterList(sid);
+            foreach (VotePothunterInfo pinfo in plist)
+            {
+                List<VoteCommentInfo> commentlist = GetVoteComments(pinfo.ID, true);
+                foreach (KeyValuePair<string, int> counter in counters)
+                {
+                    int id = DataConvert.SafeInt(counter.Key);
+                    if (commentlist.Exists(p => p.ID == id))
+                    {
+                        VoteCommentInfo cinfo = commentlist.Find(p => p.ID == id);
+                        cinfo.BelittleNum += counter.Value;
+                        CreateAndUpdateVoteComment(cinfo);
+                    }
+                }
+            }
+        }
+
+        #endregion
 
         #endregion
 

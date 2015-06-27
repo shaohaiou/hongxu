@@ -1,4 +1,5 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="votepg.aspx.cs" Inherits="Hx.BackAdmin.weixin.votepg" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="votepg.aspx.cs" Inherits="Hx.BackAdmin.weixin.votepg"
+    EnableViewState="false" %>
 
 <!DOCTYPE html>
 <html>
@@ -6,7 +7,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes" />
-    <title><%=CurrentSetting.Name %>-投票页面</title>
+    <title>
+        <%=CurrentSetting.Name %></title>
     <meta content="红旭集团,<%=CurrentSetting.Name %>" name="keywords">
     <meta content="红旭集团,<%=CurrentSetting.Name %>" name="description">
     <link href="../css/benzvote.css" rel="stylesheet" type="text/css" />
@@ -15,10 +17,22 @@
     <%if (!string.IsNullOrEmpty(CurrentSetting.ColorMustKnow))
       {%>
     <style type="text/css">
-    .xuzhi{color:<%=CurrentSetting.ColorMustKnow%>!important;}
-    .xuzhi a{color:<%=CurrentSetting.ColorMustKnow%>!important;}
-    .xuzhi a:link{color:<%=CurrentSetting.ColorMustKnow%>!important;}
-    .xuzhi a:visited{color:<%=CurrentSetting.ColorMustKnow%>!important;}
+        .xuzhi
+        {
+            color: <%=CurrentSetting.ColorMustKnow%> !important;
+        }
+        .xuzhi a
+        {
+            color: <%=CurrentSetting.ColorMustKnow%> !important;
+        }
+        .xuzhi a:link
+        {
+            color: <%=CurrentSetting.ColorMustKnow%> !important;
+        }
+        .xuzhi a:visited
+        {
+            color: <%=CurrentSetting.ColorMustKnow%> !important;
+        }
     </style>
     <%} %>
 </head>
@@ -26,9 +40,8 @@
     <div class="m-flay" id="attention" style="position: relative;">
         <div class="attention">
             <div class="attention-content">
-                <span class="attention-title">请先关注我们再参与活动</span>
                 <div class="attention-msg" id="attention-msg">
-                    <img src="<%=CurrentSetting.AppImgUrl %>" style="width: 40%;" /><br />
+                    <img src="<%=CurrentSetting.AppImgUrl %>" style="width: 100%;" /><br />
                     长按二维码图片即可关注
                 </div>
             </div>
@@ -37,10 +50,12 @@
     <form id="form1" runat="server">
     <div class="wrap">
         <div class="dad">
-        <%if (CurrentSetting != null && !string.IsNullOrEmpty(CurrentSetting.PageHeadImg))
-          { %>
-          <img src="<%= CurrentSetting.PageHeadImg%>" />
-        <%}else{ %>
+            <%if (CurrentSetting != null && !string.IsNullOrEmpty(CurrentSetting.PageHeadImg))
+              { %>
+            <img src="<%= CurrentSetting.PageHeadImg%>" />
+            <%}
+              else
+              { %>
             <img src="../images/benzvote/head.jpg" />
             <%} %>
         </div>
@@ -51,7 +66,7 @@
         </div>
         <%} %>
         <div class="content">
-            <asp:Repeater runat="server" ID="rptData">
+            <asp:Repeater runat="server" ID="rptData" OnItemDataBound="rptData_ItemDataBound">
                 <HeaderTemplate>
                     <ul>
                 </HeaderTemplate>
@@ -63,17 +78,43 @@
                                 <img src="../images/benzvote/flay.png" /></div>
                         </div>
                         <div class="d-info">
-                            <span class="sn"><span class="yellow">
-                                <%# Eval("SerialNumberDetail")%></span></span><br />
-                            <span class="name yellow">
+                            <span class="name green">
                                 <%#Eval("Name") %></span><br />
-                            <span class="ballot">票数:<span class="fense txtBallot"><%# Eval("Ballot")%></span></span>
-                            <span class="paiming">排名:<span class="fense"><%#Eval("Order")%></span></span>
+                            <%# string.IsNullOrEmpty(Eval("SerialNumberDetail").ToString()) ? string.Empty : string.Format("<span class=\"sn\"><span class=\"green\">{0}</span></span><br />",Eval("SerialNumberDetail").ToString())%>
+                            <span class="ballot green">票数:<span class="fense txtBallot"><%# Eval("Ballot")%></span></span>
+                            <span class="paiming green">排名:<span class="fense"><%#Eval("Order")%></span></span>
                             <div class="opt">
                                 <span class="xiangqing"><a href="votepothunterdetail.aspx?sid=<%=SID %>&id=<%# Eval("ID") %>&code=<%=Code %>&from=<%=CurrentUrl %>">
                                     <img src="../images/benzvote/xiangqing.png" alt="详情" /></a></span><span class="toupiao"><a
                                         href="javascript:void(0);" onclick="javascript:toupiao(<%# Eval("ID") %>,this);"><img
-                                            src="../images/benzvote/toupiao.png" alt="投票" /></a></span></div>
+                                            src="../images/benzvote/toupiao.png" alt="投票" /></a></span><a href="javascript:void(0);"
+                                                class="btnComment hide" val="<%#Eval("ID") %>"> 评论</a> <a href="javascript:void(0);"
+                                                    class="btnCommentMore" val="<%#Eval("ID") %>">更多评论 </a>
+                            </div>
+                        </div>
+                        <div class="d-comment" id="d-comment<%#Eval("ID") %>">
+                            <table id="tblCommentFirstOne<%#Eval("ID") %>">
+                                <asp:Repeater runat="server" ID="rptCommentFirstOne">
+                                    <ItemTemplate>
+                                        <tr>
+                                            <td>
+                                                <p>
+                                                    <%#Eval("Comment")%></p>
+                                                <div class="dvcommentinfo">
+                                                    <span>
+                                                        <%#Eval("AddTime","{0:HH:mm:ss}") %></span> <span>
+                                                            <%# string.IsNullOrEmpty(Eval("Commenter").ToString().Trim()) ? "匿名" : Eval("Commenter").ToString()%></span>
+                                                </div>
+                                                <div class="dvcommentopt">
+                                                    <a href="javascript:void(0);" class="btnPraise" val="<%#Eval("ID") %>">鲜花</a>(<span
+                                                        id="spPraise<%#Eval("ID") %>"><%#Eval("PraiseNum")%></span>) <a href="javascript:void(0);"
+                                                            class="btnBelittle" val="<%#Eval("ID") %>">鸡蛋</a>(<span id="spBelittle<%#Eval("ID") %>"><%#Eval("BelittleNum")%></span>)
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </ItemTemplate>
+                                </asp:Repeater>
+                            </table>
                         </div>
                     </li>
                 </ItemTemplate>
@@ -102,6 +143,19 @@
             </tr>
         </table>
         <%} %>
+        <%if (!string.IsNullOrEmpty(CurrentSetting.AD3Path))
+          { %>
+        <div class="dad" style="background: white;">
+            <a href='<%=string.IsNullOrEmpty(CurrentSetting.AD3Url) ? "javascript:void(0);" : CurrentSetting.AD3Url%>'>
+                <img src="<%=CurrentSetting.AD3Path %>" style="width: 96%; padding: 2%;" /></a>
+        </div>
+        <%} %>
+        <div id="dvComment">
+            <input type="hidden" id="hdnCurrentid" />
+            <textarea id="txtComment"></textarea>
+            <a id="btnCommentCancel" href="javascript:void(0);">取消</a> <a id="btnCommentSubmit"
+                href="javascript:void(0);">提交</a><span id="commentmsg"> </span>
+        </div>
     </div>
     </form>
 </body>
@@ -109,7 +163,7 @@
     var sid = <%= SID %>;
     var code = "<%= Code%>";
     var openid = "<%= Openid %>";
-    var subscribe = "<%=Subscribe %>";
+    var animatetimer = null;
 
     <%if(NeedAttention){ %>
     if("<%=CurrentSetting.AttentionUrl %>" != ""){
@@ -121,7 +175,7 @@
 
     if(!openInWeixin()){
         alert("请在微信中进入此页面");
-        location.href="http://m.hongxu.cn/";
+//        location.href="http://m.hongxu.cn/";
     }
     
     function openInWeixin() {
@@ -144,9 +198,10 @@
                         t.text(parseInt(t.text()) + 1);
                     alert("投票成功，感谢您的参与。");
                 }
-                else {
+                else if(data.Msg == "openid,vopenid为空")
+                    location.href ="https://open.weixin.qq.com/connect/oauth2/authorize?appid=<%=CurrentSetting.AppID%>&redirect_uri=http%3A%2F%2Frb.hongxu.cn%2Fweixin%2Fvotepg.aspx%3Fsid=<%=CurrentSetting.ID%>&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
+                else 
                     alert(data.Msg);
-                }
             }
         });
     }
@@ -220,10 +275,145 @@
             });
 
             if(openid == ""){
-                location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=<%=CurrentSetting.AppID %>&redirect_uri=http%3A%2F%2Frb.hongxu.cn%2Fweixin%2Fcardpg.aspx%3Fsid=<%=SID %>&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
+                location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=<%=CurrentSetting.AppID%>&redirect_uri=http%3A%2F%2Frb.hongxu.cn%2Fweixin%2Fvotepg.aspx%3Fsid=<%=CurrentSetting.ID%>&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
                 return;
             }
         });
+        
+
+        $(".btnComment").click(function () {
+            var top = ($("body").scrollTop() + 20) + "px";
+            $("#txtComment").val("");
+            $("#dvComment").css({ top: top });
+            $("#hdnCurrentid").val($(this).attr("val"));
+            $("#dvComment").fadeIn(200);
+        });
+        $(document).scroll(function () {
+            if (animatetimer)
+                clearTimeout(animatetimer);
+            animatetimer = setTimeout(function () {
+                var top = ($("body").scrollTop() + 20) + "px";
+                $("#dvComment").animate({ top: top }, { speed: 200 });
+            }, 100);
+        });
+        $("#btnCommentCancel").click(function () {
+            $("#dvComment").fadeOut(200);
+        });
+        $(".btnCommentMore").click(function () {
+            location.href = "votepothunterdetail.aspx?id=" + $(this).attr("val") + "&sid=<%=SID %>&code=<%=Code %>&from=<%=CurrentUrl %>#dvAllComment";
+        });
+        //提交评论
+        $("#btnCommentSubmit").click(function () {
+            if ($.trim($("#txtComment").val()) != "") {
+                $.ajax({
+                    url: "weixinaction.axd",
+                    data: { action: "votecomment",sid:sid, openid: openid, id: $("#hdnCurrentid").val(), comment: $("#txtComment").val(), acttype: 0, d: new Date() },
+                    type: 'POST',
+                    dataType: "json",
+                    error: function (msg) {
+                        alert("发生错误");
+                    },
+                    success: function (data) {
+                        if (data.Value == "success") {
+                            var id = data.Msg.split(",")[0];
+                            var commenter = data.Msg.split(",")[1];
+                            var $newrow = $("<tr><td><p>"
+                            + $("#txtComment").val() + "</p><div class=\"dvcommentinfo\"><span>"
+                            + (new Date()).Format("hh:mm:ss") + "</span> <span>" + commenter + "</span>"
+                            + "</div><div class=\"dvcommentopt\">"
+                            + "<a href=\"javascript:void(0);\" class=\"btnPraise\" val=\"" + id + "\">鲜花</a>(<span id=\"spPraise" + id + "\">0</span>)"
+                            + "<a href=\"javascript:void(0);\" class=\"btnBelittle\" val=\"" + id + "\">鸡蛋</a>(<span id=\"spBelittle" + id + "\">0</span>)"
+                            + "</div></td></tr>");
+                            if ($("#d-comment" + $("#hdnCurrentid").val()).is(":hidden")) {
+                                $("#d-comment" + $("#hdnCurrentid").val()).slideDown(function () {
+                                    $("#tblCommentFirstOne" + $("#hdnCurrentid").val()).prepend($newrow);
+                                });
+                            }
+                            else {
+                                $("#tblCommentFirstOne" + $("#hdnCurrentid").val()).prepend($newrow);
+                            }
+//                            var comments = parseInt($("#txtComments" + $("#hdnCurrentid").val()).text().replace("被评论:", "")) + 1;
+//                            $("#txtComments" + $("#hdnCurrentid").val()).text("被评论:" + comments);
+
+                            $newrow.find(".btnPraise").click(function () {
+                                CommentPraise(id);
+                            });
+                            $newrow.find(".btnBelittle").click(function () {
+                                CommentBelittle(id);
+                            });
+                        }
+                        else {
+                            alert(data.Msg);
+                        }
+                    }
+                });
+
+                $("#dvComment").hide();
+            } else {
+                $("#commentmsg").text("请输入评论内容");
+                setTimeout(function () {
+                    $("#commentmsg").text("");
+                }, 1000);
+            }
+        });
+        //鲜花
+        $(".btnPraise").click(function () {
+            var id = $(this).attr("val");
+            CommentPraise(id);
+        });
+        //鸡蛋
+        $(".btnBelittle").click(function () {
+            var id = $(this).attr("val");
+            CommentBelittle(id);
+        });
     })
+    function CommentPraise(id) {
+        $.ajax({
+            url: "weixinaction.axd",
+            data: { action: "votecommentpraise",sid:sid,  openid: openid, id: id, d: new Date() },
+            type: 'GET',
+            dataType: "json",
+            error: function (msg) {
+                alert("发生错误");
+            },
+            success: function (data) {
+                if (data.Value == "success") {
+                    var t = $("#spPraise" + id);
+                    if (t && t.length > 0) {
+                        t.text(parseInt(t.text()) + 1);
+                        t.parent().find(".btnPraise").addClass("gray");
+                        t.parent().find(".btnPraise").unbind("click");
+                    }
+                }
+                else {
+                    alert(data.Msg);
+                }
+            }
+        });
+    }
+    function CommentBelittle(id) {
+        $.ajax({
+            url: "weixinaction.axd",
+            data: { action: "votecommentbelittle",sid:sid,  openid: openid, id: id, d: new Date() },
+            type: 'GET',
+            dataType: "json",
+            error: function (msg) {
+                alert("发生错误");
+            },
+            success: function (data) {
+                if (data.Value == "success") {
+                    var t = $("#spBelittle" + id);
+                    if (t && t.length > 0) {
+                        t.text(parseInt(t.text()) + 1);
+                        t.parent().find(".btnBelittle").addClass("gray");
+                        t.parent().find(".btnBelittle").unbind("click");
+                    }
+                }
+                else {
+                    alert(data.Msg);
+                }
+            }
+        });
+    }
 </script>
 </html>

@@ -95,6 +95,26 @@ namespace Hx.BackAdmin.weixin
                 txtShareDesc.Text = CurrentSetting.ShareDesc;
                 hdnPowerUser.Value = CurrentSetting.PowerUser;
                 hdnName.Value = CurrentSetting.Name;
+                if (!string.IsNullOrEmpty(CurrentSetting.AD1Path))
+                    imgAD1Path.Src = CurrentSetting.AD1Path;
+                hdnAD1Path.Value = CurrentSetting.AD1Path;
+                txtAD1Url.Text = CurrentSetting.AD1Url;
+                if (!string.IsNullOrEmpty(CurrentSetting.AD2Path))
+                    imgAD2Path.Src = CurrentSetting.AD2Path;
+                hdnAD2Path.Value = CurrentSetting.AD2Path;
+                txtAD2Url.Text = CurrentSetting.AD2Url;
+                if (!string.IsNullOrEmpty(CurrentSetting.AD3Path))
+                    imgAD3Path.Src = CurrentSetting.AD3Path;
+                hdnAD3Path.Value = CurrentSetting.AD3Path;
+                txtAD3Url.Text = CurrentSetting.AD3Url;
+                if (!string.IsNullOrEmpty(CurrentSetting.AD4Path))
+                    imgAD4Path.Src = CurrentSetting.AD4Path;
+                hdnAD4Path.Value = CurrentSetting.AD4Path;
+                txtAD4Url.Text = CurrentSetting.AD4Url;
+                if (!string.IsNullOrEmpty(CurrentSetting.AD5Path))
+                    imgAD5Path.Src = CurrentSetting.AD5Path;
+                hdnAD5Path.Value = CurrentSetting.AD5Path;
+                txtAD5Url.Text = CurrentSetting.AD5Url;
             }
             if (HXContext.Current.AdminUser.Administrator)
             {
@@ -125,6 +145,17 @@ namespace Hx.BackAdmin.weixin
             entity.ShareLinkUrl = txtShareLinkUrl.Text;
             entity.ShareTitle = txtShareTitle.Text;
             entity.ShareDesc = txtShareDesc.Text;
+
+            entity.AD1Path = hdnAD1Path.Value;
+            entity.AD1Url = txtAD1Url.Text;
+            entity.AD2Path = hdnAD2Path.Value;
+            entity.AD2Url = txtAD2Url.Text;
+            entity.AD3Path = hdnAD3Path.Value;
+            entity.AD3Url = txtAD3Url.Text;
+            entity.AD4Path = hdnAD4Path.Value;
+            entity.AD4Url = txtAD4Url.Text;
+            entity.AD5Path = hdnAD5Path.Value;
+            entity.AD5Url = txtAD5Url.Text;
 
             entity.PowerUser = hdnPowerUser.Value;
             entity.Name = hdnName.Value;

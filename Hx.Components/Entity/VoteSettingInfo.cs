@@ -183,5 +183,103 @@ namespace Hx.Components.Entity
             get { return GetString("ShareTitle", ""); }
             set { SetExtendedAttribute("ShareTitle", value); }
         }
+
+        /// <summary>
+        /// 广告位1图片路劲
+        /// </summary>
+        [JsonIgnore]
+        public string AD1Path
+        {
+            get { return GetString("AD1Path", ""); }
+            set { SetExtendedAttribute("AD1Path", value); }
+        }
+
+        /// <summary>
+        /// 广告位1链接url
+        /// </summary>
+        [JsonIgnore]
+        public string AD1Url
+        {
+            get { return GetString("AD1Url", ""); }
+            set { SetExtendedAttribute("AD1Url", value); }
+        }
+
+        /// <summary>
+        /// 广告位2图片路劲
+        /// </summary>
+        [JsonIgnore]
+        public string AD2Path
+        {
+            get { return GetString("AD2Path", ""); }
+            set { SetExtendedAttribute("AD2Path", value); }
+        }
+
+        /// <summary>
+        /// 广告位2链接url
+        /// </summary>
+        [JsonIgnore]
+        public string AD2Url
+        {
+            get { return GetString("AD2Url", ""); }
+            set { SetExtendedAttribute("AD2Url", value); }
+        }
+
+        /// <summary>
+        /// 广告位3图片路劲
+        /// </summary>
+        [JsonIgnore]
+        public string AD3Path
+        {
+            get { return GetString("AD3Path", ""); }
+            set { SetExtendedAttribute("AD3Path", value); }
+        }
+
+        /// <summary>
+        /// 广告位3链接url
+        /// </summary>
+        [JsonIgnore]
+        public string AD3Url
+        {
+            get { return GetString("AD3Url", ""); }
+            set { SetExtendedAttribute("AD3Url", value); }
+        }
+        /// <summary>
+        /// 广告位4图片路劲
+        /// </summary>
+        [JsonIgnore]
+        public string AD4Path
+        {
+            get { return GetString("AD4Path", ""); }
+            set { SetExtendedAttribute("AD4Path", value); }
+        }
+
+        /// <summary>
+        /// 广告位4链接url
+        /// </summary>
+        [JsonIgnore]
+        public string AD4Url
+        {
+            get { return GetString("AD4Url", ""); }
+            set { SetExtendedAttribute("AD4Url", value); }
+        }
+        /// <summary>
+        /// 广告位5图片路劲
+        /// </summary>
+        [JsonIgnore]
+        public string AD5Path
+        {
+            get { return GetString("AD5Path", ""); }
+            set { SetExtendedAttribute("AD5Path", value); }
+        }
+
+        /// <summary>
+        /// 广告位5链接url
+        /// </summary>
+        [JsonIgnore]
+        public string AD5Url
+        {
+            get { return GetString("AD5Url", ""); }
+            set { SetExtendedAttribute("AD5Url", value); }
+        }
     }
 }

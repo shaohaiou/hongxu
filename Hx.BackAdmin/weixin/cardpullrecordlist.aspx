@@ -14,7 +14,9 @@
             $("#btnClear").click(function () {
                 return confirm("确定要清空抽奖记录吗？");
             });
-
+            $(".btndel").click(function () {
+                return confirm("确定要删除此记录吗？");
+            });
         });
     </script>
 </head>
@@ -59,6 +61,9 @@
                         <td class="w120 tc">
                             抽奖时间
                         </td>
+                        <td class="w80 tc">
+                            操作
+                        </td>
                     </tr>
                 </HeaderTemplate>
                 <ItemTemplate>
@@ -74,6 +79,10 @@
                         </td>
                         <td>
                             <%#Eval("AddTime","{0:yyyy-MM-dd HH:mm:ss}")%>
+                        </td>
+                        <td>
+                            <a class="btndel" href="?sid=<%=GetInt("sid") %>&id=<%#Eval("ID") %>&action=del&from=<%=CurrentUrl %>">
+                                删除</a>
                         </td>
                     </tr>
                 </ItemTemplate>

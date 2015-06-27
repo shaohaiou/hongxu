@@ -46,10 +46,10 @@ namespace Hx.BackAdmin
                             //    double.TryParse(r_yahoo.Match(httpstr_yahoo).Groups[1].Value, out curweather_yahoo);
                             //}
 
-                            string url_ra = "http://raqx.net/realtimedata.ashx?type=temp";
+                            string url_ra = "http://raqx.net/Module/Ajax/GetRealtimedata.ashx?type=temp";
                             string httpstr_ra = Http.GetPage(url_ra);
                             double curweather_ra = 0;
-                            Regex r_ra = new Regex("StationNum:\"K3164\"[\\s\\S]+?DryBulTemp:\"(\\d+)\"");
+                            Regex r_ra = new Regex("StationNum:\"K3164\"[\\s\\S]+?Val:\"(\\d+)\"");
                             if (r_ra.IsMatch(httpstr_ra))
                             {
                                 if (double.TryParse(r_ra.Match(httpstr_ra).Groups[1].Value, out curweather_ra))

@@ -37,6 +37,16 @@ namespace Hx.Components.Entity
         }
 
         /// <summary>
+        /// 必须关注
+        /// </summary>
+        [JsonIgnore]
+        public int MustAttention
+        {
+            get { return GetInt("MustAttention", 1); }
+            set { SetExtendedAttribute("MustAttention", value.ToString()); }
+        }
+
+        /// <summary>
         /// AppID
         /// </summary>
         [JsonIgnore]

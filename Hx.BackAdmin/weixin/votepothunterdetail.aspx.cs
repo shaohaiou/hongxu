@@ -80,7 +80,7 @@ namespace Hx.BackAdmin.weixin
         {
             CommentPageCount = 1;
             int id = GetInt("id");
-            CurrentPothunterInfo = WeixinActs.Instance.GetVotePothunterInfo(id, true);
+            CurrentPothunterInfo = WeixinActs.Instance.ReorderVotePothunter(WeixinActs.Instance.GetVotePothunterList(SID, true)).Find(p=>p.ID == id);
             if (CurrentPothunterInfo == null)
             {
                 Response.Write("<script>alert(\"选手信息错误\");location.href=\"" + (string.IsNullOrEmpty(FromUrl) ? ("votepg.aspx?sid=" + SID) : FromUrl) + "\"</script>");

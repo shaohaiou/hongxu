@@ -104,7 +104,7 @@ namespace Hx.BackAdmin.weixin
             int total = 0;
 
             List<VotePothunterInfo> plist = WeixinActs.Instance.GetVotePothunterList(SID, true);
-            plist = plist.OrderByDescending(l => l.Ballot).ToList();
+            plist = WeixinActs.Instance.ReorderVotePothunter(plist);
             total = plist.Count();
             plist = plist.Skip((PageIndex - 1) * PageSize).Take(PageSize).ToList<VotePothunterInfo>();
             rptData.DataSource = plist;

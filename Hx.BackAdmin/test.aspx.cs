@@ -18,6 +18,7 @@ namespace Hx.BackAdmin
         protected void Page_Load(object sender, EventArgs e)
         {
             //Response.Write(Server.UrlEncode("http://bj.hongxu.cn/weixin/act.aspx?wechat_card_js=1&sid=2"));
+            List<CardpackInfo> cardlist = WeixinActs.Instance.GetCardlist(3);
             Response.Write(WebHelper.GetClientsIP());
             Response.End();
             //string s = string.Empty;

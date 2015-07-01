@@ -1607,9 +1607,10 @@ namespace Hx.Components
 
         public List<VotePothunterInfo> GetVotePothunterList(int sid, bool fromCache = false)
         {
-            List<VotePothunterInfo> list = GetVotePothunterList(fromCache);
+            List<VotePothunterInfo> list;
             if (!fromCache)
             {
+                list = CommonDataProvider.Instance().GetVotePothunterList();
                 list = ReorderVotePothunter(list.FindAll(p => p.SID == sid)).OrderBy(b => b.SerialNumber).ToList();
                 return list;
             }
@@ -1623,13 +1624,14 @@ namespace Hx.Components
                     if (list == null)
                     {
                         list = CommonDataProvider.Instance().GetVotePothunterList();
+                        list = list.FindAll(p => p.SID == sid);
                         MangaCache.Max(key, list);
                     }
                 }
             }
-            list = ReorderVotePothunter(list.FindAll(p => p.SID == sid)).OrderBy(b => b.SerialNumber).ToList();
 
             return list;
+            return ReorderVotePothunter(list).OrderBy(b => b.SerialNumber).ToList();
         }
 
         private List<VotePothunterInfo> GetVotePothunterList(bool fromCache = false)
@@ -1808,7 +1810,7 @@ namespace Hx.Components
                     List<KeyValuePair<string, DateTime>> votes = VoteRecordList.Where(b => b.Key.EndsWith("_" + openid) && b.Value > DateTime.Today).ToList();
                     if (votes.Count > 0)
                     {
-                        if (votes.Exists(v=>v.Key == (id + "_" + openid)))
+                        if (votes.Exists(v => v.Key == (id + "_" + openid)))
                         {
                             return "您今天已经为他/她投过票了。";
                         }

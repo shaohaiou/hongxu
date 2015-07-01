@@ -450,7 +450,7 @@ namespace Hx.Components.Entity
         /// <para>使用时间的类型</para>
         /// <para>1：固定日期区间，2：固定时长（自领取后按天算）</para>
         /// </summary>
-        public int type { get; set; }
+        public string type { get; set; }
 
         /// <summary>
         /// 固定日期区间专用，表示起用时间。

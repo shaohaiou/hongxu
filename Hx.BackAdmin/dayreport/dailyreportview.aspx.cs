@@ -2530,7 +2530,7 @@ namespace Hx.BackAdmin.dayreport
                 rows[12] = tbl.NewRow();
                 rows[12]["关键指标"] = "展厅精品平均单台";
                 rows[12]["目标"] = (monthtarget != null && !string.IsNullOrEmpty(monthtarget.XSztjppjdt)) ? monthtarget.XSztjppjdt : (mbztcjjptc == 0 ? string.Empty : Math.Round(mbjpzje / mbztjcts, 0).ToString());
-                rows[12]["实际"] = hjztcjjptc == 0 ? string.Empty : Math.Round(hjjpzje / hjztjcts, 0).ToString();
+                rows[12]["实际"] = hjztjcts == 0 ? string.Empty : Math.Round(hjjpzje / hjztjcts, 0).ToString();
 
                 rows[13] = tbl.NewRow();
                 rows[13]["关键指标"] = "二网精品平均单台";

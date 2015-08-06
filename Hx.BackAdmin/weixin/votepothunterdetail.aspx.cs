@@ -28,6 +28,16 @@ namespace Hx.BackAdmin.weixin
                 return currentsetting;
             }
         }
+        private string signature = string.Empty;
+        public string CurrentSignature
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(signature))
+                    signature = Hx.Tools.EncryptString.SHA1_Hash(string.Format("jsapi_ticket={0}&noncestr={1}&timestamp={2}&url={3}", WeixinActs.Instance.GetJsapiTicket(CurrentSetting.AppID, CurrentSetting.AppSecret), NonceStr, Timestamp, Request.Url.AbsoluteUri));
+                return signature;
+            }
+        }
         private static object synchelper = new object();
         private List<VoteCommentInfo> _listcomment = null;
         public List<VoteCommentInfo> ListComment

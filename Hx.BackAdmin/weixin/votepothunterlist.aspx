@@ -92,7 +92,7 @@
                         </td>
                         <td>
                             <a href="votepothunteredit.aspx?sid=<%=GetString("sid") %>&id=<%#Eval("ID") %>&from=<%= CurrentUrl%>"
-                                class="pl10">编辑</a> <a href="?action=del&id=<%#Eval("ID") %>&from=<%= CurrentUrl%>"
+                                class="pl10">编辑</a> <a href="?action=del&sid=<%= GetInt("sid")%>&id=<%#Eval("ID") %>&from=<%= CurrentUrl%>"
                                     class="btnDel pl10">删除</a><br /><br />
                             <a class="pl10" href="votecommentmg.aspx?sid=<%=GetString("sid") %>&aid=<%#Eval("ID") %>">管理评论</a>
                         </td>

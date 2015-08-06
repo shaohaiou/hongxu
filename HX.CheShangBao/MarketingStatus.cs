@@ -930,7 +930,7 @@ namespace HX.CheShangBao
                                 #endregion
                                 #region 发布信息
 
-                                else if (wb.Url.ToString().StartsWith(Jcbs.Instance.GetLoginedUrl(account)))
+                                else if (wb.Url.ToString() == Jcbs.Instance.GetPublicUrl(account))
                                 {
                                     WriteMsg(account.ID, "正在发布车辆信息...");
                                     #region VIN码
@@ -1350,142 +1350,109 @@ namespace HX.CheShangBao
                                     bool hasdjzupload = true;
                                     bool hasxszupload = true;
                                     bool hasgcfpupload = true;
-                                    bool hascarpicsupload = false;
+
+                                    #region 车辆图片批量上传后回调
 
                                     AsyncCallback uploadpic = delegate(IAsyncResult ar)
                                     {
-                                        if (CurrentCar.Djz == "有")
+                                        if (CurrentCar.Djz == "有" && !string.IsNullOrEmpty(CurrentCar.DjzPic))
                                         {
                                             HtmlElement djbox = HtmlDoc.All["djbox"];
                                             djbox.GetElementsByTagName("input")[0].InvokeMember("click");
-                                            if (!string.IsNullOrEmpty(CurrentCar.DjzPic))
-                                            {
-                                                string picurl = string.Format(Global.Host + CurrentCar.DjzPic);
-                                                UploadPic(picurl, HtmlDoc.All["dj_cert"]);
-                                                Utils.DelayRun(100, delegate()
-                                                {
-                                                    DateTime begintime = DateTime.Now;
-                                                    HtmlElement dj_certmsg = HtmlDoc.All["dj_certmsg"];
-                                                    string classname = dj_certmsg.GetAttribute("className").ToLower();
-                                                    while (classname != "twright" && DateTime.Now.Subtract(begintime).TotalMilliseconds < 5000)
-                                                    {
-                                                        Thread.Sleep(100);
-                                                        dj_certmsg = HtmlDoc.All["dj_certmsg"];
-                                                        classname = dj_certmsg.GetAttribute("className").ToLower();
-                                                    }
-                                                    hasdjzupload = classname == "twright";
-                                                });
-                                            }
-                                        }
-                                        else if (CurrentCar.Djz == "丢失")
-                                        {
-                                            HtmlElement dj_lost = HtmlDoc.All["dj_lost"];
-                                            dj_lost.InvokeMember("click");
-                                        }
-                                        else if (CurrentCar.Djz == "补办中")
-                                        {
-                                            HtmlElement dj_doing = HtmlDoc.All["dj_doing"];
-                                            dj_doing.InvokeMember("click");
-                                        }
-                                        if (CurrentCar.Xsz == "有")
-                                        {
-                                            HtmlElement xs_yes = HtmlDoc.All["xs_yes"];
-                                            xs_yes.InvokeMember("click");
-                                            if (!string.IsNullOrEmpty(CurrentCar.XszPic))
-                                            {
-                                                string picurl = string.Format(Global.Host + CurrentCar.XszPic);
-                                                UploadPic(picurl, HtmlDoc.All["xs_cert"]);
-                                                Utils.DelayRun(100, delegate()
-                                                {
-                                                    DateTime begintime = DateTime.Now;
-                                                    HtmlElement xs_certmsg = HtmlDoc.All["xs_certmsg"];
-                                                    string classname = xs_certmsg.GetAttribute("className").ToLower();
-                                                    while (classname != "twright" && DateTime.Now.Subtract(begintime).TotalMilliseconds < 5000)
-                                                    {
-                                                        Thread.Sleep(100);
-                                                        xs_certmsg = HtmlDoc.All["xs_certmsg"];
-                                                        classname = xs_certmsg.GetAttribute("className").ToLower();
-                                                    }
-                                                    hasxszupload = classname == "twright";
-                                                });
-                                            }
-                                        }
-                                        else if (CurrentCar.Xsz == "丢失")
-                                        {
-                                            HtmlElement xs_lost = HtmlDoc.All["xs_lost"];
-                                            xs_lost.InvokeMember("click");
-                                        }
-                                        else if (CurrentCar.Xsz == "补办中")
-                                        {
-                                            HtmlElement xs_doing = HtmlDoc.All["xs_doing"];
-                                            xs_doing.InvokeMember("click");
-                                        }
-                                        if (CurrentCar.Gcfp == "有")
-                                        {
-                                            HtmlElement gc_yes = HtmlDoc.All["gc_yes"];
-                                            gc_yes.InvokeMember("click");
-                                            if (!string.IsNullOrEmpty(CurrentCar.GcfpPic))
-                                            {
-                                                string picurl = string.Format(Global.Host + CurrentCar.GcfpPic);
-                                                UploadPic(picurl, HtmlDoc.All["gc_cert"]);
-                                                Utils.DelayRun(100, delegate()
-                                                {
-                                                    DateTime begintime = DateTime.Now;
-                                                    HtmlElement gc_certmsg = HtmlDoc.All["gc_certmsg"];
-                                                    string classname = gc_certmsg.GetAttribute("className").ToLower();
-                                                    while (classname != "twright" && DateTime.Now.Subtract(begintime).TotalMilliseconds < 5000)
-                                                    {
-                                                        Thread.Sleep(100);
-                                                        gc_certmsg = HtmlDoc.All["gc_certmsg"];
-                                                        classname = gc_certmsg.GetAttribute("className").ToLower();
-                                                    }
-                                                    hasgcfpupload = classname == "twright";
-                                                });
-                                            }
-                                        }
-                                        else if (CurrentCar.Gcfp == "丢失")
-                                        {
-                                            HtmlElement gc_lost = HtmlDoc.All["gc_lost"];
-                                            gc_lost.InvokeMember("click");
-                                        }
-                                        else if (CurrentCar.Gcfp == "补办中")
-                                        {
-                                            HtmlElement gc_doing = HtmlDoc.All["gc_doing"];
-                                            gc_doing.InvokeMember("click");
-                                        }
-
-                                        if (hascarpics)
-                                        {
+                                            string picurl = string.Format(Global.Host + CurrentCar.DjzPic);
+                                            UploadPic(picurl, HtmlDoc.All["djupload"]);
                                             Utils.DelayRun(100, delegate()
                                             {
                                                 DateTime begintime = DateTime.Now;
-                                                HtmlElement uploadProgress = HtmlDoc.All["uploadProgress"];
-                                                string style = uploadProgress.Style.ToLower();
-                                                while (style != "display: none" && DateTime.Now.Subtract(begintime).TotalMilliseconds < 5000)
+                                                HtmlElement djupload = HtmlDoc.All["djupload"];
+                                                string style = djupload.Style.ToLower();
+                                                while (style != "display: none;" && DateTime.Now.Subtract(begintime).TotalMilliseconds < 5000)
                                                 {
                                                     Thread.Sleep(100);
-                                                    uploadProgress = HtmlDoc.All["uploadProgress"];
-                                                    style = uploadProgress.Style.ToLower();
+                                                    djupload = HtmlDoc.All["djupload"];
+                                                    style = djupload.Style.ToLower();
                                                 }
-                                                hascarpicsupload = style == "display: none";
+                                                hasdjzupload = style == "display: none;";
                                             });
                                         }
-                                        else
-                                            hascarpicsupload = true;
+                                        else if (CurrentCar.Djz == "丢失")
+                                        {
+                                            HtmlDoc.All["djbox"].GetElementsByTagName("input")[2].InvokeMember("click");
+                                        }
+                                        else if (CurrentCar.Djz == "补办中")
+                                        {
+                                            HtmlDoc.All["djbox"].GetElementsByTagName("input")[1].InvokeMember("click");
+                                        }
+                                        if (CurrentCar.Xsz == "有")
+                                        {
+                                            HtmlElement jsbox = HtmlDoc.All["jsbox"];
+                                            jsbox.GetElementsByTagName("input")[0].InvokeMember("click");
+                                            string picurl = string.Format(Global.Host + CurrentCar.XszPic);
+                                            UploadPic(picurl, HtmlDoc.All["jsupload"]);
+                                            Utils.DelayRun(100, delegate()
+                                            {
+                                                DateTime begintime = DateTime.Now;
+                                                HtmlElement jsupload = HtmlDoc.All["jsupload"];
+                                                string style = jsupload.Style.ToLower();
+                                                while (style != "display: none;" && DateTime.Now.Subtract(begintime).TotalMilliseconds < 5000)
+                                                {
+                                                    Thread.Sleep(100);
+                                                    jsupload = HtmlDoc.All["jsupload"];
+                                                    style = jsupload.Style.ToLower();
+                                                }
+                                                hasxszupload = style == "display: none;";
+                                            });
+                                        }
+                                        else if (CurrentCar.Xsz == "丢失")
+                                        {
+                                            HtmlDoc.All["jsbox"].GetElementsByTagName("input")[2].InvokeMember("click");
+                                        }
+                                        else if (CurrentCar.Xsz == "补办中")
+                                        {
+                                            HtmlDoc.All["jsbox"].GetElementsByTagName("input")[1].InvokeMember("click");
+                                        }
+                                        if (CurrentCar.Gcfp == "有")
+                                        {
+                                            HtmlElement fbbox = HtmlDoc.All ["fbbox"];
+                                            fbbox.GetElementsByTagName("input")[0].InvokeMember("click");
+                                            string picurl = string.Format(Global.Host + CurrentCar.XszPic);
+                                            UploadPic(picurl, HtmlDoc.All["fbupload"]);
+                                            Utils.DelayRun(100, delegate()
+                                            {
+                                                DateTime begintime = DateTime.Now;
+                                                HtmlElement fbupload = HtmlDoc.All["fbupload"];
+                                                string style = fbupload.Style.ToLower();
+                                                while (style != "display: none;" && DateTime.Now.Subtract(begintime).TotalMilliseconds < 5000)
+                                                {
+                                                    Thread.Sleep(100);
+                                                    fbupload = HtmlDoc.All["fbupload"];
+                                                    style = fbupload.Style.ToLower();
+                                                }
+                                                hasgcfpupload = style == "display: none;";
+                                            });
+                                        }
+                                        else if (CurrentCar.Gcfp == "丢失")
+                                        {
+                                            HtmlDoc.All["fbbox"].GetElementsByTagName("input")[2].InvokeMember("click");
+                                        }
+                                        else if (CurrentCar.Gcfp == "补办中")
+                                        {
+                                            HtmlDoc.All["fbbox"].GetElementsByTagName("input")[1].InvokeMember("click");
+                                        }
 
                                         Utils.DelayRun(100, delegate()
                                         {
-                                            HtmlElement CarSubmit = HtmlDoc.All["CarSubmit"];
+                                            HtmlElement submitInfoBtn = HtmlDoc.All["submitInfoBtn"];
                                             DateTime begintime = DateTime.Now;
 
                                             if (hascarpics)
                                             {
-                                                while (!(hasdjzupload && hasxszupload && hasgcfpupload && hascarpicsupload) && DateTime.Now.Subtract(begintime).TotalMilliseconds < 5000)
+                                                while (!(hasdjzupload && hasxszupload && hasgcfpupload) && DateTime.Now.Subtract(begintime).TotalMilliseconds < 5000)
                                                 {
                                                     Thread.Sleep(100);
                                                 }
-                                                if (hasdjzupload && hasxszupload && hasgcfpupload && hascarpicsupload)
-                                                    CarSubmit.InvokeMember("click");
+                                                if (hasdjzupload && hasxszupload && hasgcfpupload)
+                                                    submitInfoBtn.InvokeMember("click");
                                                 else
                                                 {
                                                     WriteMsg(account.ID, "该车辆信息不适合快速发布2");
@@ -1502,7 +1469,7 @@ namespace HX.CheShangBao
                                                     Thread.Sleep(100);
                                                 }
                                                 if (hasdjzupload && hasxszupload && hasgcfpupload)
-                                                    CarSubmit.InvokeMember("click");
+                                                    submitInfoBtn.InvokeMember("click");
                                                 else
                                                 {
                                                     WriteMsg(account.ID, "该车辆信息不适合快速发布3");
@@ -1514,6 +1481,8 @@ namespace HX.CheShangBao
                                             }
                                         });
                                     };
+
+                                    #endregion
 
                                     if (CurrentCar.Picslist.Count > 0)
                                     {

@@ -175,7 +175,6 @@
 
     if(!openInWeixin()){
         alert("请在微信中进入此页面");
-//        location.href="http://m.hongxu.cn/";
     }
     
     function openInWeixin() {
@@ -208,10 +207,10 @@
 
     wx.config({
         debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-        appId: 'wx0c9b37c9d5ddf8a8', // 必填，公众号的唯一标识
+        appId: '<%=CurrentSetting.AppID %>', // 必填，公众号的唯一标识
         timestamp: <%=Timestamp %>, // 必填，生成签名的时间戳
         nonceStr: '<%=NonceStr %>', // 必填，生成签名的随机串
-        signature: '<%=Signature %>',// 必填，签名，见附录1
+        signature: '<%=CurrentSignature %>',// 必填，签名，见附录1
         jsApiList: [
         'checkJsApi',
         'onMenuShareTimeline',
@@ -278,6 +277,7 @@
                 location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=<%=CurrentSetting.AppID%>&redirect_uri=http%3A%2F%2Frb.hongxu.cn%2Fweixin%2Fvotepg.aspx%3Fsid=<%=CurrentSetting.ID%>&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
                 return;
             }
+
         });
         
 

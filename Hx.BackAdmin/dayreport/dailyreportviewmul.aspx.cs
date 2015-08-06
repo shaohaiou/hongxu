@@ -1728,7 +1728,7 @@ namespace Hx.BackAdmin.dayreport
                 rows[12] = tbl.NewRow();
                 rows[12]["关键指标"] = "展厅精品平均单台";
                 rows[12]["目标"] = (monthtarget != null && !string.IsNullOrEmpty(monthtarget.XSztjppjdt)) ? monthtarget.XSztjppjdt : (mbztcjjptc == 0 ? string.Empty : Math.Round(mbjpzje / mbztjcts, 0).ToString());
-                rows[12]["实际"] = hjztcjjptc == 0 ? string.Empty : Math.Round(hjjpzje / hjztjcts, 0).ToString();
+                rows[12]["实际"] = hjztjcts == 0 ? string.Empty : Math.Round(hjjpzje / hjztjcts, 0).ToString();
 
                 rows[13] = tbl.NewRow();
                 rows[13]["关键指标"] = "二网精品平均单台";
@@ -1853,7 +1853,7 @@ namespace Hx.BackAdmin.dayreport
 
                 #region 表数据
 
-                DataRow[] rows = new DataRow[35];
+                DataRow[] rows = new DataRow[37];
 
                 data.DefaultView.RowFilter = "项目='来厂台次'";
                 decimal hjlctc = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
@@ -1915,6 +1915,12 @@ namespace Hx.BackAdmin.dayreport
                 data.DefaultView.RowFilter = "项目='玻璃险'";
                 decimal hjblx = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
                 decimal mbblx = DataConvert.SafeDecimal(data.DefaultView[0]["目标值"]);
+                data.DefaultView.RowFilter = "项目='发动机下护板'";
+                decimal hjfdjxhb = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
+                decimal mbfdjxhb = DataConvert.SafeDecimal(data.DefaultView[0]["目标值"]);
+                data.DefaultView.RowFilter = "项目='划痕险'";
+                decimal hjhhx = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
+                decimal mbhhx = DataConvert.SafeDecimal(data.DefaultView[0]["目标值"]);
                 data.DefaultView.RowFilter = "项目='中保理赔'";
                 decimal hjzblp = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
                 decimal mbzblp = DataConvert.SafeDecimal(data.DefaultView[0]["目标值"]);
@@ -2139,6 +2145,16 @@ namespace Hx.BackAdmin.dayreport
                 rows[34]["关键指标"] = "玻璃险";
                 rows[34]["目标"] = mbblx;
                 rows[34]["实际"] = hjblx;
+
+                rows[35] = tbl.NewRow();
+                rows[35]["关键指标"] = "发动机下护板";
+                rows[35]["目标"] = mbfdjxhb;
+                rows[35]["实际"] = hjfdjxhb;
+
+                rows[36] = tbl.NewRow();
+                rows[36]["关键指标"] = "划痕险";
+                rows[36]["目标"] = mbhhx;
+                rows[36]["实际"] = hjhhx;
 
                 #endregion
 

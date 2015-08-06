@@ -811,6 +811,7 @@
       <DependentUpon>main_x.aspx</DependentUpon>
     </Compile>
     <Compile Include="httphandler\BackAdminActionHandler.cs" />
+    <Compile Include="httphandler\CommonHandler.cs" />
     <Compile Include="httphandler\WeixinActionHandler.cs" />
     <Compile Include="index.aspx.cs">
       <DependentUpon>index.aspx</DependentUpon>

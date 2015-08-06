@@ -419,12 +419,45 @@ namespace Hx.Car
                         }
                     }
                     break;
+                case JcbSiteType.搜狐二手车:
+                    if (account.JcbAccountType == JcbAccountType.个人帐号)
+                    {
+                        HtmlDocument HtmlDoc = wb.Document;
+                        HtmlElement pp_login = HtmlDoc.All["pp_login"];
+                        HtmlElement pw_login = HtmlDoc.All["pw_login"];
+                        HtmlElement SubmitLogin = null;
+                        foreach (HtmlElement h in HtmlDoc.GetElementsByTagName("input"))
+                        {
+                            if (h.GetAttribute("value") == "登 录")
+                            {
+                                SubmitLogin = h;
+                                break;
+                            }
+                        }
+                        if (SubmitLogin != null)
+                        {
+                            pp_login.SetAttribute("value", account.AccountName);
+                            pw_login.SetAttribute("value", account.Password);
+                            SubmitLogin.InvokeMember("click");
+                            wb.Stop();
+                        }
+                        result = 1;
+                    }
+                    else if (account.JcbAccountType == JcbAccountType.商户帐号)
+                    {
+
+                    }
+                    break;
                 default:
                     break;
             }
             return result;
         }
 
+        #endregion
+
+        #region 自动填充
+        
         #endregion
     }
 }

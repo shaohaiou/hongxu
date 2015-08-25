@@ -6,6 +6,7 @@ using System.Web.SessionState;
 using Hx.Tools.Web;
 using System.IO;
 using Hx.Tools;
+using Hx.Car;
 
 namespace Hx.BackAdmin.HttpHandler
 {
@@ -32,7 +33,11 @@ namespace Hx.BackAdmin.HttpHandler
             string action = WebHelper.GetString("action");
             if (action == "cnmaccheck")
             {
-                ChebaoMacCheck();
+                CarNumberMacCheck();
+            }
+            if (action == "cncommit")
+            {
+                CarNumberCommit();
             }
             else
             {
@@ -46,7 +51,7 @@ namespace Hx.BackAdmin.HttpHandler
 
         #region 侯牌器网卡验证
 
-        private void ChebaoMacCheck()
+        private void CarNumberMacCheck()
         {
             result = "0";
 
@@ -58,8 +63,22 @@ namespace Hx.BackAdmin.HttpHandler
                     string macstr = File.ReadAllText(Utils.GetMapPath("/cnmac.txt"), System.Text.Encoding.UTF8);
                     string[] macs = macstr.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
                     if (macs.Contains(mac))
-                        result = "1";
+                        result = "1|" + DateTime.Now.ToString("yyyy-MM-dd");
                 }
+            }
+        }
+
+        #endregion
+
+        #region 侯牌器提交获牌记录
+
+        private void CarNumberCommit()
+        {
+            string code = WebHelper.GetString("code");
+            string hp = WebHelper.GetString("hp");
+            if (!string.IsNullOrEmpty(code + hp))
+            {
+                Cars.Instance.CarNumberCommit(code,hp);
             }
         }
 

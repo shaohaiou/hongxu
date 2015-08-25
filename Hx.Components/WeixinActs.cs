@@ -2255,5 +2255,128 @@ namespace Hx.Components
         }
 
         #endregion
+
+        #region 场景二维码
+
+        #region 活动设置
+
+        public void AddScenecodeSetting(ScenecodeSettingInfo entity)
+        {
+            CommonDataProvider.Instance().AddScenecodeSetting(entity);
+        }
+
+        public void DeleteScenecodeSetting(string ids)
+        {
+            CommonDataProvider.Instance().DeleteScenecodeSetting(ids);
+        }
+
+        public List<ScenecodeSettingInfo> GetScenecodeSettingList(bool fromCache = false)
+        {
+            if (!fromCache)
+            {
+                return CommonDataProvider.Instance().GetScenecodeSettinglist();
+            }
+            string key = GlobalKey.SCENECODESETTINGLIST;
+            List<ScenecodeSettingInfo> list = MangaCache.Get(key) as List<ScenecodeSettingInfo>;
+            if (list == null)
+            {
+                lock (sync_creater)
+                {
+                    list = MangaCache.Get(key) as List<ScenecodeSettingInfo>;
+                    if (list == null)
+                    {
+                        list = CommonDataProvider.Instance().GetScenecodeSettinglist();
+
+                        MangaCache.Max(key, list);
+                    }
+                }
+            }
+            return list;
+        }
+
+        public ScenecodeSettingInfo GetScenecodeSetting(int id, bool fromCache = false)
+        {
+            List<ScenecodeSettingInfo> list = GetScenecodeSettingList(fromCache);
+
+            return list.Find(c => c.ID == id);
+        }
+
+        public void ReloadScenecodeSetting()
+        {
+            string key = GlobalKey.SCENECODESETTINGLIST;
+            MangaCache.Remove(key);
+            GetScenecodeSettingList(true);
+        }
+
+        #endregion
+
+        #region 场景管理
+        
+        /// <summary>
+        /// 获取场景列表
+        /// </summary>
+        /// <param name="fromCache"></param>
+        /// <returns></returns>
+        public List<ScenecodeInfo> GetScenecodeList(int sid, bool fromCache = false)
+        {
+            if (!fromCache)
+            {
+                return CommonDataProvider.Instance().GetScenecodeList(sid);
+            }
+
+            string key = GlobalKey.SCENECODELIST + "_" + sid;
+            List<ScenecodeInfo> list = MangaCache.Get(key) as List<ScenecodeInfo>;
+            if (list == null)
+            {
+                lock (sync_creater)
+                {
+                    list = MangaCache.Get(key) as List<ScenecodeInfo>;
+                    if (list == null)
+                    {
+                        list = CommonDataProvider.Instance().GetScenecodeList(sid);
+
+                        MangaCache.Max(key, list);
+                    }
+                }
+            }
+            return list;
+        }
+
+        public ScenecodeInfo GetScenecodeInfo(int sid,int id, bool fromCache = false)
+        { 
+            List<ScenecodeInfo> list = GetScenecodeList(sid,fromCache);
+            return list.Find(l => l.ID == id);
+        }
+
+        public void ReloadScenecodeListCache(int sid)
+        {
+            string key = GlobalKey.SCENECODELIST + "_" + sid;
+            MangaCache.Remove(key);
+            GetScenecodeList(sid, true);
+        }
+
+        public void DeleteScenecodeInfo(string ids)
+        {
+            CommonDataProvider.Instance().DeleteScenecodeInfo(ids);
+        }
+
+        public void AddScenecodeInfo(ScenecodeInfo entity)
+        {
+            CommonDataProvider.Instance().AddScenecodeInfo(entity);
+        }
+
+        public void UpdateScenecodeInfo(ScenecodeInfo entity)
+        {
+            CommonDataProvider.Instance().UpdateScenecodeInfo(entity);
+        }
+
+        public void AddScenecodeNum(int id)
+        {
+            CommonDataProvider.Instance().AddScenecodeNum(id);
+        }
+
+        #endregion
+
+        #endregion
     }
 }

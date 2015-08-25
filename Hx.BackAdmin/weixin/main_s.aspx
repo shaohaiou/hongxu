@@ -21,6 +21,7 @@
      <a href="escpgmg.aspx" target="ztk" id="escpgmg" runat="server">爱车估价器</a>
      <a href="cardsettinglist.aspx" target="ztk" id="cardmg" runat="server">卡券活动</a>
      <a href="votesettinglist.aspx" target="ztk" id="votemg" runat="server">投票活动</a>
+     <a href="scenecodesettinglist.aspx" target="ztk" id="scenecodemg" runat="server">场景二维码</a>
      <a href="gb61list.aspx" target="ztk" id="gb61" runat="server">广本61活动</a>
 </div>
 

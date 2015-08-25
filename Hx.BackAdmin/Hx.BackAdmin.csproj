@@ -384,6 +384,7 @@
     <Content Include="js\ckeditor\styles.js" />
     <Content Include="js\comm.js" />
     <Content Include="js\config.js" />
+    <Content Include="js\jqchart.js" />
     <Content Include="js\jquery-1.3.2.min.js" />
     <Content Include="js\jquery-1.9.1.js" />
     <Content Include="js\jQuery-eraser-0.4.2.js" />
@@ -448,6 +449,12 @@
     <Content Include="weixin\jituanvotemg.aspx" />
     <Content Include="weixin\main.aspx" />
     <Content Include="weixin\main_s.aspx" />
+    <Content Include="weixin\scenecodelist.aspx" />
+    <Content Include="weixin\scenecodemg.aspx" />
+    <Content Include="weixin\scenecodesettinglist.aspx" />
+    <Content Include="weixin\scenecodestat.aspx" />
+    <Content Include="weixin\scenecodestatall.aspx" />
+    <Content Include="weixin\scenecodevisit.aspx" />
     <Content Include="weixin\votecommentmg.aspx" />
     <Content Include="weixin\votemg.aspx" />
     <Content Include="weixin\votepg.aspx" />
@@ -1083,6 +1090,48 @@
     </Compile>
     <Compile Include="weixin\main_s.aspx.designer.cs">
       <DependentUpon>main_s.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="weixin\scenecodelist.aspx.cs">
+      <DependentUpon>scenecodelist.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="weixin\scenecodelist.aspx.designer.cs">
+      <DependentUpon>scenecodelist.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="weixin\scenecodemg.aspx.cs">
+      <DependentUpon>scenecodemg.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="weixin\scenecodemg.aspx.designer.cs">
+      <DependentUpon>scenecodemg.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="weixin\scenecodesettinglist.aspx.cs">
+      <DependentUpon>scenecodesettinglist.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="weixin\scenecodesettinglist.aspx.designer.cs">
+      <DependentUpon>scenecodesettinglist.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="weixin\scenecodestat.aspx.cs">
+      <DependentUpon>scenecodestat.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="weixin\scenecodestat.aspx.designer.cs">
+      <DependentUpon>scenecodestat.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="weixin\scenecodestatall.aspx.cs">
+      <DependentUpon>scenecodestatall.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="weixin\scenecodestatall.aspx.designer.cs">
+      <DependentUpon>scenecodestatall.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="weixin\scenecodevisit.aspx.cs">
+      <DependentUpon>scenecodevisit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="weixin\scenecodevisit.aspx.designer.cs">
+      <DependentUpon>scenecodevisit.aspx</DependentUpon>
     </Compile>
     <Compile Include="weixin\votecommentmg.aspx.cs">
       <DependentUpon>votecommentmg.aspx</DependentUpon>

@@ -70,6 +70,10 @@ namespace Hx.Components
         public static readonly string VOTEPOTHUNTERLIST = "cache-votepothunter-list"; //卡券抽奖记录列表缓存键值
         public static readonly string VOTECOMMENT_LIST = "cache-votecomment-list"; //微信活动评论列表缓存键值
 
+        public static readonly string SCENECODESETTINGLIST = "cache-scenecodesetting-list"; //场景二维码设置列表缓存键值
+        public static readonly string SCENECODELIST = "cache-scenecode-list"; //场景列表缓存键值
+
+
         public static readonly string WEIXINACTCOMMENT_LIST = "cache-weixincomment-list"; //微信活动评论列表缓存键值
 
         public static readonly string PROMARY_LIST = "cache-promary-list"; //省份缓存键值

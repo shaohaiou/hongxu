@@ -41,7 +41,8 @@ namespace Hx.BackAdmin
                 if (((int)Admin.UserRole & (int)UserRoleType.微信活动管理员) > 0 
                     || ((int)Admin.UserRole & (int)UserRoleType.二手车估价器管理员) > 0
                     || ((int)Admin.UserRole & (int)UserRoleType.卡券活动管理员) > 0
-                    || ((int)Admin.UserRole & (int)UserRoleType.投票活动管理员) > 0 
+                    || ((int)Admin.UserRole & (int)UserRoleType.投票活动管理员) > 0
+                    || ((int)Admin.UserRole & (int)UserRoleType.场景二维码) > 0 
                     || ((int)Admin.UserRole & (int)UserRoleType.广本61活动) > 0)
                 {
                     weixin_page.Visible = true;

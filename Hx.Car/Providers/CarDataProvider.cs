@@ -565,5 +565,11 @@ namespace Hx.Car.Providers
         #endregion
 
         #endregion
+
+        #region 侯牌器
+
+        public abstract void CarNumberCommit(string code, string hp);
+
+        #endregion
     }
 }

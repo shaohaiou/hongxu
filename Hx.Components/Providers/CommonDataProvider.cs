@@ -169,7 +169,7 @@ namespace Hx.Components.Providers
             admin.LastLoginTime = reader["LastLoginTime"] as DateTime?;
             admin.Password = reader["Password"] as string;
             admin.UserName = reader["UserName"] as string;
-            admin.UserRole = (UserRoleType)(byte)reader["UserRole"];
+            admin.UserRole = (UserRoleType)(Int16)reader["UserRole"];
 
             SerializerData data = new SerializerData();
             data.Keys = reader["PropertyNames"] as string;
@@ -957,6 +957,63 @@ namespace Hx.Components.Providers
 
             return entity;
         }
+
+        #endregion
+
+        #region 场景二维码
+
+        #region 活动设置
+
+        public abstract void AddScenecodeSetting(ScenecodeSettingInfo entity);
+
+        public abstract void DeleteScenecodeSetting(string ids);
+
+        public abstract List<ScenecodeSettingInfo> GetScenecodeSettinglist();
+
+        protected ScenecodeSettingInfo PopulateScenecodeSetting(IDataReader reader)
+        {
+            ScenecodeSettingInfo entity = new ScenecodeSettingInfo()
+            {
+                ID = DataConvert.SafeInt(reader["ID"]),
+                Name = reader["Name"] as string
+            };
+            SerializerData data = new SerializerData();
+            data.Keys = reader["PropertyNames"] as string;
+            data.Values = reader["PropertyValues"] as string;
+            entity.SetSerializerData(data);
+
+            return entity;
+        }
+
+        #endregion
+
+        #region 场景管理
+
+        public abstract List<ScenecodeInfo> GetScenecodeList(int sid);
+
+        public abstract void DeleteScenecodeInfo(string ids);
+
+        public abstract void AddScenecodeInfo(ScenecodeInfo entity);
+
+        public abstract void UpdateScenecodeInfo(ScenecodeInfo entity);
+
+        public abstract void AddScenecodeNum(int id);
+
+        protected ScenecodeInfo PopulateScenecodeInfo(IDataReader reader)
+        {
+            ScenecodeInfo entity = new ScenecodeInfo()
+            {
+                ID = DataConvert.SafeInt(reader["ID"]),
+                SID = DataConvert.SafeInt(reader["SID"]),
+                SceneName = reader["SceneName"] as string,
+                ScanNum = DataConvert.SafeInt(reader["ScanNum"]),
+                RedirectAddress = reader["RedirectAddress"] as string
+            };
+
+            return entity;
+        }
+
+        #endregion
 
         #endregion
 

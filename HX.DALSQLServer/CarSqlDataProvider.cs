@@ -830,5 +830,26 @@ namespace HX.DALSQLServer
         #endregion
 
         #endregion
+
+        #region 侯牌器
+
+        public override void CarNumberCommit(string code, string hp)
+        {
+            string sql = @"INSERT INTO CarNumber_Records(
+                [Code]
+                ,[Hp]
+                )VALUES(
+                @Code
+                ,@Hp
+                )";
+            SqlParameter[] p = 
+            {
+                new SqlParameter("@Code",code),
+                new SqlParameter("@Hp",hp)
+            };
+            SqlHelper.ExecuteNonQuery(_con,CommandType.Text,sql,p);
+        }
+
+        #endregion
     }
 }

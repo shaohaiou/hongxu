@@ -129,5 +129,14 @@ namespace Hx.Car
         }
 
         #endregion
+
+        #region 侯牌器
+
+        public void CarNumberCommit(string code, string hp)
+        {
+            CarDataProvider.Instance().CarNumberCommit(code, hp);
+        }
+
+        #endregion
     }
 }

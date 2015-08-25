@@ -2130,6 +2130,142 @@ namespace HX.DALSQLServer
 
         #endregion
 
+        #region 场景二维码
+
+        #region 活动设置
+
+        public override void AddScenecodeSetting(ScenecodeSettingInfo entity)
+        {
+            SerializerData data = entity.GetSerializerData();
+            string sql = @"
+            IF EXISTS(SELECT * FROM HX_ScenecodeSetting WHERE [ID] = @ID)
+            BEGIN
+                UPDATE HX_ScenecodeSetting SET
+                    [Name] = @Name
+                    ,[PropertyNames] = @PropertyNames
+                    ,[PropertyValues] = @PropertyValues
+                WHERE [ID] = @ID
+            END
+            ELSE
+            BEGIN
+                INSERT INTO HX_ScenecodeSetting(
+                    [Name]
+                    ,[PropertyNames]
+                    ,[PropertyValues]
+                )VALUES(
+                    @Name
+                    ,@PropertyNames
+                    ,@PropertyValues)
+            END
+            ";
+            SqlParameter[] p = 
+            {
+                new SqlParameter("@ID",entity.ID),
+                new SqlParameter("@Name",entity.Name),
+                new SqlParameter("@PropertyNames",data.Keys),
+                new SqlParameter("@PropertyValues",data.Values)
+            };
+            SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql, p);
+        }
+
+        public override void DeleteScenecodeSetting(string ids)
+        {
+            string sql = "DELETE FROM HX_ScenecodeSetting WHERE [ID] IN(" + ids + ")";
+            SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql);
+        }
+
+        public override List<ScenecodeSettingInfo> GetScenecodeSettinglist()
+        {
+            string sql = "SELECT * FROM HX_ScenecodeSetting";
+            List<ScenecodeSettingInfo> list = new List<ScenecodeSettingInfo>();
+            using (IDataReader reader = SqlHelper.ExecuteReader(_con, CommandType.Text, sql))
+            {
+                while (reader.Read())
+                {
+                    list.Add(PopulateScenecodeSetting(reader));
+                }
+            }
+            return list;
+        }
+
+        #endregion
+
+        #region 场景管理
+
+
+        public override List<ScenecodeInfo> GetScenecodeList(int sid)
+        {
+            List<ScenecodeInfo> list = new List<ScenecodeInfo>();
+            string sql = "SELECT * FROM HX_ScenecodeInfo WHERE [SID] = @SID";
+            using (IDataReader reader = SqlHelper.ExecuteReader(_con, CommandType.Text, sql, new SqlParameter("@SID", sid)))
+            {
+                while (reader.Read())
+                {
+                    list.Add(PopulateScenecodeInfo(reader));
+                }
+            }
+
+            return list;
+        }
+
+        public override void AddScenecodeInfo(ScenecodeInfo entity)
+        {
+            string sql = @"
+                INSERT INTO HX_ScenecodeInfo(
+                    [SID]
+                    ,[SceneName]
+                    ,[ScanNum]
+                    ,[RedirectAddress]
+                )VALUES(
+                    @SID
+                    ,@SceneName
+                    ,@ScanNum
+                    ,@RedirectAddress
+                )
+            ";
+            SqlParameter[] p = 
+            {
+                new SqlParameter("@SID",entity.SID),
+                new SqlParameter("@SceneName",entity.SceneName),
+                new SqlParameter("@ScanNum",entity.ScanNum),
+                new SqlParameter("@RedirectAddress",entity.RedirectAddress),
+            };
+            SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql, p);
+        }
+
+        public override void DeleteScenecodeInfo(string ids)
+        {
+            string sql = "DELETE FROM HX_ScenecodeInfo WHERE [ID] IN (" + ids + ")";
+            SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql);
+        }
+
+        public override void UpdateScenecodeInfo(ScenecodeInfo entity)
+        {
+            string sql = @"
+                UPDATE HX_ScenecodeInfo SET
+                    [SceneName] = @SceneName
+                    ,[RedirectAddress] = @RedirectAddress
+                WHERE [ID] = @ID
+            ";
+            SqlParameter[] p = 
+            {
+                new SqlParameter("@ID",entity.ID),
+                new SqlParameter("@SceneName",entity.SceneName),
+                new SqlParameter("@RedirectAddress",entity.RedirectAddress),
+            };
+            SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql, p);
+        }
+
+        public override void AddScenecodeNum(int id)
+        {
+            string sql = "UPDATE HX_ScenecodeInfo SET [ScanNum] = ScanNum + 1 WHERE ID=@ID";
+            SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql,new SqlParameter("@ID",id));
+        }
+
+        #endregion
+
+        #endregion
+
         #endregion
 
         #region 招聘管理

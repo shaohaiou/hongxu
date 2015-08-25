@@ -1402,7 +1402,7 @@ namespace Hx.BackAdmin.dayreport
                     string fh = tblresult.Columns[j + 1].ColumnName.EndsWith("率")
                         || tblresult.Columns[j + 1].ColumnName.EndsWith("比")
                     || tblresult.Columns[j + 1].ColumnName.EndsWith("比例") ? "%" : string.Empty;
-                    row[j + 1] = tbl.Rows[j]["目标"].ToString() + (string.IsNullOrEmpty(tbl.Rows[j]["目标"].ToString()) ? string.Empty : fh) + "|" + tbl.Rows[j]["实际"].ToString() + (string.IsNullOrEmpty(tbl.Rows[j]["实际"].ToString()) ? string.Empty : fh) + "|" + tbl.Rows[j]["详细"].ToString();
+                    row[j + 1] = tbl.Rows[j]["目标"].ToString() + (string.IsNullOrEmpty(tbl.Rows[j]["目标"].ToString()) ? string.Empty : fh) + "|" + tbl.Rows[j]["实际"].ToString() + (string.IsNullOrEmpty(tbl.Rows[j]["实际"].ToString()) ? string.Empty : fh) + "|" + tbl.Rows[j]["详细"].ToString() + "|" + tbl.Rows[j]["完成率"].ToString() +(string.IsNullOrEmpty(tbl.Rows[j]["完成率"].ToString()) ? string.Empty : "%");
                 }
                 tblresult.Rows.Add(row);
             }
@@ -1413,7 +1413,7 @@ namespace Hx.BackAdmin.dayreport
         private string GetKeyReportStr(DayReportDep dep, DataTable tbl)
         {
             StringBuilder strb = new StringBuilder();
-            tblView.Width = (120 + 160 * tbl.Columns.Count) + "px";
+            tblView.Width = (120 + 240 * tbl.Columns.Count) + "px";
 
             #region 页面输出
 
@@ -1467,7 +1467,7 @@ namespace Hx.BackAdmin.dayreport
                 strb.Append("<td class=\"w120\" rowspan=\"2\">公司</td>");
                 for (int i = 1; i < tbl.Columns.Count; i++)
                 {
-                    strb.AppendFormat("<td class=\"w160\" colspan=\"2\">{0}</td>", reg.IsMatch(tbl.Columns[i].ToString()) ? regreplace.Replace(tbl.Columns[i].ToString(), string.Empty) : tbl.Columns[i].ToString());
+                    strb.AppendFormat("<td class=\"w240\" colspan=\"3\">{0}</td>", reg.IsMatch(tbl.Columns[i].ToString()) ? regreplace.Replace(tbl.Columns[i].ToString(), string.Empty) : tbl.Columns[i].ToString());
                 }
                 strb.Append("<td></td>");
                 strb.Append("</tr>");
@@ -1477,6 +1477,7 @@ namespace Hx.BackAdmin.dayreport
                     string[] vals = tbl.Rows[0][tbl.Columns[i].ToString()].ToString().Split(new char[] { '|' }, StringSplitOptions.None);
                     strb.AppendFormat("<td class=\"w80\">{0}</td>", string.IsNullOrEmpty(vals[2]) ? "目标" : vals[2].Split(new char[] { ',' }, StringSplitOptions.None)[0]);
                     strb.AppendFormat("<td class=\"w80\">{0}</td>", string.IsNullOrEmpty(vals[2]) ? "实际" : vals[2].Split(new char[] { ',' }, StringSplitOptions.None)[1]);
+                    strb.AppendFormat("<td class=\"w80\">{0}</td>","完成率");
                 }
                 strb.Append("<td></td>");
                 strb.Append("</tr>");
@@ -1490,6 +1491,7 @@ namespace Hx.BackAdmin.dayreport
                         string[] vals = tbl.Rows[i][tbl.Columns[j].ToString()].ToString().Split(new char[] { '|' }, StringSplitOptions.None);
                         strb.AppendFormat("<td>{0}</td>", string.IsNullOrEmpty(vals[0]) ? "&nbsp;" : vals[0]);
                         strb.AppendFormat("<td>{0}</td>", string.IsNullOrEmpty(vals[1]) ? "&nbsp;" : vals[1]);
+                        strb.AppendFormat("<td>{0}</td>", string.IsNullOrEmpty(vals[1]) ? "&nbsp;" : vals[3]);
                     }
                     strb.Append("<td></td>");
                     strb.Append("</tr>");

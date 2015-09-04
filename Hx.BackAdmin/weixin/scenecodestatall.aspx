@@ -29,11 +29,13 @@
                 数据统计</caption>
             <tbody>
                 <tr>
-                    <td>
+                    <td class="w120">
                         总数：<%= Count %>
                     </td>
+                    <td>
+                        <asp:Button runat="server" ID="btnExport" OnClick="btnExport_Click" Text="导出Excel" CssClass="an1" />
+                    </td>
                 </tr>
-                      
             </tbody>
         </table>  
         <%= TblStr %>

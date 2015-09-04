@@ -17,7 +17,7 @@
                     titleLeft: 70,
                     labelX: [<%=LabelX %>],
                     scaleY: { min: 0, max: <%=Max %>, gap: <%=Gap %> },
-                    width: 400,
+                    width: <%=Width %>,
                     height: 400,
                     paddingL: 50,
                     paddingT: 50,

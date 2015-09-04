@@ -105,6 +105,18 @@ namespace Hx.BackAdmin.weixin
             }
         }
 
+        public string Width
+        {
+            get
+            {
+                int width = 60;
+                int sid = GetInt("sid");
+                List<ScenecodeInfo> list = WeixinActs.Instance.GetScenecodeList(sid, true);
+                width += 30 * list.Count;
+                return width.ToString();
+            }
+        }
+
         private ScenecodeSettingInfo currentsetting = null;
         protected ScenecodeSettingInfo CurrentSetting
         {

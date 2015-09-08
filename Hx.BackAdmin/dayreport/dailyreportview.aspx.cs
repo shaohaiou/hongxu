@@ -2655,9 +2655,40 @@ namespace Hx.BackAdmin.dayreport
 
                 #endregion
 
+                #region 微信客户总数
+
+                decimal hjwxkhzs = 0;
+                if (ddlCorp.SelectedIndex > 0 )
+                {
+                    DailyReportQuery query_all = new DailyReportQuery()
+                    {
+                        CorporationID = DataConvert.SafeInt(ddlCorp.SelectedValue),
+                        DayReportDep = DayReportDep.售后部
+                    };
+                    List<DailyReportInfo> list_all = DailyReports.Instance.GetList(query_all, true);
+                    list_all = list_all.FindAll(l => l.DailyReportCheckStatus != DailyReportCheckStatus.审核不通过);
+                    List<DailyReportModuleInfo> rlist_sh = DayReportModules.Instance.GetList(true);
+                    rlist_sh = rlist_sh.FindAll(l => l.Department == DayReportDep.售后部).OrderBy(l => l.Sort).ToList();
+                    List<Dictionary<string, string>> data_all = new List<Dictionary<string, string>>();
+                    for (int i = 0; i < list_all.Count; i++)
+                    {
+                        if (!string.IsNullOrEmpty(list_all[i].SCReport))
+                        {
+                            data_all.Add(json.Deserialize<Dictionary<string, string>>(list_all[i].SCReport));
+                        }
+                    }
+                    if (rlist_sh.Exists(l => l.Name == "微信客户数"))
+                    {
+                        int idwxkhzs = rlist_sh.Find(l => l.Name == "微信客户数").ID;
+                        hjwxkhzs = Math.Round(data_all.Sum(d => d.ContainsKey(idwxkhzs.ToString()) ? DataConvert.SafeDecimal(d[idwxkhzs.ToString()]) : 0), 0);
+                    }
+                }
+
+                #endregion
+
                 #region 表数据
 
-                DataRow[] rows = new DataRow[28];
+                DataRow[] rows = new DataRow[30];
 
                 data.DefaultView.RowFilter = "项目='来厂台次'";
                 decimal hjlctc = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
@@ -2719,6 +2750,9 @@ namespace Hx.BackAdmin.dayreport
                 data.DefaultView.RowFilter = "项目='玻璃险'";
                 decimal hjblx = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
                 decimal mbblx = DataConvert.SafeDecimal(data.DefaultView[0]["目标值"]);
+                data.DefaultView.RowFilter = "项目='微信客户数'";
+                decimal hjwxkhs = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
+                decimal mbwxkhs = DataConvert.SafeDecimal(data.DefaultView[0]["目标值"]);
                 data.DefaultView.RowFilter = "项目='中保理赔'";
                 decimal hjzblp = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
                 decimal mbzblp = DataConvert.SafeDecimal(data.DefaultView[0]["目标值"]);
@@ -2909,6 +2943,16 @@ namespace Hx.BackAdmin.dayreport
                 rows[27]["目标"] = (hjzblp + hjtb + hjpa + hjrs + hjdd + hjzhlh + hjzs + hjdz + hjqt).ToString();
                 rows[27]["实际"] = string.Empty;
                 rows[27]["详细"] = (mbzblp + mbtb + mbpa + mbrs + mbdd + mbzhlh + mbzs + mbdz + mbqt).ToString();
+
+                rows[28] = tbl.NewRow();
+                rows[28]["关键指标"] = "微信客户总数";
+                rows[28]["目标"] = monthtarget == null || string.IsNullOrEmpty(monthtarget.SHwxkhzs) ? string.Empty : monthtarget.SHwxkhzs;
+                rows[28]["实际"] = hjwxkhzs;
+
+                rows[29] = tbl.NewRow();
+                rows[29]["关键指标"] = "本月微信客户数";
+                rows[29]["目标"] = mbwxkhs.ToString();
+                rows[29]["实际"] = hjwxkhs.ToString();
 
                 #endregion
 
@@ -3790,7 +3834,6 @@ namespace Hx.BackAdmin.dayreport
                 if (CurrentCorporation != null && CurrentCorporation.DailyreportTpp == 1)
                 {
                     m = rlist_xs.Find(l => l.Name == "他品牌交车台次");
-                    data.DefaultView.RowFilter = "项目='他品牌交车台次'";
                     hjtppjctc = m == null ? 0 : Math.Round(data_xs.Sum(d => d.ContainsKey(m.ID.ToString()) ? DataConvert.SafeDecimal(d[m.ID.ToString()]) : 0), 0);
                     mbtppjctc = targetdata_xs.ContainsKey(m.ID.ToString()) ? DataConvert.SafeDecimal(targetdata_xs[m.ID.ToString()]) : 0;
                 }
@@ -4471,6 +4514,27 @@ namespace Hx.BackAdmin.dayreport
                 strb.AppendLine("<td class=\"tc\">&nbsp;</td>");
                 strb.AppendFormat("<td class=\"tc\">{0}</td>", GetCellValue(tbl.Rows[27]["目标"].ToString(), string.Empty, false, false));
                 strb.AppendFormat("<td class=\"tc\">{0}</td>", GetCellValue(tbl.Rows[27]["详细"].ToString(), string.Empty, false, false));
+                strb.AppendLine("</tr>");
+                strb.AppendLine("</table>");
+
+                strb.AppendLine("<table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" class=\"datatable mt10\">");
+                strb.AppendLine("<tr class=\"tc\">");
+                strb.AppendLine("<td class=\"w120\" style=\"background:Yellow;\">微信客户总数目标</td>");
+                strb.AppendFormat("<td class=\"w60\">{0}</td>", GetCellValue(tbl.Rows[28]["目标"].ToString(), string.Empty, false, false));
+                strb.AppendLine("<td class=\"w120\" style=\"background:Yellow;\">微信客户总数实际</td>");
+                strb.AppendFormat("<td class=\"w60\">{0}</td>", GetCellValue(tbl.Rows[28]["实际"].ToString(), string.Empty, false, false));
+                strb.AppendLine("<td class=\"w60\" style=\"background:Yellow;\">完成率</td>");
+                strb.AppendFormat("<td class=\"w60\">{0}</td>", GetCellValue(tbl.Rows[28]["完成率"].ToString(), string.Empty, false, true));
+                strb.AppendLine("</tr>");
+                strb.AppendLine("</table>");
+                strb.AppendLine("<table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" class=\"datatable mt10\">");
+                strb.AppendLine("<tr class=\"tc\">");
+                strb.AppendLine("<td class=\"w120\" style=\"background:Yellow;\">本月微信客户数目标</td>");
+                strb.AppendFormat("<td class=\"w60\">{0}</td>", GetCellValue(tbl.Rows[29]["目标"].ToString(), string.Empty, false, false));
+                strb.AppendLine("<td class=\"w120\" style=\"background:Yellow;\">本月微信客户数实际</td>");
+                strb.AppendFormat("<td class=\"w60\">{0}</td>", GetCellValue(tbl.Rows[29]["实际"].ToString(), string.Empty, false, false));
+                strb.AppendLine("<td class=\"w60\" style=\"background:Yellow;\">完成率</td>");
+                strb.AppendFormat("<td class=\"w60\">{0}</td>", GetCellValue(tbl.Rows[29]["完成率"].ToString(), string.Empty, false, true));
                 strb.AppendLine("</tr>");
                 strb.AppendLine("</table>");
 

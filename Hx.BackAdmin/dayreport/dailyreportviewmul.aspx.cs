@@ -1853,9 +1853,40 @@ namespace Hx.BackAdmin.dayreport
 
                 #endregion
 
+                #region 微信客户总数
+
+                decimal hjwxkhzs = 0;
+                if (corpid > 0)
+                {
+                    DailyReportQuery query_all = new DailyReportQuery()
+                    {
+                        CorporationID = corpid,
+                        DayReportDep = DayReportDep.售后部
+                    };
+                    List<DailyReportInfo> list_all = DailyReports.Instance.GetList(query_all, true);
+                    list_all = list_all.FindAll(l => l.DailyReportCheckStatus != DailyReportCheckStatus.审核不通过);
+                    List<DailyReportModuleInfo> rlist_sh = DayReportModules.Instance.GetList(true);
+                    rlist_sh = rlist_sh.FindAll(l => l.Department == DayReportDep.售后部).OrderBy(l => l.Sort).ToList();
+                    List<Dictionary<string, string>> data_all = new List<Dictionary<string, string>>();
+                    for (int i = 0; i < list_all.Count; i++)
+                    {
+                        if (!string.IsNullOrEmpty(list_all[i].SCReport))
+                        {
+                            data_all.Add(json.Deserialize<Dictionary<string, string>>(list_all[i].SCReport));
+                        }
+                    }
+                    if (rlist_sh.Exists(l => l.Name == "微信客户数"))
+                    {
+                        int idwxkhzs = rlist_sh.Find(l => l.Name == "微信客户数").ID;
+                        hjwxkhzs = Math.Round(data_all.Sum(d => d.ContainsKey(idwxkhzs.ToString()) ? DataConvert.SafeDecimal(d[idwxkhzs.ToString()]) : 0), 0);
+                    }
+                }
+
+                #endregion
+
                 #region 表数据
 
-                DataRow[] rows = new DataRow[37];
+                DataRow[] rows = new DataRow[39];
 
                 data.DefaultView.RowFilter = "项目='来厂台次'";
                 decimal hjlctc = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
@@ -1923,6 +1954,9 @@ namespace Hx.BackAdmin.dayreport
                 data.DefaultView.RowFilter = "项目='划痕险'";
                 decimal hjhhx = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
                 decimal mbhhx = DataConvert.SafeDecimal(data.DefaultView[0]["目标值"]);
+                data.DefaultView.RowFilter = "项目='微信客户数'";
+                decimal hjwxkhs = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
+                decimal mbwxkhs = DataConvert.SafeDecimal(data.DefaultView[0]["目标值"]);
                 data.DefaultView.RowFilter = "项目='中保理赔'";
                 decimal hjzblp = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
                 decimal mbzblp = DataConvert.SafeDecimal(data.DefaultView[0]["目标值"]);
@@ -1957,9 +1991,6 @@ namespace Hx.BackAdmin.dayreport
                 data.DefaultView.RowFilter = "项目='电瓶数'";
                 decimal hjdps = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
                 decimal mbdps = DataConvert.SafeDecimal(data.DefaultView[0]["目标值"]);
-                data.DefaultView.RowFilter = "项目='微信客户数'";
-                decimal hjwxkhs = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
-                decimal mbwxkhs = DataConvert.SafeDecimal(data.DefaultView[0]["目标值"]);
                 data.DefaultView.RowFilter = "项目='导航升级客户数'";
                 decimal hjdhsjkhs = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
                 decimal mbdhsjkhs = DataConvert.SafeDecimal(data.DefaultView[0]["目标值"]);
@@ -2157,6 +2188,16 @@ namespace Hx.BackAdmin.dayreport
                 rows[36]["关键指标"] = "划痕险";
                 rows[36]["目标"] = mbhhx;
                 rows[36]["实际"] = hjhhx;
+
+                rows[37] = tbl.NewRow();
+                rows[37]["关键指标"] = "微信客户总数";
+                rows[37]["目标"] = (monthtarget != null && !string.IsNullOrEmpty(monthtarget.SHwxkhzs)) ? monthtarget.SHwxkhzs : string.Empty;
+                rows[37]["实际"] = hjwxkhzs;
+
+                rows[38] = tbl.NewRow();
+                rows[38]["关键指标"] = "本月微信客户数";
+                rows[38]["目标"] = mbwxkhs.ToString();
+                rows[38]["实际"] = hjwxkhs.ToString();
 
                 #endregion
 
@@ -3195,13 +3236,14 @@ namespace Hx.BackAdmin.dayreport
                 decimal mbtppjctc = 0;
 
                 CorporationInfo CurrentCorporation = Corporations.Instance.GetModel(corpid);
+                DailyReportModuleInfo m;
                 if (CurrentCorporation != null && CurrentCorporation.DailyreportTpp == 1)
                 {
-                    data.DefaultView.RowFilter = "项目='他品牌交车台次'";
-                    hjtppjctc = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
-                    mbtppjctc = DataConvert.SafeDecimal(data.DefaultView[0]["目标值"]);
+                    m = rlist_xs.Find(l => l.Name == "他品牌交车台次");
+                    hjtppjctc = m == null ? 0 : Math.Round(data_xs.Sum(d => d.ContainsKey(m.ID.ToString()) ? DataConvert.SafeDecimal(d[m.ID.ToString()]) : 0), 0);
+                    mbtppjctc = targetdata_xs.ContainsKey(m.ID.ToString()) ? DataConvert.SafeDecimal(targetdata_xs[m.ID.ToString()]) : 0;
                 }
-                DailyReportModuleInfo m = rlist_xs.Find(l => l.Name == "展厅交车台数");
+                m = rlist_xs.Find(l => l.Name == "展厅交车台数");
                 hjztjcts = m == null ? 0 : Math.Round(data_xs.Sum(d => d.ContainsKey(m.ID.ToString()) ? DataConvert.SafeDecimal(d[m.ID.ToString()]) : 0), 0);
                 mbztjcts = targetdata_xs.ContainsKey(m.ID.ToString()) ? DataConvert.SafeDecimal(targetdata_xs[m.ID.ToString()]) : 0;
                 m = rlist_xs.Find(l => l.Name == "二网销售台次");

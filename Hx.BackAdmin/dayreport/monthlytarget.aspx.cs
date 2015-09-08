@@ -217,6 +217,18 @@ namespace Hx.BackAdmin.dayreport
 
                     #endregion
                 }
+                else if (CurrentDep == DayReportDep.售后部)
+                {
+                    #region 绑定数据
+
+                    #region 关键指标
+
+                    txtSHwxkhzs.Text = target.SHwxkhzs;
+
+                    #endregion
+
+                    #endregion
+                }
             }
             else
             {
@@ -313,6 +325,10 @@ namespace Hx.BackAdmin.dayreport
                     target.XStppzhml = txtXStppzhml.Text;
                     target.XStpppjdt = txtXStpppjdt.Text;
                 }
+            }
+            else if (CurrentDep == DayReportDep.售后部)
+            {
+                target.SHwxkhzs = txtSHwxkhzs.Text;
             }
         }
 

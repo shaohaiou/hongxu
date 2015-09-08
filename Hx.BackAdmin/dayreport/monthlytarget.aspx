@@ -135,8 +135,29 @@
                         </tr>
                         <%=GetTableStr()%>
                         <%}
-                          else if (CurrentDep == DayReportDep.财务部)
-                          {%><%}
+                          else if (CurrentDep == DayReportDep.售后部)
+                          {%>
+                        <tr>
+                            <td colspan="4" style="background-color: #ccc; color: Black; font-weight: bold;">
+                                关键指标
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="tr">
+                                微信客户总数：
+                            </td>
+                            <td colspan="3">
+                                <asp:TextBox runat="server" ID="txtSHwxkhzs" CssClass="srk6"></asp:TextBox>
+                                <span class="gray pl10">截止<%=DateTime.Today.Year + 1 %>年1月1号微信客户总数目标</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" style="background-color: #ccc; color: Black; font-weight: bold;">
+                                各项目标值
+                            </td>
+                        </tr>
+                        <%=GetTableStr()%>
+                          <%}
                           else if (CurrentDep == DayReportDep.销售部)
                           {%>
                         <tr>

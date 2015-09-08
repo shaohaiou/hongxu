@@ -15,7 +15,7 @@
         var timer_bindevent;
         $(function () {
             $("#txtDate").click(function () {
-                WdatePicker({ 'readOnly': 'true', dateFmt: 'yyyy-MM', isShowToday: false, isShowClear: false });
+                WdatePicker({ 'readOnly': 'true',<%if(CurrentDep==DayReportDep.销售部){ %> minDate: '2015-07-01',<%} %> dateFmt: 'yyyy-MM', isShowToday: false, isShowClear: false });
             });
             $(".btnSubmit").click(function () {
                 if ($("#ddlCorp").val() == "-1") {

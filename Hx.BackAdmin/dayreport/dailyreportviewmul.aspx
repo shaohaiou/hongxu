@@ -14,11 +14,11 @@
         var timer_bindevent;
         $(function () {
             $("#txtDate").click(function () {
-                WdatePicker({ 'readOnly': 'true', dateFmt: 'yyyy-MM-dd', maxDate: '#F{$dp.$D(\'txtDate2\')}' });
+                WdatePicker({ 'readOnly': 'true',<%if(CurrentDep==DayReportDep.销售部){ %> minDate: '2015-07-01',<%} %>  dateFmt: 'yyyy-MM-dd', maxDate: '#F{$dp.$D(\'txtDate2\')}' });
             });
 
             $("#txtDate2").click(function () {
-                WdatePicker({ 'readOnly': 'true', dateFmt: 'yyyy-MM-dd', minDate: '#F{$dp.$D(\'txtDate\')}', maxDate: '%y-%M-%d' });
+                WdatePicker({ 'readOnly': 'true', <%if(CurrentDep==DayReportDep.销售部){ %> minDate: '2015-07-01',<%} %>  dateFmt: 'yyyy-MM-dd', minDate: '#F{$dp.$D(\'txtDate\')}', maxDate: '%y-%M-%d' });
             });
 
             $(window).scroll(function () {

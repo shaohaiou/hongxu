@@ -317,6 +317,19 @@ namespace Hx.Components.Entity
 
         #region 售后部月度目标
 
+        #region 关键指标
+
+        /// <summary>
+        /// 微信客户总数
+        /// </summary>
+        [JsonIgnore]
+        public string SHwxkhzs
+        {
+            get { return GetString("SHwxkhzs", ""); }
+            set { SetExtendedAttribute("SHwxkhzs", value); }
+        }
+
+        #endregion
 
         #endregion
 
@@ -325,7 +338,7 @@ namespace Hx.Components.Entity
         #endregion
 
         #region 市场部月度目标
-        
+
         /// <summary>
         /// 上月粉丝量
         /// </summary>

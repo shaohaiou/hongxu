@@ -100,6 +100,7 @@
     <Content Include="dayreport\crmreportexport.aspx" />
     <Content Include="dayreport\crmreportoutwardvisit.aspx" />
     <Content Include="dayreport\dailyreportcheck.aspx" />
+    <Content Include="dayreport\dailyreportsettings.aspx" />
     <Content Include="dayreport\dailyreportviewmul.aspx" />
     <Content Include="dayreport\dayreportcheckhistorymg.aspx" />
     <Content Include="dayreport\dayreporthistorymg.aspx" />
@@ -631,6 +632,13 @@
     </Compile>
     <Compile Include="dayreport\dailyreportcheck.aspx.designer.cs">
       <DependentUpon>dailyreportcheck.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="dayreport\dailyreportsettings.aspx.cs">
+      <DependentUpon>dailyreportsettings.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="dayreport\dailyreportsettings.aspx.designer.cs">
+      <DependentUpon>dailyreportsettings.aspx</DependentUpon>
     </Compile>
     <Compile Include="dayreport\dailyreportviewmul.aspx.cs">
       <DependentUpon>dailyreportviewmul.aspx</DependentUpon>

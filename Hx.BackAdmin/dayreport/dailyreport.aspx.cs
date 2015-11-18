@@ -168,6 +168,7 @@ namespace Hx.BackAdmin.dayreport
                     txtXSztcl.Text = target.XSztcl;
                     txtXSclpjdj.Text = target.XSclpjdj;
                     txtXSzzts.Text = target.XSzzts;
+                    txtXScjxctc.Text = target.XScjxctc;
                 }
             }
 
@@ -589,6 +590,7 @@ namespace Hx.BackAdmin.dayreport
                         target.XSztcl = txtXSztcl.Text;
                         target.XSclpjdj = txtXSclpjdj.Text;
                         target.XSzzts = txtXSzzts.Text;
+                        target.XScjxctc = txtXScjxctc.Text;
                         MonthlyTargets.Instance.CreateAndUpdate(target);
                     }
 

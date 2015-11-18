@@ -204,6 +204,7 @@ namespace Hx.BackAdmin.dayreport
                     txtXSxszhtc.Text = target.XSxszhtc;
                     txtXSajpjdt.Text = target.XSajpjdt;
                     txtXSmfbydt.Text = target.XSmfbydt;
+                    txtXSzjsl.Text = target.XSzjsl;
 
                     if (CurrentCorporation != null && CurrentCorporation.DailyreportTpp == 1)
                     {
@@ -317,6 +318,7 @@ namespace Hx.BackAdmin.dayreport
                 target.XSxszhtc = txtXSxszhtc.Text;
                 target.XSajpjdt = txtXSajpjdt.Text;
                 target.XSmfbydt = txtXSmfbydt.Text;
+                target.XSzjsl = txtXSzjsl.Text;
 
                 if (CurrentCorporation != null && CurrentCorporation.DailyreportTpp == 1)
                 {

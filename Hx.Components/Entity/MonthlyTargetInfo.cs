@@ -80,6 +80,16 @@ namespace Hx.Components.Entity
         }
 
         /// <summary>
+        /// 厂家虚出台次
+        /// </summary>
+        [JsonIgnore]
+        public string XScjxctc
+        {
+            get { return GetString("XScjxctc", ""); }
+            set { SetExtendedAttribute("XScjxctc", value); }
+        }
+
+        /// <summary>
         /// 展厅占比
         /// </summary>
         [JsonIgnore]
@@ -267,6 +277,16 @@ namespace Hx.Components.Entity
         {
             get { return GetString("XSmfbydt", ""); }
             set { SetExtendedAttribute("XSmfbydt", value); }
+        }
+
+        /// <summary>
+        /// 转介绍率
+        /// </summary>
+        [JsonIgnore]
+        public string XSzjsl
+        {
+            get { return GetString("XSzjsl", ""); }
+            set { SetExtendedAttribute("XSzjsl", value); }
         }
 
         /// <summary>

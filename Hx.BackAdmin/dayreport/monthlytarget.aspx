@@ -157,7 +157,7 @@
                             </td>
                         </tr>
                         <%=GetTableStr()%>
-                          <%}
+                        <%}
                           else if (CurrentDep == DayReportDep.销售部)
                           {%>
                         <tr>
@@ -308,49 +308,42 @@
                             <td>
                                 <asp:TextBox runat="server" ID="txtXSmfbydt" CssClass="srk6"></asp:TextBox>
                             </td>
-                            <%if (CurrentCorporation != null && CurrentCorporation.DailyreportTpp == 1)
-                              { %>
+                            <td class="tr">
+                                转介绍率：
+                            </td>
+                            <td>
+                                <asp:TextBox runat="server" ID="txtXSzjsl" CssClass="srk4"></asp:TextBox>
+                                %
+                            </td>
+                        </tr>
+                        <%if (CurrentCorporation != null && CurrentCorporation.DailyreportTpp == 1)
+                          { %>
+                        <tr>
                             <td class="tr">
                                 他品牌销售台次：
                             </td>
                             <td>
                                 <asp:TextBox runat="server" ID="txtXStppxstc" CssClass="srk6"></asp:TextBox>
                             </td>
-                            <%}
-                              else
-                              { %>
-                            <td class="tr">
-                            </td>
-                            <td>
-                            </td>
-                            <%} %>
-                        </tr>
-                        <%if (CurrentCorporation != null && CurrentCorporation.DailyreportTpp == 1)
-                          { %>
-                        <tr>
                             <td class="tr">
                                 他品牌单车毛利：
                             </td>
                             <td>
                                 <asp:TextBox runat="server" ID="txtXStppdcml" CssClass="srk6"></asp:TextBox>
                             </td>
+                        </tr>
+                        <tr>
                             <td class="tr">
                                 他品牌综合毛利：
                             </td>
                             <td>
                                 <asp:TextBox runat="server" ID="txtXStppzhml" CssClass="srk6"></asp:TextBox>
                             </td>
-                        </tr>
-                        <tr>
                             <td class="tr">
                                 他品牌平均单台：
                             </td>
                             <td>
                                 <asp:TextBox runat="server" ID="txtXStpppjdt" CssClass="srk6"></asp:TextBox>
-                            </td>
-                            <td class="tr">
-                            </td>
-                            <td>
                             </td>
                         </tr>
                         <%} %>

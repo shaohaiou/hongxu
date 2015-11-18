@@ -272,6 +272,14 @@
                                 <asp:TextBox runat="server" ID="txtXSclpjdj" CssClass="srk6 tr"></asp:TextBox>
                             </td>
                         </tr>
+                        <tr>
+                            <td class="bg4 tr" style="background-color: Orange;">
+                                厂家虚出台次：
+                            </td>
+                            <td>
+                                <asp:TextBox runat="server" ID="txtXScjxctc" CssClass="srk6 tr"></asp:TextBox>
+                            </td>
+                        </tr>
                         <%} %>
                         <%if (CurrentDep == DayReportDep.财务部 && HasMonthlyTargetPower())
                           {%>

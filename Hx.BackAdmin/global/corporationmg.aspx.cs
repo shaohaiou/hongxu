@@ -25,7 +25,6 @@ namespace Hx.BackAdmin.global
         {
             rptcarbrand.DataSource = CarBrands.Instance.GetCarBrandList(true);
             rptcarbrand.DataBind();
-
             rptCorporation.DataSource = Corporations.Instance.GetList(true);
             rptCorporation.DataBind();
         }

@@ -56,7 +56,7 @@ namespace Hx.BackAdmin.dayreport
             rptTargetDep.DataSource = DepartmentList;
             rptTargetDep.DataBind();
 
-            List<CorporationInfo> corplist = Corporations.Instance.GetList(true);
+            List<CorporationInfo> corplist = Corporations.Instance.GetList(true).FindAll(c=>c.DailyreportShow == 1);
             rptDayReportCorp.DataSource = corplist;
             rptDayReportCorp.DataBind();
 

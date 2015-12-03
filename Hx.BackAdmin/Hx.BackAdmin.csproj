@@ -1241,7 +1241,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="config\common.config" />
+    <Content Include="config\common.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Hx.Car\Hx.Car.csproj">
@@ -1278,7 +1280,10 @@
     <None Include="App_Data\行政人事日报表模板.xlsx" />
     <None Include="App_Data\财务日报表模板.xlsx" />
     <None Include="App_Data\金融日报表模板.xlsx" />
+    <None Include="App_Data\销售客源、DCC线索周度进度跟进表模版.xls" />
+    <None Include="App_Data\销售日报汇总模版.xls" />
     <None Include="App_Data\销售日报表模板.xlsx" />
+    <None Include="App_Data\销售日报表模板1.xlsx" />
     <None Include="js\ckeditor\plugins\scayt\LICENSE.md" />
     <None Include="js\ckeditor\plugins\scayt\README.md" />
     <None Include="js\ckeditor\plugins\wsc\LICENSE.md" />

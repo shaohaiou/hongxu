@@ -139,7 +139,7 @@ namespace Hx.BackAdmin.dayreport
             }
             List<CorporationInfo> corplist = Corporations.Instance.GetList(true);
             string[] corppower = CurrentUser.DayReportViewCorpPowerSetting.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
-            corplist = corplist.FindAll(c => corppower.Contains(c.ID.ToString()));
+            corplist = corplist.FindAll(c => c.DailyreportShow == 1 && corppower.Contains(c.ID.ToString()));
             rptDayReportCorp.DataSource = corplist;
             rptDayReportCorp.DataBind();
         }
@@ -230,7 +230,7 @@ namespace Hx.BackAdmin.dayreport
 
             List<CorporationInfo> corplist = Corporations.Instance.GetList(true);
             string[] corppower = hdnDayReportCorp.Value.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
-            corplist = corplist.FindAll(c => corppower.Contains(c.ID.ToString()));
+            corplist = corplist.FindAll(c => c.DailyreportShow == 1 && corppower.Contains(c.ID.ToString()));
             for (int i = 0; i < corplist.Count; i++)
             {
                 DailyReportQuery query = new DailyReportQuery()
@@ -1436,7 +1436,7 @@ namespace Hx.BackAdmin.dayreport
 
             List<CorporationInfo> corplist = Corporations.Instance.GetList(true);
             string[] corppower = hdnDayReportCorp.Value.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
-            corplist = corplist.FindAll(c => corppower.Contains(c.ID.ToString()));
+            corplist = corplist.FindAll(c => c.DailyreportShow == 1 && corppower.Contains(c.ID.ToString()));
             for (int i = 0; i < corplist.Count; i++)
             {
                 DailyReportQuery query = new DailyReportQuery()
@@ -3611,7 +3611,7 @@ namespace Hx.BackAdmin.dayreport
 
             List<CorporationInfo> corplist = Corporations.Instance.GetList(true);
             string[] corppower = hdnDayReportCorp.Value.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
-            corplist = corplist.FindAll(c => corppower.Contains(c.ID.ToString()));
+            corplist = corplist.FindAll(c => c.DailyreportShow == 1 && corppower.Contains(c.ID.ToString()));
             for (int i = 0; i < corplist.Count; i++)
             {
                 DailyReportQuery query = new DailyReportQuery()

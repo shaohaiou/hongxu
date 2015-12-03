@@ -26,7 +26,7 @@ namespace Hx.BackAdmin.dayreport
             {
                 if (corplist == null)
                 {
-                    corplist = Corporations.Instance.GetList(true);
+                    corplist = Corporations.Instance.GetList(true).FindAll(c => c.DailyreportShow == 1);
                 }
                 return corplist;
             }

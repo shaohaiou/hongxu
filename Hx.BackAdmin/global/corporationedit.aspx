@@ -90,6 +90,14 @@
                 </tr>
                 <tr>
                     <td class="bg1">
+                        日报表：
+                    </td>
+                    <td>
+                        <asp:CheckBox runat="server" ID="cbxDailyreportShow" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bg1">
                         日报表他品牌模块：
                     </td>
                     <td>

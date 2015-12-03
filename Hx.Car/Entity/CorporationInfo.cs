@@ -151,5 +151,15 @@ namespace Hx.Car.Entity
             get { return GetInt("DailyreportTpp", 0); }
             set { SetExtendedAttribute("DailyreportTpp", value.ToString()); }
         }
+
+        /// <summary>
+        /// 日报表展示
+        /// </summary>
+        [JsonIgnore]
+        public int DailyreportShow
+        {
+            get { return GetInt("DailyreportShow", 1); }
+            set { SetExtendedAttribute("DailyreportShow", value.ToString()); }
+        }
     }
 }

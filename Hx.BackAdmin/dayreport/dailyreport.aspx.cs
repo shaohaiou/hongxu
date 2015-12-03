@@ -109,7 +109,7 @@ namespace Hx.BackAdmin.dayreport
 
             string[] corppowers = CurrentUser.DayReportCorpPowerSetting.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
             List<CorporationInfo> corps = Corporations.Instance.GetList(true);
-            ddlCorp.DataSource = corps.FindAll(c => corppowers.Contains(c.ID.ToString()) || (c.ID == CurrentUser.CorporationID && corppowers.Length == 0));
+            ddlCorp.DataSource = corps.FindAll(c => c.DailyreportShow == 1 && (corppowers.Contains(c.ID.ToString()) || (c.ID == CurrentUser.CorporationID && corppowers.Length == 0)));
             ddlCorp.DataTextField = "Name";
             ddlCorp.DataValueField = "ID";
             ddlCorp.DataBind();

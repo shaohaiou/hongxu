@@ -98,7 +98,9 @@
         <div class="flqh">
             <span><a href="votemg.aspx?sid=<%= GetInt("sid")%>">活动设置</a></span> <span class="dj">
                 <a href="votepothunterlist.aspx?sid=<%= GetInt("sid")%>">选手管理</a></span> <span><a
-                    href="voterecordlist.aspx?sid=<%= GetInt("sid")%>">投票记录</a></span>
+                    href="voterecordlist.aspx?sid=<%= GetInt("sid")%>">投票记录</a></span> 
+                    <span><a href="votecommentmg.aspx?sid=<%= GetInt("sid")%>">
+                        评论管理</a></span>
         </div>
         <table width="100%" border="0" cellspacing="0" cellpadding="0" class="biaoge3">
             <caption class="bt2">

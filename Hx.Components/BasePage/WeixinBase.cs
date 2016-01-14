@@ -42,5 +42,9 @@ namespace Hx.Components.BasePage
                 return signature;
             }
         }
+        protected override void Check()
+        {
+
+        }
     }
 }

@@ -2679,5 +2679,55 @@ namespace HX.DALSQLServer
         }
 
         #endregion
+
+        #region 调查问卷（试用版）
+
+        public override int AddQuestionRecordInfo(QuestionRecordInfo entity)
+        {
+            string sql = @"
+            INSERT INTO HX_QuestionRecord(PostUser,PostUserName,PostTime,QuestionType,QuestionCompanyID,[QuestionScoreInfoListJson])
+            VALUES (@PostUser,@PostUserName,@PostTime,@QuestionType,@QuestionCompanyID,@QuestionScoreInfoListJson)
+            ;SELECT @@IDENTITY";
+            SqlParameter[] p = 
+            {
+                new SqlParameter("@PostUser",entity.PostUser),
+                new SqlParameter("@PostUserName",entity.PostUserName),
+                new SqlParameter("@PostTime",entity.PostTime),
+                new SqlParameter("@QuestionType",(int)entity.QuestionType),
+                new SqlParameter("@QuestionCompanyID",entity.QuestionCompanyID),
+                new SqlParameter("@QuestionScoreInfoListJson",entity.QuestionScoreInfoListJson)
+            };
+            entity.ID = DataConvert.SafeInt(SqlHelper.ExecuteScalar(_con, CommandType.Text, sql, p));
+            return entity.ID;
+        }
+
+        public override bool CheckQuestionPostUser(string postuser)
+        {
+            string sql = @"
+            SELECT COUNT(0) FROM HX_QuestionRecord WHERE [PostUser] = @PostUser
+            ";
+            SqlParameter[] p = 
+            {
+                new SqlParameter("@PostUser",postuser)
+            };
+            return DataConvert.SafeInt(SqlHelper.ExecuteScalar(_con, CommandType.Text, sql, p)) == 0;
+        }
+
+        public override List<QuestionRecordInfo> GetQuestionRecordList()
+        {
+            List<QuestionRecordInfo> list = new List<QuestionRecordInfo>();
+            string sql = "SELECT * FROM HX_QuestionRecord";
+            using (IDataReader reader = SqlHelper.ExecuteReader(_con, CommandType.Text, sql))
+            {
+                while (reader.Read())
+                {
+                    list.Add(PopulateQuestionRecordInfo(reader));
+                }
+            }
+
+            return list;
+        }
+
+        #endregion
     }
 }

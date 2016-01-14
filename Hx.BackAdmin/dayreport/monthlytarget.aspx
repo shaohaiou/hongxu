@@ -316,6 +316,15 @@
                                 %
                             </td>
                         </tr>
+                        <tr>
+                            <td class="tr">
+                                玻璃险渗透率：
+                            </td>
+                            <td colspan="3">
+                                <asp:TextBox runat="server" ID="txtXSblxstl" CssClass="srk4"></asp:TextBox>
+                                %
+                            </td>
+                        </tr>
                         <%if (CurrentCorporation != null && CurrentCorporation.DailyreportTpp == 1)
                           { %>
                         <tr>

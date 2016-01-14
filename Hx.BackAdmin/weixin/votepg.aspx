@@ -198,7 +198,7 @@
                     alert("投票成功，感谢您的参与。");
                 }
                 else if(data.Msg == "openid,vopenid为空")
-                    location.href ="https://open.weixin.qq.com/connect/oauth2/authorize?appid=<%=CurrentSetting.AppID%>&redirect_uri=http%3A%2F%2Frb.hongxu.cn%2Fweixin%2Fvotepg.aspx%3Fsid=<%=CurrentSetting.ID%>&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
+                    location.href ="https://open.weixin.qq.com/connect/oauth2/authorize?appid=<%=CurrentSetting.AppID%>&redirect_uri=http%3A%2F%2Frb.hongxucar.com%2Fweixin%2Fvotepg.aspx%3Fsid=<%=CurrentSetting.ID%>&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
                 else 
                     alert(data.Msg);
             }
@@ -226,7 +226,7 @@
             var wxData = {
                 "imgUrl": 'http://<%= CurrentDomain %><%=CurrentSetting == null ? string.Empty : CurrentSetting.ShareImgUrl %>',
                 "link": "<%=CurrentSetting == null ? string.Empty : CurrentSetting.ShareLinkUrl %>",
-                "desc": '<%=CurrentSetting == null ? string.Empty : CurrentSetting.ShareDesc %>',
+                "desc": '<%=CurrentSetting == null ? string.Empty : CurrentSetting.ShareDesc.Replace("\r\n",string.Empty) %>',
                 "title": "<%=CurrentSetting == null ? string.Empty : CurrentSetting.ShareTitle %>"
             };
 
@@ -274,7 +274,7 @@
             });
 
             if(openid == ""){
-                location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=<%=CurrentSetting.AppID%>&redirect_uri=http%3A%2F%2Frb.hongxu.cn%2Fweixin%2Fvotepg.aspx%3Fsid=<%=CurrentSetting.ID%>&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
+                location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=<%=CurrentSetting.AppID%>&redirect_uri=http%3A%2F%2Frb.hongxucar.com%2Fweixin%2Fvotepg.aspx%3Fsid=<%=CurrentSetting.ID%>&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
                 return;
             }
 

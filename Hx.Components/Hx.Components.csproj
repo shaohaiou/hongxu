@@ -104,6 +104,10 @@
     <Compile Include="Entity\MonthlyTargetInfo.cs" />
     <Compile Include="Entity\MonthlyTargetHistoryInfo.cs" />
     <Compile Include="Entity\PromaryInfo.cs" />
+    <Compile Include="Entity\QuestionCompanyInfo.cs" />
+    <Compile Include="Entity\QuestionInfo.cs" />
+    <Compile Include="Entity\QuestionRecordInfo.cs" />
+    <Compile Include="Entity\QuestionScoreInfo.cs" />
     <Compile Include="Entity\ScenecodeInfo.cs" />
     <Compile Include="Entity\ScenecodeSettingInfo.cs" />
     <Compile Include="Entity\ShowUrl.cs" />
@@ -128,6 +132,8 @@
     <Compile Include="Enumerations\DayReportDep.cs" />
     <Compile Include="Enumerations\JcbCompanyType.cs" />
     <Compile Include="Enumerations\OVCustomerNature.cs" />
+    <Compile Include="Enumerations\QuestionItem.cs" />
+    <Compile Include="Enumerations\QuestionType.cs" />
     <Compile Include="Enumerations\UrlRuleType.cs" />
     <Compile Include="Enumerations\UserRoleType.cs" />
     <Compile Include="Enumerations\WeixinActType.cs" />

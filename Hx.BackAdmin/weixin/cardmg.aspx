@@ -53,7 +53,7 @@
                 setpoweruser();
             });
             $("#txtAppID").change(function () {
-                $("#txtUrl").val("https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + $(this).val() + "&redirect_uri=http%3A%2F%2Frb.hongxu.cn%2Fweixin%2Fcardpg.aspx%3Fwechat_card_js=1%26sid=<%=CurrentSetting.ID%>&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect");
+                $("#txtUrl").val("https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + $(this).val() + "&redirect_uri=http%3A%2F%2Frb.hongxucar.com%2Fweixin%2Fcardpg.aspx%3Fwechat_card_js=1%26sid=<%=CurrentSetting.ID%>&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect");
             });
             $("#txtColorRule").spectrum({
                 change: function (color) {
@@ -127,7 +127,7 @@
                     <td>
                         <%if (!string.IsNullOrEmpty(CurrentSetting.AppID))
                           { %>
-                        <input type="text" id="txtUrl" onclick="javascript:this.select();" value="https://open.weixin.qq.com/connect/oauth2/authorize?appid=<%=CurrentSetting.AppID%>&redirect_uri=http%3A%2F%2Frb.hongxu.cn%2Fweixin%2Fcardpg.aspx%3Fwechat_card_js=1%26sid=<%=CurrentSetting.ID%>&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect" class="srk1" />
+                        <input type="text" id="txtUrl" onclick="javascript:this.select();" value="https://open.weixin.qq.com/connect/oauth2/authorize?appid=<%=CurrentSetting.AppID%>&redirect_uri=http%3A%2F%2Frb.hongxucar.com%2Fweixin%2Fcardpg.aspx%3Fwechat_card_js=1%26sid=<%=CurrentSetting.ID%>&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect" class="srk1" />
                         <%}else{ %>
                         <input type="text" id="txtUrl" onclick="javascript:this.select();" value="" class="srk1" />
                         <%} %>

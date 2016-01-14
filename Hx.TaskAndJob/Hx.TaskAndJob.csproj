@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Job\BenzvoteAccountJob.cs" />
+    <Compile Include="Job\DailyReportJob.cs" />
     <Compile Include="Job\RefreshBackadminCacheJob.cs" />
     <Compile Include="Job\JituanvoteAccountJob.cs" />
     <Compile Include="Job\VoteAccountJob.cs" />

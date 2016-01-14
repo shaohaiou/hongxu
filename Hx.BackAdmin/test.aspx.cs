@@ -10,6 +10,7 @@ using System.Text.RegularExpressions;
 using Hx.Components.Entity;
 using Hx.Components;
 using Hx.Tools.Web;
+using Hx.Car;
 
 namespace Hx.BackAdmin
 {
@@ -17,10 +18,35 @@ namespace Hx.BackAdmin
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            //Response.Write(Server.UrlEncode("http://bj.hongxu.cn/weixin/act.aspx?wechat_card_js=1&sid=2"));
             //List<CardpackInfo> cardlist = WeixinActs.Instance.GetCardlist(3);
-            Response.Write(WebHelper.GetClientsIP());
-            Response.End();
+            if (Request.QueryString["t"] == "1")
+            {
+                Response.Write(WebHelper.GetClientsIP());
+                Response.End();
+            }
+            else if (Request.QueryString["t"] == "2") 
+            { 
+                Response.Write(Server.UrlEncode("http://bj.hongxu.cn/weixin/act.aspx?wechat_card_js=1&sid=2"));
+            }
+            else if (Request.QueryString["t"] == "3") //查询多家公司数据的用户
+            {
+                List<DayReportUserInfo> userlist = DayReportUsers.Instance.GetList(true);
+                List<DayReportUserInfo> userlist1 = userlist.FindAll(u => u.CorporationID != 1 && u.DayReportViewCorpPowerSetting.Trim('|').Contains("|"));
+                List<DayReportUserInfo> userlist2 = userlist.FindAll(u => u.CorporationID == 1 && u.DayReportViewCorpPowerSetting.Trim('|').Contains("|"));
+                Response.Write("非集团总部：<br>");
+                foreach (DayReportUserInfo user in userlist1)
+                {
+                    string[] cids = user.DayReportViewCorpPowerSetting.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
+                    Response.Write(user.UserName + ":" + string.Join(",",Corporations.Instance.GetList(true).FindAll(c=>cids.Contains(c.ID.ToString())).Select(c=>c.Name)) + "<br>");
+                }
+                Response.Write("集团总部：<br>");
+                foreach (DayReportUserInfo user in userlist2)
+                {
+                    string[] cids = user.DayReportViewCorpPowerSetting.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
+                    Response.Write(user.UserName + ":" + string.Join(",", Corporations.Instance.GetList(true).FindAll(c => cids.Contains(c.ID.ToString())).Select(c => c.Name)) + "<br>");
+                }
+                Response.End();
+            }
             //string s = string.Empty;
             //s.GetHashCode();
             //Response.Write(FormatNum(""));

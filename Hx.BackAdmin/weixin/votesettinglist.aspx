@@ -62,7 +62,7 @@
                         </td>
                         <td class="lan5x">
                             <a href="javascript:void(0);" class="btnDel pl10" val="<%#Eval("ID") %>">删除</a><a
-                                class="btnDel pl10" href="cardmg.aspx?sid=<%#Eval("ID") %>&from=<%=CurrentUrl %>">管理</a>
+                                class="btnDel pl10" href="votemg.aspx?sid=<%#Eval("ID") %>&from=<%=CurrentUrl %>">管理</a>
                         </td>
                     </tr>
                 </ItemTemplate>

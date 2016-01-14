@@ -52,6 +52,7 @@ namespace Hx.Components.Providers
             }
             return objType;
         }
+        private System.Web.Script.Serialization.JavaScriptSerializer json = new System.Web.Script.Serialization.JavaScriptSerializer();
 
         /// <summary>
         ///从配置文件加载默认数据库访问提供者类
@@ -1201,6 +1202,33 @@ namespace Hx.Components.Providers
             admin.SetSerializerData(data);
 
             return admin;
+        }
+
+        #endregion
+
+        #region 调查问卷（测试版）
+
+        public abstract int AddQuestionRecordInfo(QuestionRecordInfo entity);
+
+        public abstract bool CheckQuestionPostUser(string postuser);
+
+        public abstract List<QuestionRecordInfo> GetQuestionRecordList();
+
+        protected QuestionRecordInfo PopulateQuestionRecordInfo(IDataReader reader)
+        {
+            QuestionRecordInfo entity = new QuestionRecordInfo()
+            {
+                ID = DataConvert.SafeInt(reader["ID"]),
+                PostTime = DataConvert.SafeDate(reader["PostTime"]),
+                PostUser = reader["PostUser"] as string,
+                PostUserName = reader["PostUserName"] as string,
+                QuestionCompanyID = DataConvert.SafeInt(reader["QuestionCompanyID"]),
+                QuestionType = (QuestionType)DataConvert.SafeInt(reader["QuestionType"]),
+                QuestionScoreInfoListJson = reader["QuestionScoreInfoListJson"] as string
+            };
+            entity.QuestionScoreList = json.Deserialize<List<QuestionScoreInfo>>(entity.QuestionScoreInfoListJson);
+
+            return entity;
         }
 
         #endregion

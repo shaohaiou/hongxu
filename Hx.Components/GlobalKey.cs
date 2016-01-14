@@ -63,7 +63,7 @@ namespace Hx.Components
         public static readonly string CARDIDLIST = "cache-cardid-list"; //卡券抽奖记录列表缓存键值
 
         public static readonly string VOTESETTINGLIST = "cache-votesetting-list"; //投票活动设置列表缓存键值
-        public static readonly string VOTEOPENID = "session-cardopenid"; //投票活动openid键值
+        public static readonly string VOTEOPENID = "session-voteopenid"; //投票活动openid键值
         public static readonly string VOTELIST = "cache-vote-list"; //投票列表缓存键值
         public static readonly string VOTERECORDLIST = "cache-voterecord-list"; //投票记录列表缓存键值
         public static readonly string VOTERECORDLISTCACHE = "cache-voterecordcache-list"; //投票记录临时列表缓存键值

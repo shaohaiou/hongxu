@@ -50,7 +50,7 @@ namespace Hx.AutoCgs
             this.Invoke((EventHandler)(delegate
             {
                     //直接按ASCII规则转换成字符串  
-                    builder.Append(Encoding.ASCII.GetString(buf);
+                    builder.Append(Encoding.ASCII.GetString(buf));
                 //追加的形式添加到文本框末端，并滚动到最后。  
                 this.txtContent.AppendText(builder.ToString());
             }));

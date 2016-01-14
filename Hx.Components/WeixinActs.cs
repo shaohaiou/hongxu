@@ -1516,6 +1516,7 @@ namespace Hx.Components
         #region 投票活动
 
         private static object sync_vote = new object();
+        private static object sync_votecache = new object();
 
         #region 活动设置
 
@@ -1720,7 +1721,7 @@ namespace Hx.Components
             Dictionary<string, DateTime> result = MangaCache.Get(key) as Dictionary<string, DateTime>;
             if (result == null)
             {
-                lock (sync_vote)
+                lock (sync_votecache)
                 {
                     result = MangaCache.Get(key) as Dictionary<string, DateTime>;
                     if (result == null)
@@ -1756,7 +1757,7 @@ namespace Hx.Components
             List<VoteRecordInfo> result = MangaCache.Get(key) as List<VoteRecordInfo>;
             if (result == null)
             {
-                lock (sync_vote)
+                lock (sync_votecache)
                 {
                     result = MangaCache.Get(key) as List<VoteRecordInfo>;
                     if (result == null)
@@ -2376,6 +2377,106 @@ namespace Hx.Components
         }
 
         #endregion
+
+        #endregion
+
+        #region 调查问卷（试用版）
+
+        #region 数据定义
+
+        private static List<QuestionInfo> listQuestion = new List<QuestionInfo>()
+        { 
+            new QuestionInfo(){ID=1,QuestionItem=QuestionItem.指导,QuestionFacor="坚持",QuestionType=QuestionType.主管,QuestionIntroduce="从我入职到现在，每个月公司总经理都会不定期的跟我讨论公司及我的未来发展问题；"}
+            ,new QuestionInfo(){ID=2,QuestionItem=QuestionItem.指导,QuestionFacor="支持",QuestionType=QuestionType.主管,QuestionIntroduce="公司总经理能理解我们的工作困难，并且会给予我们相关支持，工作中遇到困难时，总经理会及时给予我指导和帮助；"}
+            ,new QuestionInfo(){ID=3,QuestionItem=QuestionItem.指导,QuestionFacor="影响",QuestionType=QuestionType.主管,QuestionIntroduce="公司总经理的管理水平、管理艺术和有效性很高，在他的指导过程中，让我获益匪浅；"}
+            ,new QuestionInfo(){ID=4,QuestionItem=QuestionItem.指导,QuestionFacor="远见",QuestionType=QuestionType.主管,QuestionIntroduce="公司总经理经常对我进行职业生涯管理方面的指导；"}
+            ,new QuestionInfo(){ID=5,QuestionItem=QuestionItem.执行,QuestionFacor="职责",QuestionType=QuestionType.主管,QuestionIntroduce="我非常明确我的工作职责和岗位要求，在实际工作中，我的职位、责任和权力是对应的，对我的工作开展的效率起到很大的作用；"}
+            ,new QuestionInfo(){ID=6,QuestionItem=QuestionItem.执行,QuestionFacor="诚信",QuestionType=QuestionType.主管,QuestionIntroduce="我完全相信公司总经理做出的承诺，包括公司战略目标、业绩发展、年度规划、各项制度和员工待遇等；"}
+            ,new QuestionInfo(){ID=7,QuestionItem=QuestionItem.执行,QuestionFacor="表率",QuestionType=QuestionType.主管,QuestionIntroduce="公司全体同事都很遵守公司的规章制度，不会出现有人可为之、有人不可为之的现象，全体一视同仁；"}
+            ,new QuestionInfo(){ID=8,QuestionItem=QuestionItem.执行,QuestionFacor="效率",QuestionType=QuestionType.主管,QuestionIntroduce="公司总经理的决策非常快捷，不会影响工作效率；"}
+            ,new QuestionInfo(){ID=9,QuestionItem=QuestionItem.团队,QuestionFacor="和谐",QuestionType=QuestionType.主管,QuestionIntroduce="公司整体的人际关系积极向上，透明畅通，横向与纵向之间的交流很容易表达；"}
+            ,new QuestionInfo(){ID=10,QuestionItem=QuestionItem.团队,QuestionFacor="激励",QuestionType=QuestionType.主管,QuestionIntroduce="工作成绩出色时，我们能够得到公司总经理的各种褒奖，激励我们更加上进；"}
+            ,new QuestionInfo(){ID=11,QuestionItem=QuestionItem.团队,QuestionFacor="活动",QuestionType=QuestionType.主管,QuestionIntroduce="公司每年就会不定期组织各种类型的集体活动，我愿意参加公司组织的集体活动，与同事们在一起，让我感到心情舒畅；"}
+            ,new QuestionInfo(){ID=12,QuestionItem=QuestionItem.团队,QuestionFacor="合作",QuestionType=QuestionType.主管,QuestionIntroduce="公司总经理对部门合作非常重视，每月会不定期组织部门协调会议，探讨部门合作问题，使得各部门间工作氛围和谐、顺畅；"}
+            ,new QuestionInfo(){ID=13,QuestionItem=QuestionItem.参与,QuestionFacor="建议",QuestionType=QuestionType.主管,QuestionIntroduce="在工作过程中向公司总经理提出的建议和意见能够被公司理解或采纳，并实质得以改进；"}
+            ,new QuestionInfo(){ID=14,QuestionItem=QuestionItem.参与,QuestionFacor="决策",QuestionType=QuestionType.主管,QuestionIntroduce="公司总经理在制定各项战略和制度的前期，都能够充分征求和采纳员工的意见，使得员工对公司的政策和决策有信任感；"}
+            ,new QuestionInfo(){ID=15,QuestionItem=QuestionItem.参与,QuestionFacor="扩大",QuestionType=QuestionType.主管,QuestionIntroduce="在责权范围内我能够知道到我应该了解的公司事件，总经理经常召开扩大会议，鼓励参与跨部门、跨级别的交流探讨会，为公司共同出谋划策；"}
+            ,new QuestionInfo(){ID=16,QuestionItem=QuestionItem.参与,QuestionFacor="投入",QuestionType=QuestionType.主管,QuestionIntroduce="公司经常鼓励员工的创新、变革，积极投入到公司的发展建设中来，并为之设立了相应的创新、变革奖项；"}
+            ,new QuestionInfo(){ID=17,QuestionItem=QuestionItem.学习,QuestionFacor="发展",QuestionType=QuestionType.主管,QuestionIntroduce="公司的内训及厂方的培训机会对每位员工都提供相对应的平等机会；"}
+            ,new QuestionInfo(){ID=18,QuestionItem=QuestionItem.学习,QuestionFacor="针对",QuestionType=QuestionType.主管,QuestionIntroduce="公司内部安排组织的培训能够满足我们的工作需求，提升我们的工作技能，并具有很好的发展空间；"}
+            ,new QuestionInfo(){ID=19,QuestionItem=QuestionItem.学习,QuestionFacor="氛围",QuestionType=QuestionType.主管,QuestionIntroduce="公司总经理不定期会进行工作总结分析，就工作中碰到的问题进行交流、探讨，在解决问题的同时又充分提升了员工的工作学习热情；"}
+            ,new QuestionInfo(){ID=20,QuestionItem=QuestionItem.学习,QuestionFacor="考核",QuestionType=QuestionType.主管,QuestionIntroduce="公司总经理非常注重培训后的转训工作，每次参加培训的同事必须就培训情况进行分享，公司对培训有一系列的完整考核体系。"}
+            ,new QuestionInfo(){ID=21,QuestionItem=QuestionItem.指导,QuestionFacor="支持",QuestionType=QuestionType.普通员工,QuestionIntroduce="从我入职到现在，公司部门领导都会不定期的跟我讨论公司及我的未来发展问题；"}
+            ,new QuestionInfo(){ID=22,QuestionItem=QuestionItem.指导,QuestionFacor="帮助",QuestionType=QuestionType.普通员工,QuestionIntroduce="公司能理解员工的工作困难，并且会给予我们相关支持，工作中遇到困难时，公司会及时给予我指导和帮助；"}
+            ,new QuestionInfo(){ID=23,QuestionItem=QuestionItem.指导,QuestionFacor="及时",QuestionType=QuestionType.普通员工,QuestionIntroduce="员工对工作的意见和提议能够得到及时的反馈和指导，并能落实到工作中去；"}
+            ,new QuestionInfo(){ID=24,QuestionItem=QuestionItem.指导,QuestionFacor="鼓励",QuestionType=QuestionType.普通员工,QuestionIntroduce="公司领导的工作态度热情、周全，部门领导对我的哪怕一点进步也会充分鼓励我，指导我；"}
+            ,new QuestionInfo(){ID=25,QuestionItem=QuestionItem.执行,QuestionFacor="制度",QuestionType=QuestionType.普通员工,QuestionIntroduce="公司各项管理制度能够得到有效落实，各项考核制度公平公正，有明确的工作流程，通常情况下能够解决一切问题；"}
+            ,new QuestionInfo(){ID=26,QuestionItem=QuestionItem.执行,QuestionFacor="诚信",QuestionType=QuestionType.普通员工,QuestionIntroduce="相信公司做出的承诺，包括公司战略目标、业绩发展、年度规划、各项制度和员工待遇等；"}
+            ,new QuestionInfo(){ID=27,QuestionItem=QuestionItem.执行,QuestionFacor="表率",QuestionType=QuestionType.普通员工,QuestionIntroduce="公司全体同事都很遵守公司的规章制度，不会出现有人可为之、有人不可为之的现象，全体一视同仁；"}
+            ,new QuestionInfo(){ID=28,QuestionItem=QuestionItem.执行,QuestionFacor="效率",QuestionType=QuestionType.普通员工,QuestionIntroduce="公司的决策非常快捷，不会影响工作效率；"}
+            ,new QuestionInfo(){ID=29,QuestionItem=QuestionItem.团队,QuestionFacor="文化",QuestionType=QuestionType.普通员工,QuestionIntroduce="公司安排的业余生活丰富多彩，有益健康，有着良好的企业文化；"}
+            ,new QuestionInfo(){ID=30,QuestionItem=QuestionItem.团队,QuestionFacor="组织",QuestionType=QuestionType.普通员工,QuestionIntroduce="在工作过程中，有专门的人员作为老师，指导我的工作，提供了积极的晋升方法和通道，帮助员工成长；"}
+            ,new QuestionInfo(){ID=31,QuestionItem=QuestionItem.团队,QuestionFacor="活动",QuestionType=QuestionType.普通员工,QuestionIntroduce="公司每年会不定期的组织各种类型的集体活动，我愿意参加公司组织的集体活动，与同事们在一起，让我感到心情舒畅；"}
+            ,new QuestionInfo(){ID=32,QuestionItem=QuestionItem.团队,QuestionFacor="尊重",QuestionType=QuestionType.普通员工,QuestionIntroduce="对于每位员工都表现出了充分的尊重和理解，公平对待每位员工，工作出色时，能够得到公司领导的各种褒奖，激励我们更加上进；"}
+            ,new QuestionInfo(){ID=33,QuestionItem=QuestionItem.参与,QuestionFacor="建议",QuestionType=QuestionType.普通员工,QuestionIntroduce="在工作过程中向公司领导提出的建议和意见能够被公司理解或采纳，并能实质得以改进；"}
+            ,new QuestionInfo(){ID=34,QuestionItem=QuestionItem.参与,QuestionFacor="开明",QuestionType=QuestionType.普通员工,QuestionIntroduce="员工清楚公司给予我们的帮助，我们能够随时向他们提出要求及建议；"}
+            ,new QuestionInfo(){ID=35,QuestionItem=QuestionItem.参与,QuestionFacor="扩大",QuestionType=QuestionType.普通员工,QuestionIntroduce="公司经常召开扩大会议，鼓励员工参与到跨部门、跨级别的交流探讨会中去，为公司出谋划策的同时又可提升、学习；"}
+            ,new QuestionInfo(){ID=36,QuestionItem=QuestionItem.参与,QuestionFacor="投入",QuestionType=QuestionType.普通员工,QuestionIntroduce="公司设置的薪酬福利方案是科学合理的，能够体现外部竞争力和内部公平性，并充分考虑了员工的情况和意见；"}
+            ,new QuestionInfo(){ID=37,QuestionItem=QuestionItem.学习,QuestionFacor="平等",QuestionType=QuestionType.普通员工,QuestionIntroduce="公司有完善的内训体系，对每个员工提供平等的培训机会，只要努力把握，大家都有机会获得相应的培训；"}
+            ,new QuestionInfo(){ID=38,QuestionItem=QuestionItem.学习,QuestionFacor="发展",QuestionType=QuestionType.普通员工,QuestionIntroduce="公司向员工提供了学习和成长的培训体系，设立了专业与管理的双通道多职级的职业发展通路；"}
+            ,new QuestionInfo(){ID=39,QuestionItem=QuestionItem.学习,QuestionFacor="氛围",QuestionType=QuestionType.普通员工,QuestionIntroduce="公司定期组织安排员工学习沙龙，就工作中碰到的问题进行交流、探讨，充分提升了员工的学习热情；"}
+            ,new QuestionInfo(){ID=40,QuestionItem=QuestionItem.学习,QuestionFacor="考核",QuestionType=QuestionType.普通员工,QuestionIntroduce="公司非常注重培训后的转化工作，每次参加培训的同事必须就培训情况进行分享，公司对培训有一系列的完善考核体系。"}
+        };
+
+        private static List<QuestionCompanyInfo> listQuestionCompany = new List<QuestionCompanyInfo>() 
+        {
+            new QuestionCompanyInfo(){ID=6584,Index=1,Name="温州红盈现代",Manager="武仰民"}
+            ,new QuestionCompanyInfo(){ID=6248,Index=2,Name="温州红旭别克",Manager="张亮"}
+            ,new QuestionCompanyInfo(){ID=1528,Index=3,Name="温州红源奥迪",Manager="刘道从"}
+            ,new QuestionCompanyInfo(){ID=5258,Index=4,Name="温州红翔广本",Manager="孙海望"}
+            ,new QuestionCompanyInfo(){ID=8989,Index=5,Name="温州红旭江铃",Manager="崔建明"}
+            ,new QuestionCompanyInfo(){ID=1358,Index=6,Name="乐清红源奥迪",Manager="麻立军"}
+            ,new QuestionCompanyInfo(){ID=7824,Index=7,Name="乐清红通马自达",Manager="李和荣"}
+            ,new QuestionCompanyInfo(){ID=6925,Index=8,Name="丽水红旭现代",Manager="包宗设"}
+            ,new QuestionCompanyInfo(){ID=7521,Index=9,Name="丽水红旭别克",Manager="邱伟林"}
+            ,new QuestionCompanyInfo(){ID=7238,Index=10,Name="丽水奥奇奇瑞",Manager="蔡荣标"}
+            ,new QuestionCompanyInfo(){ID=5287,Index=11,Name="临海东昌广本",Manager="刘兴龙"}
+            ,new QuestionCompanyInfo(){ID=5698,Index=12,Name="台州路桥红本",Manager="张兹东"}
+            ,new QuestionCompanyInfo(){ID=8654,Index=13,Name="德州天衢丰田",Manager="聂军"}
+            ,new QuestionCompanyInfo(){ID=7892,Index=14,Name="德州红旭别克",Manager="李长彬"}
+            ,new QuestionCompanyInfo(){ID=7694,Index=15,Name="苍南红豪东本",Manager="林正周"}
+            ,new QuestionCompanyInfo(){ID=1251,Index=16,Name="瑞安红升奔驰",Manager="徐晓萍"}
+            ,new QuestionCompanyInfo(){ID=1548,Index=17,Name="瑞安红旭广本",Manager="邱海彬"}
+            ,new QuestionCompanyInfo(){ID=5934,Index=18,Name="瑞安红日现代",Manager="陈军"}
+            ,new QuestionCompanyInfo(){ID=6358,Index=19,Name="乐清红润别克",Manager="项公程"}
+        };
+
+        #endregion
+
+        public List<QuestionInfo> GetQuestionList()
+        {
+            return listQuestion;
+        }
+
+        public List<QuestionCompanyInfo> GetQuestionCompanyList()
+        {
+            return listQuestionCompany;
+        }
+
+        public int AddQuestionRecordInfo(QuestionRecordInfo entity)
+        {
+            return CommonDataProvider.Instance().AddQuestionRecordInfo(entity);
+        }
+
+        public bool CheckQuestionPostUser(string postuser)
+        {
+            return CommonDataProvider.Instance().CheckQuestionPostUser(postuser);
+        }
+
+        public List<QuestionRecordInfo> GetQuestionRecordList()
+        {
+            return CommonDataProvider.Instance().GetQuestionRecordList();
+        }
 
         #endregion
     }

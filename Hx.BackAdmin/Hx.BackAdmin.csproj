@@ -470,6 +470,9 @@
     <Content Include="weixin\jituanvotesetting.aspx" />
     <Content Include="weixin\jituanvotedetail.aspx" />
     <Content Include="weixin\jituanvotepage.aspx" />
+    <Content Include="weixin\wjdcpt.aspx" />
+    <Content Include="weixin\wjdctj.aspx" />
+    <Content Include="weixin\wjdczg.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="biz\corpmien.aspx.cs">
@@ -1238,6 +1241,27 @@
     </Compile>
     <Compile Include="weixin\jituanvotepage.aspx.designer.cs">
       <DependentUpon>jituanvotepage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="weixin\wjdcpt.aspx.cs">
+      <DependentUpon>wjdcpt.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="weixin\wjdcpt.aspx.designer.cs">
+      <DependentUpon>wjdcpt.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="weixin\wjdctj.aspx.cs">
+      <DependentUpon>wjdctj.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="weixin\wjdctj.aspx.designer.cs">
+      <DependentUpon>wjdctj.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="weixin\wjdczg.aspx.cs">
+      <DependentUpon>wjdczg.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="weixin\wjdczg.aspx.designer.cs">
+      <DependentUpon>wjdczg.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

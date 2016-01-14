@@ -5,6 +5,7 @@ using System.Text;
 using Hx.Components.Interface;
 using Hx.Components.Entity;
 using Hx.Components;
+using Hx.Tools;
 
 namespace Hx.TaskAndJob.Job
 {
@@ -18,11 +19,18 @@ namespace Hx.TaskAndJob.Job
             {
                 isRunning = true;
 
-                List<VoteSettingInfo> settinglist = WeixinActs.Instance.GetVoteSettingList(true);
-                foreach (VoteSettingInfo setting in settinglist)
+                try
                 {
-                    if (setting != null && setting.Switch == 0) continue;
-                    WeixinActs.Instance.VoteRecordAccount(setting.ID);
+                    List<VoteSettingInfo> settinglist = WeixinActs.Instance.GetVoteSettingList(true);
+                    foreach (VoteSettingInfo setting in settinglist)
+                    {
+                        if (setting != null && setting.Switch == 0) continue;
+                        WeixinActs.Instance.VoteRecordAccount(setting.ID);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ExpLog.Write(ex);
                 }
                 
                 isRunning = false;

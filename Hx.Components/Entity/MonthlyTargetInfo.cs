@@ -290,6 +290,16 @@ namespace Hx.Components.Entity
         }
 
         /// <summary>
+        /// 转介绍率
+        /// </summary>
+        [JsonIgnore]
+        public string XSblxstl
+        {
+            get { return GetString("XSblxstl", ""); }
+            set { SetExtendedAttribute("XSblxstl", value); }
+        }
+
+        /// <summary>
         /// 他品牌销售台次
         /// </summary>
         [JsonIgnore]

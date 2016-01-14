@@ -92,6 +92,28 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hx.SerialPorts", "Hx.Serial
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GBDMSAuto", "GBDMSAuto\GBDMSAuto.csproj", "{EA6C84A0-3DF4-4044-8FE6-4D304DA086BD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hx.RunDMS", "Hx.RunDMS\Hx.RunDMS.csproj", "{88FC09D7-74C2-47A1-A14B-2DC1FC809C8C}"
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "HongxuWeb", "..\HongxuWeb\", "{165B6786-8444-4437-B5FF-14758C2731F5}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv2.0"
+		Debug.AspNetCompiler.VirtualPath = "/HongxuWeb"
+		Debug.AspNetCompiler.PhysicalPath = "..\HongxuWeb\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\HongxuWeb\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/HongxuWeb"
+		Release.AspNetCompiler.PhysicalPath = "..\HongxuWeb\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\HongxuWeb\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "6157"
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -269,6 +291,26 @@ Global
 		{EA6C84A0-3DF4-4044-8FE6-4D304DA086BD}.Release|Mixed Platforms.Build.0 = Release|x86
 		{EA6C84A0-3DF4-4044-8FE6-4D304DA086BD}.Release|x86.ActiveCfg = Release|x86
 		{EA6C84A0-3DF4-4044-8FE6-4D304DA086BD}.Release|x86.Build.0 = Release|x86
+		{88FC09D7-74C2-47A1-A14B-2DC1FC809C8C}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{88FC09D7-74C2-47A1-A14B-2DC1FC809C8C}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{88FC09D7-74C2-47A1-A14B-2DC1FC809C8C}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{88FC09D7-74C2-47A1-A14B-2DC1FC809C8C}.Debug|x86.ActiveCfg = Debug|x86
+		{88FC09D7-74C2-47A1-A14B-2DC1FC809C8C}.Debug|x86.Build.0 = Debug|x86
+		{88FC09D7-74C2-47A1-A14B-2DC1FC809C8C}.Release|Any CPU.ActiveCfg = Release|x86
+		{88FC09D7-74C2-47A1-A14B-2DC1FC809C8C}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{88FC09D7-74C2-47A1-A14B-2DC1FC809C8C}.Release|Mixed Platforms.Build.0 = Release|x86
+		{88FC09D7-74C2-47A1-A14B-2DC1FC809C8C}.Release|x86.ActiveCfg = Release|x86
+		{88FC09D7-74C2-47A1-A14B-2DC1FC809C8C}.Release|x86.Build.0 = Release|x86
+		{165B6786-8444-4437-B5FF-14758C2731F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{165B6786-8444-4437-B5FF-14758C2731F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{165B6786-8444-4437-B5FF-14758C2731F5}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{165B6786-8444-4437-B5FF-14758C2731F5}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{165B6786-8444-4437-B5FF-14758C2731F5}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{165B6786-8444-4437-B5FF-14758C2731F5}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{165B6786-8444-4437-B5FF-14758C2731F5}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{165B6786-8444-4437-B5FF-14758C2731F5}.Release|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{165B6786-8444-4437-B5FF-14758C2731F5}.Release|Mixed Platforms.Build.0 = Debug|Any CPU
+		{165B6786-8444-4437-B5FF-14758C2731F5}.Release|x86.ActiveCfg = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

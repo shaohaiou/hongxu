@@ -56,7 +56,7 @@
 <body>
     <div class="content">
         <a href="jobview.aspx" class="fll" target="_blank" title="红旭集团所有4S店招聘信息">
-            <img src="<%=CurrentJobOffer.PicPath %>" />
+            <img src="<%=ImgServer %><%=CurrentJobOffer.PicPath %>" />
         </a>
     </div>
 </body>

@@ -47,7 +47,7 @@
                             <a href="corpmienview.aspx?id=<%#Eval("ID") %>" title="<%#Eval("Introduce") %>" target="_blank"
                                 style="display: block; position: relative; padding-top: 100px; width: 120px;
                                 text-align: center;">
-                                <img src="<%#Eval("Pic")%>" alt="" style="width: 100px; height: 100px; position: absolute;
+                                <img src="<%= ImgServer%><%#Eval("Pic")%>" alt="" style="width: 100px; height: 100px; position: absolute;
                                     left: 10px; top: 0;" />
                                 <%#Hx.Tools.StrHelper.GetFuzzyChar(Eval("Introduce").ToString(),8) %></a>
                         </td>

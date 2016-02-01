@@ -69,7 +69,7 @@
                     button1.val('修改图片');
                     window.clearInterval(interval1);
                     this.enable();
-                    $("img", button1.parent()).attr("src", response.src).attr("val", response.src);
+                    $("img", button1.parent()).attr("src", "<%=ImgServer %>" + response.src).attr("val", response.src);
                     $(".hdnImgUrl", button1.parent()).val(response.src);
                 }
             });
@@ -138,7 +138,7 @@
                         </td>
                         <td>
                             <input type="button" value="上传图片" class="an3 uploadbtpics" /><br />
-                            <img src="<%# string.IsNullOrEmpty(Eval("ImgUrl").ToString()) ? "../images/fm.jpg" : Eval("ImgUrl").ToString() %>"
+                            <img src="<%# string.IsNullOrEmpty(Eval("ImgUrl").ToString()) ? "../images/fm.jpg" : (ImgServer + Eval("ImgUrl").ToString()) %>"
                                 alt="奖品图片" class="imgpics" style="width: 80px; height: 80px;" />
                             <input type="hidden" value='<%# Eval("ImgUrl") %>' runat="server" id="hdnImgUrl"
                                 class="hdnImgUrl" />

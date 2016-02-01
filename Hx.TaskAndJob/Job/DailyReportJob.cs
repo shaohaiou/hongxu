@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using Hx.Components.Interface;
 using Hx.Tools;
+using Hx.Components;
+using Hx.Car;
+using Hx.Car.Entity;
 
 namespace Hx.TaskAndJob.Job
 {
@@ -19,7 +22,7 @@ namespace Hx.TaskAndJob.Job
 
                 try
                 {
-                    string url = "";
+                    DailyReports.Instance.CollectDailyReportInfo();
                 }
                 catch (Exception ex)
                 {

@@ -71,24 +71,27 @@ namespace Hx.BackAdmin.weixin
             if (CurrentSetting != null)
             {
                 cbxSwitch.Checked = CurrentSetting.Switch == 1;
+                cbxIsRepeatOneday.Checked = CurrentSetting.IsrepeatOnday == 1;
+                cbxIsRepeat.Checked = CurrentSetting.Isrepeat == 1;
                 txtAppID.Text = CurrentSetting.AppID;
                 txtAppSecret.Text = CurrentSetting.AppSecret;
                 txtAppNumber.Text = CurrentSetting.AppNumber;
                 txtAppName.Text = CurrentSetting.AppName;
                 txtAttentionUrl.Text = CurrentSetting.AttentionUrl;
                 if (!string.IsNullOrEmpty(CurrentSetting.AppImgUrl))
-                    imgAppImg.Src = CurrentSetting.AppImgUrl;
+                    imgAppImg.Src = ImgServer + CurrentSetting.AppImgUrl;
                 hdnAppImg.Value = CurrentSetting.AppImgUrl;
                 if (!string.IsNullOrEmpty(CurrentSetting.PageHeadImg))
-                    imgPageHeadImg.Src = CurrentSetting.PageHeadImg;
+                    imgPageHeadImg.Src = ImgServer + CurrentSetting.PageHeadImg;
                 hdnPageHeadImg.Value = CurrentSetting.PageHeadImg;
                 txtMustKnow.Text = CurrentSetting.MustKnow;
                 if (!string.IsNullOrEmpty(CurrentSetting.ColorMustKnow))
                     txtColorMustKnow.Text = CurrentSetting.ColorMustKnow;
                 txtOverdueMinutes.Text = CurrentSetting.OverdueMinutes.ToString();
                 txtVoteTimes.Text = CurrentSetting.VoteTimes.ToString();
+                txtVoteTimesMax.Text = CurrentSetting.VoteTimesMax.ToString();
                 if (!string.IsNullOrEmpty(CurrentSetting.ShareImgUrl))
-                    imgpic.Src = CurrentSetting.ShareImgUrl;
+                    imgpic.Src = ImgServer + CurrentSetting.ShareImgUrl;
                 hdimage_pic.Value = CurrentSetting.ShareImgUrl;
                 txtShareLinkUrl.Text = CurrentSetting.ShareLinkUrl;
                 txtShareTitle.Text = CurrentSetting.ShareTitle;
@@ -96,23 +99,23 @@ namespace Hx.BackAdmin.weixin
                 hdnPowerUser.Value = CurrentSetting.PowerUser;
                 hdnName.Value = CurrentSetting.Name;
                 if (!string.IsNullOrEmpty(CurrentSetting.AD1Path))
-                    imgAD1Path.Src = CurrentSetting.AD1Path;
+                    imgAD1Path.Src = ImgServer + CurrentSetting.AD1Path;
                 hdnAD1Path.Value = CurrentSetting.AD1Path;
                 txtAD1Url.Text = CurrentSetting.AD1Url;
                 if (!string.IsNullOrEmpty(CurrentSetting.AD2Path))
-                    imgAD2Path.Src = CurrentSetting.AD2Path;
+                    imgAD2Path.Src = ImgServer + CurrentSetting.AD2Path;
                 hdnAD2Path.Value = CurrentSetting.AD2Path;
                 txtAD2Url.Text = CurrentSetting.AD2Url;
                 if (!string.IsNullOrEmpty(CurrentSetting.AD3Path))
-                    imgAD3Path.Src = CurrentSetting.AD3Path;
+                    imgAD3Path.Src = ImgServer + CurrentSetting.AD3Path;
                 hdnAD3Path.Value = CurrentSetting.AD3Path;
                 txtAD3Url.Text = CurrentSetting.AD3Url;
                 if (!string.IsNullOrEmpty(CurrentSetting.AD4Path))
-                    imgAD4Path.Src = CurrentSetting.AD4Path;
+                    imgAD4Path.Src = ImgServer + CurrentSetting.AD4Path;
                 hdnAD4Path.Value = CurrentSetting.AD4Path;
                 txtAD4Url.Text = CurrentSetting.AD4Url;
                 if (!string.IsNullOrEmpty(CurrentSetting.AD5Path))
-                    imgAD5Path.Src = CurrentSetting.AD5Path;
+                    imgAD5Path.Src = ImgServer + CurrentSetting.AD5Path;
                 hdnAD5Path.Value = CurrentSetting.AD5Path;
                 txtAD5Url.Text = CurrentSetting.AD5Url;
             }
@@ -129,6 +132,8 @@ namespace Hx.BackAdmin.weixin
         {
             entity.ID = GetInt("sid");
             entity.Switch = cbxSwitch.Checked ? 1 : 0;
+            entity.IsrepeatOnday = cbxIsRepeatOneday.Checked ? 1 : 0;
+            entity.Isrepeat = cbxIsRepeat.Checked ? 1 : 0;
             entity.AppID = txtAppID.Text;
             entity.AppSecret = txtAppSecret.Text;
             entity.AppNumber = txtAppNumber.Text;
@@ -140,6 +145,7 @@ namespace Hx.BackAdmin.weixin
             entity.ColorMustKnow = txtColorMustKnow.Text;
             entity.OverdueMinutes = DataConvert.SafeInt(txtOverdueMinutes.Text);
             entity.VoteTimes = DataConvert.SafeInt(txtVoteTimes.Text);
+            entity.VoteTimesMax = DataConvert.SafeInt(txtVoteTimesMax.Text);
 
             entity.ShareImgUrl = hdimage_pic.Value;
             entity.ShareLinkUrl = txtShareLinkUrl.Text;

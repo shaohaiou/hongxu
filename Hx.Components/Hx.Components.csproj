@@ -37,6 +37,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
@@ -90,6 +91,7 @@
     <Compile Include="Entity\CRMReportInfo.cs" />
     <Compile Include="Entity\CustomerInfo.cs" />
     <Compile Include="Entity\DailyReportCheckHistoryInfo.cs" />
+    <Compile Include="Entity\DailyReportCollectInfo.cs" />
     <Compile Include="Entity\DailyReportHistoryInfo.cs" />
     <Compile Include="Entity\DailyReportInfo.cs" />
     <Compile Include="Entity\DailyReportModuleInfo.cs" />

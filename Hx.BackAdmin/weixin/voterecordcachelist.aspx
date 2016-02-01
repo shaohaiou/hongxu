@@ -1,5 +1,5 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="voterecordlist.aspx.cs"
-    Inherits="Hx.BackAdmin.weixin.voterecordlist" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="voterecordcachelist.aspx.cs" Inherits="Hx.BackAdmin.weixin.voterecordcachelist" %>
+
 
 <%@ Register Assembly="AspNetPager" Namespace="Wuqi.Webdiyer" TagPrefix="webdiyer" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -40,28 +40,10 @@
         </ul>
         <div class="flqh">
             <span><a href="votemg.aspx?sid=<%= GetInt("sid")%>">活动设置</a></span> <span><a href="votepothunterlist.aspx?sid=<%= GetInt("sid")%>">
-                选手管理</a></span> <span class="dj"><a href="voterecordlist.aspx?sid=<%= GetInt("sid")%>">
-                    投票记录</a></span><span><a href="votecommentmg.aspx?sid=<%= GetInt("sid")%>">评论管理</a></span><%if(Admin.Administrator){ %><span><a
+                选手管理</a></span> <span><a href="voterecordlist.aspx?sid=<%= GetInt("sid")%>">
+                    投票记录</a></span><span><a href="votecommentmg.aspx?sid=<%= GetInt("sid")%>">评论管理</a></span><%if(Admin.Administrator){ %><span class="dj"><a
                     href="voterecordcachelist.aspx?sid=<%= GetInt("sid")%>">投票队列</a></span><%} %>
         </div>
-        <table width="424" border="0" cellspacing="0" cellpadding="0" class="biaoge4" style="background-color: #f4f8fc;">
-            <tr>
-                <td class="w40 bold">
-                    查询：
-                </td>
-                <td>
-                    选手姓名：<asp:TextBox runat="server" ID="txtAthleteName" CssClass="w60"></asp:TextBox>
-                    <span class="pl10">选手序号：</span><asp:TextBox runat="server" ID="txtSerialNumber" CssClass="w60"></asp:TextBox>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                </td>
-                <td>
-                    <input type="submit" id="btnFilter" class="an1" value=" 查询 " />
-                </td>
-            </tr>
-        </table>
         <table border="0" cellspacing="0" cellpadding="0" class="biaoge2">
             <asp:Repeater ID="rptdata" runat="server">
                 <HeaderTemplate>

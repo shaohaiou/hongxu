@@ -10,6 +10,7 @@ using System.Web.UI.WebControls;
 using Hx.Tools;
 using Hx.Tools.Web;
 using Hx.Components.Web;
+using Hx.Components.Config;
 
 namespace Hx.Components.BasePage
 {
@@ -61,6 +62,19 @@ namespace Hx.Components.BasePage
                     _currentdomain = HttpContext.Current.Request.Url.Host;
                 }
                 return _currentdomain;
+            }
+        }
+
+        private string _imgserver = string.Empty;
+        protected virtual string ImgServer
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_imgserver))
+                {
+                    _imgserver = CommConfig.GetConfig().AppSetting["imgserver"];
+                }
+                return _imgserver;
             }
         }
 

@@ -40,7 +40,7 @@
                         window.clearInterval(interval);
                         this.enable();
 
-                        button.next().next().attr("src", response.src);
+                        button.next().next().attr("src", "<%=ImgServer %>" + response.src);
                         button.prev().val(response.src);
                     }
                 });
@@ -48,7 +48,7 @@
             $("#cbxAllPowerUser").click(function () {
                 $(".cbxPowerUser").attr("checked", $(this).attr("checked"));
                 setpoweruser();
-            })
+            });
             $(".cbxPowerUser").click(function () {
                 setpoweruser();
             });
@@ -94,7 +94,8 @@
             <span class="dj"><a href="votemg.aspx?sid=<%= GetInt("sid")%>">活动设置</a></span> <span>
                 <a href="votepothunterlist.aspx?sid=<%= GetInt("sid")%>">选手管理</a></span> <span><a
                     href="voterecordlist.aspx?sid=<%= GetInt("sid")%>">投票记录</a></span><span><a
-                    href="votecommentmg.aspx?sid=<%= GetInt("sid")%>">评论管理</a></span>
+                    href="votecommentmg.aspx?sid=<%= GetInt("sid")%>">评论管理</a></span><%if(Admin.Administrator){ %><span><a
+                    href="voterecordcachelist.aspx?sid=<%= GetInt("sid")%>">投票队列</a></span><%} %>
         </div>
         <table width="100%" border="0" cellspacing="0" cellpadding="0" class="biaoge3">
             <caption class="bt2">
@@ -220,6 +221,31 @@
                         次 <span class="gray">(不填写或填0表示不限制次数)</span>
                     </td>
                 </tr>
+                <tr>
+                    <td class="bg1">
+                        总投票次数：
+                    </td>
+                    <td>
+                        <asp:TextBox ID="txtVoteTimesMax" runat="server" CssClass="w40"></asp:TextBox>
+                        次 <span class="gray">(不填写或填0表示不限制次数)</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bg1">
+                        每日可重复投票：
+                    </td>
+                    <td>
+                        <asp:CheckBox runat="server" ID="cbxIsRepeatOneday" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bg1">
+                         隔天可重复投票：
+                    </td>
+                    <td>
+                        <asp:CheckBox runat="server" ID="cbxIsRepeat" />
+                    </td>
+                </tr>
                 <%if (Hx.Components.Web.HXContext.Current.AdminUser.Administrator)
                   { %>
                 <tr>
@@ -301,6 +327,8 @@
                 <tr>
                     <td class="bg1">
                         广告位1图片：
+                        <br />
+                        <span style="color:Gray;">（内页上面1）</span>
                     </td>
                     <td>
                         <input id="hdnAD1Path" runat="server" type="hidden" />
@@ -320,6 +348,8 @@
                 <tr>
                     <td class="bg1">
                         广告位2图片：
+                        <br />
+                        <span style="color:Gray;">（内页上面2）</span>
                     </td>
                     <td>
                         <input id="hdnAD2Path" runat="server" type="hidden" />
@@ -339,6 +369,8 @@
                 <tr>
                     <td class="bg1">
                         广告位3图片：
+                        <br />
+                        <span style="color:Gray;">（首页底部位置）</span>
                     </td>
                     <td>
                         <input id="hdnAD3Path" runat="server" type="hidden" />
@@ -358,6 +390,8 @@
                 <tr>
                     <td class="bg1">
                         广告位4图片：
+                        <br />
+                        <span style="color:Gray;">（内页中间位置）</span>
                     </td>
                     <td>
                         <input id="hdnAD4Path" runat="server" type="hidden" />
@@ -377,6 +411,8 @@
                 <tr>
                     <td class="bg1">
                         广告位5图片：
+                        <br />
+                        <span style="color:Gray;">（内页上面3）</span>
                     </td>
                     <td>
                         <input id="hdnAD5Path" runat="server" type="hidden" />

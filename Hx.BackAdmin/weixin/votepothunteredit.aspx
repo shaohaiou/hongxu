@@ -37,7 +37,7 @@
                     window.clearInterval(interval);
                     this.enable();
 
-                    $("#imgpic").attr("src", response.src);
+                    $("#imgpic").attr("src", "<%=ImgServer %>" + response.src);
                     $("#hdimage_pic").val(response.src);
                 }
             });
@@ -71,7 +71,7 @@
                         window.clearInterval(interval1);
                         this.enable();
 
-                        $("img", button1.parent()).attr("src", response.src).attr("val", response.src);
+                        $("img", button1.parent()).attr("src", "<%=ImgServer %>" +  response.src).attr("val", response.src);
                         var imgs = $(".imgpics").map(function () {
                             return $(this).attr("val");
                         }).get().join("|")
@@ -100,7 +100,8 @@
                 <a href="votepothunterlist.aspx?sid=<%= GetInt("sid")%>">选手管理</a></span> <span><a
                     href="voterecordlist.aspx?sid=<%= GetInt("sid")%>">投票记录</a></span> 
                     <span><a href="votecommentmg.aspx?sid=<%= GetInt("sid")%>">
-                        评论管理</a></span>
+                        评论管理</a></span><%if(Admin.Administrator){ %><span><a
+                    href="voterecordcachelist.aspx?sid=<%= GetInt("sid")%>">投票队列</a></span><%} %>
         </div>
         <table width="100%" border="0" cellspacing="0" cellpadding="0" class="biaoge3">
             <caption class="bt2">

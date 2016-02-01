@@ -19,7 +19,7 @@
         <div class="attention">
             <div class="attention-content">
                 <div class="attention-msg" id="attention-msg">
-                    <img src="<%=CurrentSetting.AppImgUrl %>" style="width: 100%;" /><br />
+                    <img src="<%=ImgServer %><%=CurrentSetting.AppImgUrl %>" style="width: 100%;" /><br />
                     长按二维码图片即可关注
                 </div>
             </div>
@@ -30,21 +30,21 @@
           { %>
         <div class="dad" style="background: white;">
             <a href='<%=string.IsNullOrEmpty(CurrentSetting.AD1Url) ? "javascript:void(0);" : CurrentSetting.AD1Url%>'>
-                <img src="<%=CurrentSetting.AD1Path %>" style="width: 96%; padding: 2%;" /></a>
+                <img src="<%=ImgServer %><%=CurrentSetting.AD1Path %>" style="width: 96%; padding: 2%;" /></a>
         </div>
         <%} %>
         <%if (!string.IsNullOrEmpty(CurrentSetting.AD2Path))
           { %>
         <div class="dad" style="background: white;">
             <a href='<%=string.IsNullOrEmpty(CurrentSetting.AD2Url) ? "javascript:void(0);" : CurrentSetting.AD2Url%>'>
-                <img src="<%=CurrentSetting.AD2Path %>" style="width: 96%; padding: 2%;" /></a>
+                <img src="<%=ImgServer %><%=CurrentSetting.AD2Path %>" style="width: 96%; padding: 2%;" /></a>
         </div>
         <%} %>
         <%if (!string.IsNullOrEmpty(CurrentSetting.AD5Path))
           { %>
         <div class="dad" style="background: white;">
             <a href='<%=string.IsNullOrEmpty(CurrentSetting.AD5Url) ? "javascript:void(0);" : CurrentSetting.AD5Url%>'>
-                <img src="<%=CurrentSetting.AD5Path %>" style="width: 96%; padding: 2%;" /></a>
+                <img src="<%=ImgServer %><%=CurrentSetting.AD5Path %>" style="width: 96%; padding: 2%;" /></a>
         </div>
         <%} %>
         <div class="nav">
@@ -54,7 +54,7 @@
         <div class="dcontent">
             <div class="c1">
                 <div class="d-pic1">
-                    <img src="<%= CurrentPothunterInfo.PicPath %>" alt="<%= CurrentPothunterInfo.Name %>" />
+                    <img src="<%=ImgServer %><%= CurrentPothunterInfo.PicPath %>" alt="<%= CurrentPothunterInfo.Name %>" />
                 </div>
                 <div class="detailinfo">
                     <span class="name green">
@@ -72,6 +72,7 @@
                 </div>
             </div>
             <div class="cintro">
+                <%if (!string.IsNullOrEmpty(CurrentPothunterInfo.Declare)){ %>
                 <dt>
                     <dl>
                         <img src="../images/benzvote/cansaixuanyan.png" /></dl>
@@ -80,7 +81,8 @@
                         <%= CurrentPothunterInfo.Declare%>
                     </dr>
                 </dt>
-                <br />
+               <br />
+               <%} %>
                 <dt>
                     <dl>
                         <img src="../images/benzvote/fengcaizhanshi.png" />
@@ -89,27 +91,27 @@
                     <dr style="width: 100%!important; text-align: center;">
                     <%if (!string.IsNullOrEmpty(CurrentPothunterInfo.IntroducePic1))
                       {%>
-                    <img src="http://<%= CurrentDomain %><%= CurrentPothunterInfo.IntroducePic1%>" class="picpreview"  /><br />
+                    <img src="http://rb.hongxu.cn<%= CurrentPothunterInfo.IntroducePic1%>" class="picpreview"  /><br />
                     <%} %>
                     <%if (!string.IsNullOrEmpty(CurrentPothunterInfo.IntroducePic2))
                       {%>
-                    <img src="http://<%= CurrentDomain %><%= CurrentPothunterInfo.IntroducePic2%>" class="picpreview"  /><br />
+                    <img src="http://rb.hongxu.cn<%= CurrentPothunterInfo.IntroducePic2%>" class="picpreview"  /><br />
                     <%} %>
                     <%if (!string.IsNullOrEmpty(CurrentPothunterInfo.IntroducePic3))
                       {%>
-                    <img src="http://<%= CurrentDomain %><%= CurrentPothunterInfo.IntroducePic3%>" class="picpreview"  /><br />
+                    <img src="http://rb.hongxu.cn<%= CurrentPothunterInfo.IntroducePic3%>" class="picpreview"  /><br />
                     <%} %>
                     <%if (!string.IsNullOrEmpty(CurrentPothunterInfo.IntroducePic4))
                       {%>
-                    <img src="http://<%= CurrentDomain %><%= CurrentPothunterInfo.IntroducePic4%>" class="picpreview"  /><br />
+                    <img src="http://rb.hongxu.cn<%= CurrentPothunterInfo.IntroducePic4%>" class="picpreview"  /><br />
                     <%} %>
                     <%if (!string.IsNullOrEmpty(CurrentPothunterInfo.IntroducePic5))
                       {%>
-                    <img src="http://<%= CurrentDomain %><%= CurrentPothunterInfo.IntroducePic5%>" class="picpreview"  /><br />
+                    <img src="http://rb.hongxu.cn<%= CurrentPothunterInfo.IntroducePic5%>" class="picpreview"  /><br />
                     <%} %>
                     <%if (!string.IsNullOrEmpty(CurrentPothunterInfo.IntroducePic6))
                       {%>
-                    <img src="http://<%= CurrentDomain %><%= CurrentPothunterInfo.IntroducePic6%>" class="picpreview"  /><br />
+                    <img src="http://<%= ImgServer %><%= CurrentPothunterInfo.IntroducePic6%>" class="picpreview"  /><br />
                     <%} %></dr>
                 </dt>
                 <dt id="posComment" name="posComment">
@@ -150,7 +152,7 @@
                           { %>
                         <div class="dad" style="background: white;">
                             <a href='<%=string.IsNullOrEmpty(CurrentSetting.AD4Url) ? "javascript:void(0);" : CurrentSetting.AD4Url%>'>
-                                <img src="<%=CurrentSetting.AD4Path %>" style="width: 96%; padding: 2%;" /></a>
+                                <img src="<%=ImgServer %><%=CurrentSetting.AD4Path %>" style="width: 96%; padding: 2%;" /></a>
                         </div>
                         <%} %>
                         <div class="commenthead" id="dvAllComment">
@@ -254,7 +256,9 @@
     'onMenuShareTimeline',
     'onMenuShareAppMessage',
     'onMenuShareQQ',
-    'onMenuShareWeibo'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+    'onMenuShareWeibo',
+    'previewImage',
+    'checkJsApi'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
     });
 
     $(function () {
@@ -267,10 +271,23 @@
         });
 
         wx.ready(function () {
-            
+            var srcList = [];
+            $.each($(".picpreview,#drIntroduce img"), function (i, item) {
+                if (item.src) {
+                    srcList.push(item.src);
+                    $(item).click(function (e) {
+                        // 通过这个API就能直接调起微信客户端的图片播放组件了
+                        wx.previewImage({
+                            current:this.src, 
+                            urls:srcList
+                        });
+                    });
+                }
+            });
+
             // 微信分享的数据
             var wxData = {
-                "imgUrl": 'http://<%= CurrentDomain %><%=CurrentSetting == null ? string.Empty : CurrentSetting.ShareImgUrl %>',
+                "imgUrl": '<%= ImgServer %><%=CurrentSetting == null ? string.Empty : CurrentSetting.ShareImgUrl %>',
                 "link": "<%=CurrentSetting == null ? string.Empty : CurrentSetting.ShareLinkUrl %>",
                 "desc": '<%=CurrentSetting == null ? string.Empty : CurrentSetting.ShareDesc %>',
                 "title": "<%=CurrentSetting == null ? string.Empty : CurrentSetting.ShareTitle %>"

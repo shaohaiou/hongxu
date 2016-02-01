@@ -108,11 +108,11 @@
 </head>
 <body style="background-color: #F3E1B0;">
     <div style="font-weight: bold;font-size: 1.1em;">
-        各位同事：大家好，为了更好的了解4S店总经理日常管理及员工满意度方面情况，集团人资部特此制作该电子满意度问卷，请各位红旭家人认真仔细的研读，公平公正的对待此次问卷调查，感谢您的支持与参与！
+        各位同事：大家好，为了更好的了解4S店总经理日常管理及员工满意度方面，集团人资部特制作该电子满意度问卷，请各位红旭家人认真仔细的研读，公平公正的对待此次问卷调查，感谢您的支持与参与！
     </div>
     <div style="margin: 10px 0;font-size: 0.8em;">
         问卷说明：<br />
-        1、共涉及五大方面，共计20个要素描述，共计100分；<br /> 2、以五点计分法打分，5分为最高分，1分为最低分。在方框中点“圈”标示即可，每个要素只选择1个分数；<br /> 3、5分非常同意或满意；4分比较同意或满意；3分一般同意或满意；2分比较不同意或不满意；1分非常不同意或不满意；
+        1、共涉及五大方面，共计20个要素描述，共计100分；<br /> 2、以五点计分法打分，5分为最高分，1分为最低分。在方框中点“圈”标示即可，每个要素只选择1个分数；<br /> 3、5分为非常同意或满意；4分为比较同意或满意；3分为基本同意或满意；2分为比较不同意或不满意；1分为非常不同意或不满意；
     </div>
     <div style="font-size: 0.8em;font-weight: bold;">
         被调查人：<%=CurrentCompany == null ? string.Empty : CurrentCompany.Manager%> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;职位：总经理&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />所属品牌：<%=CurrentCompany == null ? string.Empty : CurrentCompany.Name%>

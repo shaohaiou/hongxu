@@ -64,7 +64,14 @@ namespace Hx.BackAdmin.weixin
                 {
                     string accesstoken = WeixinActs.Instance.GetAccessToken(appid, appsecret);
                     Dictionary<string, string> openinfo = WeixinActs.Instance.GetOpeninfo(accesstoken, Openid);
-                    Session["session-questionnickname"] = openinfo["nickname"];
+                    if (!openinfo.Keys.Contains("subscribe") || openinfo["subscribe"] == "0")
+                    {
+                        Session["session-questionnickname"] = "匿名";
+                    }
+                    else
+                    {
+                        Session["session-questionnickname"] = openinfo["nickname"];
+                    }
                 }
                 LoadData();
             }

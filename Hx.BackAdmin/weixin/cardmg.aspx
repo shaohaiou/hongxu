@@ -40,7 +40,7 @@
                         window.clearInterval(interval);
                         this.enable();
 
-                        button.next().next().attr("src", response.src);
+                        button.next().next().attr("src", "<%=ImgServer %>" + response.src);
                         button.prev().val(response.src);
                     }
                 });

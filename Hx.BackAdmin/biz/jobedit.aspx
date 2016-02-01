@@ -41,7 +41,7 @@
                     window.clearInterval(interval);
                     this.enable();
 
-                    $("#imgpic").attr("src", response.src);
+                    $("#imgpic").attr("src", "<%=ImgServer %>" +  response.src);
                     $("#hdimage_pic").val(response.src);
                 }
             });

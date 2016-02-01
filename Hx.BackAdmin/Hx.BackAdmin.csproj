@@ -462,6 +462,7 @@
     <Content Include="weixin\votepothunterdetail.aspx" />
     <Content Include="weixin\votepothunteredit.aspx" />
     <Content Include="weixin\votepothunterlist.aspx" />
+    <Content Include="weixin\voterecordcachelist.aspx" />
     <Content Include="weixin\voterecordlist.aspx" />
     <Content Include="weixin\votesettinglist.aspx" />
     <Content Include="weixin\weixinactmg.aspx" />
@@ -1185,6 +1186,13 @@
     </Compile>
     <Compile Include="weixin\votepothunterlist.aspx.designer.cs">
       <DependentUpon>votepothunterlist.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="weixin\voterecordcachelist.aspx.cs">
+      <DependentUpon>voterecordcachelist.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="weixin\voterecordcachelist.aspx.designer.cs">
+      <DependentUpon>voterecordcachelist.aspx</DependentUpon>
     </Compile>
     <Compile Include="weixin\voterecordlist.aspx.cs">
       <DependentUpon>voterecordlist.aspx</DependentUpon>

@@ -41,7 +41,7 @@
         <div class="attention">
             <div class="attention-content">
                 <div class="attention-msg" id="attention-msg">
-                    <img src="<%=CurrentSetting.AppImgUrl %>" style="width: 100%;" /><br />
+                    <img src="<%=ImgServer %><%=CurrentSetting.AppImgUrl %>" style="width: 100%;" /><br />
                     长按二维码图片即可关注
                 </div>
             </div>
@@ -52,7 +52,7 @@
         <div class="dad">
             <%if (CurrentSetting != null && !string.IsNullOrEmpty(CurrentSetting.PageHeadImg))
               { %>
-            <img src="<%= CurrentSetting.PageHeadImg%>" />
+            <img src="<%=ImgServer %><%= CurrentSetting.PageHeadImg%>" />
             <%}
               else
               { %>
@@ -73,7 +73,7 @@
                 <ItemTemplate>
                     <li>
                         <div class="d-pic">
-                            <img src="<%# Eval("PicPath") %>" alt="<%#Eval("Name") %>" />
+                            <img src="<%=ImgServer %><%# Eval("PicPath") %>" alt="<%#Eval("Name") %>" />
                             <div class="flay">
                                 <img src="../images/benzvote/flay.png" /></div>
                         </div>
@@ -147,7 +147,7 @@
           { %>
         <div class="dad" style="background: white;">
             <a href='<%=string.IsNullOrEmpty(CurrentSetting.AD3Url) ? "javascript:void(0);" : CurrentSetting.AD3Url%>'>
-                <img src="<%=CurrentSetting.AD3Path %>" style="width: 96%; padding: 2%;" /></a>
+                <img src="<%=ImgServer %><%=CurrentSetting.AD3Path %>" style="width: 96%; padding: 2%;" /></a>
         </div>
         <%} %>
         <div id="dvComment">
@@ -224,7 +224,7 @@
         wx.ready(function () {            
             // 微信分享的数据
             var wxData = {
-                "imgUrl": 'http://<%= CurrentDomain %><%=CurrentSetting == null ? string.Empty : CurrentSetting.ShareImgUrl %>',
+                "imgUrl": '<%= ImgServer %><%=CurrentSetting == null ? string.Empty : CurrentSetting.ShareImgUrl %>',
                 "link": "<%=CurrentSetting == null ? string.Empty : CurrentSetting.ShareLinkUrl %>",
                 "desc": '<%=CurrentSetting == null ? string.Empty : CurrentSetting.ShareDesc.Replace("\r\n",string.Empty) %>',
                 "title": "<%=CurrentSetting == null ? string.Empty : CurrentSetting.ShareTitle %>"

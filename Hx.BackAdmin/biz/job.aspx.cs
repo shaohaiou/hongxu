@@ -6,10 +6,11 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Hx.Components.Entity;
 using Hx.Components;
+using Hx.Components.BasePage;
 
 namespace Hx.BackAdmin.biz
 {
-    public partial class job : System.Web.UI.Page
+    public partial class job : AdminBase
     {
 
         private JobOfferInfo _currentJobOffer;
@@ -26,6 +27,10 @@ namespace Hx.BackAdmin.biz
 
                 return _currentJobOffer;
             }
+        }
+        protected override void Check()
+        {
+
         }
 
 

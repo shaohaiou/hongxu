@@ -61,7 +61,7 @@ namespace Hx.BackAdmin.biz
                 txtContent.Text = CurrentJobOffer.Content;
                 if (!string.IsNullOrEmpty(CurrentJobOffer.PicPath))
                 {
-                    imgpic.Src = CurrentJobOffer.PicPath;
+                    imgpic.Src = ImgServer + CurrentJobOffer.PicPath;
                     hdimage_pic.Value = CurrentJobOffer.PicPath;
                 }
                 hdnID.Value = CurrentJobOffer.ID.ToString();

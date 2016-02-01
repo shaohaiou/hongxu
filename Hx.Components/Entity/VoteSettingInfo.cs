@@ -135,13 +135,45 @@ namespace Hx.Components.Entity
         }
 
         /// <summary>
-        /// 投票次数限制
+        /// 每日投票次数限制
+        /// <para>0：不限制</para>
         /// </summary>
         [JsonIgnore]
         public int VoteTimes
         {
             get { return GetInt("VoteTimes", 0); }
             set { SetExtendedAttribute("VoteTimes", value.ToString()); }
+        }
+
+        /// <summary>
+        /// 总投票次数限制
+        /// <para>0：不限制</para>
+        /// </summary>
+        [JsonIgnore]
+        public int VoteTimesMax
+        {
+            get { return GetInt("VoteTimesMax", 0); }
+            set { SetExtendedAttribute("VoteTimesMax", value.ToString()); }
+        }
+
+        /// <summary>
+        /// 当日是否可重复投票
+        /// </summary>
+        [JsonIgnore]
+        public int IsrepeatOnday
+        {
+            get { return GetInt("IsrepeatOnday", 0); }
+            set { SetExtendedAttribute("IsrepeatOnday", value.ToString()); }
+        }
+
+        /// <summary>
+        /// 隔天是否可重复
+        /// </summary>
+        [JsonIgnore]
+        public int Isrepeat
+        {
+            get { return GetInt("Isrepeat", 0); }
+            set { SetExtendedAttribute("Isrepeat", value.ToString()); }
         }
 
         /// <summary>

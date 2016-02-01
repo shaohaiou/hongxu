@@ -93,33 +93,33 @@ namespace Hx.BackAdmin.weixin
             imgpic.Src = pothunter.PicPath;
             hdimage_pic.Value = pothunter.PicPath; if (!string.IsNullOrEmpty(pothunter.IntroducePic1))
             {
-                imgpics1.Src = pothunter.IntroducePic1;
-                imgpics1.Attributes["val"] = pothunter.IntroducePic1;
+                imgpics1.Src = ImgServer + pothunter.IntroducePic1;
+                imgpics1.Attributes["val"] = ImgServer + pothunter.IntroducePic1;
             }
             if (!string.IsNullOrEmpty(pothunter.IntroducePic2))
             {
-                imgpics2.Src = pothunter.IntroducePic2;
-                imgpics2.Attributes["val"] = pothunter.IntroducePic2;
+                imgpics2.Src = ImgServer + pothunter.IntroducePic2;
+                imgpics2.Attributes["val"] = ImgServer + pothunter.IntroducePic2;
             }
             if (!string.IsNullOrEmpty(pothunter.IntroducePic3))
             {
                 imgpics3.Src = pothunter.IntroducePic3;
-                imgpics3.Attributes["val"] = pothunter.IntroducePic3;
+                imgpics3.Attributes["val"] = ImgServer + pothunter.IntroducePic3;
             }
             if (!string.IsNullOrEmpty(pothunter.IntroducePic4))
             {
                 imgpics4.Src = pothunter.IntroducePic4;
-                imgpics4.Attributes["val"] = pothunter.IntroducePic4;
+                imgpics4.Attributes["val"] = ImgServer + pothunter.IntroducePic4;
             }
             if (!string.IsNullOrEmpty(pothunter.IntroducePic5))
             {
-                imgpics5.Src = pothunter.IntroducePic5;
-                imgpics5.Attributes["val"] = pothunter.IntroducePic5;
+                imgpics5.Src = ImgServer + pothunter.IntroducePic5;
+                imgpics5.Attributes["val"] = ImgServer + pothunter.IntroducePic5;
             }
             if (!string.IsNullOrEmpty(pothunter.IntroducePic6))
             {
-                imgpics6.Src = pothunter.IntroducePic6;
-                imgpics6.Attributes["val"] = pothunter.IntroducePic6;
+                imgpics6.Src = ImgServer + pothunter.IntroducePic6;
+                imgpics6.Attributes["val"] = ImgServer + pothunter.IntroducePic6;
             }
             hdimage_pics.Value = string.Join("|", new string[] { pothunter.IntroducePic1, pothunter.IntroducePic2, pothunter.IntroducePic3, pothunter.IntroducePic4, pothunter.IntroducePic5, pothunter.IntroducePic6 });
         }

@@ -84,14 +84,14 @@ namespace Hx.BackAdmin.weixin
                     txtColorAward.Text = CurrentSetting.ColorAwards;
                 txtAttentionUrl.Text = CurrentSetting.AttentionUrl;
                 if (!string.IsNullOrEmpty(CurrentSetting.AppImgUrl))
-                    imgAppImg.Src = CurrentSetting.AppImgUrl;
+                    imgAppImg.Src = ImgServer + CurrentSetting.AppImgUrl;
                 hdnAppImg.Value = CurrentSetting.AppImgUrl;
                 if (!string.IsNullOrEmpty(CurrentSetting.BgImgUrl))
-                    imgBgImg.Src = CurrentSetting.BgImgUrl;
+                    imgBgImg.Src = ImgServer + CurrentSetting.BgImgUrl;
                 hdnBgImg.Value = CurrentSetting.BgImgUrl;
                 txtWinRate.Text = CurrentSetting.WinRate.ToString();
                 if (!string.IsNullOrEmpty(CurrentSetting.ShareImgUrl))
-                    imgpic.Src = CurrentSetting.ShareImgUrl;
+                    imgpic.Src = ImgServer + CurrentSetting.ShareImgUrl;
                 hdimage_pic.Value = CurrentSetting.ShareImgUrl;
                 txtShareLinkUrl.Text = CurrentSetting.ShareLinkUrl;
                 txtShareTitle.Text = CurrentSetting.ShareTitle;

@@ -121,7 +121,7 @@
             
             // 微信分享的数据
             var wxData = {
-                "imgUrl": 'http://<%= CurrentDomain %><%=CurrentSetting == null ? string.Empty : CurrentSetting.ShareImgUrl %>',
+                "imgUrl": 'http://<%= ImgServer %><%=CurrentSetting == null ? string.Empty : CurrentSetting.ShareImgUrl %>',
                 "link": '<%=CurrentSetting == null ? string.Empty : CurrentSetting.ShareLinkUrl %>',
                 "desc": '<%=CurrentSetting == null ? string.Empty : CurrentSetting.ShareDesc %>',
                 "title": '<%=CurrentSetting == null ? string.Empty : CurrentSetting.ShareTitle %>'

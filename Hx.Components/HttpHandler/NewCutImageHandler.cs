@@ -6,6 +6,7 @@ using System.IO;
 using System.Web;
 using Hx.Tools.Web;
 using Hx.Tools;
+using Hx.Components.Config;
 
 namespace Hx.Components.HttpHandler
 {
@@ -24,7 +25,7 @@ namespace Hx.Components.HttpHandler
 
             //如果通过验证
             string methodName = WebHelper.GetString("action");//获取请求类型
-            url = "http://" + context.Request.Url.Host;
+            url = CommConfig.GetConfig().AppSetting["imgserver"];
             switch (methodName)
             {
                 case "upload":
@@ -173,7 +174,7 @@ namespace Hx.Components.HttpHandler
             object[] o = new object[2];
             o[0] = b;
             o[1] = context.Request.Files[0].FileName;
-            string result = DynamicWebServices.InvokeWebService(url + "/webservice/UploadServices.asmx", "CkeditorUpload", o).ToString();
+            string result = DynamicWebServices.InvokeWebService("http://" + context.Request.Url.Host + "/webservice/UploadServices.asmx", "CkeditorUpload", o).ToString();
             if (!string.IsNullOrEmpty(result))
             {
                 string callback = context.Request["CKEditorFuncNum"];

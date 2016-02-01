@@ -11,6 +11,9 @@ using Hx.Components.Entity;
 using Hx.Components;
 using Hx.Tools.Web;
 using Hx.Car;
+using Hx.Car.Entity;
+using Hx.Components.Enumerations;
+using Hx.Tools;
 
 namespace Hx.BackAdmin
 {
@@ -37,16 +40,26 @@ namespace Hx.BackAdmin
                 foreach (DayReportUserInfo user in userlist1)
                 {
                     string[] cids = user.DayReportViewCorpPowerSetting.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
+                    List<string> pids = user.DayReportViewDepPowerSetting.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries).ToList();
                     Response.Write(user.UserName + ":" + string.Join(",",Corporations.Instance.GetList(true).FindAll(c=>cids.Contains(c.ID.ToString())).Select(c=>c.Name)) + "<br>");
+                    Response.Write("    " + string.Join(",", pids.Select(p => ((DayReportDep)DataConvert.SafeInt(p)).ToString())) + "<br>");
                 }
                 Response.Write("集团总部：<br>");
                 foreach (DayReportUserInfo user in userlist2)
                 {
                     string[] cids = user.DayReportViewCorpPowerSetting.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
+                    List<string> pids = user.DayReportViewDepPowerSetting.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries).ToList();
                     Response.Write(user.UserName + ":" + string.Join(",", Corporations.Instance.GetList(true).FindAll(c => cids.Contains(c.ID.ToString())).Select(c => c.Name)) + "<br>");
+                    Response.Write("    " + string.Join(",", pids.Select(p => ((DayReportDep)DataConvert.SafeInt(p)).ToString())) + "<br>");
                 }
                 Response.End();
             }
+            else if (Request.QueryString["t"] == "4")
+            {
+                List<CorporationInfo> corp = Corporations.Instance.GetList(true);
+                DailyReports.Instance.CollectDailyReportInfo();
+            }
+
             //string s = string.Empty;
             //s.GetHashCode();
             //Response.Write(FormatNum(""));

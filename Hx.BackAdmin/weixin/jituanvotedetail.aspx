@@ -24,7 +24,7 @@
         <div class="dcontent">
             <div class="c1">
                 <div class="d-pic1">
-                    <img src="<%= CurrentPothunterInfo.PicPath %>" alt="<%= CurrentPothunterInfo.Name %>" />
+                    <img src="<%=ImgServer %><%= CurrentPothunterInfo.PicPath %>" alt="<%= CurrentPothunterInfo.Name %>" />
                 </div>
                 <div class="detailinfo">
                     <span class="name">
@@ -52,14 +52,14 @@
                     <br />
                     <dr style="width: 100%!important; text-align: center;">
                     <%if (!string.IsNullOrEmpty(CurrentPothunterInfo.IntroducePic1)) {%>
-                    <img src="http://<%= CurrentDomain %><%= CurrentPothunterInfo.IntroducePic1%>" class="picpreview"  /><br />
+                    <img src="<%= ImgServer %><%= CurrentPothunterInfo.IntroducePic1%>" class="picpreview"  /><br />
                     <%} %>
                     <%if (!string.IsNullOrEmpty(CurrentPothunterInfo.IntroducePic2))
                       {%>
-                    <img src="http://<%= CurrentDomain %><%= CurrentPothunterInfo.IntroducePic2%>" class="picpreview"  /><br />
+                    <img src="<%= ImgServer %><%= CurrentPothunterInfo.IntroducePic2%>" class="picpreview"  /><br />
                     <%} %>
                     <%if (!string.IsNullOrEmpty(CurrentPothunterInfo.IntroducePic3)) {%>
-                    <img src="http://<%= CurrentDomain %><%= CurrentPothunterInfo.IntroducePic3%>" class="picpreview"  />
+                    <img src="<%= ImgServer %><%= CurrentPothunterInfo.IntroducePic3%>" class="picpreview"  />
                     <%} %></dr>
                 </dt>
                 <%} %>
@@ -181,7 +181,7 @@
 
             // 微信分享的数据
             var wxData = {
-                "imgUrl": '<%= CurrentDomain %><%=CurrentSetting == null ? string.Empty : CurrentSetting.ShareImgUrl %>',
+                "imgUrl": '<%= ImgServer %><%=CurrentSetting == null ? string.Empty : CurrentSetting.ShareImgUrl %>',
                 "link": "<%=CurrentSetting == null ? string.Empty : CurrentSetting.ShareLinkUrl %>",
                 "desc": '<%=CurrentSetting == null ? string.Empty : CurrentSetting.ShareDesc %>',
                 "title": "<%=CurrentSetting == null ? string.Empty : CurrentSetting.ShareTitle %>"

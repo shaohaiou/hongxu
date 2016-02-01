@@ -57,7 +57,7 @@ namespace Hx.BackAdmin.biz
             hdnID.Value = corpmien.ID.ToString();
             if (!string.IsNullOrEmpty(corpmien.Pic))
             {
-                imgpic.Src = corpmien.Pic;
+                imgpic.Src = ImgServer + corpmien.Pic;
                 hdimage_pic.Value = corpmien.Pic;
             }
             txtIntroduce.Text = corpmien.Introduce;

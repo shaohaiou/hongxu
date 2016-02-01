@@ -6,11 +6,16 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Hx.Components;
 using Hx.Components.Entity;
+using Hx.Components.BasePage;
 
 namespace Hx.BackAdmin.biz
 {
-    public partial class corpmiendetail : System.Web.UI.Page
+    public partial class corpmiendetail : AdminBase
     {
+        protected override void Check()
+        {
+
+        }
         protected int RecordCount = 0;
 
         protected void Page_Load(object sender, EventArgs e)

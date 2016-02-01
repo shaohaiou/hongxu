@@ -48,15 +48,15 @@ namespace Hx.BackAdmin.weixin
                     sheet.GetRow(2).Cells[3 * i + 3].SetCellValue(Math.Round(sum / num, 1).ToString());
 
                     List<KeyValuePair<string, decimal>> listquestionscoresum = new List<KeyValuePair<string, decimal>>();
-                    foreach (QuestionInfo question in listQuestion)
+                    foreach (QuestionInfo question in listQuestion.FindAll(l=>l.QuestionType == Components.Enumerations.QuestionType.主管))
                     {
-                        listquestionscoresum.Add(new KeyValuePair<string, decimal>(question.QuestionFacor, listRecord.FindAll(l => l.QuestionCompanyID == listCompany[i].ID && l.QuestionType == Components.Enumerations.QuestionType.主管).Sum(l => l.QuestionScoreList.FindAll(s => s.QuestionID == question.ID).Sum(s => s.Score))));
+                        listquestionscoresum.Add(new KeyValuePair<string, decimal>(question.QuestionFacor, listRecord.FindAll(l => l.QuestionCompanyID == listCompany[i].ID && l.QuestionType == Components.Enumerations.QuestionType.主管).Sum(l => l.QuestionScoreList.Find(s => s.QuestionID == question.ID).Score)));
                     }
-                    listquestionscoresum = listquestionscoresum.OrderByDescending(l => l.Value).ToList();
+                    listquestionscoresum = listquestionscoresum.OrderBy(l => l.Value).ToList();
 
-                    sheet.GetRow(4).Cells[3 * i + 1].SetCellValue(listquestionscoresum[0].Key + "：" + listquestionscoresum[0].Value.ToString());
-                    sheet.GetRow(4).Cells[3 * i + 2].SetCellValue(listquestionscoresum[1].Key + "：" + listquestionscoresum[0].Value.ToString());
-                    sheet.GetRow(4).Cells[3 * i + 3].SetCellValue(listquestionscoresum[2].Key + "：" + listquestionscoresum[0].Value.ToString());
+                    sheet.GetRow(4).Cells[3 * i + 1].SetCellValue(listquestionscoresum[0].Key + "：" + Math.Round(listquestionscoresum[0].Value, 0).ToString());
+                    sheet.GetRow(4).Cells[3 * i + 2].SetCellValue(listquestionscoresum[1].Key + "：" + Math.Round(listquestionscoresum[1].Value, 0).ToString());
+                    sheet.GetRow(4).Cells[3 * i + 3].SetCellValue(listquestionscoresum[2].Key + "：" + Math.Round(listquestionscoresum[2].Value, 0).ToString());
                 }
                 if (listRecord.Exists(l => l.QuestionCompanyID == listCompany[i].ID && l.QuestionType == Components.Enumerations.QuestionType.普通员工))
                 {
@@ -67,15 +67,15 @@ namespace Hx.BackAdmin.weixin
                     sheet.GetRow(3).Cells[3 * i + 3].SetCellValue(Math.Round(sum / num, 1).ToString());
 
                     List<KeyValuePair<string, decimal>> listquestionscoresum = new List<KeyValuePair<string, decimal>>();
-                    foreach (QuestionInfo question in listQuestion)
+                    foreach (QuestionInfo question in listQuestion.FindAll(l => l.QuestionType == Components.Enumerations.QuestionType.普通员工))
                     {
-                        listquestionscoresum.Add(new KeyValuePair<string, decimal>(question.QuestionFacor, listRecord.FindAll(l => l.QuestionCompanyID == listCompany[i].ID && l.QuestionType == Components.Enumerations.QuestionType.普通员工).Sum(l => l.QuestionScoreList.FindAll(s => s.QuestionID == question.ID).Sum(s => s.Score))));
+                        listquestionscoresum.Add(new KeyValuePair<string, decimal>(question.QuestionFacor, listRecord.FindAll(l => l.QuestionCompanyID == listCompany[i].ID && l.QuestionType == Components.Enumerations.QuestionType.普通员工).Sum(l => l.QuestionScoreList.Find(s => s.QuestionID == question.ID).Score)));                  
                     }
-                    listquestionscoresum = listquestionscoresum.OrderByDescending(l => l.Value).ToList();
+                    listquestionscoresum = listquestionscoresum.OrderBy(l => l.Value).ToList();
 
-                    sheet.GetRow(5).Cells[3 * i + 1].SetCellValue(listquestionscoresum[0].Key + "：" + listquestionscoresum[0].Value.ToString());
-                    sheet.GetRow(5).Cells[3 * i + 2].SetCellValue(listquestionscoresum[1].Key + "：" + listquestionscoresum[0].Value.ToString());
-                    sheet.GetRow(5).Cells[3 * i + 3].SetCellValue(listquestionscoresum[2].Key + "：" + listquestionscoresum[0].Value.ToString());
+                    sheet.GetRow(5).Cells[3 * i + 1].SetCellValue(listquestionscoresum[0].Key + "：" + Math.Round(listquestionscoresum[0].Value,0).ToString());
+                    sheet.GetRow(5).Cells[3 * i + 2].SetCellValue(listquestionscoresum[1].Key + "：" + Math.Round(listquestionscoresum[1].Value, 0).ToString());
+                    sheet.GetRow(5).Cells[3 * i + 3].SetCellValue(listquestionscoresum[2].Key + "：" + Math.Round(listquestionscoresum[2].Value, 0).ToString());
                 }
             }
 

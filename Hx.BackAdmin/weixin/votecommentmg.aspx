@@ -46,7 +46,8 @@
         <div class="flqh">
             <span><a href="votemg.aspx?sid=<%= GetInt("sid")%>">活动设置</a></span> <span><a href="votepothunterlist.aspx?sid=<%= GetInt("sid")%>">
                 选手管理</a></span> <span><a href="voterecordlist.aspx?sid=<%= GetInt("sid")%>">投票记录</a></span><span
-                    class="dj"><a href="votecommentmg.aspx?sid=<%= GetInt("sid")%>">评论管理</a></span>
+                    class="dj"><a href="votecommentmg.aspx?sid=<%= GetInt("sid")%>">评论管理</a></span><%if(Admin.Administrator){ %><span><a
+                    href="voterecordcachelist.aspx?sid=<%= GetInt("sid")%>">投票队列</a></span><%} %>
         </div>
         <table border="0" cellspacing="0" cellpadding="0" class="biaoge4" style="background-color: #f4f8fc;">
             <tr>

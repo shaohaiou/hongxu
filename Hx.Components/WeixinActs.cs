@@ -1735,6 +1735,8 @@ namespace Hx.Components
                         {
                             if (!result.Keys.Contains(v.AthleteID + "_" + v.Openid))
                                 result.Add(v.AthleteID + "_" + v.Openid, v.AddTime);
+                            else if (v.AddTime > result[v.AthleteID + "_" + v.Openid])
+                                result[v.AthleteID + "_" + v.Openid] = v.AddTime;
                         }
                         MangaCache.Max(key, result);
                     }
@@ -1809,11 +1811,16 @@ namespace Hx.Components
                 if (VoteRecordList != null)
                 {
                     List<KeyValuePair<string, DateTime>> votes = VoteRecordList.Where(b => b.Key.EndsWith("_" + openid) && b.Value > DateTime.Today).ToList();
+                    List<KeyValuePair<string, DateTime>> votesall = VoteRecordList.Where(b => b.Key.EndsWith("_" + openid)).ToList();
                     if (votes.Count > 0)
                     {
-                        if (votes.Exists(v => v.Key == (id + "_" + openid)))
+                        if (votes.Exists(v => v.Key == (id + "_" + openid)) && setting.IsrepeatOnday == 0)
                         {
-                            return "您今天已经为他/她投过票了。";
+                            return "您今日已经为他/她投过票了。";
+                        }
+                        if (votesall.Exists(v => v.Key == (id + "_" + openid)) && setting.Isrepeat == 0)
+                        {
+                            return "您已经为他/她投过票了。";
                         }
                         DateTime ftime = votes.Min(b => b.Value);
                         int minutes = setting == null ? 30 : setting.OverdueMinutes;
@@ -1823,7 +1830,11 @@ namespace Hx.Components
                         }
                         if (setting != null && setting.VoteTimes > 0 && votes.Count >= setting.VoteTimes)
                         {
-                            return "您今天的点赞次数已经用完。";
+                            return "您今天的投票次数已经用完。";
+                        }
+                        if (setting != null && setting.VoteTimesMax > 0 && votesall.Count >= setting.VoteTimesMax)
+                        {
+                            return "您的投票次数已经用完。";
                         }
                     }
                 }
@@ -1845,15 +1856,17 @@ namespace Hx.Components
                 }
             }
             List<VotePothunterInfo> plist = GetVotePothunterList(sid, true);
+            foreach (VotePothunterInfo pinfo in plist)
+            {
+                if (votes.Exists(v => v.AthleteID == pinfo.ID))
+                {
+                    pinfo.Ballot += votes.FindAll(v => v.AthleteID == pinfo.ID).Count;
+                    AddVotePothunterInfo(pinfo);
+                }
+            }
             foreach (VoteRecordInfo vote in votes)
             {
-                if (plist.Exists(p => p.ID == vote.AthleteID))
-                {
-                    VotePothunterInfo pinfo = plist.Find(p => p.ID == vote.AthleteID);
-                    pinfo.Ballot++;
-                    if (AddVoteRecordInfo(vote))
-                        AddVotePothunterInfo(pinfo);
-                }
+                AddVoteRecordInfo(vote);
             }
         }
 
@@ -2060,15 +2073,22 @@ namespace Hx.Components
                     VoteCommentCounter.Clear();
                 }
             }
-            List<VotePothunterInfo> plist = GetVotePothunterList(true);
-            foreach (KeyValuePair<string, int> counter in counters)
+            List<VoteSettingInfo> settings = GetVoteSettingList(true);
+            foreach (VoteSettingInfo setting in settings)
             {
-                int pid = DataConvert.SafeInt(counter.Key);
-                if (plist.Exists(p => p.ID == pid))
+                if (setting.Switch == 1)
                 {
-                    VotePothunterInfo pinfo = plist.Find(p => p.ID == pid);
-                    pinfo.Comments += counter.Value;
-                    AddVotePothunterInfo(pinfo);
+                    List<VotePothunterInfo> plist = GetVotePothunterList(setting.ID,true);
+                    foreach (KeyValuePair<string, int> counter in counters)
+                    {
+                        int pid = DataConvert.SafeInt(counter.Key);
+                        if (plist.Exists(p => p.ID == pid))
+                        {
+                            VotePothunterInfo pinfo = plist.Find(p => p.ID == pid);
+                            pinfo.Comments += counter.Value;
+                            AddVotePothunterInfo(pinfo);
+                        }
+                    }
                 }
             }
         }
@@ -2129,29 +2149,36 @@ namespace Hx.Components
         /// </summary>
         public void VoteCommentPraiseCountAccount(int sid)
         {
-            List<KeyValuePair<string, int>> counters = new List<KeyValuePair<string, int>>();
-            lock (sync_votecommentpraisecounter)
+            try
             {
-                if (VoteCommentPraiseCounter.Count > 0)
+                List<KeyValuePair<string, int>> counters = new List<KeyValuePair<string, int>>();
+                lock (sync_votecommentpraisecounter)
                 {
-                    counters.AddRange(VoteCommentPraiseCounter);
-                    VoteCommentPraiseCounter.Clear();
-                }
-            }
-            List<VotePothunterInfo> plist = GetVotePothunterList(sid);
-            foreach (VotePothunterInfo pinfo in plist)
-            {
-                List<VoteCommentInfo> commentlist = GetVoteComments(pinfo.ID, true);
-                foreach (KeyValuePair<string, int> counter in counters)
-                {
-                    int id = DataConvert.SafeInt(counter.Key);
-                    if (commentlist.Exists(p => p.ID == id))
+                    if (VoteCommentPraiseCounter.Count > 0)
                     {
-                        VoteCommentInfo cinfo = commentlist.Find(p => p.ID == id);
-                        cinfo.PraiseNum += counter.Value;
-                        CreateAndUpdateVoteComment(cinfo);
+                        counters.AddRange(VoteCommentPraiseCounter);
+                        VoteCommentPraiseCounter.Clear();
                     }
                 }
+                List<VotePothunterInfo> plist = GetVotePothunterList(sid);
+                foreach (VotePothunterInfo pinfo in plist)
+                {
+                    List<VoteCommentInfo> commentlist = GetVoteComments(pinfo.ID, true);
+                    foreach (KeyValuePair<string, int> counter in counters)
+                    {
+                        int id = DataConvert.SafeInt(counter.Key);
+                        if (commentlist.Exists(p => p.ID == id))
+                        {
+                            VoteCommentInfo cinfo = commentlist.Find(p => p.ID == id);
+                            cinfo.PraiseNum += counter.Value;
+                            CreateAndUpdateVoteComment(cinfo);
+                        }
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                ExpLog.Write(ex);
             }
         }
 
@@ -2211,29 +2238,36 @@ namespace Hx.Components
         /// </summary>
         public void VoteCommentBelittleCountAccount(int sid)
         {
-            List<KeyValuePair<string, int>> counters = new List<KeyValuePair<string, int>>();
-            lock (sync_votecommentbelittlecounter)
+            try
             {
-                if (VoteCommentBelittleCounter.Count > 0)
+                List<KeyValuePair<string, int>> counters = new List<KeyValuePair<string, int>>();
+                lock (sync_votecommentbelittlecounter)
                 {
-                    counters.AddRange(VoteCommentBelittleCounter);
-                    VoteCommentBelittleCounter.Clear();
-                }
-            }
-            List<VotePothunterInfo> plist = GetVotePothunterList(sid);
-            foreach (VotePothunterInfo pinfo in plist)
-            {
-                List<VoteCommentInfo> commentlist = GetVoteComments(pinfo.ID, true);
-                foreach (KeyValuePair<string, int> counter in counters)
-                {
-                    int id = DataConvert.SafeInt(counter.Key);
-                    if (commentlist.Exists(p => p.ID == id))
+                    if (VoteCommentBelittleCounter.Count > 0)
                     {
-                        VoteCommentInfo cinfo = commentlist.Find(p => p.ID == id);
-                        cinfo.BelittleNum += counter.Value;
-                        CreateAndUpdateVoteComment(cinfo);
+                        counters.AddRange(VoteCommentBelittleCounter);
+                        VoteCommentBelittleCounter.Clear();
                     }
                 }
+                List<VotePothunterInfo> plist = GetVotePothunterList(sid);
+                foreach (VotePothunterInfo pinfo in plist)
+                {
+                    List<VoteCommentInfo> commentlist = GetVoteComments(pinfo.ID, true);
+                    foreach (KeyValuePair<string, int> counter in counters)
+                    {
+                        int id = DataConvert.SafeInt(counter.Key);
+                        if (commentlist.Exists(p => p.ID == id))
+                        {
+                            VoteCommentInfo cinfo = commentlist.Find(p => p.ID == id);
+                            cinfo.BelittleNum += counter.Value;
+                            CreateAndUpdateVoteComment(cinfo);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ExpLog.Write(ex);
             }
         }
 
@@ -2312,7 +2346,7 @@ namespace Hx.Components
         #endregion
 
         #region 场景管理
-        
+
         /// <summary>
         /// 获取场景列表
         /// </summary>
@@ -2343,9 +2377,9 @@ namespace Hx.Components
             return list;
         }
 
-        public ScenecodeInfo GetScenecodeInfo(int sid,int id, bool fromCache = false)
-        { 
-            List<ScenecodeInfo> list = GetScenecodeList(sid,fromCache);
+        public ScenecodeInfo GetScenecodeInfo(int sid, int id, bool fromCache = false)
+        {
+            List<ScenecodeInfo> list = GetScenecodeList(sid, fromCache);
             return list.Find(l => l.ID == id);
         }
 
@@ -2386,45 +2420,45 @@ namespace Hx.Components
 
         private static List<QuestionInfo> listQuestion = new List<QuestionInfo>()
         { 
-            new QuestionInfo(){ID=1,QuestionItem=QuestionItem.指导,QuestionFacor="坚持",QuestionType=QuestionType.主管,QuestionIntroduce="从我入职到现在，每个月公司总经理都会不定期的跟我讨论公司及我的未来发展问题；"}
+            new QuestionInfo(){ID=1,QuestionItem=QuestionItem.指导,QuestionFacor="坚持",QuestionType=QuestionType.主管,QuestionIntroduce="从我入职到现在，公司总经理都会不定期的跟我讨论公司及我的未来发展问题；"}
             ,new QuestionInfo(){ID=2,QuestionItem=QuestionItem.指导,QuestionFacor="支持",QuestionType=QuestionType.主管,QuestionIntroduce="公司总经理能理解我们的工作困难，并且会给予我们相关支持，工作中遇到困难时，总经理会及时给予我指导和帮助；"}
             ,new QuestionInfo(){ID=3,QuestionItem=QuestionItem.指导,QuestionFacor="影响",QuestionType=QuestionType.主管,QuestionIntroduce="公司总经理的管理水平、管理艺术和有效性很高，在他的指导过程中，让我获益匪浅；"}
             ,new QuestionInfo(){ID=4,QuestionItem=QuestionItem.指导,QuestionFacor="远见",QuestionType=QuestionType.主管,QuestionIntroduce="公司总经理经常对我进行职业生涯管理方面的指导；"}
-            ,new QuestionInfo(){ID=5,QuestionItem=QuestionItem.执行,QuestionFacor="职责",QuestionType=QuestionType.主管,QuestionIntroduce="我非常明确我的工作职责和岗位要求，在实际工作中，我的职位、责任和权力是对应的，对我的工作开展的效率起到很大的作用；"}
+            ,new QuestionInfo(){ID=5,QuestionItem=QuestionItem.执行,QuestionFacor="职责",QuestionType=QuestionType.主管,QuestionIntroduce="我非常明确我的工作职责和岗位要求，在实际工作中，我的职位、责任和权力是对应的，对我工作开展的效率起到很大的作用；"}
             ,new QuestionInfo(){ID=6,QuestionItem=QuestionItem.执行,QuestionFacor="诚信",QuestionType=QuestionType.主管,QuestionIntroduce="我完全相信公司总经理做出的承诺，包括公司战略目标、业绩发展、年度规划、各项制度和员工待遇等；"}
             ,new QuestionInfo(){ID=7,QuestionItem=QuestionItem.执行,QuestionFacor="表率",QuestionType=QuestionType.主管,QuestionIntroduce="公司全体同事都很遵守公司的规章制度，不会出现有人可为之、有人不可为之的现象，全体一视同仁；"}
             ,new QuestionInfo(){ID=8,QuestionItem=QuestionItem.执行,QuestionFacor="效率",QuestionType=QuestionType.主管,QuestionIntroduce="公司总经理的决策非常快捷，不会影响工作效率；"}
-            ,new QuestionInfo(){ID=9,QuestionItem=QuestionItem.团队,QuestionFacor="和谐",QuestionType=QuestionType.主管,QuestionIntroduce="公司整体的人际关系积极向上，透明畅通，横向与纵向之间的交流很容易表达；"}
+            ,new QuestionInfo(){ID=9,QuestionItem=QuestionItem.团队,QuestionFacor="和谐",QuestionType=QuestionType.主管,QuestionIntroduce="公司整体的人际关系积极正向，各部门相互配合，横向与纵向之间的交流很和谐顺畅；"}
             ,new QuestionInfo(){ID=10,QuestionItem=QuestionItem.团队,QuestionFacor="激励",QuestionType=QuestionType.主管,QuestionIntroduce="工作成绩出色时，我们能够得到公司总经理的各种褒奖，激励我们更加上进；"}
             ,new QuestionInfo(){ID=11,QuestionItem=QuestionItem.团队,QuestionFacor="活动",QuestionType=QuestionType.主管,QuestionIntroduce="公司每年就会不定期组织各种类型的集体活动，我愿意参加公司组织的集体活动，与同事们在一起，让我感到心情舒畅；"}
-            ,new QuestionInfo(){ID=12,QuestionItem=QuestionItem.团队,QuestionFacor="合作",QuestionType=QuestionType.主管,QuestionIntroduce="公司总经理对部门合作非常重视，每月会不定期组织部门协调会议，探讨部门合作问题，使得各部门间工作氛围和谐、顺畅；"}
+            ,new QuestionInfo(){ID=12,QuestionItem=QuestionItem.团队,QuestionFacor="合作",QuestionType=QuestionType.主管,QuestionIntroduce="公司总经理对部门合作非常重视，每月会不定期组织部门协调会议，探讨部门合作问题；"}
             ,new QuestionInfo(){ID=13,QuestionItem=QuestionItem.参与,QuestionFacor="建议",QuestionType=QuestionType.主管,QuestionIntroduce="在工作过程中向公司总经理提出的建议和意见能够被公司理解或采纳，并实质得以改进；"}
             ,new QuestionInfo(){ID=14,QuestionItem=QuestionItem.参与,QuestionFacor="决策",QuestionType=QuestionType.主管,QuestionIntroduce="公司总经理在制定各项战略和制度的前期，都能够充分征求和采纳员工的意见，使得员工对公司的政策和决策有信任感；"}
             ,new QuestionInfo(){ID=15,QuestionItem=QuestionItem.参与,QuestionFacor="扩大",QuestionType=QuestionType.主管,QuestionIntroduce="在责权范围内我能够知道到我应该了解的公司事件，总经理经常召开扩大会议，鼓励参与跨部门、跨级别的交流探讨会，为公司共同出谋划策；"}
-            ,new QuestionInfo(){ID=16,QuestionItem=QuestionItem.参与,QuestionFacor="投入",QuestionType=QuestionType.主管,QuestionIntroduce="公司经常鼓励员工的创新、变革，积极投入到公司的发展建设中来，并为之设立了相应的创新、变革奖项；"}
-            ,new QuestionInfo(){ID=17,QuestionItem=QuestionItem.学习,QuestionFacor="发展",QuestionType=QuestionType.主管,QuestionIntroduce="公司的内训及厂方的培训机会对每位员工都提供相对应的平等机会；"}
+            ,new QuestionInfo(){ID=16,QuestionItem=QuestionItem.参与,QuestionFacor="投入",QuestionType=QuestionType.主管,QuestionIntroduce="公司经常鼓励员工的创新、变革，积极投入到公司的发展建设中来，并为之设立了相应的奖励；"}
+            ,new QuestionInfo(){ID=17,QuestionItem=QuestionItem.学习,QuestionFacor="发展",QuestionType=QuestionType.主管,QuestionIntroduce="公司的内训及厂方的培训机会对每位员工都提供相对应的平等机会；职业晋升充分考虑内部员工的公平公正性；"}
             ,new QuestionInfo(){ID=18,QuestionItem=QuestionItem.学习,QuestionFacor="针对",QuestionType=QuestionType.主管,QuestionIntroduce="公司内部安排组织的培训能够满足我们的工作需求，提升我们的工作技能，并具有很好的发展空间；"}
-            ,new QuestionInfo(){ID=19,QuestionItem=QuestionItem.学习,QuestionFacor="氛围",QuestionType=QuestionType.主管,QuestionIntroduce="公司总经理不定期会进行工作总结分析，就工作中碰到的问题进行交流、探讨，在解决问题的同时又充分提升了员工的工作学习热情；"}
+            ,new QuestionInfo(){ID=19,QuestionItem=QuestionItem.学习,QuestionFacor="氛围",QuestionType=QuestionType.主管,QuestionIntroduce="公司总经理不定期与各部门就工作中碰到的问题和大家进行交流、探讨，在解决问题的同时又充分给予部门授权；"}
             ,new QuestionInfo(){ID=20,QuestionItem=QuestionItem.学习,QuestionFacor="考核",QuestionType=QuestionType.主管,QuestionIntroduce="公司总经理非常注重培训后的转训工作，每次参加培训的同事必须就培训情况进行分享，公司对培训有一系列的完整考核体系。"}
             ,new QuestionInfo(){ID=21,QuestionItem=QuestionItem.指导,QuestionFacor="支持",QuestionType=QuestionType.普通员工,QuestionIntroduce="从我入职到现在，公司部门领导都会不定期的跟我讨论公司及我的未来发展问题；"}
             ,new QuestionInfo(){ID=22,QuestionItem=QuestionItem.指导,QuestionFacor="帮助",QuestionType=QuestionType.普通员工,QuestionIntroduce="公司能理解员工的工作困难，并且会给予我们相关支持，工作中遇到困难时，公司会及时给予我指导和帮助；"}
             ,new QuestionInfo(){ID=23,QuestionItem=QuestionItem.指导,QuestionFacor="及时",QuestionType=QuestionType.普通员工,QuestionIntroduce="员工对工作的意见和提议能够得到及时的反馈和指导，并能落实到工作中去；"}
-            ,new QuestionInfo(){ID=24,QuestionItem=QuestionItem.指导,QuestionFacor="鼓励",QuestionType=QuestionType.普通员工,QuestionIntroduce="公司领导的工作态度热情、周全，部门领导对我的哪怕一点进步也会充分鼓励我，指导我；"}
+            ,new QuestionInfo(){ID=24,QuestionItem=QuestionItem.指导,QuestionFacor="鼓励",QuestionType=QuestionType.普通员工,QuestionIntroduce="公司领导的工作态度热情、周全，部门领导对我的进步也会充分鼓励我，指导我；"}
             ,new QuestionInfo(){ID=25,QuestionItem=QuestionItem.执行,QuestionFacor="制度",QuestionType=QuestionType.普通员工,QuestionIntroduce="公司各项管理制度能够得到有效落实，各项考核制度公平公正，有明确的工作流程，通常情况下能够解决一切问题；"}
-            ,new QuestionInfo(){ID=26,QuestionItem=QuestionItem.执行,QuestionFacor="诚信",QuestionType=QuestionType.普通员工,QuestionIntroduce="相信公司做出的承诺，包括公司战略目标、业绩发展、年度规划、各项制度和员工待遇等；"}
+            ,new QuestionInfo(){ID=26,QuestionItem=QuestionItem.执行,QuestionFacor="诚信",QuestionType=QuestionType.普通员工,QuestionIntroduce="相信公司做出的承诺，包括公司年度规划、各项制度和员工待遇等；"}
             ,new QuestionInfo(){ID=27,QuestionItem=QuestionItem.执行,QuestionFacor="表率",QuestionType=QuestionType.普通员工,QuestionIntroduce="公司全体同事都很遵守公司的规章制度，不会出现有人可为之、有人不可为之的现象，全体一视同仁；"}
             ,new QuestionInfo(){ID=28,QuestionItem=QuestionItem.执行,QuestionFacor="效率",QuestionType=QuestionType.普通员工,QuestionIntroduce="公司的决策非常快捷，不会影响工作效率；"}
-            ,new QuestionInfo(){ID=29,QuestionItem=QuestionItem.团队,QuestionFacor="文化",QuestionType=QuestionType.普通员工,QuestionIntroduce="公司安排的业余生活丰富多彩，有益健康，有着良好的企业文化；"}
-            ,new QuestionInfo(){ID=30,QuestionItem=QuestionItem.团队,QuestionFacor="组织",QuestionType=QuestionType.普通员工,QuestionIntroduce="在工作过程中，有专门的人员作为老师，指导我的工作，提供了积极的晋升方法和通道，帮助员工成长；"}
+            ,new QuestionInfo(){ID=29,QuestionItem=QuestionItem.团队,QuestionFacor="文化",QuestionType=QuestionType.普通员工,QuestionIntroduce="企业有着良好的文化底蕴，文化理念深入人心；"}
+            ,new QuestionInfo(){ID=30,QuestionItem=QuestionItem.团队,QuestionFacor="组织",QuestionType=QuestionType.普通员工,QuestionIntroduce="在工作过程中，有专门的人员作为老师，指导我的工作，工作中出现疑惑，可以找部门主管解决；"}
             ,new QuestionInfo(){ID=31,QuestionItem=QuestionItem.团队,QuestionFacor="活动",QuestionType=QuestionType.普通员工,QuestionIntroduce="公司每年会不定期的组织各种类型的集体活动，我愿意参加公司组织的集体活动，与同事们在一起，让我感到心情舒畅；"}
-            ,new QuestionInfo(){ID=32,QuestionItem=QuestionItem.团队,QuestionFacor="尊重",QuestionType=QuestionType.普通员工,QuestionIntroduce="对于每位员工都表现出了充分的尊重和理解，公平对待每位员工，工作出色时，能够得到公司领导的各种褒奖，激励我们更加上进；"}
+            ,new QuestionInfo(){ID=32,QuestionItem=QuestionItem.团队,QuestionFacor="尊重",QuestionType=QuestionType.普通员工,QuestionIntroduce="公司对于每位员工都表现出了充分的尊重和理解，公平对待每位员工，工作出色时，能够得到公司领导的各种褒奖，激励我们更加上进；"}
             ,new QuestionInfo(){ID=33,QuestionItem=QuestionItem.参与,QuestionFacor="建议",QuestionType=QuestionType.普通员工,QuestionIntroduce="在工作过程中向公司领导提出的建议和意见能够被公司理解或采纳，并能实质得以改进；"}
             ,new QuestionInfo(){ID=34,QuestionItem=QuestionItem.参与,QuestionFacor="开明",QuestionType=QuestionType.普通员工,QuestionIntroduce="员工清楚公司给予我们的帮助，我们能够随时向他们提出要求及建议；"}
             ,new QuestionInfo(){ID=35,QuestionItem=QuestionItem.参与,QuestionFacor="扩大",QuestionType=QuestionType.普通员工,QuestionIntroduce="公司经常召开扩大会议，鼓励员工参与到跨部门、跨级别的交流探讨会中去，为公司出谋划策的同时又可提升、学习；"}
             ,new QuestionInfo(){ID=36,QuestionItem=QuestionItem.参与,QuestionFacor="投入",QuestionType=QuestionType.普通员工,QuestionIntroduce="公司设置的薪酬福利方案是科学合理的，能够体现外部竞争力和内部公平性，并充分考虑了员工的情况和意见；"}
             ,new QuestionInfo(){ID=37,QuestionItem=QuestionItem.学习,QuestionFacor="平等",QuestionType=QuestionType.普通员工,QuestionIntroduce="公司有完善的内训体系，对每个员工提供平等的培训机会，只要努力把握，大家都有机会获得相应的培训；"}
             ,new QuestionInfo(){ID=38,QuestionItem=QuestionItem.学习,QuestionFacor="发展",QuestionType=QuestionType.普通员工,QuestionIntroduce="公司向员工提供了学习和成长的培训体系，设立了专业与管理的双通道多职级的职业发展通路；"}
-            ,new QuestionInfo(){ID=39,QuestionItem=QuestionItem.学习,QuestionFacor="氛围",QuestionType=QuestionType.普通员工,QuestionIntroduce="公司定期组织安排员工学习沙龙，就工作中碰到的问题进行交流、探讨，充分提升了员工的学习热情；"}
+            ,new QuestionInfo(){ID=39,QuestionItem=QuestionItem.学习,QuestionFacor="氛围",QuestionType=QuestionType.普通员工,QuestionIntroduce="公司定期组织安排员工学习座谈或开展读书会，就工作中碰到的问题进行交流、探讨，充分提升了员工的学习热情；"}
             ,new QuestionInfo(){ID=40,QuestionItem=QuestionItem.学习,QuestionFacor="考核",QuestionType=QuestionType.普通员工,QuestionIntroduce="公司非常注重培训后的转化工作，每次参加培训的同事必须就培训情况进行分享，公司对培训有一系列的完善考核体系。"}
         };
 
@@ -2438,7 +2472,7 @@ namespace Hx.Components
             ,new QuestionCompanyInfo(){ID=1358,Index=6,Name="乐清红源奥迪",Manager="麻立军"}
             ,new QuestionCompanyInfo(){ID=7824,Index=7,Name="乐清红通马自达",Manager="李和荣"}
             ,new QuestionCompanyInfo(){ID=6925,Index=8,Name="丽水红旭现代",Manager="包宗设"}
-            ,new QuestionCompanyInfo(){ID=7521,Index=9,Name="丽水红旭别克",Manager="邱伟林"}
+            ,new QuestionCompanyInfo(){ID=7521,Index=9,Name="丽水红盛别克",Manager="邱伟林"}
             ,new QuestionCompanyInfo(){ID=7238,Index=10,Name="丽水奥奇奇瑞",Manager="蔡荣标"}
             ,new QuestionCompanyInfo(){ID=5287,Index=11,Name="临海东昌广本",Manager="刘兴龙"}
             ,new QuestionCompanyInfo(){ID=5698,Index=12,Name="台州路桥红本",Manager="张兹东"}

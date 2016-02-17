@@ -36,12 +36,17 @@
                         }, 200);
                     },
                     onComplete: function (file, response) {
-                        button.val('修改图片');
+                        if (response.msg == "success") {
+                            button.val('修改图片');
+
+                            button.next().next().attr("src", "<%=ImgServer %>" + response.src);
+                            button.prev().val(response.src);
+                        } else {
+                            alert(response.errorcode);
+                            button.val('上传图片');
+                        }
                         window.clearInterval(interval);
                         this.enable();
-
-                        button.next().next().attr("src", "<%=ImgServer %>" + response.src);
-                        button.prev().val(response.src);
                     }
                 });
             });
@@ -93,9 +98,9 @@
         <div class="flqh">
             <span class="dj"><a href="votemg.aspx?sid=<%= GetInt("sid")%>">活动设置</a></span> <span>
                 <a href="votepothunterlist.aspx?sid=<%= GetInt("sid")%>">选手管理</a></span> <span><a
-                    href="voterecordlist.aspx?sid=<%= GetInt("sid")%>">投票记录</a></span><span><a
-                    href="votecommentmg.aspx?sid=<%= GetInt("sid")%>">评论管理</a></span><%if(Admin.Administrator){ %><span><a
-                    href="voterecordcachelist.aspx?sid=<%= GetInt("sid")%>">投票队列</a></span><%} %>
+                    href="voterecordlist.aspx?sid=<%= GetInt("sid")%>">投票记录</a></span><span><a href="votecommentmg.aspx?sid=<%= GetInt("sid")%>">评论管理</a></span><%if (Admin.Administrator)
+                                                                                                                                                                  { %><span><a
+                        href="voterecordcachelist.aspx?sid=<%= GetInt("sid")%>">投票队列</a></span><%} %>
         </div>
         <table width="100%" border="0" cellspacing="0" cellpadding="0" class="biaoge3">
             <caption class="bt2">
@@ -240,7 +245,7 @@
                 </tr>
                 <tr>
                     <td class="bg1">
-                         隔天可重复投票：
+                        隔天可重复投票：
                     </td>
                     <td>
                         <asp:CheckBox runat="server" ID="cbxIsRepeat" />
@@ -328,12 +333,12 @@
                     <td class="bg1">
                         广告位1图片：
                         <br />
-                        <span style="color:Gray;">（内页上面1）</span>
+                        <span style="color: Gray;">（内页上面1）</span>
                     </td>
                     <td>
                         <input id="hdnAD1Path" runat="server" type="hidden" />
                         <input type="button" value="上传图片" class="an3 uploadbtpic" /><br />
-                        <img src="../images/fm.jpg" alt="图片" id="imgAD1Path" style="width:auto;height:auto;"
+                        <img src="../images/fm.jpg" alt="图片" id="imgAD1Path" style="width: auto; height: auto;"
                             runat="server" />
                     </td>
                 </tr>
@@ -349,12 +354,12 @@
                     <td class="bg1">
                         广告位2图片：
                         <br />
-                        <span style="color:Gray;">（内页上面2）</span>
+                        <span style="color: Gray;">（内页上面2）</span>
                     </td>
                     <td>
                         <input id="hdnAD2Path" runat="server" type="hidden" />
                         <input type="button" value="上传图片" class="an3 uploadbtpic" /><br />
-                        <img src="../images/fm.jpg" alt="图片" id="imgAD2Path" style="width:auto;height:auto;"
+                        <img src="../images/fm.jpg" alt="图片" id="imgAD2Path" style="width: auto; height: auto;"
                             runat="server" />
                     </td>
                 </tr>
@@ -370,12 +375,12 @@
                     <td class="bg1">
                         广告位3图片：
                         <br />
-                        <span style="color:Gray;">（首页底部位置）</span>
+                        <span style="color: Gray;">（首页底部位置）</span>
                     </td>
                     <td>
                         <input id="hdnAD3Path" runat="server" type="hidden" />
                         <input type="button" value="上传图片" class="an3 uploadbtpic" /><br />
-                        <img src="../images/fm.jpg" alt="图片" id="imgAD3Path" style="width:auto;height:auto;"
+                        <img src="../images/fm.jpg" alt="图片" id="imgAD3Path" style="width: auto; height: auto;"
                             runat="server" />
                     </td>
                 </tr>
@@ -391,12 +396,12 @@
                     <td class="bg1">
                         广告位4图片：
                         <br />
-                        <span style="color:Gray;">（内页中间位置）</span>
+                        <span style="color: Gray;">（内页中间位置）</span>
                     </td>
                     <td>
                         <input id="hdnAD4Path" runat="server" type="hidden" />
                         <input type="button" value="上传图片" class="an3 uploadbtpic" /><br />
-                        <img src="../images/fm.jpg" alt="图片" id="imgAD4Path" style="width:auto;height:auto;"
+                        <img src="../images/fm.jpg" alt="图片" id="imgAD4Path" style="width: auto; height: auto;"
                             runat="server" />
                     </td>
                 </tr>
@@ -412,12 +417,12 @@
                     <td class="bg1">
                         广告位5图片：
                         <br />
-                        <span style="color:Gray;">（内页上面3）</span>
+                        <span style="color: Gray;">（内页上面3）</span>
                     </td>
                     <td>
                         <input id="hdnAD5Path" runat="server" type="hidden" />
                         <input type="button" value="上传图片" class="an3 uploadbtpic" /><br />
-                        <img src="../images/fm.jpg" alt="图片" id="imgAD5Path" style="width:auto;height:auto;"
+                        <img src="../images/fm.jpg" alt="图片" id="imgAD5Path" style="width: auto; height: auto;"
                             runat="server" />
                     </td>
                 </tr>

@@ -37,12 +37,17 @@
                     }, 200);
                 },
                 onComplete: function (file, response) {
-                    button.val('修改图片');
+                    if (response.msg == "success") {
+                        button.val('修改图片');
+
+                        $("#imgpic").attr("src", "<%=ImgServer %>" + response.src);
+                        $("#hdimage_pic").val(response.src);
+                    } else {
+                        alert(response.errorcode);
+                        button.val('上传图片');
+                    }
                     window.clearInterval(interval);
                     this.enable();
-
-                    $("#imgpic").attr("src", "<%=ImgServer %>" +  response.src);
-                    $("#hdimage_pic").val(response.src);
                 }
             });
         });
@@ -61,8 +66,8 @@
                     </td>
                     <td>
                         <input type="button" name="uploadbtpic" id="uploadbtpic" value="上传图片" class="an3" /><br />
-                        <img src="../images/fm.jpg" alt="图片" id="imgpic" style="width: 457px; height: 154px;border:0px;padding:0px;"
-                            runat="server" />   
+                        <img src="../images/fm.jpg" alt="图片" id="imgpic" style="width: 457px; height: 154px;
+                            border: 0px; padding: 0px;" runat="server" />
                     </td>
                 </tr>
                 <tr>

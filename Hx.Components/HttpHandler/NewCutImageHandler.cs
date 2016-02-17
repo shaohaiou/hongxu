@@ -23,39 +23,48 @@ namespace Hx.Components.HttpHandler
         {
             string result = string.Empty;//需要返回的信息
 
-            //如果通过验证
-            string methodName = WebHelper.GetString("action");//获取请求类型
-            url = CommConfig.GetConfig().AppSetting["imgserver"];
-            switch (methodName)
+            if (HttpContext.Current.Request.Files.Count > 0 && HttpContext.Current.Request.Files[0].ContentLength > 400 * 1024)
             {
-                case "upload":
-                    result = UpLoadImage();
-                    break;
-                case "GenerateBitmap":
-                    result = GenerateCutImage();
-                    break;
-                case "GenerateBitmaps":
-                    result = GenerateCutImages();
-                    break;
-                case "ckeditorUpload":
-                    result = CkeditorUpload();
-                    break;
-                case "weixinUpload":
-                    result = WeixinUpload();
-                    break;
-                case "weixinjtUpload":
-                    result = WeixinjtUpload();
-                    break;
-                case "jobUpload":
-                    result = JobUpload();
-                    break;
-                case "jcbUpload":
-                    result = JcbUpload();
-                    break;
-                default:
-                    result = "{msg:'上传出错！没有参数类型'}";
-                    break;
+                result = "{msg:'error',errorcode:'文件不能超过400K'}";
             }
+            else if (HttpContext.Current.Request.Files.Count > 0)
+            {
+                //如果通过验证
+                string methodName = WebHelper.GetString("action");//获取请求类型
+                url = CommConfig.GetConfig().AppSetting["imgserver"];
+                switch (methodName)
+                {
+                    case "upload":
+                        result = UpLoadImage();
+                        break;
+                    case "GenerateBitmap":
+                        result = GenerateCutImage();
+                        break;
+                    case "GenerateBitmaps":
+                        result = GenerateCutImages();
+                        break;
+                    case "ckeditorUpload":
+                        result = CkeditorUpload();
+                        break;
+                    case "weixinUpload":
+                        result = WeixinUpload();
+                        break;
+                    case "weixinjtUpload":
+                        result = WeixinjtUpload();
+                        break;
+                    case "jobUpload":
+                        result = JobUpload();
+                        break;
+                    case "jcbUpload":
+                        result = JcbUpload();
+                        break;
+                    default:
+                        result = "{msg:'error',errorcode:'上传出错！没有参数类型'}";
+                        break;
+                }
+            }
+            else
+                result = "{msg:'error',errorcode:'文件上传失败，请重新上传'}";
             context.Response.Write(result);
         }
 

@@ -3621,6 +3621,7 @@ namespace Hx.BackAdmin.dayreport
             tblresult.Columns.Add("公司");
             tblresult.Columns.Add("录入");
             tblresult.Columns.Add("差值");
+            tblresult.Columns.Add("差值合计");
 
             List<CorporationInfo> corplist = Corporations.Instance.GetList(true);
             string[] corppower = hdnDayReportCorp.Value.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
@@ -3640,7 +3641,16 @@ namespace Hx.BackAdmin.dayreport
                 DataRow row = tblresult.NewRow();
                 row["公司"] = corplist[i].Name;
                 row["录入"] = list.Count;
-                row["差值"] = list.Count - day2.Subtract(day).Days;
+                row["差值"] = list.Count - day2.Subtract(day).Days - 1;
+                int subcount = 0;
+                for (int j = 0; j <= day2.Subtract(day).Days; j++)
+                {
+                    subcount += list.FindAll(l => l.CreateTime > day && l.CreateTime < day.AddDays(j + 1) && DataConvert.SafeInt(l.DayUnique) >= DataConvert.SafeInt(day.ToString("yyyyMMdd")) && DataConvert.SafeInt(l.DayUnique) <= DataConvert.SafeInt(day.AddDays(j + 1).ToString("yyyyMMdd"))).Count - j - 1;
+                }
+
+
+                row["差值合计"] = subcount;
+
                 tblresult.Rows.Add(row);
             }
 

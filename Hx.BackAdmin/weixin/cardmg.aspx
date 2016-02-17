@@ -1,4 +1,5 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="cardmg.aspx.cs" Inherits="Hx.BackAdmin.weixin.cardmg" ValidateRequest="false" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="cardmg.aspx.cs" Inherits="Hx.BackAdmin.weixin.cardmg"
+    ValidateRequest="false" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -36,12 +37,17 @@
                         }, 200);
                     },
                     onComplete: function (file, response) {
-                        button.val('修改图片');
+                        if (response.msg == "success") {
+                            button.val('修改图片');
+
+                            button.next().next().attr("src", "<%=ImgServer %>" + response.src);
+                            button.prev().val(response.src);
+                        } else {
+                            alert(response.errorcode);
+                            button.val('上传图片');
+                        }
                         window.clearInterval(interval);
                         this.enable();
-
-                        button.next().next().attr("src", "<%=ImgServer %>" + response.src);
-                        button.prev().val(response.src);
                     }
                 });
             });
@@ -58,7 +64,7 @@
             $("#txtColorRule").spectrum({
                 change: function (color) {
                     $("#txtColorRule").val(color.toHexString());
-                } 
+                }
             });
             $("#txtColorAward").spectrum({
                 change: function (color) {
@@ -127,8 +133,11 @@
                     <td>
                         <%if (!string.IsNullOrEmpty(CurrentSetting.AppID))
                           { %>
-                        <input type="text" id="txtUrl" onclick="javascript:this.select();" value="https://open.weixin.qq.com/connect/oauth2/authorize?appid=<%=CurrentSetting.AppID%>&redirect_uri=http%3A%2F%2Frb.hongxucar.com%2Fweixin%2Fcardpg.aspx%3Fwechat_card_js=1%26sid=<%=CurrentSetting.ID%>&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect" class="srk1" />
-                        <%}else{ %>
+                        <input type="text" id="txtUrl" onclick="javascript:this.select();" value="https://open.weixin.qq.com/connect/oauth2/authorize?appid=<%=CurrentSetting.AppID%>&redirect_uri=http%3A%2F%2Frb.hongxucar.com%2Fweixin%2Fcardpg.aspx%3Fwechat_card_js=1%26sid=<%=CurrentSetting.ID%>&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect"
+                            class="srk1" />
+                        <%}
+                          else
+                          { %>
                         <input type="text" id="txtUrl" onclick="javascript:this.select();" value="" class="srk1" />
                         <%} %>
                     </td>
@@ -149,7 +158,7 @@
                         <asp:TextBox runat="server" ID="txtAppSecret" CssClass="srk1"></asp:TextBox>
                     </td>
                 </tr>
-                <tr style="display:none;">
+                <tr style="display: none;">
                     <td class="bg1">
                         微信号：
                     </td>
@@ -157,7 +166,7 @@
                         <asp:TextBox runat="server" ID="txtAppNumber" CssClass="srk1"></asp:TextBox>
                     </td>
                 </tr>
-                <tr style="display:none;">
+                <tr style="display: none;">
                     <td class="bg1">
                         公众号名称：
                     </td>
@@ -191,8 +200,8 @@
                     <td>
                         <input id="hdnBgImg" runat="server" type="hidden" />
                         <input type="button" class="uploadbtpic an3" value="上传图片" /><br />
-                        <img src="../images/weixin/card/cardbg.png" alt="图片" id="imgBgImg" style="width:320px; height: 567px;"
-                            runat="server" />
+                        <img src="../images/weixin/card/cardbg.png" alt="图片" id="imgBgImg" style="width: 320px;
+                            height: 567px;" runat="server" />
                     </td>
                 </tr>
                 <tr>

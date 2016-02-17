@@ -34,12 +34,17 @@
                     }, 200);
                 },
                 onComplete: function (file, response) {
-                    button.val('修改图片');
+                    if (response.msg == "success") {
+                        button.val('修改图片');
+
+                        $("#imgpic").attr("src", response.src);
+                        $("#hdimage_pic").val(response.src);
+                    } else {
+                        alert(response.errorcode);
+                        button.val('上传图片');
+                    }
                     window.clearInterval(interval);
                     this.enable();
-
-                    $("#imgpic").attr("src", response.src);
-                    $("#hdimage_pic").val(response.src);
                 }
             });
         })

@@ -1,4 +1,5 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="corpmienedit.aspx.cs" Inherits="Hx.BackAdmin.biz.corpmienedit" ValidateRequest="false" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="corpmienedit.aspx.cs" Inherits="Hx.BackAdmin.biz.corpmienedit"
+    ValidateRequest="false" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -36,12 +37,17 @@
                     }, 200);
                 },
                 onComplete: function (file, response) {
-                    button.val('修改图片');
+                    if (response.msg == "success") {
+                        button.val('修改图片');
+
+                        $("#imgpic").attr("src", "<%=ImgServer %>" + response.src);
+                        $("#hdimage_pic").val(response.src);
+                    } else {
+                        alert(response.errorcode);
+                        button.val('上传图片');
+                    }
                     window.clearInterval(interval);
                     this.enable();
-
-                    $("#imgpic").attr("src", "<%=ImgServer %>" + response.src);
-                    $("#hdimage_pic").val(response.src);
                 }
             });
         });

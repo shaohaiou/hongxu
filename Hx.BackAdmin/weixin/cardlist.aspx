@@ -66,11 +66,16 @@
                     }, 200);
                 },
                 onComplete: function (file, response) {
-                    button1.val('修改图片');
+                    if (response.msg == "success") {
+                        button1.val('修改图片');
+                        $("img", button1.parent()).attr("src", "<%=ImgServer %>" + response.src).attr("val", response.src);
+                        $(".hdnImgUrl", button1.parent()).val(response.src);
+                    } else {
+                        alert(response.errorcode);
+                        button.val('上传图片');
+                    }
                     window.clearInterval(interval1);
                     this.enable();
-                    $("img", button1.parent()).attr("src", "<%=ImgServer %>" + response.src).attr("val", response.src);
-                    $(".hdnImgUrl", button1.parent()).val(response.src);
                 }
             });
         }
@@ -79,7 +84,6 @@
 <body>
     <form id="form1" runat="server">
     <div class="ht_main">
-        
         <ul class="xnav">
             <%if (Hx.Components.Web.HXContext.Current.AdminUser.Administrator)
               { %><li><a href="cardsettinglist.aspx">卡券活动管理</a></li><%} %>
@@ -91,9 +95,9 @@
             </asp:Repeater>
         </ul>
         <div class="flqh">
-            <span><a href="cardmg.aspx?sid=<%= GetInt("sid")%>">活动设置</a></span> 
-            <span class="dj"><a href="cardlist.aspx?sid=<%= GetInt("sid")%>">卡券管理</a></span> 
-            <span><a href="cardpullrecordlist.aspx?sid=<%= GetInt("sid")%>">抽奖记录</a></span>
+            <span><a href="cardmg.aspx?sid=<%= GetInt("sid")%>">活动设置</a></span> <span class="dj">
+                <a href="cardlist.aspx?sid=<%= GetInt("sid")%>">卡券管理</a></span> <span><a href="cardpullrecordlist.aspx?sid=<%= GetInt("sid")%>">
+                    抽奖记录</a></span>
         </div>
         <table border="0" cellspacing="0" cellpadding="0" class="biaoge2" id="tblData">
             <asp:Repeater ID="rptData" runat="server" OnItemDataBound="rptData_ItemDataBound">

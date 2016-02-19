@@ -6,8 +6,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>玩转六一 缤纷梦工场——报名活动开始了</title>
-    <link href="../css/gb61.css" rel="stylesheet" type="text/css" />
-    <script src="../js/jquery-1.3.2.min.js" type="text/javascript"></script>
+    <link href=<%=ResourceServer%>/css/gb61.css rel="stylesheet" type="text/css" />
+    <script src=<%=ResourceServer%>/js/jquery-1.3.2.min.js type="text/javascript"></script>
     <script type="text/javascript">        
         $(function () {
             $(".begin-btn").bind('click', function () {

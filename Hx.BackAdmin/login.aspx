@@ -5,8 +5,8 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>日报表</title>
-    <link href="images/apple-touch-icon-114x114.png" sizes="114x114" rel="apple-touch-icon">
-    <script src="js/jquery-1.3.2.min.js" type="text/javascript"></script>
+    <link href=<%=ResourceServer%>/images/apple-touch-icon-114x114.png" sizes="114x114" rel="apple-touch-icon">
+    <script src=<%=ResourceServer%>/js/jquery-1.3.2.min.js type="text/javascript"></script>
     <script type="text/javascript">
         if (self.location != top.location) {
             top.location.href = self.location;

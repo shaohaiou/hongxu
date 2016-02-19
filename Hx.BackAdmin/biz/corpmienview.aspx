@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>集团荣誉展示</title>
-    <script src="../js/jquery-1.3.2.min.js" type="text/javascript"></script>
+    <script src=<%=ResourceServer%>/js/jquery-1.3.2.min.js type="text/javascript"></script>
     <script language="javascript" type="text/javascript">
         $(function () {
             $("#Big_Slide_Last").css("top", ($(window).height() - $("#Big_Slide_Last").height() - 128) / 2);

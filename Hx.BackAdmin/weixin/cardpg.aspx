@@ -13,10 +13,10 @@
     <title>红旭集团-卡券活动</title>
     <meta content="红旭集团,卡券活动" name="keywords">
     <meta content="红旭集团,卡券活动" name="description">
-    <link href="../css/card.css" rel="stylesheet" type="text/css" />
-    <script src="../js/jquery-1.3.2.min.js" type="text/javascript"></script>
-    <script src="../js/jweixin-1.0.0.js" type="text/javascript"></script>
-    <script src="../js/jQuery-eraser-0.4.2.js" type="text/javascript"></script>
+    <link href=<%=ResourceServer%>/css/card.css rel="stylesheet" type="text/css" />
+    <script src=<%=ResourceServer%>/js/jquery-1.3.2.min.js type="text/javascript"></script>
+    <script src="/js/jweixin-1.0.0.js" type="text/javascript"></script>
+    <script src=<%=ResourceServer%>/js/jQuery-eraser-0.4.2.js type="text/javascript"></script>
     <%if (!string.IsNullOrEmpty(CurrentSetting.ColorAwards))
       {%>
     <style type="text/css">

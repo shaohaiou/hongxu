@@ -5,11 +5,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>活动设置</title>
-    <link href="../css/admin.css" rel="stylesheet" type="text/css" />
-    <link href="../css/spectrum.css" rel="stylesheet" type="text/css" />
-    <script src="../js/jquery-1.9.1.js" type="text/javascript"></script>
-    <script src="../js/spectrum.js" type="text/javascript"></script>
-    <script src="../js/ajaxupload.js" type="text/javascript"></script>
+    <link href=<%=ResourceServer%>/css/admin.css rel="stylesheet" type="text/css" />
+    <link href=<%=ResourceServer%>/css/spectrum.css rel="stylesheet" type="text/css" />
+    <script src=<%=ResourceServer%>/js/jquery-1.9.1.js type="text/javascript"></script>
+    <script src=<%=ResourceServer%>/js/spectrum.js type="text/javascript"></script>
+    <script src=<%=ResourceServer%>/js/ajaxupload.js type="text/javascript"></script>
     <script type="text/javascript">
         $(function () {
             $(".uploadbtpic").each(function () {

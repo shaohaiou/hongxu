@@ -5,7 +5,7 @@
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>购车报价单</title>
-    <link href="../css/admin.css" rel="stylesheet" type="text/css" />
+    <link href=<%=ResourceServer%>/css/admin.css rel="stylesheet" type="text/css" />
     <style type="text/css">
         body
         {

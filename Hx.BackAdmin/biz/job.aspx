@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>招聘信息</title>
-    <link href="../css/admin.css" rel="stylesheet" type="text/css" />
+    <link href=<%=ResourceServer%>/css/admin.css rel="stylesheet" type="text/css" />
     <style type="text/css">
         .content
         {

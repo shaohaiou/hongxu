@@ -6,10 +6,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>日报审核</title>
-    <link href="../css/admin.css" rel="stylesheet" type="text/css" />
-    <script src="../js/jquery-1.3.2.min.js" type="text/javascript"></script>
-    <script src="../js/comm.js" type="text/javascript"></script>
-    <script src="../js/WdatePicker.js" type="text/javascript"></script>
+    <link href=<%=ResourceServer%>/css/admin.css rel="stylesheet" type="text/css" />
+    <script src=<%=ResourceServer%>/js/jquery-1.3.2.min.js type="text/javascript"></script>
+    <script src=<%=ResourceServer%>/js/comm.js type="text/javascript"></script>
+    <script src="/js/WdatePicker.js" type="text/javascript"></script>
     <script type="text/javascript">
         var timer_bindevent;
         $(function () {

@@ -7,10 +7,10 @@
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>全款购车</title>
-    <link href="../css/admin.css" rel="stylesheet" type="text/css" />
-    <link href="../css/calculator/calculator.css" rel="stylesheet" type="text/css" />
-    <script src="../js/jquery-1.3.2.min.js" type="text/javascript"></script>
-    <script src="../js/calculator.js" type="text/javascript"></script>
+    <link href=<%=ResourceServer%>/css/admin.css rel="stylesheet" type="text/css" />
+    <link href=<%=ResourceServer%>/css/calculator/calculator.css rel="stylesheet" type="text/css" />
+    <script src=<%=ResourceServer%>/js/jquery-1.3.2.min.js type="text/javascript"></script>
+    <script src=<%=ResourceServer%>/js/calculator.js type="text/javascript"></script>
     <script language="javascript" type="text/javascript">
         var curnumberbox;
         var timer_bindevent;

@@ -9,7 +9,7 @@
     <title>红旭集团-爱车车价评估器</title>
     <meta content="红旭集团,爱车车价评估器" name="keywords">
     <meta content="红旭集团,爱车车价评估器" name="description">
-    <link href="../css/escpg.css" rel="stylesheet" type="text/css" />
+    <link href=<%=ResourceServer%>/css/escpg.css rel="stylesheet" type="text/css" />
 </head>
 <body>
     <div class="dwrap">

@@ -5,8 +5,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>活动设置</title>
-    <link href="../css/admin.css" rel="stylesheet" type="text/css" />
-    <script src="../js/jquery-1.9.1.js" type="text/javascript"></script>
+    <link href=<%=ResourceServer%>/css/admin.css rel="stylesheet" type="text/css" />
+    <script src=<%=ResourceServer%>/js/jquery-1.9.1.js type="text/javascript"></script>
     <script type="text/javascript">
         $(function () {
             $("#cbxAllPowerUser").click(function () {

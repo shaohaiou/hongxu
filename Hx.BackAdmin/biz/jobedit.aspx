@@ -5,10 +5,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>招聘信息设置</title>
-    <link href="../css/admin.css" rel="stylesheet" type="text/css" />
-    <script src="../js/jquery-1.3.2.min.js" type="text/javascript"></script>
-    <script src="../js/ckeditor/ckeditor.js" type="text/javascript"></script>
-    <script src="../js/ajaxupload.js" type="text/javascript"></script>
+    <link href=<%=ResourceServer%>/css/admin.css rel="stylesheet" type="text/css" />
+    <script src=<%=ResourceServer%>/js/jquery-1.3.2.min.js type="text/javascript"></script>
+    <script src=<%=ResourceServer%>/js/ckeditor/ckeditor.js type="text/javascript"></script>
+    <script src=<%=ResourceServer%>/js/ajaxupload.js type="text/javascript"></script>
     <script type="text/javascript">
         $(function () {
             CKEDITOR.replace('txtContent', { toolbar: 'Basic', height: 680, width: 980 });

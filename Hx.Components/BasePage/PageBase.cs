@@ -78,6 +78,19 @@ namespace Hx.Components.BasePage
             }
         }
 
+        private string _resourceserver = string.Empty;
+        protected virtual string ResourceServer
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_resourceserver))
+                {
+                    _resourceserver = CommConfig.GetConfig().AppSetting["resourceserver"];
+                }
+                return _resourceserver;
+            }
+        }
+
         protected virtual void Check() { }
 
         /// <summary>

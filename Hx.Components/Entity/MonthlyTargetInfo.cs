@@ -90,6 +90,16 @@ namespace Hx.Components.Entity
         }
 
         /// <summary>
+        /// 在库超3个月台次
+        /// </summary>
+        [JsonIgnore]
+        public string XSzkcsgytc
+        {
+            get { return GetString("XSzkcsgytc", ""); }
+            set { SetExtendedAttribute("XSzkcsgytc", value); }
+        }
+
+        /// <summary>
         /// 展厅占比
         /// </summary>
         [JsonIgnore]

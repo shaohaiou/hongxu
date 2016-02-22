@@ -1639,7 +1639,7 @@ namespace Hx.BackAdmin.dayreport
 
                 #region 表数据
 
-                DataRow[] rows = new DataRow[37];
+                DataRow[] rows = new DataRow[38];
 
                 data.DefaultView.RowFilter = "项目='展厅首次来客批次'";
                 decimal hjztsclkpc = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
@@ -1880,48 +1880,52 @@ namespace Hx.BackAdmin.dayreport
                 rows[26]["实际"] = hjrktc - hjztjcts - hjewxstc - hjwlxstc;
 
                 rows[27] = tbl.NewRow();
-                rows[27]["关键指标"] = "在途";
-                rows[27]["实际"] = monthtarget == null ? string.Empty : monthtarget.XSztcl;
+                rows[27]["关键指标"] = "在库超3个月";
+                rows[27]["实际"] = monthtarget == null ? string.Empty : monthtarget.XSzkcsgytc;
 
                 rows[28] = tbl.NewRow();
-                rows[28]["关键指标"] = "总库存";
-                rows[28]["实际"] = hjrktc - hjztjcts - hjewxstc - hjwlxstc + DataConvert.SafeInt(monthtarget == null ? string.Empty : monthtarget.XSztcl);
+                rows[28]["关键指标"] = "在途";
+                rows[28]["实际"] = monthtarget == null ? string.Empty : monthtarget.XSztcl;
 
                 rows[29] = tbl.NewRow();
-                rows[29]["关键指标"] = "上月留单";
-                rows[29]["实际"] = ld.ToString();
+                rows[29]["关键指标"] = "总库存";
+                rows[29]["实际"] = hjrktc - hjztjcts - hjewxstc - hjwlxstc + DataConvert.SafeInt(monthtarget == null ? string.Empty : monthtarget.XSztcl);
 
                 rows[30] = tbl.NewRow();
-                rows[30]["关键指标"] = "本月留单";
-                rows[30]["实际"] = hjztddts - hjztjcts;
+                rows[30]["关键指标"] = "上月留单";
+                rows[30]["实际"] = ld.ToString();
 
                 rows[31] = tbl.NewRow();
-                rows[31]["关键指标"] = "厂家虚出";
-                rows[31]["实际"] = monthtarget == null ? string.Empty : monthtarget.XScjxctc;
+                rows[31]["关键指标"] = "本月留单";
+                rows[31]["实际"] = hjztddts - hjztjcts;
 
                 rows[32] = tbl.NewRow();
-                rows[32]["关键指标"] = "他品牌留单";
-                rows[32]["实际"] = hjqztppxzddtc - hjtppjctc;
+                rows[32]["关键指标"] = "厂家虚出";
+                rows[32]["实际"] = monthtarget == null ? string.Empty : monthtarget.XScjxctc;
 
                 rows[33] = tbl.NewRow();
-                rows[33]["关键指标"] = "他品牌销售台次";
-                rows[33]["目标"] = (monthtarget != null && !string.IsNullOrEmpty(monthtarget.XStppxstc)) ? monthtarget.XStppxstc : mbtppjctc.ToString();
-                rows[33]["实际"] = hjtppjctc;
+                rows[33]["关键指标"] = "他品牌留单";
+                rows[33]["实际"] = hjqztppxzddtc - hjtppjctc;
 
                 rows[34] = tbl.NewRow();
-                rows[34]["关键指标"] = "他品牌单车毛利";
-                rows[34]["目标"] = (monthtarget != null && !string.IsNullOrEmpty(monthtarget.XStppdcml)) ? monthtarget.XStppdcml : mbtppdcml.ToString();
-                rows[34]["实际"] = hjtppdcml;
+                rows[34]["关键指标"] = "他品牌销售台次";
+                rows[34]["目标"] = (monthtarget != null && !string.IsNullOrEmpty(monthtarget.XStppxstc)) ? monthtarget.XStppxstc : mbtppjctc.ToString();
+                rows[34]["实际"] = hjtppjctc;
 
                 rows[35] = tbl.NewRow();
-                rows[35]["关键指标"] = "他品牌综合毛利";
-                rows[35]["目标"] = (monthtarget != null && !string.IsNullOrEmpty(monthtarget.XStppzhml)) ? monthtarget.XStppzhml : mbtppzhml.ToString();
-                rows[35]["实际"] = hjtppzhml;
+                rows[35]["关键指标"] = "他品牌单车毛利";
+                rows[35]["目标"] = (monthtarget != null && !string.IsNullOrEmpty(monthtarget.XStppdcml)) ? monthtarget.XStppdcml : mbtppdcml.ToString();
+                rows[35]["实际"] = hjtppdcml;
 
                 rows[36] = tbl.NewRow();
-                rows[36]["关键指标"] = "他品牌平均单台";
-                rows[36]["目标"] = (monthtarget != null && !string.IsNullOrEmpty(monthtarget.XStpppjdt)) ? monthtarget.XStpppjdt : (mbtppjctc == 0 ? string.Empty : Math.Round((mbtppdcml + mbtppzhml) / mbtppjctc, 0).ToString());
-                rows[36]["实际"] = hjtppjctc == 0 ? string.Empty : Math.Round((hjtppdcml + hjtppzhml) / hjtppjctc, 0).ToString();
+                rows[36]["关键指标"] = "他品牌综合毛利";
+                rows[36]["目标"] = (monthtarget != null && !string.IsNullOrEmpty(monthtarget.XStppzhml)) ? monthtarget.XStppzhml : mbtppzhml.ToString();
+                rows[36]["实际"] = hjtppzhml;
+
+                rows[37] = tbl.NewRow();
+                rows[37]["关键指标"] = "他品牌平均单台";
+                rows[37]["目标"] = (monthtarget != null && !string.IsNullOrEmpty(monthtarget.XStpppjdt)) ? monthtarget.XStpppjdt : (mbtppjctc == 0 ? string.Empty : Math.Round((mbtppdcml + mbtppzhml) / mbtppjctc, 0).ToString());
+                rows[37]["实际"] = hjtppjctc == 0 ? string.Empty : Math.Round((hjtppdcml + hjtppzhml) / hjtppjctc, 0).ToString();
 
                 #endregion
 

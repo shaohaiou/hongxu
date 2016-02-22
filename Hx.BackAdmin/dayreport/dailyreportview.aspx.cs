@@ -404,25 +404,29 @@ namespace Hx.BackAdmin.dayreport
 
                             if (!string.IsNullOrEmpty(monthtarget.XSclpjdj))
                                 sheet.GetRow(24).Cells[39].SetCellValue(DataConvert.SafeFloat(monthtarget.XSclpjdj));
+                            if (!string.IsNullOrEmpty(monthtarget.XSzkcsgytc))
+                                sheet.GetRow(26).Cells[39].SetCellValue(DataConvert.SafeFloat(monthtarget.XSzkcsgytc));
                             if (!string.IsNullOrEmpty(monthtarget.XSztcl))
-                                sheet.GetRow(26).Cells[39].SetCellValue(DataConvert.SafeFloat(monthtarget.XSztcl));
-                            sheet.GetRow(28).Cells[39].SetCellValue(DataConvert.SafeFloat(ld));
+                                sheet.GetRow(27).Cells[39].SetCellValue(DataConvert.SafeFloat(monthtarget.XSztcl));
+                            sheet.GetRow(29).Cells[39].SetCellValue(DataConvert.SafeFloat(ld));
                             if (!string.IsNullOrEmpty(monthtarget.XSzzts))
-                                sheet.GetRow(30).Cells[39].SetCellValue(DataConvert.SafeFloat(monthtarget.XSzzts));
+                                sheet.GetRow(31).Cells[39].SetCellValue(DataConvert.SafeFloat(monthtarget.XSzzts));
                             if(!string.IsNullOrEmpty(monthtarget.XScjxctc))
-                                sheet.GetRow(32).Cells[39].SetCellValue(DataConvert.SafeFloat(monthtarget.XScjxctc));
+                                sheet.GetRow(33).Cells[39].SetCellValue(DataConvert.SafeFloat(monthtarget.XScjxctc));
                         }
                         else
                         {
                             if (!string.IsNullOrEmpty(monthtarget.XSclpjdj))
                                 sheet.GetRow(20).Cells[39].SetCellValue(DataConvert.SafeFloat(monthtarget.XSclpjdj));
+                            if (!string.IsNullOrEmpty(monthtarget.XSzkcsgytc))
+                                sheet.GetRow(22).Cells[39].SetCellValue(DataConvert.SafeFloat(monthtarget.XSzkcsgytc));
                             if (!string.IsNullOrEmpty(monthtarget.XSztcl))
-                                sheet.GetRow(22).Cells[39].SetCellValue(DataConvert.SafeFloat(monthtarget.XSztcl));
-                            sheet.GetRow(24).Cells[39].SetCellValue(DataConvert.SafeFloat(ld));
+                                sheet.GetRow(23).Cells[39].SetCellValue(DataConvert.SafeFloat(monthtarget.XSztcl));
+                            sheet.GetRow(25).Cells[39].SetCellValue(DataConvert.SafeFloat(ld));
                             if (!string.IsNullOrEmpty(monthtarget.XSzzts))
                                 sheet.GetRow(26).Cells[39].SetCellValue(DataConvert.SafeFloat(monthtarget.XSzzts));
                             if (!string.IsNullOrEmpty(monthtarget.XScjxctc))
-                                sheet.GetRow(27).Cells[39].SetCellValue(DataConvert.SafeFloat(monthtarget.XScjxctc));
+                                sheet.GetRow(28).Cells[39].SetCellValue(DataConvert.SafeFloat(monthtarget.XScjxctc));
                         }
                     }
 
@@ -2412,7 +2416,7 @@ namespace Hx.BackAdmin.dayreport
 
                 #region 表数据
 
-                DataRow[] rows = new DataRow[37];
+                DataRow[] rows = new DataRow[38];
 
                 data.DefaultView.RowFilter = "项目='展厅首次来客批次'";
                 decimal hjztsclkpc = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
@@ -2731,6 +2735,10 @@ namespace Hx.BackAdmin.dayreport
                 rows[36] = tbl.NewRow();
                 rows[36]["关键指标"] = "厂家虚出";
                 rows[36]["实际"] = monthtarget == null ? string.Empty : monthtarget.XScjxctc;
+
+                rows[37] = tbl.NewRow();
+                rows[37]["关键指标"] = "在库超3个月";
+                rows[37]["实际"] = monthtarget == null ? string.Empty : monthtarget.XSzkcsgytc;
 
                 #endregion
 
@@ -4426,6 +4434,8 @@ namespace Hx.BackAdmin.dayreport
                 strb.AppendFormat("<td class=\"w60\">{0}</td>", GetCellValue(tbl.Rows[25]["实际"].ToString(), string.Empty, false, false));
                 strb.AppendFormat("<td class=\"w60\" style=\"background:Yellow;\">{0}</td>", GetCellValue(tbl.Rows[26]["关键指标"].ToString(), string.Empty, false, false));
                 strb.AppendFormat("<td class=\"w60\">{0}</td>", GetCellValue(tbl.Rows[26]["实际"].ToString(), string.Empty, false, false));
+                strb.AppendFormat("<td class=\"w80\" style=\"background:Yellow;\">{0}</td>", GetCellValue(tbl.Rows[37]["关键指标"].ToString(), string.Empty, false, false));
+                strb.AppendFormat("<td class=\"w60\">{0}</td>", GetCellValue(tbl.Rows[37]["实际"].ToString(), string.Empty, false, false));
                 strb.AppendFormat("<td class=\"w60\" style=\"background:Yellow;\">{0}</td>", GetCellValue(tbl.Rows[27]["关键指标"].ToString(), string.Empty, false, false));
                 strb.AppendFormat("<td class=\"w60\">{0}</td>", GetCellValue(tbl.Rows[27]["实际"].ToString(), string.Empty, false, false));
                 strb.AppendFormat("<td class=\"w60\" style=\"background:Yellow;\">{0}</td>", GetCellValue(tbl.Rows[28]["关键指标"].ToString(), string.Empty, false, false));

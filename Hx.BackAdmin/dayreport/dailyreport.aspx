@@ -453,69 +453,34 @@
                                 <table width="600" border="0" cellspacing="0" cellpadding="0" class="datatablecw">
                                     <tr>
                                         <td>
-                                            <asp:TextBox runat="server" ID="txtCWycdkdq1" class="srk7 tc number cwycdkdq gray"></asp:TextBox>
+                                            <asp:TextBox runat="server" ID="txtCWycdkdq1" class="srk7 tc cwycdkdq gray"></asp:TextBox>
                                         </td>
                                         <td>
-                                            <asp:TextBox runat="server" ID="txtCWycdkdq2" class="srk7 tc number cwycdkdq gray"></asp:TextBox>
+                                            <asp:TextBox runat="server" ID="txtCWycdkdq2" class="srk7 tc cwycdkdq gray"></asp:TextBox>
                                         </td>
                                         <td>
-                                            <asp:TextBox runat="server" ID="txtCWycdkdq3" class="srk7 tc number cwycdkdq gray"></asp:TextBox>
+                                            <asp:TextBox runat="server" ID="txtCWycdkdq3" class="srk7 tc cwycdkdq gray"></asp:TextBox>
                                         </td>
                                         <td>
-                                            <asp:TextBox runat="server" ID="txtCWycdkdq4" class="srk7 tc number cwycdkdq gray"></asp:TextBox>
+                                            <asp:TextBox runat="server" ID="txtCWycdkdq4" class="srk7 tc cwycdkdq gray"></asp:TextBox>
                                         </td>
                                         <td>
-                                            <asp:TextBox runat="server" ID="txtCWycdkdq5" class="srk7 tc number cwycdkdq gray"></asp:TextBox>
+                                            <asp:TextBox runat="server" ID="txtCWycdkdq5" class="srk7 tc cwycdkdq gray"></asp:TextBox>
                                         </td>
                                         <td>
-                                            <asp:TextBox runat="server" ID="txtCWycdkdq6" class="srk7 tc number cwycdkdq gray"></asp:TextBox>
+                                            <asp:TextBox runat="server" ID="txtCWycdkdq6" class="srk7 tc cwycdkdq gray"></asp:TextBox>
                                         </td>
                                         <td>
-                                            <asp:TextBox runat="server" ID="txtCWycdkdq7" class="srk7 tc number cwycdkdq gray"></asp:TextBox>
+                                            <asp:TextBox runat="server" ID="txtCWycdkdq7" class="srk7 tc cwycdkdq gray"></asp:TextBox>
                                         </td>
                                         <td>
-                                            <asp:TextBox runat="server" ID="txtCWycdkdq8" class="srk7 tc number cwycdkdq gray"></asp:TextBox>
+                                            <asp:TextBox runat="server" ID="txtCWycdkdq8" class="srk7 tc cwycdkdq gray"></asp:TextBox>
                                         </td>
                                         <td>
-                                            <asp:TextBox runat="server" ID="txtCWycdkdq9" class="srk7 tc number cwycdkdq gray"></asp:TextBox>
+                                            <asp:TextBox runat="server" ID="txtCWycdkdq9" class="srk7 tc cwycdkdq gray"></asp:TextBox>
                                         </td>
                                         <td>
-                                            <asp:TextBox runat="server" ID="txtCWycdkdq10" class="srk7 tc number cwycdkdq gray"></asp:TextBox>
-                                        </td>
-                                        <td>
-                                            &nbsp;
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <asp:TextBox runat="server" ID="txtCWycdkdq11" class="srk7 tc number cwycdkdq gray"></asp:TextBox>
-                                        </td>
-                                        <td>
-                                            <asp:TextBox runat="server" ID="txtCWycdkdq12" class="srk7 tc number cwycdkdq gray"></asp:TextBox>
-                                        </td>
-                                        <td>
-                                            <asp:TextBox runat="server" ID="txtCWycdkdq13" class="srk7 tc number cwycdkdq gray"></asp:TextBox>
-                                        </td>
-                                        <td>
-                                            <asp:TextBox runat="server" ID="txtCWycdkdq14" class="srk7 tc number cwycdkdq gray"></asp:TextBox>
-                                        </td>
-                                        <td>
-                                            <asp:TextBox runat="server" ID="txtCWycdkdq15" class="srk7 tc number cwycdkdq gray"></asp:TextBox>
-                                        </td>
-                                        <td>
-                                            <asp:TextBox runat="server" ID="txtCWycdkdq16" class="srk7 tc number cwycdkdq gray"></asp:TextBox>
-                                        </td>
-                                        <td>
-                                            <asp:TextBox runat="server" ID="txtCWycdkdq17" class="srk7 tc number cwycdkdq gray"></asp:TextBox>
-                                        </td>
-                                        <td>
-                                            <asp:TextBox runat="server" ID="txtCWycdkdq18" class="srk7 tc number cwycdkdq gray"></asp:TextBox>
-                                        </td>
-                                        <td>
-                                            <asp:TextBox runat="server" ID="txtCWycdkdq19" class="srk7 tc number cwycdkdq gray"></asp:TextBox>
-                                        </td>
-                                        <td>
-                                            <asp:TextBox runat="server" ID="txtCWycdkdq20" class="srk7 tc number cwycdkdq gray"></asp:TextBox>
+                                            <asp:TextBox runat="server" ID="txtCWycdkdq10" class="srk7 tc cwycdkdq gray"></asp:TextBox>
                                         </td>
                                         <td>
                                             &nbsp;
@@ -523,37 +488,72 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <asp:TextBox runat="server" ID="txtCWycdkdq21" class="srk7 tc number cwycdkdq gray"></asp:TextBox>
+                                            <asp:TextBox runat="server" ID="txtCWycdkdq11" class="srk7 tc cwycdkdq gray"></asp:TextBox>
                                         </td>
                                         <td>
-                                            <asp:TextBox runat="server" ID="txtCWycdkdq22" class="srk7 tc number cwycdkdq gray"></asp:TextBox>
+                                            <asp:TextBox runat="server" ID="txtCWycdkdq12" class="srk7 tc cwycdkdq gray"></asp:TextBox>
                                         </td>
                                         <td>
-                                            <asp:TextBox runat="server" ID="txtCWycdkdq23" class="srk7 tc number cwycdkdq gray"></asp:TextBox>
+                                            <asp:TextBox runat="server" ID="txtCWycdkdq13" class="srk7 tc cwycdkdq gray"></asp:TextBox>
                                         </td>
                                         <td>
-                                            <asp:TextBox runat="server" ID="txtCWycdkdq24" class="srk7 tc number cwycdkdq gray"></asp:TextBox>
+                                            <asp:TextBox runat="server" ID="txtCWycdkdq14" class="srk7 tc cwycdkdq gray"></asp:TextBox>
                                         </td>
                                         <td>
-                                            <asp:TextBox runat="server" ID="txtCWycdkdq25" class="srk7 tc number cwycdkdq gray"></asp:TextBox>
+                                            <asp:TextBox runat="server" ID="txtCWycdkdq15" class="srk7 tc cwycdkdq gray"></asp:TextBox>
                                         </td>
                                         <td>
-                                            <asp:TextBox runat="server" ID="txtCWycdkdq26" class="srk7 tc number cwycdkdq gray"></asp:TextBox>
+                                            <asp:TextBox runat="server" ID="txtCWycdkdq16" class="srk7 tc cwycdkdq gray"></asp:TextBox>
                                         </td>
                                         <td>
-                                            <asp:TextBox runat="server" ID="txtCWycdkdq27" class="srk7 tc number cwycdkdq gray"></asp:TextBox>
+                                            <asp:TextBox runat="server" ID="txtCWycdkdq17" class="srk7 tc cwycdkdq gray"></asp:TextBox>
                                         </td>
                                         <td>
-                                            <asp:TextBox runat="server" ID="txtCWycdkdq28" class="srk7 tc number cwycdkdq gray"></asp:TextBox>
+                                            <asp:TextBox runat="server" ID="txtCWycdkdq18" class="srk7 tc cwycdkdq gray"></asp:TextBox>
                                         </td>
                                         <td>
-                                            <asp:TextBox runat="server" ID="txtCWycdkdq29" class="srk7 tc number cwycdkdq gray"></asp:TextBox>
+                                            <asp:TextBox runat="server" ID="txtCWycdkdq19" class="srk7 tc cwycdkdq gray"></asp:TextBox>
                                         </td>
                                         <td>
-                                            <asp:TextBox runat="server" ID="txtCWycdkdq30" class="srk7 tc number cwycdkdq gray"></asp:TextBox>
+                                            <asp:TextBox runat="server" ID="txtCWycdkdq20" class="srk7 tc cwycdkdq gray"></asp:TextBox>
                                         </td>
                                         <td>
-                                            <asp:TextBox runat="server" ID="txtCWycdkdq31" class="srk7 tc number cwycdkdq gray"></asp:TextBox>
+                                            &nbsp;
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <asp:TextBox runat="server" ID="txtCWycdkdq21" class="srk7 tc cwycdkdq gray"></asp:TextBox>
+                                        </td>
+                                        <td>
+                                            <asp:TextBox runat="server" ID="txtCWycdkdq22" class="srk7 tc cwycdkdq gray"></asp:TextBox>
+                                        </td>
+                                        <td>
+                                            <asp:TextBox runat="server" ID="txtCWycdkdq23" class="srk7 tc cwycdkdq gray"></asp:TextBox>
+                                        </td>
+                                        <td>
+                                            <asp:TextBox runat="server" ID="txtCWycdkdq24" class="srk7 tc cwycdkdq gray"></asp:TextBox>
+                                        </td>
+                                        <td>
+                                            <asp:TextBox runat="server" ID="txtCWycdkdq25" class="srk7 tc cwycdkdq gray"></asp:TextBox>
+                                        </td>
+                                        <td>
+                                            <asp:TextBox runat="server" ID="txtCWycdkdq26" class="srk7 tc cwycdkdq gray"></asp:TextBox>
+                                        </td>
+                                        <td>
+                                            <asp:TextBox runat="server" ID="txtCWycdkdq27" class="srk7 tc cwycdkdq gray"></asp:TextBox>
+                                        </td>
+                                        <td>
+                                            <asp:TextBox runat="server" ID="txtCWycdkdq28" class="srk7 tc cwycdkdq gray"></asp:TextBox>
+                                        </td>
+                                        <td>
+                                            <asp:TextBox runat="server" ID="txtCWycdkdq29" class="srk7 tc cwycdkdq gray"></asp:TextBox>
+                                        </td>
+                                        <td>
+                                            <asp:TextBox runat="server" ID="txtCWycdkdq30" class="srk7 tc cwycdkdq gray"></asp:TextBox>
+                                        </td>
+                                        <td>
+                                            <asp:TextBox runat="server" ID="txtCWycdkdq31" class="srk7 tc cwycdkdq gray"></asp:TextBox>
                                         </td>
                                     </tr>
                                 </table>
@@ -598,7 +598,7 @@
                                             车辆违章次数
                                         </td>
                                         <td>
-                                            <asp:TextBox runat="server" ID="txtXZcpfzr1" CssClass="srk6 number"></asp:TextBox>
+                                            <asp:TextBox runat="server" ID="txtXZcpfzr1" CssClass="srk6"></asp:TextBox>
                                         </td>
                                         <td>
                                             <asp:TextBox runat="server" ID="txtXZdyzclwzcs1" CssClass="srk7 number"></asp:TextBox>
@@ -613,7 +613,7 @@
                                             <asp:TextBox runat="server" ID="txtXZdsizclwzcs1" CssClass="srk7 number"></asp:TextBox>
                                         </td>
                                         <td>
-                                            <asp:TextBox runat="server" ID="txtXZsywcl1" CssClass="srk6 number"></asp:TextBox>
+                                            <asp:TextBox runat="server" ID="txtXZsywcl1" CssClass="srk6"></asp:TextBox>
                                         </td>
                                         <td>
                                             <asp:TextBox runat="server" ID="txtXZwz1" CssClass="srk7 number"></asp:TextBox>
@@ -621,7 +621,7 @@
                                     </tr>
                                     <tr style="background-color: Yellow;">
                                         <td>
-                                            <asp:TextBox runat="server" ID="txtXZcpfzr2" CssClass="srk6 number"></asp:TextBox>
+                                            <asp:TextBox runat="server" ID="txtXZcpfzr2" CssClass="srk6"></asp:TextBox>
                                         </td>
                                         <td>
                                             <asp:TextBox runat="server" ID="txtXZdyzclwzcs2" CssClass="srk7 number"></asp:TextBox>
@@ -636,7 +636,7 @@
                                             <asp:TextBox runat="server" ID="txtXZdsizclwzcs2" CssClass="srk7 number"></asp:TextBox>
                                         </td>
                                         <td>
-                                            <asp:TextBox runat="server" ID="txtXZsywcl2" CssClass="srk6 number"></asp:TextBox>
+                                            <asp:TextBox runat="server" ID="txtXZsywcl2" CssClass="srk6"></asp:TextBox>
                                         </td>
                                         <td>
                                             <asp:TextBox runat="server" ID="txtXZwz2" CssClass="srk7 number"></asp:TextBox>
@@ -644,7 +644,7 @@
                                     </tr>
                                     <tr style="background-color: Yellow;">
                                         <td>
-                                            <asp:TextBox runat="server" ID="txtXZcpfzr3" CssClass="srk6 number"></asp:TextBox>
+                                            <asp:TextBox runat="server" ID="txtXZcpfzr3" CssClass="srk6"></asp:TextBox>
                                         </td>
                                         <td>
                                             <asp:TextBox runat="server" ID="txtXZdyzclwzcs3" CssClass="srk7 number"></asp:TextBox>
@@ -659,7 +659,7 @@
                                             <asp:TextBox runat="server" ID="txtXZdsizclwzcs3" CssClass="srk7 number"></asp:TextBox>
                                         </td>
                                         <td>
-                                            <asp:TextBox runat="server" ID="txtXZsywcl3" CssClass="srk6 number"></asp:TextBox>
+                                            <asp:TextBox runat="server" ID="txtXZsywcl3" CssClass="srk6"></asp:TextBox>
                                         </td>
                                         <td>
                                             <asp:TextBox runat="server" ID="txtXZwz3" CssClass="srk7 number"></asp:TextBox>
@@ -667,7 +667,7 @@
                                     </tr>
                                     <tr style="background-color: Yellow;">
                                         <td>
-                                            <asp:TextBox runat="server" ID="txtXZcpfzr4" CssClass="srk6 number"></asp:TextBox>
+                                            <asp:TextBox runat="server" ID="txtXZcpfzr4" CssClass="srk6"></asp:TextBox>
                                         </td>
                                         <td>
                                             <asp:TextBox runat="server" ID="txtXZdyzclwzcs4" CssClass="srk7 number"></asp:TextBox>
@@ -682,7 +682,7 @@
                                             <asp:TextBox runat="server" ID="txtXZdsizclwzcs4" CssClass="srk7 number"></asp:TextBox>
                                         </td>
                                         <td>
-                                            <asp:TextBox runat="server" ID="txtXZsywcl4" CssClass="srk6 number"></asp:TextBox>
+                                            <asp:TextBox runat="server" ID="txtXZsywcl4" CssClass="srk6"></asp:TextBox>
                                         </td>
                                         <td>
                                             <asp:TextBox runat="server" ID="txtXZwz4" CssClass="srk7 number"></asp:TextBox>
@@ -690,7 +690,7 @@
                                     </tr>
                                     <tr style="background-color: Yellow;">
                                         <td>
-                                            <asp:TextBox runat="server" ID="txtXZcpfzr5" CssClass="srk6 number"></asp:TextBox>
+                                            <asp:TextBox runat="server" ID="txtXZcpfzr5" CssClass="srk6"></asp:TextBox>
                                         </td>
                                         <td>
                                             <asp:TextBox runat="server" ID="txtXZdyzclwzcs5" CssClass="srk7 number"></asp:TextBox>
@@ -705,7 +705,7 @@
                                             <asp:TextBox runat="server" ID="txtXZdsizclwzcs5" CssClass="srk7 number"></asp:TextBox>
                                         </td>
                                         <td>
-                                            <asp:TextBox runat="server" ID="txtXZsywcl5" CssClass="srk6 number"></asp:TextBox>
+                                            <asp:TextBox runat="server" ID="txtXZsywcl5" CssClass="srk6"></asp:TextBox>
                                         </td>
                                         <td>
                                             <asp:TextBox runat="server" ID="txtXZwz5" CssClass="srk7 number"></asp:TextBox>
@@ -713,7 +713,7 @@
                                     </tr>
                                     <tr style="background-color: Yellow;">
                                         <td>
-                                            <asp:TextBox runat="server" ID="txtXZcpfzr6" CssClass="srk6 number"></asp:TextBox>
+                                            <asp:TextBox runat="server" ID="txtXZcpfzr6" CssClass="srk6"></asp:TextBox>
                                         </td>
                                         <td>
                                             <asp:TextBox runat="server" ID="txtXZdyzclwzcs6" CssClass="srk7 number"></asp:TextBox>
@@ -728,7 +728,7 @@
                                             <asp:TextBox runat="server" ID="txtXZdsizclwzcs6" CssClass="srk7 number"></asp:TextBox>
                                         </td>
                                         <td>
-                                            <asp:TextBox runat="server" ID="txtXZsywcl6" CssClass="srk6 number"></asp:TextBox>
+                                            <asp:TextBox runat="server" ID="txtXZsywcl6" CssClass="srk6"></asp:TextBox>
                                         </td>
                                         <td>
                                             <asp:TextBox runat="server" ID="txtXZwz6" CssClass="srk7 number"></asp:TextBox>
@@ -736,7 +736,7 @@
                                     </tr>
                                     <tr style="background-color: Yellow;">
                                         <td>
-                                            <asp:TextBox runat="server" ID="txtXZcpfzr7" CssClass="srk6 number"></asp:TextBox>
+                                            <asp:TextBox runat="server" ID="txtXZcpfzr7" CssClass="srk6"></asp:TextBox>
                                         </td>
                                         <td>
                                             <asp:TextBox runat="server" ID="txtXZdyzclwzcs7" CssClass="srk7 number"></asp:TextBox>
@@ -751,7 +751,7 @@
                                             <asp:TextBox runat="server" ID="txtXZdsizclwzcs7" CssClass="srk7 number"></asp:TextBox>
                                         </td>
                                         <td>
-                                            <asp:TextBox runat="server" ID="txtXZsywcl7" CssClass="srk6 number"></asp:TextBox>
+                                            <asp:TextBox runat="server" ID="txtXZsywcl7" CssClass="srk6"></asp:TextBox>
                                         </td>
                                         <td>
                                             <asp:TextBox runat="server" ID="txtXZwz7" CssClass="srk7 number"></asp:TextBox>

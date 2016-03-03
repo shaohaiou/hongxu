@@ -276,6 +276,8 @@
                             Text="渠道汇总" />
                         <asp:Button runat="server" ID="btnDCCCjqdzb" CssClass="an1" OnClick="btnKeyTarget_Click"
                             Text="网络汇总" />
+                        <asp:Button runat="server" ID="btnDCCCyb" CssClass="an1" OnClick="btnDCCMonthly_Click"
+                            Text="DCC月报" />
                         <%}else if(CurrentDep == DayReportDep.市场部) {%>
                         <asp:Button runat="server" ID="btnXSFollow" CssClass="an1" OnClick="btnXSFollow_Click"
                             Text="客源、线索进度下载" />

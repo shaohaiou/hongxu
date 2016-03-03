@@ -148,6 +148,7 @@ namespace Hx.BackAdmin.dayreport
         {
             txtDate.Text = !string.IsNullOrEmpty(GetString("date")) ? GetString("date") : (DateTime.Today.ToString("yyyy-MM") + "-01");
             txtDate2.Text = !string.IsNullOrEmpty(GetString("date2")) ? GetString("date2") : DateTime.Today.ToString("yyyy-MM-dd");
+
             hdnDayReportCorp.Value = !string.IsNullOrEmpty(GetString("corp")) ? GetString("corp") : CurrentUser.DayReportViewCorpPowerSetting;
 
             NewQuery = "&date=" + txtDate.Text + "&date2=" + txtDate2.Text + "&corp=" + hdnDayReportCorp.Value;
@@ -2583,7 +2584,7 @@ namespace Hx.BackAdmin.dayreport
                 int rownum = 32;
                 if (hdnKeyReportType.Value == "dccqdzhl") rownum = 28;
                 else if (hdnKeyReportType.Value == "dccjqdzb") rownum = 36;
-                else if (hdnKeyReportType.Value == "dcczhhz") rownum = 12;
+                else if (hdnKeyReportType.Value == "dcczhhz") rownum = 13;
 
                 DataRow[] rows = new DataRow[rownum];
 
@@ -2970,9 +2971,14 @@ namespace Hx.BackAdmin.dayreport
                     rows[10]["实际"] = hjscyyddkhzs == 0 ? string.Empty : Math.Round(hjcjzts * 100 / hjscyyddkhzs, 1).ToString();
 
                     rows[11] = tbl.NewRow();
-                    rows[11]["关键指标"] = "网络线索转化率";
-                    rows[11]["目标"] = mbxzwlxszl == 0 ? string.Empty : Math.Round((mbqczjcjs + mbycwcjs + mbtpycjs + mbqtwlcjs) * 100 / mbxzwlxszl, 1).ToString();
-                    rows[11]["实际"] = hjxzwlxszl == 0 ? string.Empty : Math.Round((hjqczjcjs + hjycwcjs + hjtpycjs + hjqtwlcjs) * 100 / hjxzwlxszl, 1).ToString();
+                    rows[11]["关键指标"] = "订单转化率";
+                    rows[11]["目标"] = mbxzwlxszl == 0 ? string.Empty : Math.Round(mbdccdds * 100 / mbxzdccxszl, 1).ToString();
+                    rows[11]["实际"] = hjxzwlxszl == 0 ? string.Empty : Math.Round(hjdccdds * 100 / hjxzdccxszl, 1).ToString();
+
+                    rows[12] = tbl.NewRow();
+                    rows[12]["关键指标"] = "成交转化率";
+                    rows[12]["目标"] = mbxzwlxszl == 0 ? string.Empty : Math.Round(mbcjzts * 100 / mbxzdccxszl, 1).ToString();
+                    rows[12]["实际"] = hjxzwlxszl == 0 ? string.Empty : Math.Round(hjcjzts * 100 / hjxzdccxszl, 1).ToString();
 
                     #endregion
                 }
@@ -3813,10 +3819,10 @@ namespace Hx.BackAdmin.dayreport
                 tblresult.Columns.Add("DCC建档率合计");
                 tblresult.Columns.Add("DCC首次邀约到店率目标值");
                 tblresult.Columns.Add("DCC首次邀约到店率合计");
-                tblresult.Columns.Add("DCC成交率目标值");
-                tblresult.Columns.Add("DCC成交率合计");
-                tblresult.Columns.Add("DCC线索转换率目标值");
-                tblresult.Columns.Add("DCC线索转换率合计");
+                tblresult.Columns.Add("订单转化率目标值");
+                tblresult.Columns.Add("订单转化率合计");
+                tblresult.Columns.Add("成交转化率目标值");
+                tblresult.Columns.Add("成交转化率合计");
 
                 #endregion
 
@@ -3946,12 +3952,12 @@ namespace Hx.BackAdmin.dayreport
                     tblKey.DefaultView.RowFilter = "关键指标='首次邀约到店率'";
                     row["DCC首次邀约到店率目标值"] = tblKey.DefaultView[0]["目标"];
                     row["DCC首次邀约到店率合计"] = tblKey.DefaultView[0]["实际"];
-                    tblKey.DefaultView.RowFilter = "关键指标='成交率'";
-                    row["DCC成交率目标值"] = tblKey.DefaultView[0]["目标"];
-                    row["DCC成交率合计"] = tblKey.DefaultView[0]["实际"];
-                    tblKey.DefaultView.RowFilter = "关键指标='网络线索转化率'";
-                    row["DCC线索转换率目标值"] = tblKey.DefaultView[0]["目标"];
-                    row["DCC线索转换率合计"] = tblKey.DefaultView[0]["实际"];
+                    tblKey.DefaultView.RowFilter = "关键指标='订单转化率'";
+                    row["订单转化率目标值"] = tblKey.DefaultView[0]["目标"];
+                    row["订单转化率合计"] = tblKey.DefaultView[0]["实际"];
+                    tblKey.DefaultView.RowFilter = "关键指标='成交转化率'";
+                    row["成交转化率目标值"] = tblKey.DefaultView[0]["目标"];
+                    row["成交转化率合计"] = tblKey.DefaultView[0]["实际"];
 
                     #endregion
 
@@ -4080,10 +4086,10 @@ namespace Hx.BackAdmin.dayreport
                     row.CreateCell(44).SetCellValue(string.IsNullOrEmpty(drow["DCC建档率合计"].ToString()) ? string.Empty : (drow["DCC建档率合计"].ToString() + "%"));
                     row.CreateCell(45).SetCellValue(string.IsNullOrEmpty(drow["DCC首次邀约到店率目标值"].ToString()) ? string.Empty : (drow["DCC首次邀约到店率目标值"].ToString() + "%"));
                     row.CreateCell(46).SetCellValue(string.IsNullOrEmpty(drow["DCC首次邀约到店率合计"].ToString()) ? string.Empty : (drow["DCC首次邀约到店率合计"].ToString() + "%"));
-                    row.CreateCell(47).SetCellValue(string.IsNullOrEmpty(drow["DCC成交率目标值"].ToString()) ? string.Empty : (drow["DCC成交率目标值"].ToString() + "%"));
-                    row.CreateCell(48).SetCellValue(string.IsNullOrEmpty(drow["DCC成交率合计"].ToString()) ? string.Empty : (drow["DCC成交率合计"].ToString() + "%"));
-                    row.CreateCell(49).SetCellValue(string.IsNullOrEmpty(drow["DCC线索转换率目标值"].ToString()) ? string.Empty : (drow["DCC线索转换率目标值"].ToString() + "%"));
-                    row.CreateCell(50).SetCellValue(string.IsNullOrEmpty(drow["DCC线索转换率合计"].ToString()) ? string.Empty : (drow["DCC线索转换率合计"].ToString() + "%"));
+                    row.CreateCell(47).SetCellValue(string.IsNullOrEmpty(drow["订单转化率目标值"].ToString()) ? string.Empty : (drow["订单转化率目标值"].ToString() + "%"));
+                    row.CreateCell(48).SetCellValue(string.IsNullOrEmpty(drow["订单转化率合计"].ToString()) ? string.Empty : (drow["订单转化率合计"].ToString() + "%"));
+                    row.CreateCell(49).SetCellValue(string.IsNullOrEmpty(drow["成交转化率目标值"].ToString()) ? string.Empty : (drow["成交转化率目标值"].ToString() + "%"));
+                    row.CreateCell(50).SetCellValue(string.IsNullOrEmpty(drow["成交转化率合计"].ToString()) ? string.Empty : (drow["成交转化率合计"].ToString() + "%"));
 
                     for (int i = 0; i <= 1; i++)
                     {
@@ -4100,6 +4106,252 @@ namespace Hx.BackAdmin.dayreport
                         else
                             sheet.GetRow(index).Cells[i + 1].CellStyle = cellStyleBlack;
                     }
+                    index++;
+                }
+                sheet.ForceFormulaRecalculation = true;
+                using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
+                {
+                    workbook.Write(ms);
+                    Response.Clear();
+                    Response.Buffer = true;
+                    Response.ContentType = "application/vnd.ms-excel";
+                    Response.ContentEncoding = System.Text.Encoding.UTF8;
+                    Response.AppendHeader("Content-Disposition", "attachment; filename=" + HttpUtility.UrlEncode(newfile, Encoding.UTF8).ToString() + "");
+                    Response.BinaryWrite(ms.ToArray());
+                    Response.End();
+                    workbook = null;
+                }
+            }
+        }
+
+        protected void btnDCCMonthly_Click(object sender, EventArgs e)
+        {
+            DateTime day = DateTime.Today;
+            if (DateTime.TryParse(txtDate2.Text, out day))
+            {
+                DataTable tblresult = new DataTable();
+
+                #region 表结构
+
+                tblresult.Columns.Add("店名");
+                tblresult.Columns.Add("当月新增潜客总量");
+                tblresult.Columns.Add("当月新增潜客有效建档量");
+                tblresult.Columns.Add("当月新增潜客渠道细分网络E接触");
+                tblresult.Columns.Add("当月新增潜客渠道细分触点");
+                tblresult.Columns.Add("当月新增潜客渠道细分展厅转入");
+                tblresult.Columns.Add("当月新增潜客渠道细分转介绍");
+                tblresult.Columns.Add("当月新增潜客渠道细分销售热线");
+                tblresult.Columns.Add("当月新增潜客渠道细分其他");
+                tblresult.Columns.Add("当月呼出总量");
+                tblresult.Columns.Add("当月有效呼出总量");
+                tblresult.Columns.Add("当月首次邀约到店量");
+                tblresult.Columns.Add("当月再次邀约量");
+                tblresult.Columns.Add("实际订单");
+                tblresult.Columns.Add("实际交车量");
+                tblresult.Columns.Add("公司展厅零售销量");
+                tblresult.Columns.Add("当月公司总销量");
+                tblresult.Columns.Add("当月网络订单渠道细分汽车之家");
+                tblresult.Columns.Add("当月网络订单渠道细分易车网");
+                tblresult.Columns.Add("当月网络订单渠道细分太平洋");
+                tblresult.Columns.Add("当月网络订单渠道细分其他网络");
+                tblresult.Columns.Add("当月网络订单渠道细分转介绍");
+                tblresult.Columns.Add("当月网络订单渠道细分触点");
+                tblresult.Columns.Add("当月网络订单渠道细分其他");
+
+                #endregion
+
+                List<CorporationInfo> corplist = Corporations.Instance.GetList(true);
+                string[] corppower = hdnDayReportCorp.Value.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
+                corplist = corplist.FindAll(c => corppower.Contains(c.ID.ToString()));
+                for (int i = 0; i < corplist.Count; i++)
+                {
+                    DataRow row = tblresult.NewRow();
+
+                    #region 销售数据
+
+                    DayReportDep dep = DayReportDep.销售部;
+                    DailyReportQuery query = new DailyReportQuery()
+                    {
+                        DayUnique = day.ToString("yyyyMM"),
+                        CorporationID = corplist[i].ID,
+                        DayReportDep = dep
+                    };
+                    query.OrderBy = " [DayUnique] ASC";
+                    List<DailyReportInfo> list = DailyReports.Instance.GetList(query, true);
+                    list = list.FindAll(l => l.DailyReportCheckStatus != DailyReportCheckStatus.审核不通过);
+                    MonthlyTargetInfo monthtarget = MonthlyTargets.Instance.GetModel(corplist[i].ID, dep, day, true);
+                    int days = 0;
+                    DataTable tblDay = GetReport(dep, list, monthtarget, day, corplist[i].ID, ref days);
+                    DataTable tblKey = GetKeyReport(dep, list, monthtarget, tblDay, corplist[i].ID);
+
+                    row["店名"] = corplist[i].Name;
+                    tblDay.DefaultView.RowFilter = "项目='展厅交车台数'";
+                    row["公司展厅零售销量"] = tblDay.DefaultView[0]["合计"];
+                    tblDay.DefaultView.RowFilter = "项目='二网销售台次'";
+                    row["当月公司总销量"] = DataConvert.SafeInt(tblDay.DefaultView[0]["合计"]) + DataConvert.SafeInt(row["公司展厅零售销量"]);
+
+
+                    #endregion
+
+                    #region DCC数据
+
+                    dep = DayReportDep.DCC部;
+                    query = new DailyReportQuery()
+                    {
+                        DayUnique = day.ToString("yyyyMM"),
+                        CorporationID = corplist[i].ID,
+                        DayReportDep = dep
+                    };
+                    query.OrderBy = " [DayUnique] ASC";
+                    list = DailyReports.Instance.GetList(query, true);
+                    list = list.FindAll(l => l.DailyReportCheckStatus != DailyReportCheckStatus.审核不通过);
+                    monthtarget = MonthlyTargets.Instance.GetModel(corplist[i].ID, dep, day, true);
+                    days = 0;
+                    tblDay = GetReport(dep, list, monthtarget, day, corplist[i].ID, ref days);
+
+                    tblDay.DefaultView.RowFilter = "项目='新增DCC线索总量'";
+                    row["当月新增潜客总量"] = tblDay.DefaultView[0]["合计"];
+                    tblDay.DefaultView.RowFilter = "项目='新增DCC线索建档量'";
+                    row["当月新增潜客有效建档量"] = tblDay.DefaultView[0]["合计"];
+                    tblDay.DefaultView.RowFilter = "项目='新增网络线索总量'";
+                    row["当月新增潜客渠道细分网络E接触"] = tblDay.DefaultView[0]["合计"];
+                    tblDay.DefaultView.RowFilter = "项目='触点'";
+                    row["当月新增潜客渠道细分触点"] = tblDay.DefaultView[0]["合计"];
+                    tblDay.DefaultView.RowFilter = "项目='展厅当日转入'";
+                    row["当月新增潜客渠道细分展厅转入"] = tblDay.DefaultView[0]["合计"];
+                    tblDay.DefaultView.RowFilter = "项目='转介绍线索数'";
+                    row["当月新增潜客渠道细分转介绍"] = tblDay.DefaultView[0]["合计"];
+                    tblDay.DefaultView.RowFilter = "项目='新增展厅前台来电数'";
+                    row["当月新增潜客渠道细分销售热线"] = tblDay.DefaultView[0]["合计"];
+                    row["当月新增潜客渠道细分其他"] = "";
+                    tblDay.DefaultView.RowFilter = "项目='呼出总量'";
+                    row["当月呼出总量"] = tblDay.DefaultView[0]["合计"];
+                    tblDay.DefaultView.RowFilter = "项目='呼出有效数'";
+                    row["当月有效呼出总量"] = tblDay.DefaultView[0]["合计"];
+                    tblDay.DefaultView.RowFilter = "项目='首次邀约到店客户总数'";
+                    row["当月首次邀约到店量"] = tblDay.DefaultView[0]["合计"];
+                    tblDay.DefaultView.RowFilter = "项目='再次邀约到店数'";
+                    row["当月再次邀约量"] = tblDay.DefaultView[0]["合计"];
+                    tblDay.DefaultView.RowFilter = "项目='DCC订单数'";
+                    row["实际订单"] = tblDay.DefaultView[0]["合计"];
+                    tblDay.DefaultView.RowFilter = "项目='DCC成交总台数'";
+                    row["实际交车量"] = tblDay.DefaultView[0]["合计"];
+                    tblDay.DefaultView.RowFilter = "项目='汽车之家订单数'";
+                    row["当月网络订单渠道细分汽车之家"] = tblDay.DefaultView[0]["合计"];
+                    tblDay.DefaultView.RowFilter = "项目='易车网订单数'";
+                    row["当月网络订单渠道细分易车网"] = tblDay.DefaultView[0]["合计"];
+                    tblDay.DefaultView.RowFilter = "项目='太平洋订单数'";
+                    row["当月网络订单渠道细分太平洋"] = tblDay.DefaultView[0]["合计"];
+                    tblDay.DefaultView.RowFilter = "项目='其他网络订单数'";
+                    row["当月网络订单渠道细分其他网络"] = tblDay.DefaultView[0]["合计"];
+                    tblDay.DefaultView.RowFilter = "项目='转介绍订单数'";
+                    row["当月网络订单渠道细分转介绍"] = tblDay.DefaultView[0]["合计"];
+                    tblDay.DefaultView.RowFilter = "项目='触点订单数'";
+                    row["当月网络订单渠道细分触点"] = tblDay.DefaultView[0]["合计"];
+                    row["当月网络订单渠道细分其他"] = "";
+
+                    #endregion
+
+                    tblresult.Rows.Add(row);
+                }
+
+                IWorkbook workbook = null;
+                ISheet sheet = null;
+                string newfile = string.Empty;
+                string fileName = Utils.GetMapPath(@"\App_Data\DCC月报.xlsx");
+                newfile = string.Format(@"{0}DCC月报汇总-{1}.xlsx", day.ToString("yyyy年M月"),DateTime.Now.ToString("M.dd"));
+                using (FileStream file = new FileStream(fileName, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite))
+                {
+                    workbook = new XSSFWorkbook(file);
+                }
+                sheet = workbook.GetSheetAt(0);
+
+                #region 颜色
+
+                IFont fontblack = workbook.CreateFont();
+                fontblack.Color = HSSFColor.Black.Index;
+
+                ICellStyle cellStyleBlack = workbook.CreateCellStyle();
+                cellStyleBlack.SetFont(fontblack);
+                cellStyleBlack.BorderTop = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyleBlack.BorderRight = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyleBlack.BorderBottom = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyleBlack.BorderLeft = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyleBlack.TopBorderColor = HSSFColor.Black.Index;
+                cellStyleBlack.RightBorderColor = HSSFColor.Black.Index;
+                cellStyleBlack.BottomBorderColor = HSSFColor.Black.Index;
+                cellStyleBlack.LeftBorderColor = HSSFColor.Black.Index;
+
+                ICellStyle cellStyleGreen = workbook.CreateCellStyle();
+                cellStyleGreen.SetFont(fontblack);
+                cellStyleGreen.BorderTop = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyleGreen.BorderRight = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyleGreen.BorderBottom = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyleGreen.BorderLeft = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyleGreen.TopBorderColor = HSSFColor.Black.Index;
+                cellStyleGreen.RightBorderColor = HSSFColor.Black.Index;
+                cellStyleGreen.BottomBorderColor = HSSFColor.Black.Index;
+                cellStyleGreen.LeftBorderColor = HSSFColor.Black.Index;
+                cellStyleGreen.FillForegroundColor = HSSFColor.BrightGreen.Index;
+                cellStyleGreen.FillPattern = FillPattern.SolidForeground;
+
+                ICellStyle cellStyleYellow = workbook.CreateCellStyle();
+                cellStyleYellow.SetFont(fontblack);
+                cellStyleYellow.BorderTop = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyleYellow.BorderRight = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyleYellow.BorderBottom = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyleYellow.BorderLeft = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyleYellow.TopBorderColor = HSSFColor.Black.Index;
+                cellStyleYellow.RightBorderColor = HSSFColor.Black.Index;
+                cellStyleYellow.BottomBorderColor = HSSFColor.Black.Index;
+                cellStyleYellow.LeftBorderColor = HSSFColor.Black.Index;
+                cellStyleYellow.FillForegroundColor = HSSFColor.Yellow.Index;
+                cellStyleYellow.FillPattern = FillPattern.SolidForeground;
+
+                ICellStyle cellStyleRed = workbook.CreateCellStyle();
+                cellStyleRed.SetFont(fontblack);
+                cellStyleRed.BorderTop = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyleRed.BorderRight = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyleRed.BorderBottom = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyleRed.BorderLeft = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyleRed.TopBorderColor = HSSFColor.Black.Index;
+                cellStyleRed.RightBorderColor = HSSFColor.Black.Index;
+                cellStyleRed.BottomBorderColor = HSSFColor.Black.Index;
+                cellStyleRed.LeftBorderColor = HSSFColor.Black.Index;
+                cellStyleRed.FillForegroundColor = HSSFColor.Red.Index;
+                cellStyleRed.FillPattern = FillPattern.SolidForeground;
+
+                #endregion
+
+                int index = 3;
+                sheet.GetRow(0).GetCell(1).SetCellValue(day.ToString("yyyy年  M  月") + "DCC月报");
+                foreach (DataRow drow in tblresult.Rows)
+                {
+                    XSSFRow row = (XSSFRow)sheet.GetRow(index);
+                    row.GetCell(2).SetCellValue(DataConvert.SafeDouble(drow["当月新增潜客总量"].ToString()));
+                    row.GetCell(3).SetCellValue(DataConvert.SafeDouble(drow["当月新增潜客有效建档量"].ToString()));
+                    row.GetCell(6).SetCellValue(DataConvert.SafeDouble(drow["当月新增潜客渠道细分网络E接触"].ToString()));
+                    row.GetCell(7).SetCellValue(DataConvert.SafeDouble(drow["当月新增潜客渠道细分触点"].ToString()));
+                    row.GetCell(8).SetCellValue(DataConvert.SafeDouble(drow["当月新增潜客渠道细分展厅转入"].ToString()));
+                    row.GetCell(9).SetCellValue(DataConvert.SafeDouble(drow["当月新增潜客渠道细分转介绍"].ToString()));
+                    row.GetCell(10).SetCellValue(DataConvert.SafeDouble(drow["当月新增潜客渠道细分销售热线"].ToString()));
+                    row.GetCell(11).SetCellValue(DataConvert.SafeDouble(drow["当月新增潜客渠道细分其他"].ToString()));
+                    row.GetCell(12).SetCellValue(DataConvert.SafeDouble(drow["当月呼出总量"].ToString()));
+                    row.GetCell(13).SetCellValue(DataConvert.SafeDouble(drow["当月有效呼出总量"].ToString()));
+                    row.GetCell(14).SetCellValue(DataConvert.SafeDouble(drow["当月首次邀约到店量"].ToString()));
+                    row.GetCell(16).SetCellValue(DataConvert.SafeDouble(drow["当月再次邀约量"].ToString()));
+                    row.GetCell(18).SetCellValue(DataConvert.SafeDouble(drow["实际订单"].ToString()));
+                    row.GetCell(19).SetCellValue(DataConvert.SafeDouble(drow["实际交车量"].ToString()));
+                    row.GetCell(21).SetCellValue(DataConvert.SafeDouble(drow["公司展厅零售销量"].ToString()));
+                    row.GetCell(23).SetCellValue(DataConvert.SafeDouble(drow["当月公司总销量"].ToString()));
+                    row.GetCell(25).SetCellValue(DataConvert.SafeDouble(drow["当月网络订单渠道细分汽车之家"].ToString()));
+                    row.GetCell(26).SetCellValue(DataConvert.SafeDouble(drow["当月网络订单渠道细分易车网"].ToString()));
+                    row.GetCell(27).SetCellValue(DataConvert.SafeDouble(drow["当月网络订单渠道细分太平洋"].ToString()));
+                    row.GetCell(28).SetCellValue(DataConvert.SafeDouble(drow["当月网络订单渠道细分其他网络"].ToString()));
+                    row.GetCell(29).SetCellValue(DataConvert.SafeDouble(drow["当月网络订单渠道细分转介绍"].ToString()));
+                    row.GetCell(30).SetCellValue(DataConvert.SafeDouble(drow["当月网络订单渠道细分触点"].ToString()));
+                    row.GetCell(31).SetCellValue(DataConvert.SafeDouble(drow["当月网络订单渠道细分其他"].ToString()));
+
                     index++;
                 }
                 sheet.ForceFormulaRecalculation = true;

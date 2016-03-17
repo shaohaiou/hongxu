@@ -85,6 +85,8 @@ namespace Hx.BackAdmin.dayreport
             {
                 cbxAllowModify.Checked = CurrentUser.AllowModify == "1";
                 cbxReportGather.Checked = CurrentUser.ReportGather == "1";
+                cbxYearGather.Checked = CurrentUser.YearGather == "1";
+                cbxAllowYearGahterInput.Checked = CurrentUser.AllowYearGahterInput == "1";
                 hdnDayReportDep.Value = CurrentUser.DayReportDepPowerSetting;
                 hdnModule.Value = CurrentUser.DayReportModulePowerSetting;
                 hdnTargetCorp.Value = CurrentUser.MonthlyTargetCorpPowerSetting;
@@ -263,6 +265,8 @@ namespace Hx.BackAdmin.dayreport
             DayReportUserInfo user = CurrentUser;
             user.AllowModify = cbxAllowModify.Checked ? "1" : "0";
             user.ReportGather = cbxReportGather.Checked ? "1" : "0";
+            user.YearGather = cbxYearGather.Checked ? "1" : "0";
+            user.AllowYearGahterInput = cbxAllowYearGahterInput.Checked ? "1" : "0";
             user.DayReportModulePowerSetting = hdnModule.Value;
             user.DayReportDepPowerSetting = hdnDayReportDep.Value;
             user.MonthlyTargetDepPowerSetting = hdnTargetDep.Value;

@@ -286,6 +286,20 @@
                           {%>
                         <asp:Button runat="server" ID="btnXSDayGather" CssClass="an1" OnClick="btnXSDayGather_Click"
                             Text="销售日报汇总" />
+                            <%if(CurrentUser.YearGather == "1"){ %>
+                        <asp:Button runat="server" ID="btnXSYearGather" CssClass="an1" OnClick="btnXSYearGather_Click"
+                            Text="销售数据分析汇总" />
+                            <%} %>
+                        <%}else if(CurrentDep == DayReportDep.售后部){ %>
+                            <%if(CurrentUser.YearGather == "1") {%>
+                        <asp:Button runat="server" ID="btnSHYearGather" CssClass="an1" OnClick="btnSHYearGather_Click"
+                            Text="售后数据分析汇总" />
+                            <%} %>
+                        <%}else if (CurrentDep == DayReportDep.精品部){ %>
+                            <%if(CurrentUser.YearGather == "1") {%>
+                        <asp:Button runat="server" ID="btnJPYearGather" CssClass="an1" OnClick="btnJPYearGather_Click"
+                            Text="精品数据分析汇总" />
+                            <%} %>                            
                         <%} %>
                         <input type="button" name="btnExportExcel" id="btnExportExcel" value="导出Excel" onclick="exportExcel()"
                             class="an1" />

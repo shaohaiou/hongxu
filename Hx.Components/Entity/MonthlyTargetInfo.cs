@@ -100,6 +100,156 @@ namespace Hx.Components.Entity
         }
 
         /// <summary>
+        /// 在库超6个月台次
+        /// </summary>
+        [JsonIgnore]
+        public string XSzkclgytc
+        {
+            get { return GetString("XSzkclgytc", ""); }
+            set { SetExtendedAttribute("XSzkclgytc", value); }
+        }
+
+        /// <summary>
+        /// 在库超1年台次
+        /// </summary>
+        [JsonIgnore]
+        public string XSzkcyntc
+        {
+            get { return GetString("XSzkcyntc", ""); }
+            set { SetExtendedAttribute("XSzkcyntc", value); }
+        }
+
+        /// <summary>
+        /// 本月整车实际销售额
+        /// </summary>
+        [JsonIgnore]
+        public string XSbyzcsjxse
+        {
+            get { return GetString("XSbyzcsjxse", ""); }
+            set { SetExtendedAttribute("XSbyzcsjxse", value); }
+        }
+
+        /// <summary>
+        /// 本月整车预算销售额
+        /// </summary>
+        [JsonIgnore]
+        public string XSbyzcysxse
+        {
+            get { return GetString("XSbyzcysxse", ""); }
+            set { SetExtendedAttribute("XSbyzcysxse", value); }
+        }
+
+        /// <summary>
+        /// 本月整车裸车实际毛利额
+        /// </summary>
+        [JsonIgnore]
+        public string XSbyzclcsjmle
+        {
+            get { return GetString("XSbyzclcsjmle", ""); }
+            set { SetExtendedAttribute("XSbyzclcsjmle", value); }
+        }
+
+        /// <summary>
+        /// 本月整车裸车预算毛利额
+        /// </summary>
+        [JsonIgnore]
+        public string XSbyzclcysmle
+        {
+            get { return GetString("XSbyzclcysmle", ""); }
+            set { SetExtendedAttribute("XSbyzclcysmle", value); }
+        }
+
+        /// <summary>
+        /// 本月厂方返利实际收入
+        /// </summary>
+        [JsonIgnore]
+        public string XSbycfflsjsr
+        {
+            get { return GetString("XSbycfflsjsr", ""); }
+            set { SetExtendedAttribute("XSbycfflsjsr", value); }
+        }
+
+        /// <summary>
+        /// 本月厂方返利预算收入
+        /// </summary>
+        [JsonIgnore]
+        public string XSbycfflyssr
+        {
+            get { return GetString("XSbycfflyssr", ""); }
+            set { SetExtendedAttribute("XSbycfflyssr", value); }
+        }
+
+        /// <summary>
+        /// 本月厂方金融手续费净收入
+        /// </summary>
+        [JsonIgnore]
+        public string XSbycfjrsxfjsr
+        {
+            get { return GetString("XSbycfjrsxfjsr", ""); }
+            set { SetExtendedAttribute("XSbycfjrsxfjsr", value); }
+        }
+
+        /// <summary>
+        /// 本月美容交车净收入
+        /// </summary>
+        [JsonIgnore]
+        public string XSbymrjcjsr
+        {
+            get { return GetString("XSbymrjcjsr", ""); }
+            set { SetExtendedAttribute("XSbymrjcjsr", value); }
+        }
+
+        /// <summary>
+        /// 本月精品毛利
+        /// </summary>
+        [JsonIgnore]
+        public string XSbyjpmlsr
+        {
+            get { return GetString("XSbyjpmlsr", ""); }
+            set { SetExtendedAttribute("XSbyjpmlsr", value); }
+        }
+
+        /// <summary>
+        /// 本月精品预算毛利
+        /// </summary>
+        [JsonIgnore]
+        public string XSbyjpmlyssr
+        {
+            get { return GetString("XSbyjpmlyssr", ""); }
+            set { SetExtendedAttribute("XSbyjpmlyssr", value); }
+        }
+
+        /// <summary>
+        /// 本月延保毛利
+        /// </summary>
+        [JsonIgnore]
+        public string XSbyybml
+        {
+            get { return GetString("XSbyybml", ""); }
+            set { SetExtendedAttribute("XSbyybml", value); }
+        }
+
+        /// <summary>
+        /// 本月终生免费保养毛利
+        /// </summary>
+        [JsonIgnore]
+        public string XSbyzsmfbyml
+        {
+            get { return GetString("XSbyzsmfbyml", ""); }
+            set { SetExtendedAttribute("XSbyzsmfbyml", value); }
+        }
+
+        /// <summary>
+        /// 本月其他收入
+        /// </summary>
+        [JsonIgnore]
+        public string XSbyqtsr
+        {
+            get { return GetString("XSbyqtsr", ""); }
+            set { SetExtendedAttribute("XSbyqtsr", value); }
+        }
+
+        /// <summary>
         /// 展厅占比
         /// </summary>
         [JsonIgnore]
@@ -367,6 +517,256 @@ namespace Hx.Components.Entity
         {
             get { return GetString("SHwxkhzs", ""); }
             set { SetExtendedAttribute("SHwxkhzs", value); }
+        }
+
+        /// <summary>
+        /// 本月一般维修额
+        /// </summary>
+        [JsonIgnore]
+        public string SHbyybwxe
+        {
+            get { return GetString("SHbyybwxe", ""); }
+            set { SetExtendedAttribute("SHbyybwxe", value); }
+        }
+
+        /// <summary>
+        /// 本月首保索赔额
+        /// </summary>
+        [JsonIgnore]
+        public string SHbysbspe
+        {
+            get { return GetString("SHbysbspe", ""); }
+            set { SetExtendedAttribute("SHbysbspe", value); }
+        }
+
+        /// <summary>
+        /// 本月他品牌收入
+        /// </summary>
+        [JsonIgnore]
+        public string SHbytppsr
+        {
+            get { return GetString("SHbytppsr", ""); }
+            set { SetExtendedAttribute("SHbytppsr", value); }
+        }
+
+        /// <summary>
+        /// 本月维修毛利额
+        /// </summary>
+        [JsonIgnore]
+        public string SHbywxmle
+        {
+            get { return GetString("SHbywxmle", ""); }
+            set { SetExtendedAttribute("SHbywxmle", value); }
+        }
+
+        /// <summary>
+        /// 本月维修毛利率
+        /// </summary>
+        [JsonIgnore]
+        public string SHbywxmll
+        {
+            get { return GetString("SHbywxmll", ""); }
+            set { SetExtendedAttribute("SHbywxmll", value); }
+        }
+
+        /// <summary>
+        /// 本月废旧收入
+        /// </summary>
+        [JsonIgnore]
+        public string SHbyfjsr
+        {
+            get { return GetString("SHbyfjsr", ""); }
+            set { SetExtendedAttribute("SHbyfjsr", value); }
+        }
+
+        /// <summary>
+        /// 本月含废旧的维修实际毛利率
+        /// </summary>
+        [JsonIgnore]
+        public string SHbyhfjdwxsjmll
+        {
+            get { return GetString("SHbyhfjdwxsjmll", ""); }
+            set { SetExtendedAttribute("SHbyhfjdwxsjmll", value); }
+        }
+
+        /// <summary>
+        /// 本月含废旧的维修预算毛利率
+        /// </summary>
+        [JsonIgnore]
+        public string SHbyhfjdwxysmll
+        {
+            get { return GetString("SHbyhfjdwxysmll", ""); }
+            set { SetExtendedAttribute("SHbyhfjdwxysmll", value); }
+        }
+
+        /// <summary>
+        /// 本月油漆收入
+        /// </summary>
+        [JsonIgnore]
+        public string SHbyyqsr
+        {
+            get { return GetString("SHbyyqsr", ""); }
+            set { SetExtendedAttribute("SHbyyqsr", value); }
+        }
+
+        /// <summary>
+        /// 本月油漆成本
+        /// </summary>
+        [JsonIgnore]
+        public string SHbyyqcb
+        {
+            get { return GetString("SHbyyqcb", ""); }
+            set { SetExtendedAttribute("SHbyyqcb", value); }
+        }
+
+        /// <summary>
+        /// 本月养护产品毛利率
+        /// </summary>
+        [JsonIgnore]
+        public string SHbyyhcpmll
+        {
+            get { return GetString("SHbyyhcpmll", ""); }
+            set { SetExtendedAttribute("SHbyyhcpmll", value); }
+        }
+
+        /// <summary>
+        /// 本月标准库存金额
+        /// </summary>
+        [JsonIgnore]
+        public string SHbybzkcje
+        {
+            get { return GetString("SHbybzkcje", ""); }
+            set { SetExtendedAttribute("SHbybzkcje", value); }
+        }
+
+        /// <summary>
+        /// 本月期末实际库存额
+        /// </summary>
+        [JsonIgnore]
+        public string SHbyqmsjkce
+        {
+            get { return GetString("SHbyqmsjkce", ""); }
+            set { SetExtendedAttribute("SHbyqmsjkce", value); }
+        }
+
+        /// <summary>
+        /// 其中一年以上库存额
+        /// </summary>
+        [JsonIgnore]
+        public string SHqzynyskce
+        {
+            get { return GetString("SHqzynyskce", ""); }
+            set { SetExtendedAttribute("SHqzynyskce", value); }
+        }
+
+        /// <summary>
+        /// 本月标准的库存度
+        /// </summary>
+        [JsonIgnore]
+        public string SHbybzdkcd
+        {
+            get { return GetString("SHbybzdkcd", ""); }
+            set { SetExtendedAttribute("SHbybzdkcd", value); }
+        }
+
+        /// <summary>
+        /// 本月实际库存度
+        /// </summary>
+        [JsonIgnore]
+        public string SHbysjkcd
+        {
+            get { return GetString("SHbysjkcd", ""); }
+            set { SetExtendedAttribute("SHbysjkcd", value); }
+        }
+
+        /// <summary>
+        /// 本月配件毛利率
+        /// </summary>
+        [JsonIgnore]
+        public string SHbypjmll
+        {
+            get { return GetString("SHbypjmll", ""); }
+            set { SetExtendedAttribute("SHbypjmll", value); }
+        }
+
+        /// <summary>
+        /// 本月事故车毛利率
+        /// </summary>
+        [JsonIgnore]
+        public string SHbysgcmll
+        {
+            get { return GetString("SHbysgcmll", ""); }
+            set { SetExtendedAttribute("SHbysgcmll", value); }
+        }
+
+        /// <summary>
+        /// 本月一般维修毛利率
+        /// </summary>
+        [JsonIgnore]
+        public string SHbyybwxmll
+        {
+            get { return GetString("SHbyybwxmll", ""); }
+            set { SetExtendedAttribute("SHbyybwxmll", value); }
+        }
+
+        /// <summary>
+        /// 本月他牌车维修毛利率
+        /// </summary>
+        [JsonIgnore]
+        public string SHbytppwxmll
+        {
+            get { return GetString("SHbytppwxmll", ""); }
+            set { SetExtendedAttribute("SHbytppwxmll", value); }
+        }
+
+        /// <summary>
+        /// 本月续保返利收入
+        /// </summary>
+        [JsonIgnore]
+        public string SHbyxbflsr
+        {
+            get { return GetString("SHbyxbflsr", ""); }
+            set { SetExtendedAttribute("SHbyxbflsr", value); }
+        }
+
+        /// <summary>
+        /// 本月续保平均单台净收入
+        /// </summary>
+        [JsonIgnore]
+        public string SHbyxbpjdtjsr
+        {
+            get { return GetString("SHbyxbpjdtjsr", ""); }
+            set { SetExtendedAttribute("SHbyxbpjdtjsr", value); }
+        }
+
+        /// <summary>
+        /// 本月延保返利收入
+        /// </summary>
+        [JsonIgnore]
+        public string SHbyybflsr
+        {
+            get { return GetString("SHbyybflsr", ""); }
+            set { SetExtendedAttribute("SHbyybflsr", value); }
+        }
+
+        /// <summary>
+        /// 本月延保平均单台净收入
+        /// </summary>
+        [JsonIgnore]
+        public string SHbyybpjdtjsr
+        {
+            get { return GetString("SHbyybpjdtjsr", ""); }
+            set { SetExtendedAttribute("SHbyybpjdtjsr", value); }
+        }
+
+        /// <summary>
+        /// 本月导航升级业务平均单台收入
+        /// </summary>
+        [JsonIgnore]
+        public string SHbydhsjywpjdtsr
+        {
+            get { return GetString("SHbydhsjywpjdtsr", ""); }
+            set { SetExtendedAttribute("SHbydhsjywpjdtsr", value); }
         }
 
         #endregion
@@ -876,6 +1276,140 @@ namespace Hx.Components.Entity
         #region 关键指标
         
         #endregion
+
+        #endregion
+
+        #region 精品部月度目标
+
+        /// <summary>
+        /// 预算展厅精品毛利额
+        /// </summary>
+        [JsonIgnore]
+        public string JPysztjpmle
+        {
+            get { return GetString("JPysztjpmle", ""); }
+            set { SetExtendedAttribute("JPysztjpmle", value); }
+        }
+
+        /// <summary>
+        /// 预算网点精品毛利额
+        /// </summary>
+        [JsonIgnore]
+        public string JPyswdjpmle
+        {
+            get { return GetString("JPyswdjpmle", ""); }
+            set { SetExtendedAttribute("JPyswdjpmle", value); }
+        }
+
+        /// <summary>
+        /// 预算售后精品毛利额
+        /// </summary>
+        [JsonIgnore]
+        public string JPysshjpmle
+        {
+            get { return GetString("JPysshjpmle", ""); }
+            set { SetExtendedAttribute("JPysshjpmle", value); }
+        }
+
+        /// <summary>
+        /// 预算展厅单车产值
+        /// </summary>
+        [JsonIgnore]
+        public string JPysztdccz
+        {
+            get { return GetString("JPysztdccz", ""); }
+            set { SetExtendedAttribute("JPysztdccz", value); }
+        }
+
+        /// <summary>
+        /// 预算网点单台产值
+        /// </summary>
+        [JsonIgnore]
+        public string JPyswddtcz
+        {
+            get { return GetString("JPyswddtcz", ""); }
+            set { SetExtendedAttribute("JPyswddtcz", value); }
+        }
+
+        /// <summary>
+        /// 预算售后单台产值
+        /// </summary>
+        [JsonIgnore]
+        public string JPysshdtcz
+        {
+            get { return GetString("JPysshdtcz", ""); }
+            set { SetExtendedAttribute("JPysshdtcz", value); }
+        }
+
+        /// <summary>
+        /// 展厅实际精品产值
+        /// </summary>
+        [JsonIgnore]
+        public string JPztsjjpcz
+        {
+            get { return GetString("JPztsjjpcz", ""); }
+            set { SetExtendedAttribute("JPztsjjpcz", value); }
+        }
+
+        /// <summary>
+        /// 展厅实际的毛利额
+        /// </summary>
+        [JsonIgnore]
+        public string JPztsjmle
+        {
+            get { return GetString("JPztsjmle", ""); }
+            set { SetExtendedAttribute("JPztsjmle", value); }
+        }
+
+        /// <summary>
+        /// 网点精品毛利额
+        /// </summary>
+        [JsonIgnore]
+        public string JPwdjpmle
+        {
+            get { return GetString("JPwdjpmle", ""); }
+            set { SetExtendedAttribute("JPwdjpmle", value); }
+        }
+
+        /// <summary>
+        /// 售后精品毛利额
+        /// </summary>
+        [JsonIgnore]
+        public string JPshjpmle
+        {
+            get { return GetString("JPshjpmle", ""); }
+            set { SetExtendedAttribute("JPshjpmle", value); }
+        }
+
+        /// <summary>
+        /// 期末库存数
+        /// </summary>
+        [JsonIgnore]
+        public string JPqmkcs
+        {
+            get { return GetString("JPqmkcs", ""); }
+            set { SetExtendedAttribute("JPqmkcs", value); }
+        }
+
+        /// <summary>
+        /// 3个月以上滞销库存
+        /// </summary>
+        [JsonIgnore]
+        public string JPsgyyszxkc
+        {
+            get { return GetString("JPsgyyszxkc", ""); }
+            set { SetExtendedAttribute("JPsgyyszxkc", value); }
+        }
+
+        /// <summary>
+        /// 1年以上滞销库存
+        /// </summary>
+        [JsonIgnore]
+        public string JPynyszxkc
+        {
+            get { return GetString("JPynyszxkc", ""); }
+            set { SetExtendedAttribute("JPynyszxkc", value); }
+        }
 
         #endregion
 

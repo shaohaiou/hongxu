@@ -165,11 +165,114 @@ namespace Hx.BackAdmin.dayreport
                     target = MonthlyTargets.Instance.GetModel(DataConvert.SafeInt(ddlCorp.SelectedValue), CurrentDep, daytarget.AddMonths(-1), true);
                 if (target != null)
                 {
-                    txtXSztcl.Text = target.XSztcl;
-                    txtXSclpjdj.Text = target.XSclpjdj;
-                    txtXSzzts.Text = target.XSzzts;
-                    txtXScjxctc.Text = target.XScjxctc;
-                    txtXSzkcsgytc.Text = target.XSzkcsgytc;
+                    if (CurrentUser.AllowYearGahterInput == "1")
+                    {
+                        txtXSbyzcsjxse.Text = target.XSbyzcsjxse;
+                        txtXSbyzcysxse.Text = target.XSbyzcysxse;
+                        txtXSbyzclcsjmle.Text = target.XSbyzclcsjmle;
+                        txtXSbyzclcysmle.Text = target.XSbyzclcysmle;
+                        txtXSbycfflsjsr.Text = target.XSbycfflsjsr;
+                        txtXSbycfflyssr.Text = target.XSbycfflyssr;
+                        txtXSbycfjrsxfjsr.Text = target.XSbycfjrsxfjsr;
+                        txtXSbymrjcjsr.Text = target.XSbymrjcjsr;
+                        txtXSbyjpmlsr.Text = target.XSbyjpmlsr;
+                        txtXSbyjpmlyssr.Text = target.XSbyjpmlyssr;
+                        txtXSbyybml.Text = target.XSbyybml;
+                        txtXSbyzsmfbyml.Text = target.XSbyzsmfbyml;
+                        txtXSbyqtsr.Text = target.XSbyqtsr;
+                    }
+                    else
+                    {
+                        txtXSztcl.Text = target.XSztcl;
+                        txtXSclpjdj.Text = target.XSclpjdj;
+                        txtXSzzts.Text = target.XSzzts;
+                        txtXScjxctc.Text = target.XScjxctc;
+                        txtXSzkcsgytc.Text = target.XSzkcsgytc;
+                        txtXSzkclgytc.Text = target.XSzkclgytc;
+                        txtXSzkcyntc.Text = target.XSzkcyntc;
+                    }
+                }
+            }
+
+            #endregion
+
+            #region 售后部特殊处理
+
+            if (CurrentDep == DayReportDep.售后部)
+            {
+                MonthlyTargetInfo target = null;
+                DateTime daytarget = DateTime.Today;
+                if (DateTime.TryParse(txtDate.Text, out daytarget))
+                {
+                    target = MonthlyTargets.Instance.GetModel(DataConvert.SafeInt(ddlCorp.SelectedValue), CurrentDep, daytarget, true);
+                }
+                if (target == null)
+                    target = MonthlyTargets.Instance.GetModel(DataConvert.SafeInt(ddlCorp.SelectedValue), CurrentDep, daytarget.AddMonths(-1), true);
+                if (target != null)
+                {
+                    if (CurrentUser.AllowYearGahterInput == "1")
+                    {
+                        txtSHbyybwxe.Text = target.SHbyybwxe;
+                        txtSHbysbspe.Text = target.SHbysbspe;
+                        txtSHbytppsr.Text = target.SHbytppsr;
+                        txtSHbywxmle.Text = target.SHbywxmle;
+                        txtSHbywxmll.Text = target.SHbywxmll;
+                        txtSHbyfjsr.Text = target.SHbyfjsr;
+                        txtSHbyhfjdwxsjmll.Text = target.SHbyhfjdwxsjmll;
+                        txtSHbyhfjdwxysmll.Text = target.SHbyhfjdwxysmll;
+                        txtSHbyyqsr.Text = target.SHbyyqsr;
+                        txtSHbyyqcb.Text = target.SHbyyqcb;
+                        txtSHbyyhcpmll.Text = target.SHbyyhcpmll;
+                        txtSHbybzkcje.Text = target.SHbybzkcje;
+                        txtSHbyqmsjkce.Text = target.SHbyqmsjkce;
+                        txtSHqzynyskce.Text = target.SHqzynyskce;
+                        txtSHbybzdkcd.Text = target.SHbybzdkcd;
+                        txtSHbysjkcd.Text = target.SHbysjkcd;
+                        txtSHbypjmll.Text = target.SHbypjmll;
+                        txtSHbysgcmll.Text = target.SHbysgcmll;
+                        txtSHbyybwxmll.Text = target.SHbyybwxmll;
+                        txtSHbytppwxmll.Text = target.SHbytppwxmll;
+                        txtSHbyxbflsr.Text = target.SHbyxbflsr;
+                        txtSHbyxbpjdtjsr.Text = target.SHbyxbpjdtjsr;
+                        txtSHbyybflsr.Text = target.SHbyybflsr;
+                        txtSHbyybpjdtjsr.Text = target.SHbyybpjdtjsr;
+                        txtSHbydhsjywpjdtsr.Text = target.SHbydhsjywpjdtsr;
+                    }
+                }
+            }
+
+            #endregion
+
+            #region 精品部特殊处理
+
+            if (CurrentDep == DayReportDep.精品部)
+            {
+                MonthlyTargetInfo target = null;
+                DateTime daytarget = DateTime.Today;
+                if (DateTime.TryParse(txtDate.Text, out daytarget))
+                {
+                    target = MonthlyTargets.Instance.GetModel(DataConvert.SafeInt(ddlCorp.SelectedValue), CurrentDep, daytarget, true);
+                }
+                if (target == null)
+                    target = MonthlyTargets.Instance.GetModel(DataConvert.SafeInt(ddlCorp.SelectedValue), CurrentDep, daytarget.AddMonths(-1), true);
+                if (target != null)
+                {
+                    if (CurrentUser.AllowYearGahterInput == "1")
+                    {
+                        txtJPysztjpmle.Text = target.JPysztjpmle;
+                        txtJPyswdjpmle.Text = target.JPyswdjpmle;
+                        txtJPysshjpmle.Text = target.JPysshjpmle;
+                        txtJPysztdccz.Text = target.JPysztdccz;
+                        txtJPyswddtcz.Text = target.JPyswddtcz;
+                        txtJPysshdtcz.Text = target.JPysshdtcz;
+                        txtJPztsjjpcz.Text = target.JPztsjjpcz;
+                        txtJPztsjmle.Text = target.JPztsjmle;
+                        txtJPwdjpmle.Text = target.JPwdjpmle;
+                        txtJPshjpmle.Text = target.JPshjpmle;
+                        txtJPqmkcs.Text = target.JPqmkcs;
+                        txtJPsgyyszxkc.Text = target.JPsgyyszxkc;
+                        txtJPynyszxkc.Text = target.JPynyszxkc;
+                    }
                 }
             }
 
@@ -588,12 +691,129 @@ namespace Hx.BackAdmin.dayreport
                         {
                             target.LastUpdateUser = CurrentUser.UserName;
                         }
-                        target.XSztcl = txtXSztcl.Text;
-                        target.XSclpjdj = txtXSclpjdj.Text;
-                        target.XSzzts = txtXSzzts.Text;
-                        target.XScjxctc = txtXScjxctc.Text;
-                        target.XSzkcsgytc = txtXSzkcsgytc.Text;
+                        if (CurrentUser.AllowYearGahterInput == "1")
+                        {
+                            target.XSbyzcsjxse = txtXSbyzcsjxse.Text;
+                            target.XSbyzcysxse = txtXSbyzcysxse.Text;
+                            target.XSbyzclcsjmle = txtXSbyzclcsjmle.Text;
+                            target.XSbyzclcysmle = txtXSbyzclcysmle.Text;
+                            target.XSbycfflsjsr = txtXSbycfflsjsr.Text;
+                            target.XSbycfflyssr = txtXSbycfflyssr.Text;
+                            target.XSbycfjrsxfjsr = txtXSbycfjrsxfjsr.Text;
+                            target.XSbymrjcjsr = txtXSbymrjcjsr.Text;
+                            target.XSbyjpmlsr = txtXSbyjpmlsr.Text;
+                            target.XSbyjpmlyssr = txtXSbyjpmlyssr.Text;
+                            target.XSbyybml = txtXSbyybml.Text;
+                            target.XSbyzsmfbyml = txtXSbyzsmfbyml.Text;
+                            target.XSbyqtsr = txtXSbyqtsr.Text;
+                        }
+                        else
+                        {
+                            target.XSztcl = txtXSztcl.Text;
+                            target.XSclpjdj = txtXSclpjdj.Text;
+                            target.XSzzts = txtXSzzts.Text;
+                            target.XScjxctc = txtXScjxctc.Text;
+                            target.XSzkcsgytc = txtXSzkcsgytc.Text;
+                            target.XSzkclgytc = txtXSzkclgytc.Text;
+                            target.XSzkcyntc = txtXSzkcyntc.Text;
+                        }
                         MonthlyTargets.Instance.CreateAndUpdate(target);
+                    }
+
+                    #endregion
+
+                    #region 售后部特殊处理
+
+                    if (CurrentDep == DayReportDep.售后部)
+                    {
+                        MonthlyTargetInfo target = null;
+                        target = MonthlyTargets.Instance.GetModel(DataConvert.SafeInt(ddlCorp.SelectedValue), CurrentDep, day, true);
+                        if (target == null)
+                        {
+                            target = new MonthlyTargetInfo()
+                            {
+                                CorporationID = DataConvert.SafeInt(ddlCorp.SelectedValue),
+                                Department = CurrentDep,
+                                MonthUnique = day.ToString("yyyyMM"),
+                                Creator = CurrentUser.UserName,
+                                LastUpdateUser = CurrentUser.UserName
+                            };
+                        }
+                        else
+                        {
+                            target.LastUpdateUser = CurrentUser.UserName;
+                        }
+                        if (CurrentUser.AllowYearGahterInput == "1")
+                        {
+                            target.SHbyybwxe = txtSHbyybwxe.Text;
+                            target.SHbysbspe = txtSHbysbspe.Text;
+                            target.SHbytppsr = txtSHbytppsr.Text;
+                            target.SHbywxmle = txtSHbywxmle.Text;
+                            target.SHbywxmll = txtSHbywxmll.Text;
+                            target.SHbyfjsr = txtSHbyfjsr.Text;
+                            target.SHbyhfjdwxsjmll = txtSHbyhfjdwxsjmll.Text;
+                            target.SHbyhfjdwxysmll = txtSHbyhfjdwxysmll.Text;
+                            target.SHbyyqsr = txtSHbyyqsr.Text;
+                            target.SHbyyqcb = txtSHbyyqcb.Text;
+                            target.SHbyyhcpmll = txtSHbyyhcpmll.Text;
+                            target.SHbybzkcje = txtSHbybzkcje.Text;
+                            target.SHbyqmsjkce = txtSHbyqmsjkce.Text;
+                            target.SHqzynyskce = txtSHqzynyskce.Text;
+                            target.SHbybzdkcd = txtSHbybzdkcd.Text;
+                            target.SHbysjkcd = txtSHbysjkcd.Text;
+                            target.SHbypjmll = txtSHbypjmll.Text;
+                            target.SHbysgcmll = txtSHbysgcmll.Text;
+                            target.SHbyybwxmll = txtSHbyybwxmll.Text;
+                            target.SHbytppwxmll = txtSHbytppwxmll.Text;
+                            target.SHbyxbflsr = txtSHbyxbflsr.Text;
+                            target.SHbyxbpjdtjsr = txtSHbyxbpjdtjsr.Text;
+                            target.SHbyybflsr = txtSHbyybflsr.Text;
+                            target.SHbyybpjdtjsr = txtSHbyybpjdtjsr.Text;
+                            target.SHbydhsjywpjdtsr = txtSHbydhsjywpjdtsr.Text;
+                            MonthlyTargets.Instance.CreateAndUpdate(target);
+                        }
+                    }
+
+                    #endregion
+
+                    #region 精品部特殊处理
+
+                    if (CurrentDep == DayReportDep.精品部)
+                    {
+                        MonthlyTargetInfo target = null;
+                        target = MonthlyTargets.Instance.GetModel(DataConvert.SafeInt(ddlCorp.SelectedValue), CurrentDep, day, true);
+                        if (target == null)
+                        {
+                            target = new MonthlyTargetInfo()
+                            {
+                                CorporationID = DataConvert.SafeInt(ddlCorp.SelectedValue),
+                                Department = CurrentDep,
+                                MonthUnique = day.ToString("yyyyMM"),
+                                Creator = CurrentUser.UserName,
+                                LastUpdateUser = CurrentUser.UserName
+                            };
+                        }
+                        else
+                        {
+                            target.LastUpdateUser = CurrentUser.UserName;
+                        }
+                        if (CurrentUser.AllowYearGahterInput == "1")
+                        {
+                            target.JPysztjpmle = txtJPysztjpmle.Text;
+                            target.JPyswdjpmle = txtJPyswdjpmle.Text;
+                            target.JPysshjpmle = txtJPysshjpmle.Text;
+                            target.JPysztdccz = txtJPysztdccz.Text;
+                            target.JPyswddtcz = txtJPyswddtcz.Text;
+                            target.JPysshdtcz = txtJPysshdtcz.Text;
+                            target.JPztsjjpcz = txtJPztsjjpcz.Text;
+                            target.JPztsjmle = txtJPztsjmle.Text;
+                            target.JPwdjpmle = txtJPwdjpmle.Text;
+                            target.JPshjpmle = txtJPshjpmle.Text;
+                            target.JPqmkcs = txtJPqmkcs.Text;
+                            target.JPsgyyszxkc = txtJPsgyyszxkc.Text;
+                            target.JPynyszxkc = txtJPynyszxkc.Text;
+                            MonthlyTargets.Instance.CreateAndUpdate(target);
+                        }
                     }
 
                     #endregion
@@ -773,8 +993,8 @@ namespace Hx.BackAdmin.dayreport
                 }
             }
             else allowmodify = true;
-            if ((CurrentDep == DayReportDep.销售部 || CurrentDep == DayReportDep.售后部) 
-                && report != null 
+            if ((CurrentDep == DayReportDep.销售部 || CurrentDep == DayReportDep.售后部)
+                && report != null
                 && (report.DailyReportCheckStatus == DailyReportCheckStatus.未审核 || report.DailyReportCheckStatus == DailyReportCheckStatus.审核不通过)) allowmodify = true;
             else if ((CurrentDep == DayReportDep.销售部 || CurrentDep == DayReportDep.售后部)
                 && report != null
@@ -823,7 +1043,7 @@ namespace Hx.BackAdmin.dayreport
                     else if (name == "入库台次")
                         tr = string.Format("<tr><td class=\"bg4 tr\">{0}：</td><td><input id=\"txtmodule{1}\" name=\"txtmodule{1}\" class=\"number srk6 {5} {7}\" value=\"{2}\" {3} />{6}<span class=\"gray pl10\">{4}</span></td></tr>", name, m.ID, string.IsNullOrEmpty(value) ? "需包含上月在库数" : value, string.IsNullOrEmpty(value) || allowmodify ? string.Empty : "readonly=\"true\"", m.Description, m.Mustinput ? "required" : string.Empty, m.Mustinput ? "<span class=\"red pl10\">*</span>" : string.Empty, string.IsNullOrEmpty(value) ? "remind gray" : string.Empty);
                     else
-                        tr = string.Format("<tr><td class=\"bg4 tr\">{0}：</td><td><input id=\"txtmodule{1}\" name=\"txtmodule{1}\" class=\"number srk6 {5}\" value=\"{2}\" {3} />{6}<span class=\"gray pl10\">{4}</span></td></tr>", name, m.ID, value, string.IsNullOrEmpty(value) || allowmodify? string.Empty : "readonly=\"true\"", m.Description, m.Mustinput ? "required" : string.Empty, m.Mustinput ? "<span class=\"red pl10\">*</span>" : string.Empty);
+                        tr = string.Format("<tr><td class=\"bg4 tr\">{0}：</td><td><input id=\"txtmodule{1}\" name=\"txtmodule{1}\" class=\"number srk6 {5}\" value=\"{2}\" {3} />{6}<span class=\"gray pl10\">{4}</span></td></tr>", name, m.ID, value, string.IsNullOrEmpty(value) || allowmodify ? string.Empty : "readonly=\"true\"", m.Description, m.Mustinput ? "required" : string.Empty, m.Mustinput ? "<span class=\"red pl10\">*</span>" : string.Empty);
                     strb.AppendLine(tr);
                 }
             }

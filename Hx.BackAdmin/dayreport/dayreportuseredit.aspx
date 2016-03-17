@@ -230,6 +230,22 @@
                     </td>
                 </tr>
                 <tr>
+                    <td class="tr">
+                        年度报表权限：
+                    </td>
+                    <td>
+                        <asp:CheckBox runat="server" ID="cbxYearGather" Checked="false" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tr">
+                        年报数据录入权限：
+                    </td>
+                    <td>
+                        <asp:CheckBox runat="server" ID="cbxAllowYearGahterInput" Checked="false" />
+                    </td>
+                </tr>
+                <tr>
                     <td class="vt tr">
                         录入栏目权限：
                     </td>

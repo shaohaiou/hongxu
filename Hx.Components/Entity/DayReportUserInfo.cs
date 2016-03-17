@@ -58,6 +58,16 @@ namespace Hx.Components.Entity
         }
 
         /// <summary>
+        /// 年报数据录入权限
+        /// </summary>
+        [JsonIgnore]
+        public string AllowYearGahterInput
+        {
+            get { return GetString("AllowYearGahterInput", ""); }
+            set { SetExtendedAttribute("AllowYearGahterInput", value); }
+        }
+
+        /// <summary>
         /// 月报汇总
         /// </summary>
         [JsonIgnore]
@@ -65,6 +75,16 @@ namespace Hx.Components.Entity
         {
             get { return GetString("ReportGather", ""); }
             set { SetExtendedAttribute("ReportGather", value); }
+        }
+
+        /// <summary>
+        /// 年报汇总
+        /// </summary>
+        [JsonIgnore]
+        public string YearGather
+        {
+            get { return GetString("YearGather", ""); }
+            set { SetExtendedAttribute("YearGather", value); }
         }
 
         /// <summary>

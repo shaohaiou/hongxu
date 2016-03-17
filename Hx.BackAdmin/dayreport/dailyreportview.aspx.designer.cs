@@ -58,6 +58,33 @@ namespace Hx.BackAdmin.dayreport {
         protected global::System.Web.UI.WebControls.Button btnExportExcel;
         
         /// <summary>
+        /// btnXSYearAnalyze 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnXSYearAnalyze;
+        
+        /// <summary>
+        /// btnSHYearAnalyze 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSHYearAnalyze;
+        
+        /// <summary>
+        /// btnJPYearAnalyze 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnJPYearAnalyze;
+        
+        /// <summary>
         /// spMsg 控件。
         /// </summary>
         /// <remarks>

@@ -248,6 +248,113 @@
                         <%}%>
                         <%if (CurrentDep == DayReportDep.销售部)
                           {%>
+                        <%if (CurrentUser.AllowYearGahterInput == "1")
+                          { %>
+                        <tr>
+                            <td class="bg4 tr" style="background-color: Orange;">
+                                本月整车实际销售额：
+                            </td>
+                            <td>
+                                <asp:TextBox runat="server" ID="txtXSbyzcsjxse" CssClass="srk6 tr number"></asp:TextBox>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="bg4 tr" style="background-color: Orange;">
+                                本月整车预算销售额：
+                            </td>
+                            <td>
+                                <asp:TextBox runat="server" ID="txtXSbyzcysxse" CssClass="srk6 tr number"></asp:TextBox>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="bg4 tr" style="background-color: Orange;">
+                                本月整车裸车实际毛利额：
+                            </td>
+                            <td>
+                                <asp:TextBox runat="server" ID="txtXSbyzclcsjmle" CssClass="srk6 tr number"></asp:TextBox>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="bg4 tr" style="background-color: Orange;">
+                                本月整车裸车预算毛利额：
+                            </td>
+                            <td>
+                                <asp:TextBox runat="server" ID="txtXSbyzclcysmle" CssClass="srk6 tr number"></asp:TextBox>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="bg4 tr" style="background-color: Orange;">
+                                本月厂方返利实际收入：
+                            </td>
+                            <td>
+                                <asp:TextBox runat="server" ID="txtXSbycfflsjsr" CssClass="srk6 tr number"></asp:TextBox>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="bg4 tr" style="background-color: Orange;">
+                                本月厂方返利预算收入：
+                            </td>
+                            <td>
+                                <asp:TextBox runat="server" ID="txtXSbycfflyssr" CssClass="srk6 tr number"></asp:TextBox>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="bg4 tr" style="background-color: Orange;">
+                                本月厂方金融手续费净收入：
+                            </td>
+                            <td>
+                                <asp:TextBox runat="server" ID="txtXSbycfjrsxfjsr" CssClass="srk6 tr number"></asp:TextBox>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="bg4 tr" style="background-color: Orange;">
+                                本月美容交车净收入：
+                            </td>
+                            <td>
+                                <asp:TextBox runat="server" ID="txtXSbymrjcjsr" CssClass="srk6 tr number"></asp:TextBox>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="bg4 tr" style="background-color: Orange;">
+                                本月精品毛利：
+                            </td>
+                            <td>
+                                <asp:TextBox runat="server" ID="txtXSbyjpmlsr" CssClass="srk6 tr number"></asp:TextBox>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="bg4 tr" style="background-color: Orange;">
+                                本月精品预算毛利：
+                            </td>
+                            <td>
+                                <asp:TextBox runat="server" ID="txtXSbyjpmlyssr" CssClass="srk6 tr number"></asp:TextBox>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="bg4 tr" style="background-color: Orange;">
+                                本月延保毛利：
+                            </td>
+                            <td>
+                                <asp:TextBox runat="server" ID="txtXSbyybml" CssClass="srk6 tr number"></asp:TextBox>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="bg4 tr" style="background-color: Orange;">
+                                本月终生免费保养毛利：
+                            </td>
+                            <td>
+                                <asp:TextBox runat="server" ID="txtXSbyzsmfbyml" CssClass="srk6 tr number"></asp:TextBox>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="bg4 tr" style="background-color: Orange;">
+                                本月其他收入：
+                            </td>
+                            <td>
+                                <asp:TextBox runat="server" ID="txtXSbyqtsr" CssClass="srk6 tr number"></asp:TextBox>
+                            </td>
+                        </tr>
+                        <%}else{ %>
                         <tr>
                             <td class="bg4 tr" style="background-color: Orange;">
                                 在途车辆：
@@ -288,6 +395,334 @@
                                 <asp:TextBox runat="server" ID="txtXSzkcsgytc" CssClass="srk6 tr number"></asp:TextBox>
                             </td>
                         </tr>
+                        <tr>
+                            <td class="bg4 tr" style="background-color: Orange;">
+                                在库超6个月台次：
+                            </td>
+                            <td>
+                                <asp:TextBox runat="server" ID="txtXSzkclgytc" CssClass="srk6 tr number"></asp:TextBox>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="bg4 tr" style="background-color: Orange;">
+                                在库超1年台次：
+                            </td>
+                            <td>
+                                <asp:TextBox runat="server" ID="txtXSzkcyntc" CssClass="srk6 tr number"></asp:TextBox>
+                            </td>
+                        </tr>
+                        <%} %>
+                        <%}else if (CurrentDep == DayReportDep.售后部) {%>
+                          <%if (CurrentUser.AllowYearGahterInput == "1")
+                          { %>
+                            <tr>
+                                <td class="bg4 tr" style="background-color: Orange;">
+                                    本月一般维修额：
+                                </td>
+                                <td>
+                                    <asp:TextBox runat="server" ID="txtSHbyybwxe" CssClass="srk6 tr number"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="bg4 tr" style="background-color: Orange;">
+                                    本月首保索赔额：
+                                </td>
+                                <td>
+                                    <asp:TextBox runat="server" ID="txtSHbysbspe" CssClass="srk6 tr number"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="bg4 tr" style="background-color: Orange;">
+                                    本月他品牌收入：
+                                </td>
+                                <td>
+                                    <asp:TextBox runat="server" ID="txtSHbytppsr" CssClass="srk6 tr number"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="bg4 tr" style="background-color: Orange;">
+                                    本月维修毛利额：
+                                </td>
+                                <td>
+                                    <asp:TextBox runat="server" ID="txtSHbywxmle" CssClass="srk6 tr number"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="bg4 tr" style="background-color: Orange;">
+                                    本月维修毛利率：
+                                </td>
+                                <td>
+                                    <asp:TextBox runat="server" ID="txtSHbywxmll" CssClass="srk4 tr number"></asp:TextBox>%
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="bg4 tr" style="background-color: Orange;">
+                                    本月废旧收入：
+                                </td>
+                                <td>
+                                    <asp:TextBox runat="server" ID="txtSHbyfjsr" CssClass="srk6 tr number"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="bg4 tr" style="background-color: Orange;">
+                                    本月含废旧的维修实际毛利率：
+                                </td>
+                                <td>
+                                    <asp:TextBox runat="server" ID="txtSHbyhfjdwxsjmll" CssClass="srk4 tr number"></asp:TextBox>%
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="bg4 tr" style="background-color: Orange;">
+                                    本月含废旧的维修预算毛利率：
+                                </td>
+                                <td>
+                                    <asp:TextBox runat="server" ID="txtSHbyhfjdwxysmll" CssClass="srk4 tr number"></asp:TextBox>%
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="bg4 tr" style="background-color: Orange;">
+                                    本月油漆收入：
+                                </td>
+                                <td>
+                                    <asp:TextBox runat="server" ID="txtSHbyyqsr" CssClass="srk6 tr number"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="bg4 tr" style="background-color: Orange;">
+                                    本月油漆成本：
+                                </td>
+                                <td>
+                                    <asp:TextBox runat="server" ID="txtSHbyyqcb" CssClass="srk6 tr number"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="bg4 tr" style="background-color: Orange;">
+                                    本月养护产品毛利率：
+                                </td>
+                                <td>
+                                    <asp:TextBox runat="server" ID="txtSHbyyhcpmll" CssClass="srk4 tr number"></asp:TextBox>%
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="bg4 tr" style="background-color: Orange;">
+                                    本月标准库存金额：
+                                </td>
+                                <td>
+                                    <asp:TextBox runat="server" ID="txtSHbybzkcje" CssClass="srk6 tr number"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="bg4 tr" style="background-color: Orange;">
+                                    本月期末实际库存额：
+                                </td>
+                                <td>
+                                    <asp:TextBox runat="server" ID="txtSHbyqmsjkce" CssClass="srk6 tr number"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="bg4 tr" style="background-color: Orange;">
+                                    其中一年以上库存额：
+                                </td>
+                                <td>
+                                    <asp:TextBox runat="server" ID="txtSHqzynyskce" CssClass="srk6 tr number"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="bg4 tr" style="background-color: Orange;">
+                                    本月标准的库存度：
+                                </td>
+                                <td>
+                                    <asp:TextBox runat="server" ID="txtSHbybzdkcd" CssClass="srk6 tr number"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="bg4 tr" style="background-color: Orange;">
+                                    本月实际库存度：
+                                </td>
+                                <td>
+                                    <asp:TextBox runat="server" ID="txtSHbysjkcd" CssClass="srk6 tr number"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="bg4 tr" style="background-color: Orange;">
+                                    本月配件毛利率：
+                                </td>
+                                <td>
+                                    <asp:TextBox runat="server" ID="txtSHbypjmll" CssClass="srk4 tr number"></asp:TextBox>%
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="bg4 tr" style="background-color: Orange;">
+                                    本月事故车毛利率：
+                                </td>
+                                <td>
+                                    <asp:TextBox runat="server" ID="txtSHbysgcmll" CssClass="srk4 tr number"></asp:TextBox>%
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="bg4 tr" style="background-color: Orange;">
+                                    本月一般维修毛利率：
+                                </td>
+                                <td>
+                                    <asp:TextBox runat="server" ID="txtSHbyybwxmll" CssClass="srk4 tr number"></asp:TextBox>%
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="bg4 tr" style="background-color: Orange;">
+                                    本月他牌车维修毛利率：
+                                </td>
+                                <td>
+                                    <asp:TextBox runat="server" ID="txtSHbytppwxmll" CssClass="srk4 tr number"></asp:TextBox>%
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="bg4 tr" style="background-color: Orange;">
+                                    本月本月续保返利收入：
+                                </td>
+                                <td>
+                                    <asp:TextBox runat="server" ID="txtSHbyxbflsr" CssClass="srk6 tr number"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="bg4 tr" style="background-color: Orange;">
+                                    本月续保平均单台净收入：
+                                </td>
+                                <td>
+                                    <asp:TextBox runat="server" ID="txtSHbyxbpjdtjsr" CssClass="srk6 tr number"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="bg4 tr" style="background-color: Orange;">
+                                    本月延保返利收入：
+                                </td>
+                                <td>
+                                    <asp:TextBox runat="server" ID="txtSHbyybflsr" CssClass="srk6 tr number"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="bg4 tr" style="background-color: Orange;">
+                                    本月延保平均单台净收入：
+                                </td>
+                                <td>
+                                    <asp:TextBox runat="server" ID="txtSHbyybpjdtjsr" CssClass="srk6 tr number"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="bg4 tr" style="background-color: Orange;">
+                                    本月导航升级业务平均单台收入：
+                                </td>
+                                <td>
+                                    <asp:TextBox runat="server" ID="txtSHbydhsjywpjdtsr" CssClass="srk6 tr number"></asp:TextBox>
+                                </td>
+                            </tr>
+                           <%} %>
+                        <%}else if (CurrentDep == DayReportDep.精品部) {%>
+                            <%if(CurrentUser.AllowYearGahterInput == "1"){ %>
+                            <tr>
+                                <td class="bg4 tr" style="background-color: Orange;">
+                                    本月预算展厅精品毛利额：
+                                </td>
+                                <td>
+                                    <asp:TextBox runat="server" ID="txtJPysztjpmle" CssClass="srk6 tr number"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="bg4 tr" style="background-color: Orange;">
+                                    本月预算网点精品毛利额：
+                                </td>
+                                <td>
+                                    <asp:TextBox runat="server" ID="txtJPyswdjpmle" CssClass="srk6 tr number"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="bg4 tr" style="background-color: Orange;">
+                                    本月预算售后精品毛利额：
+                                </td>
+                                <td>
+                                    <asp:TextBox runat="server" ID="txtJPysshjpmle" CssClass="srk6 tr number"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="bg4 tr" style="background-color: Orange;">
+                                    本月预算展厅单车产值：
+                                </td>
+                                <td>
+                                    <asp:TextBox runat="server" ID="txtJPysztdccz" CssClass="srk6 tr number"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="bg4 tr" style="background-color: Orange;">
+                                    本月预算网点单台产值：
+                                </td>
+                                <td>
+                                    <asp:TextBox runat="server" ID="txtJPyswddtcz" CssClass="srk6 tr number"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="bg4 tr" style="background-color: Orange;">
+                                    本月预算售后单台产值：
+                                </td>
+                                <td>
+                                    <asp:TextBox runat="server" ID="txtJPysshdtcz" CssClass="srk6 tr number"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="bg4 tr" style="background-color: Orange;">
+                                    本月展厅实际精品产值：
+                                </td>
+                                <td>
+                                    <asp:TextBox runat="server" ID="txtJPztsjjpcz" CssClass="srk6 tr number"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="bg4 tr" style="background-color: Orange;">
+                                    本月展厅实际的毛利额：
+                                </td>
+                                <td>
+                                    <asp:TextBox runat="server" ID="txtJPztsjmle" CssClass="srk6 tr number"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="bg4 tr" style="background-color: Orange;">
+                                    本月网点精品毛利额：
+                                </td>
+                                <td>
+                                    <asp:TextBox runat="server" ID="txtJPwdjpmle" CssClass="srk6 tr number"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="bg4 tr" style="background-color: Orange;">
+                                    本月售后精品毛利额：
+                                </td>
+                                <td>
+                                    <asp:TextBox runat="server" ID="txtJPshjpmle" CssClass="srk6 tr number"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="bg4 tr" style="background-color: Orange;">
+                                    本月期末库存数：
+                                </td>
+                                <td>
+                                    <asp:TextBox runat="server" ID="txtJPqmkcs" CssClass="srk6 tr number"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="bg4 tr" style="background-color: Orange;">
+                                    3个月以上滞销库存：
+                                </td>
+                                <td>
+                                    <asp:TextBox runat="server" ID="txtJPsgyyszxkc" CssClass="srk6 tr number"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="bg4 tr" style="background-color: Orange;">
+                                    1年以上滞销库存：
+                                </td>
+                                <td>
+                                    <asp:TextBox runat="server" ID="txtJPynyszxkc" CssClass="srk6 tr number"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <%} %>
                         <%} %>
                         <%if (CurrentDep == DayReportDep.财务部 && HasMonthlyTargetPower())
                           {%>

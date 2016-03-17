@@ -21,6 +21,7 @@ using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 using System.Text.RegularExpressions;
+using NPOI.HSSF.Util;
 
 namespace Hx.BackAdmin.dayreport
 {
@@ -5108,6 +5109,1029 @@ namespace Hx.BackAdmin.dayreport
             }
 
             ExportExcel();
+        }
+
+        protected void btnXSYearAnalyze_Click(object sender, EventArgs e)
+        {
+
+            DateTime day = DateTime.Today;
+            if (DateTime.TryParse(txtDate.Text, out day))
+            {
+                DataTable tblresult = new DataTable();
+
+                #region 表结构
+
+                tblresult.Columns.Add("月份");
+                tblresult.Columns.Add("目标整车销售量");
+                tblresult.Columns.Add("实际整车销售量");
+                tblresult.Columns.Add("展厅目标数");
+                tblresult.Columns.Add("展厅实际数");
+                tblresult.Columns.Add("整车实际销售额");
+                tblresult.Columns.Add("整车裸车毛利额");
+                tblresult.Columns.Add("厂方返利收入");
+                tblresult.Columns.Add("含厂家返利的预算毛利率");
+                tblresult.Columns.Add("现金上牌手续费收入");
+                tblresult.Columns.Add("按揭手续费净收入");
+                tblresult.Columns.Add("厂方金融手续费净收入");
+                tblresult.Columns.Add("保险返利收入");
+                tblresult.Columns.Add("交车费收入");
+                tblresult.Columns.Add("销售延保和终生免费保养净收入");
+                tblresult.Columns.Add("销售部精品毛利收入");
+                tblresult.Columns.Add("其他收入");
+                tblresult.Columns.Add("整车综合预算毛利率");
+                tblresult.Columns.Add("保险成交量");
+                tblresult.Columns.Add("新车保险交易额");
+                tblresult.Columns.Add("上牌量");
+                tblresult.Columns.Add("美容交车台次");
+                tblresult.Columns.Add("美容交车平均单台净收入");
+                tblresult.Columns.Add("按揭台次");
+                tblresult.Columns.Add("厂家金融台次");
+                tblresult.Columns.Add("预算按揭率");
+                tblresult.Columns.Add("预算按揭平均每台净收入");
+                tblresult.Columns.Add("销售延保的台次");
+                tblresult.Columns.Add("延保平均单车产值");
+                tblresult.Columns.Add("延保平均单台毛利");
+                tblresult.Columns.Add("终生免费保养的台次");
+                tblresult.Columns.Add("终生免费保养平均单车产值");
+                tblresult.Columns.Add("终生免费保养平均单台毛利");
+                tblresult.Columns.Add("展厅附加值净收入的平均单台目标");
+                tblresult.Columns.Add("标准库存量");
+                tblresult.Columns.Add("现有在库存车辆数");
+                tblresult.Columns.Add("现有在途库存数");
+                tblresult.Columns.Add("3个月以上的库存");
+                tblresult.Columns.Add("6个月以上的库存");
+                tblresult.Columns.Add("1年以上的库存");
+                tblresult.Columns.Add("标准库存周转天数");
+                tblresult.Columns.Add("库存资金占用总成本利息");
+
+                #endregion
+
+                for (int i = 0; i < 12; i++)
+                {
+                    DataRow row = tblresult.NewRow();
+
+                    #region 销售数据
+
+                    day = DateTime.Parse(day.Year.ToString() + "-" + (i + 1).ToString("00") + "-01");
+                    DayReportDep dep = DayReportDep.销售部;
+                    DailyReportQuery query = new DailyReportQuery()
+                    {
+                        DayUnique = day.ToString("yyyyMM"),
+                        CorporationID = DataConvert.SafeInt(ddlCorp.SelectedValue),
+                        DayReportDep = dep
+                    };
+                    query.OrderBy = " [DayUnique] ASC";
+                    List<DailyReportInfo> list = DailyReports.Instance.GetList(query, true);
+                    if (list != null && list.Count > 0)
+                    {
+                        list = list.FindAll(l => l.DailyReportCheckStatus != DailyReportCheckStatus.审核不通过);
+                        MonthlyTargetInfo monthtarget = MonthlyTargets.Instance.GetModel(DataConvert.SafeInt(ddlCorp.SelectedValue), dep, day, true);
+                        int days = 0;
+                        DataTable tblDay = GetReport(dep, list, monthtarget, day, ref days);
+                        DataTable tblKey = GetKeyReport(dep, list, monthtarget, tblDay);
+
+                        row["月份"] = (i + 1);
+                        tblKey.DefaultView.RowFilter = "关键指标='总销售台次'";
+                        row["目标整车销售量"] = tblKey.DefaultView[0]["目标"];
+                        row["实际整车销售量"] = tblKey.DefaultView[0]["实际"];
+                        tblDay.DefaultView.RowFilter = "项目='展厅交车台数'";
+                        row["展厅目标数"] = tblDay.DefaultView[0]["目标值"];
+                        row["展厅实际数"] = tblDay.DefaultView[0]["合计"];
+                        row["整车实际销售额"] = monthtarget == null ? "" : monthtarget.XSbyzcsjxse;
+                        row["整车裸车毛利额"] = monthtarget == null ? "" : monthtarget.XSbyzclcsjmle;
+                        row["厂方返利收入"] = monthtarget == null ? "" : monthtarget.XSbycfflsjsr;
+                        row["含厂家返利的预算毛利率"] = monthtarget == null ? "" : (DataConvert.SafeDecimal(monthtarget.XSbyzcysxse) > 0 ? ((DataConvert.SafeDecimal(monthtarget.XSbycfflyssr) + DataConvert.SafeDecimal(monthtarget.XSbyzclcysmle)) / DataConvert.SafeDecimal(monthtarget.XSbyzcysxse)).ToString() : "");
+                        tblDay.DefaultView.RowFilter = "项目='上牌总金额'";
+                        row["现金上牌手续费收入"] = tblDay.DefaultView[0]["合计"];
+                        decimal ysspzje = DataConvert.SafeDecimal(tblDay.DefaultView[0]["目标值"]);
+                        tblDay.DefaultView.RowFilter = "项目='按揭净收入'";
+                        row["按揭手续费净收入"] = tblDay.DefaultView[0]["合计"];
+                        decimal ysajjsrsxf = DataConvert.SafeDecimal(tblDay.DefaultView[0]["目标值"]);
+                        row["厂方金融手续费净收入"] = monthtarget == null ? "" : monthtarget.XSbycfjrsxfjsr;
+                        tblDay.DefaultView.RowFilter = "项目='二网保险返利'";
+                        decimal ewbxfl = DataConvert.SafeDecimal(tblDay.DefaultView[0]["合计"]);
+                        decimal ysewbxfl = DataConvert.SafeDecimal(tblDay.DefaultView[0]["目标值"]);
+                        tblDay.DefaultView.RowFilter = "项目='展厅含DCC保险返利'";
+                        decimal ztbxfl = DataConvert.SafeDecimal(tblDay.DefaultView[0]["合计"]);
+                        decimal ysztbxfl = DataConvert.SafeDecimal(tblDay.DefaultView[0]["目标值"]);
+                        row["保险返利收入"] = ztbxfl + ewbxfl;
+                        tblDay.DefaultView.RowFilter = "项目='美容交车总金额'";
+                        row["交车费收入"] = DataConvert.SafeDecimal(tblDay.DefaultView[0]["合计"]);
+                        decimal ysjcfsr = DataConvert.SafeDecimal(tblDay.DefaultView[0]["目标值"]);
+                        tblDay.DefaultView.RowFilter = "项目='延保总金额'";
+                        decimal ybzje = DataConvert.SafeDecimal(tblDay.DefaultView[0]["合计"]);
+                        decimal ysybzje = DataConvert.SafeDecimal(tblDay.DefaultView[0]["目标值"]);
+                        tblDay.DefaultView.RowFilter = "项目='终身免费保养总金额'";
+                        decimal zsmfbyzje = DataConvert.SafeDecimal(tblDay.DefaultView[0]["合计"]);
+                        decimal yszsmfbyzje = DataConvert.SafeDecimal(tblDay.DefaultView[0]["目标值"]);
+                        row["销售延保和终生免费保养净收入"] = ybzje * 30 / 100 + zsmfbyzje;
+                        row["销售部精品毛利收入"] = monthtarget == null ? "" : monthtarget.XSbyjpmlsr;
+                        row["其他收入"] = monthtarget == null ? "" : monthtarget.XSbyqtsr;
+                        decimal yszclcmle = monthtarget == null ? 0 : DataConvert.SafeDecimal(monthtarget.XSbyzclcysmle); //整车裸车预算毛利额
+                        decimal yscfflsr = monthtarget == null ? 0 : DataConvert.SafeDecimal(monthtarget.XSbycfflyssr); //厂方返利预算收入
+                        decimal ysjpmlsr = monthtarget == null ? 0 : DataConvert.SafeDecimal(monthtarget.XSbyjpmlyssr);//本月精品预算毛利
+
+                        row["整车综合预算毛利率"] =monthtarget == null ? "" : (DataConvert.SafeDecimal(monthtarget.XSbyzcysxse) > 0 ? ((yszclcmle + yscfflsr + ysspzje + ysajjsrsxf + ysewbxfl + ysztbxfl + ysjcfsr + ysybzje * 30 / 100 + yszsmfbyzje + ysjpmlsr + DataConvert.SafeDecimal(row["其他收入"])) /DataConvert.SafeDecimal(monthtarget.XSbyzcysxse)).ToString() : "");
+                        tblDay.DefaultView.RowFilter = "项目='二网保险台次'";
+                        decimal ewbxtc = DataConvert.SafeDecimal(tblDay.DefaultView[0]["合计"]);
+                        tblDay.DefaultView.RowFilter = "项目='展厅含DCC保险台次'";
+                        decimal ztbxtc = DataConvert.SafeDecimal(tblDay.DefaultView[0]["合计"]);
+                        row["保险成交量"] = ewbxtc + ztbxtc;
+                        tblDay.DefaultView.RowFilter = "项目='二网保险金额'";
+                        decimal ewbxje = DataConvert.SafeDecimal(tblDay.DefaultView[0]["合计"]);
+                        tblDay.DefaultView.RowFilter = "项目='展厅含DCC保险总金额'";
+                        decimal ztbxje = DataConvert.SafeDecimal(tblDay.DefaultView[0]["合计"]);
+                        row["新车保险交易额"] = ewbxje + ztbxje;
+                        tblDay.DefaultView.RowFilter = "项目='上牌台次'";
+                        row["上牌量"] = tblDay.DefaultView[0]["合计"];
+                        tblDay.DefaultView.RowFilter = "项目='美容交车台次'";
+                        row["美容交车台次"] = tblDay.DefaultView[0]["合计"];
+                        row["美容交车平均单台净收入"] = monthtarget == null ? 0 : (DataConvert.SafeInt(row["美容交车台次"]) == 0 ? 0 : DataConvert.SafeDecimal(monthtarget.XSbymrjcjsr) / DataConvert.SafeInt(row["美容交车台次"]));
+                        tblDay.DefaultView.RowFilter = "项目='本地按揭台次'";
+                        decimal bdajtc = DataConvert.SafeDecimal(tblDay.DefaultView[0]["合计"]);
+                        tblDay.DefaultView.RowFilter = "项目='银行按揭台次'";
+                        decimal yhajtc = DataConvert.SafeDecimal(tblDay.DefaultView[0]["合计"]);
+                        tblDay.DefaultView.RowFilter = "项目='厂家金融台次'";
+                        decimal cjjrtc = DataConvert.SafeDecimal(tblDay.DefaultView[0]["合计"]);
+                        row["按揭台次"] = bdajtc + yhajtc + cjjrtc;
+                        row["厂家金融台次"] = cjjrtc;
+                        tblKey.DefaultView.RowFilter = "关键指标='按揭率'";
+                        row["预算按揭率"] = tblKey.DefaultView[0]["目标"];
+                        tblKey.DefaultView.RowFilter = "关键指标='按揭平均单台'";
+                        row["预算按揭平均每台净收入"] = tblKey.DefaultView[0]["目标"];
+                        tblDay.DefaultView.RowFilter = "项目='延保台次'";
+                        row["销售延保的台次"] = tblDay.DefaultView[0]["合计"];
+                        row["延保平均单车产值"] = DataConvert.SafeInt(row["销售延保的台次"]) > 0 ? (ybzje / DataConvert.SafeInt(row["销售延保的台次"])).ToString() : "";
+                        row["美容交车平均单台净收入"] = monthtarget == null ? 0 : (DataConvert.SafeInt(row["销售延保的台次"]) == 0 ? 0 : DataConvert.SafeDecimal(monthtarget.XSbyybml) / DataConvert.SafeInt(row["销售延保的台次"]));
+                        tblDay.DefaultView.RowFilter = "项目='终身免费保养台次（含赠送）'";
+                        row["终生免费保养的台次"] = tblDay.DefaultView[0]["合计"];
+                        row["终生免费保养平均单车产值"] = DataConvert.SafeInt(tblDay.DefaultView[0]["合计"]) > 0 ? (zsmfbyzje / DataConvert.SafeInt(tblDay.DefaultView[0]["合计"])).ToString() : "";
+                        row["终生免费保养平均单台毛利"] = monthtarget == null ? 0 : (DataConvert.SafeInt(row["终生免费保养的台次"]) == 0 ? 0 : DataConvert.SafeDecimal(monthtarget.XSbyzsmfbyml) / DataConvert.SafeInt(row["终生免费保养的台次"]));
+                        tblKey.DefaultView.RowFilter = "关键指标='附加值合计'";
+                        row["展厅附加值净收入的平均单台目标"] = DataConvert.SafeDecimal(row["展厅目标数"]) == 0 ? 0 : DataConvert.SafeDecimal(tblKey.DefaultView[0]["目标"]) / DataConvert.SafeDecimal(row["展厅目标数"]);
+                        tblKey.DefaultView.RowFilter = "关键指标='标准在库库存'";
+                        row["标准库存量"] = tblKey.DefaultView[0]["目标"];
+                        row["现有在库存车辆数"] = tblKey.DefaultView[0]["实际"];
+                        tblKey.DefaultView.RowFilter = "关键指标='在途'";
+                        row["现有在途库存数"] = tblKey.DefaultView[0]["实际"];
+                        tblKey.DefaultView.RowFilter = "关键指标='在库超3个月'";
+                        row["3个月以上的库存"] = tblKey.DefaultView[0]["实际"];
+                        row["6个月以上的库存"] = monthtarget == null ? "" : monthtarget.XSzkclgytc;
+                        row["1年以上的库存"] = monthtarget == null ? "" : monthtarget.XSzkcyntc;
+                        row["标准库存周转天数"] = monthtarget == null ? "" : monthtarget.XSzzts;
+                        tblKey.DefaultView.RowFilter = "关键指标='库存利息'";
+                        row["库存资金占用总成本利息"] = tblKey.DefaultView[0]["实际"];
+
+                    }
+
+                    #endregion
+
+                    tblresult.Rows.Add(row);
+                }
+
+                IWorkbook workbook = null;
+                ISheet sheet = null;
+                string newfile = string.Empty;
+                string fileName = Utils.GetMapPath(string.Format(@"\App_Data\年度销售数据分析.xls"));
+                newfile = string.Format(@"{0}年度销售数据分析.xls", day.Year);
+                using (FileStream file = new FileStream(fileName, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite))
+                {
+                    workbook = new HSSFWorkbook(file);
+                }
+                sheet = workbook.GetSheetAt(0);
+
+                #region 颜色
+
+                IFont fontblack = workbook.CreateFont();
+                fontblack.Color = HSSFColor.Black.Index;
+
+                ICellStyle cellStyleBlack = workbook.CreateCellStyle();
+                cellStyleBlack.SetFont(fontblack);
+                cellStyleBlack.BorderTop = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyleBlack.BorderRight = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyleBlack.BorderBottom = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyleBlack.BorderLeft = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyleBlack.TopBorderColor = HSSFColor.Black.Index;
+                cellStyleBlack.RightBorderColor = HSSFColor.Black.Index;
+                cellStyleBlack.BottomBorderColor = HSSFColor.Black.Index;
+                cellStyleBlack.LeftBorderColor = HSSFColor.Black.Index;
+
+                ICellStyle cellStyleGreen = workbook.CreateCellStyle();
+                cellStyleGreen.SetFont(fontblack);
+                cellStyleGreen.BorderTop = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyleGreen.BorderRight = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyleGreen.BorderBottom = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyleGreen.BorderLeft = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyleGreen.TopBorderColor = HSSFColor.Black.Index;
+                cellStyleGreen.RightBorderColor = HSSFColor.Black.Index;
+                cellStyleGreen.BottomBorderColor = HSSFColor.Black.Index;
+                cellStyleGreen.LeftBorderColor = HSSFColor.Black.Index;
+                cellStyleGreen.FillForegroundColor = HSSFColor.BrightGreen.Index;
+                cellStyleGreen.FillPattern = FillPattern.SolidForeground;
+
+                ICellStyle cellStyleYellow = workbook.CreateCellStyle();
+                cellStyleYellow.SetFont(fontblack);
+                cellStyleYellow.BorderTop = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyleYellow.BorderRight = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyleYellow.BorderBottom = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyleYellow.BorderLeft = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyleYellow.TopBorderColor = HSSFColor.Black.Index;
+                cellStyleYellow.RightBorderColor = HSSFColor.Black.Index;
+                cellStyleYellow.BottomBorderColor = HSSFColor.Black.Index;
+                cellStyleYellow.LeftBorderColor = HSSFColor.Black.Index;
+                cellStyleYellow.FillForegroundColor = HSSFColor.Yellow.Index;
+                cellStyleYellow.FillPattern = FillPattern.SolidForeground;
+
+                #endregion
+
+                sheet.GetRow(0).GetCell(0).SetCellValue(day.Year + "年度销售数据分析表");
+
+                int maxrow = 0;
+                for (int i = 0; i < tblresult.Rows.Count;i++ )
+                {
+                    if (!string.IsNullOrEmpty(tblresult.Rows[i]["月份"].ToString()))
+                    {
+                        maxrow = i;
+                        sheet.GetRow(2).GetCell(i + 5).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["目标整车销售量"]));
+                        sheet.GetRow(3).GetCell(i + 5).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["实际整车销售量"]));
+                        sheet.GetRow(4).GetCell(i + 5).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["展厅目标数"]));
+                        sheet.GetRow(5).GetCell(i + 5).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["展厅实际数"]));
+                        sheet.GetRow(8).GetCell(i + 5).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["整车实际销售额"]) / 10000);
+                        sheet.GetRow(9).GetCell(i + 5).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["整车裸车毛利额"]) / 10000);
+                        sheet.GetRow(12).GetCell(i + 5).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["厂方返利收入"]) / 10000);
+                        sheet.GetRow(15).GetCell(i + 5).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["现金上牌手续费收入"]) / 10000);
+                        sheet.GetRow(16).GetCell(i + 5).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["按揭手续费净收入"]) / 10000);
+                        sheet.GetRow(17).GetCell(i + 5).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["厂方金融手续费净收入"]) / 10000);
+                        sheet.GetRow(18).GetCell(i + 5).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["保险返利收入"]) / 10000);
+                        sheet.GetRow(19).GetCell(i + 5).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["交车费收入"]) / 10000);
+                        sheet.GetRow(20).GetCell(i + 5).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["销售延保和终生免费保养净收入"]) / 10000);
+                        sheet.GetRow(21).GetCell(i + 5).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["销售部精品毛利收入"]) / 10000);
+                        sheet.GetRow(22).GetCell(i + 5).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["其他收入"]) / 10000);
+                        sheet.GetRow(25).GetCell(i + 5).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["整车综合预算毛利率"]));
+                        sheet.GetRow(27).GetCell(i + 5).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["保险成交量"]));
+                        sheet.GetRow(29).GetCell(i + 5).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["新车保险交易额"]) / 10000);
+                        sheet.GetRow(31).GetCell(i + 5).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["保险返利收入"]) / 10000);
+                        sheet.GetRow(34).GetCell(i + 5).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["上牌量"]));
+                        sheet.GetRow(37).GetCell(i + 5).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["美容交车台次"]));
+                        sheet.GetRow(38).GetCell(i + 5).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["美容交车平均单台净收入"]) / 10000);
+                        sheet.GetRow(40).GetCell(i + 5).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["按揭台次"]));
+                        sheet.GetRow(41).GetCell(i + 5).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["厂家金融台次"]));
+                        sheet.GetRow(43).GetCell(i + 5).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["预算按揭率"]) / 100);
+                        sheet.GetRow(44).GetCell(i + 5).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["预算按揭平均每台净收入"]) / 10000);
+                        sheet.GetRow(48).GetCell(i + 5).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["销售延保的台次"]));
+                        sheet.GetRow(50).GetCell(i + 5).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["延保平均单车产值"]) / 10000);
+                        sheet.GetRow(51).GetCell(i + 5).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["延保平均单台毛利"]) / 10000);
+                        sheet.GetRow(52).GetCell(i + 5).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["终生免费保养的台次"]));
+                        sheet.GetRow(54).GetCell(i + 5).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["终生免费保养平均单车产值"]) / 10000);
+                        sheet.GetRow(55).GetCell(i + 5).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["终生免费保养平均单台毛利"]) / 10000);
+                        sheet.GetRow(56).GetCell(i + 5).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["展厅附加值净收入的平均单台目标"]) / 10000);
+                        sheet.GetRow(58).GetCell(i + 5).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["标准库存量"]));
+                        sheet.GetRow(59).GetCell(i + 5).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["现有在库存车辆数"]));
+                        sheet.GetRow(60).GetCell(i + 5).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["现有在途库存数"]));
+                        sheet.GetRow(61).GetCell(i + 5).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["3个月以上的库存"]));
+                        sheet.GetRow(62).GetCell(i + 5).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["6个月以上的库存"]));
+                        sheet.GetRow(63).GetCell(i + 5).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["1年以上的库存"]));
+                        sheet.GetRow(64).GetCell(i + 5).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["标准库存周转天数"]));
+                        sheet.GetRow(66).GetCell(i + 5).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["库存资金占用总成本利息"]) / 10000);
+
+                    }
+                    else if (i < 11 || (i == 11 && maxrow > 0))
+                        sheet.SetColumnHidden(i + 5, true);
+                }
+                if (maxrow > 0)
+                {
+                    for (int i = 0; i < maxrow; i++)
+                    {
+                        sheet.SetColumnHidden(i + 5, true);
+                    }
+                }
+
+                sheet.ForceFormulaRecalculation = true;
+                using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
+                {
+                    workbook.Write(ms);
+                    Response.Clear();
+                    Response.Buffer = true;
+                    Response.ContentType = "application/vnd.ms-excel";
+                    Response.ContentEncoding = System.Text.Encoding.UTF8;
+                    Response.AppendHeader("Content-Disposition", "attachment; filename=" + HttpUtility.UrlEncode(newfile, Encoding.UTF8).ToString() + "");
+                    Response.BinaryWrite(ms.ToArray());
+                    Response.End();
+                    workbook = null;
+                }
+            }
+        }
+
+        protected void btnSHYearAnalyze_Click(object sender, EventArgs e)
+        {
+
+            DateTime day = DateTime.Today;
+            if (DateTime.TryParse(txtDate.Text, out day))
+            {
+                DataTable tblresult = new DataTable();
+
+                #region 表结构
+
+                tblresult.Columns.Add("月份");
+                tblresult.Columns.Add("预算台次");
+                tblresult.Columns.Add("来厂台次");
+                tblresult.Columns.Add("预算产值");
+                tblresult.Columns.Add("维修产值");
+                tblresult.Columns.Add("一般维修额");
+                tblresult.Columns.Add("首保索赔额");
+                tblresult.Columns.Add("事故车收入");
+                tblresult.Columns.Add("终生免费保养的收入");
+                tblresult.Columns.Add("养护产品的收入");
+                tblresult.Columns.Add("他牌车收入");
+                tblresult.Columns.Add("其中事故车台次");
+                tblresult.Columns.Add("维修毛利额");
+                tblresult.Columns.Add("维修毛利率");
+                tblresult.Columns.Add("废旧收入");
+                tblresult.Columns.Add("含废旧的维修实际毛利率");
+                tblresult.Columns.Add("含废旧的维修预算毛利率");
+                tblresult.Columns.Add("油漆收入");
+                tblresult.Columns.Add("油漆成本");
+                tblresult.Columns.Add("占产值收入比例目标");
+                tblresult.Columns.Add("其中养护产品毛利率");
+                tblresult.Columns.Add("标准库存金额");
+                tblresult.Columns.Add("期末实际库存额");
+                tblresult.Columns.Add("其中一年以上库存额");
+                tblresult.Columns.Add("标准的库存度");
+                tblresult.Columns.Add("实际库存度");
+                tblresult.Columns.Add("配件毛利率");
+                tblresult.Columns.Add("事故车毛利率");
+                tblresult.Columns.Add("一般维修毛利率");
+                tblresult.Columns.Add("他牌车维修毛利率");
+                tblresult.Columns.Add("续保预算台次");
+                tblresult.Columns.Add("续保实际台次");
+                tblresult.Columns.Add("续保目标渗透率");
+                tblresult.Columns.Add("续保实际渗透率");
+                tblresult.Columns.Add("续保总额");
+                tblresult.Columns.Add("续保返利收入");
+                tblresult.Columns.Add("续保平均单台净收入");
+                tblresult.Columns.Add("终生免费保养预算台次");
+                tblresult.Columns.Add("终生免费保养实际台次");
+                tblresult.Columns.Add("终生免费保养目标渗透率");
+                tblresult.Columns.Add("终生免费保养实际渗透率");
+                tblresult.Columns.Add("终身免费保养总额");
+                tblresult.Columns.Add("延保返利收入");
+                tblresult.Columns.Add("延保平均单台净收入");
+                tblresult.Columns.Add("导航升级业务个数");
+                tblresult.Columns.Add("导航升级业务平均单台收入");
+
+                #endregion
+
+                for (int i = 0; i < 12; i++)
+                {
+                    DataRow row = tblresult.NewRow();
+
+                    DataTable tblDay, tblKey;
+
+                    #region 售后数据
+
+                    day = DateTime.Parse(day.Year.ToString() + "-" + (i + 1).ToString("00") + "-01");
+                    DayReportDep dep = DayReportDep.售后部;
+                    DailyReportQuery query = new DailyReportQuery()
+                    {
+                        DayUnique = day.ToString("yyyyMM"),
+                        CorporationID = DataConvert.SafeInt(ddlCorp.SelectedValue),
+                        DayReportDep = dep
+                    };
+                    query.OrderBy = " [DayUnique] ASC";
+                    List<DailyReportInfo> list = DailyReports.Instance.GetList(query, true);
+                    if (list != null && list.Count > 0)
+                    {
+                        list = list.FindAll(l => l.DailyReportCheckStatus != DailyReportCheckStatus.审核不通过);
+                        MonthlyTargetInfo monthtarget = MonthlyTargets.Instance.GetModel(DataConvert.SafeInt(ddlCorp.SelectedValue), dep, day, true);
+                        int days = 0;
+                        tblDay = GetReport(dep, list, monthtarget, day, ref days);
+                        tblKey = GetKeyReport(dep, list, monthtarget, tblDay);
+
+                        row["月份"] = (i + 1);
+                        tblDay.DefaultView.RowFilter = "项目='来厂台次'";
+                        row["预算台次"] = tblDay.DefaultView[0]["目标值"];
+                        row["来厂台次"] = tblDay.DefaultView[0]["合计"];
+                        tblDay.DefaultView.RowFilter = "项目='当日产值'";
+                        decimal wxcz = DataConvert.SafeDecimal(tblDay.DefaultView[0]["合计"]);
+                        row["预算产值"] = tblDay.DefaultView[0]["目标值"];
+                        row["维修产值"] = wxcz;
+
+                        //一般维修额
+                        row["一般维修额"] = monthtarget == null ? "" : monthtarget.SHbyybwxe;
+
+                        //首保索赔额
+                        row["首保索赔额"] = monthtarget == null ? "" : monthtarget.SHbysbspe;
+
+                        //事故车收入
+                        tblDay.DefaultView.RowFilter = "项目='事故总产值'";
+                        decimal sgcsr = DataConvert.SafeDecimal(tblDay.DefaultView[0]["合计"]);
+                        row["事故车收入"] = sgcsr;
+
+                        //养护产品的收入
+                        tblDay.DefaultView.RowFilter = "项目='养护产值'";
+                        decimal yhczmb = DataConvert.SafeDecimal(tblDay.DefaultView[0]["目标值"]);
+                        row["养护产品的收入"] = tblDay.DefaultView[0]["合计"];
+
+                        //他品牌收入
+                        row["他牌车收入"] = monthtarget == null ? "" : monthtarget.SHbytppsr;
+
+                        //其中事故车台次
+                        tblDay.DefaultView.RowFilter = "项目='事故来厂台次'";
+                        row["其中事故车台次"] = tblDay.DefaultView[0]["合计"];
+
+                        //维修毛利额
+                        row["维修毛利额"] = monthtarget == null ? "" : monthtarget.SHbywxmle;
+
+                        //维修毛利率
+                        row["维修毛利率"] = monthtarget == null ? "" : monthtarget.SHbywxmll;
+
+                        //废旧收入
+                        row["废旧收入"] = monthtarget == null ? "" : monthtarget.SHbyfjsr;
+
+                        //含废旧的维修实际毛利率
+                        row["含废旧的维修实际毛利率"] = monthtarget == null ? "" : monthtarget.SHbyhfjdwxsjmll;
+
+                        //含废旧的维修预算毛利率
+                        row["含废旧的维修预算毛利率"] = monthtarget == null ? "" : monthtarget.SHbyhfjdwxysmll;
+
+                        //油漆收入
+                        row["油漆收入"] = monthtarget == null ? "" : monthtarget.SHbyyqsr;
+
+                        //油漆成本
+                        row["油漆成本"] = monthtarget == null ? "" : monthtarget.SHbyyqcb;
+
+                        //占产值收入比例目标
+                        row["占产值收入比例目标"] = wxcz > 0 ? (yhczmb / (wxcz * (1 - ((sgcsr / wxcz) - (decimal)0.5)))).ToString() : string.Empty;
+
+                        //养护产品毛利率
+                        row["其中养护产品毛利率"] = monthtarget == null ? "" : monthtarget.SHbyyhcpmll;
+
+                        //标准库存金额
+                        row["标准库存金额"] = monthtarget == null ? "" : monthtarget.SHbybzkcje;
+
+                        //期末实际库存额
+                        row["期末实际库存额"] = monthtarget == null ? "" : monthtarget.SHbyqmsjkce;
+
+                        //其中一年以上库存额
+                        row["其中一年以上库存额"] = monthtarget == null ? "" : monthtarget.SHqzynyskce;
+
+                        //标准的库存度
+                        row["标准的库存度"] = monthtarget == null ? "" : monthtarget.SHbybzdkcd;
+
+                        //实际库存度
+                        row["实际库存度"] = monthtarget == null ? "" : monthtarget.SHbysjkcd;
+
+                        //配件毛利率
+                        row["配件毛利率"] = monthtarget == null ? "" : monthtarget.SHbypjmll;
+
+                        //事故车毛利率
+                        row["事故车毛利率"] = monthtarget == null ? "" : monthtarget.SHbysgcmll;
+
+                        //一般维修毛利率
+                        row["一般维修毛利率"] = monthtarget == null ? "" : monthtarget.SHbyybwxmll;
+
+                        //他牌车维修毛利率
+                        row["他牌车维修毛利率"] = monthtarget == null ? "" : monthtarget.SHbytppwxmll;
+
+                        //续保预算台次
+                        tblDay.DefaultView.RowFilter = "项目='延保台次'";
+                        row["续保预算台次"] = tblDay.DefaultView[0]["目标值"];
+                        row["续保实际台次"] = tblDay.DefaultView[0]["合计"];
+
+                        //续保返利收入
+                        row["续保返利收入"] = monthtarget == null ? "" : monthtarget.SHbyxbflsr;
+
+                        //续保平均单台净收入
+                        row["续保平均单台净收入"] = monthtarget == null ? "" : monthtarget.SHbyxbpjdtjsr;
+
+                        //终身免费保养预算台次
+                        tblDay.DefaultView.RowFilter = "项目='终身免费保养'";
+                        row["终生免费保养预算台次"] = tblDay.DefaultView[0]["目标值"];
+                        row["终生免费保养实际台次"] = tblDay.DefaultView[0]["合计"];
+
+                        //延保返利收入
+                        row["延保返利收入"] = monthtarget == null ? "" : monthtarget.SHbyybflsr;
+
+                        //延保平均单台净收入
+                        row["延保平均单台净收入"] = monthtarget == null ? "" : monthtarget.SHbyybpjdtjsr;
+
+                        //导航升级业务个数
+                        tblDay.DefaultView.RowFilter = "项目='导航升级客户数'";
+                        row["导航升级业务个数"] = tblDay.DefaultView[0]["合计"];
+
+                        //导航升级业务平均单台收入
+                        row["导航升级业务平均单台收入"] = monthtarget == null ? "" : monthtarget.SHbydhsjywpjdtsr;
+
+                    }
+
+                    #endregion
+
+                    #region 销售数据
+
+                    dep = DayReportDep.销售部;
+                    query = new DailyReportQuery()
+                    {
+                        DayUnique = day.ToString("yyyyMM"),
+                        CorporationID = DataConvert.SafeInt(ddlCorp.SelectedValue),
+                        DayReportDep = dep
+                    };
+                    query.OrderBy = " [DayUnique] ASC";
+                    list = DailyReports.Instance.GetList(query, true);
+                    if (list != null && list.Count > 0)
+                    {
+                        list = list.FindAll(l => l.DailyReportCheckStatus != DailyReportCheckStatus.审核不通过);
+                        MonthlyTargetInfo monthtarget = MonthlyTargets.Instance.GetModel(DataConvert.SafeInt(ddlCorp.SelectedValue), dep, day, true);
+                        int days = 0;
+                        tblDay = GetReport(dep, list, monthtarget, day, ref days);
+                        tblKey = GetKeyReport(dep, list, monthtarget, tblDay);
+
+                        //续保目标渗透率
+                        tblDay.DefaultView.RowFilter = "项目='终身免费保养总金额'";
+                        row["终生免费保养的收入"] = tblDay.DefaultView[0]["合计"];
+
+                        //续保目标渗透率
+                        tblKey.DefaultView.RowFilter = "关键指标='延保渗透率'";
+                        row["续保目标渗透率"] = tblKey.DefaultView[0]["目标"];
+                        row["续保实际渗透率"] = tblKey.DefaultView[0]["实际"];
+
+                        //续保目标渗透率
+                        tblDay.DefaultView.RowFilter = "项目='延保总金额'";
+                        row["续保总额"] = tblDay.DefaultView[0]["合计"];
+
+                        tblDay.DefaultView.RowFilter = "项目='展厅交车台数'";
+                        decimal ztjctsmb = DataConvert.SafeDecimal(tblDay.DefaultView[0]["目标值"]);
+                        decimal ztjcts = DataConvert.SafeDecimal(tblDay.DefaultView[0]["合计"]);
+                        row["终生免费保养目标渗透率"] = ztjctsmb > 0 ? (DataConvert.SafeDecimal(row["终生免费保养预算台次"]) / ztjctsmb).ToString() : string.Empty;
+                        row["终生免费保养实际渗透率"] = ztjcts > 0 ? (DataConvert.SafeDecimal(row["终生免费保养实际台次"]) / ztjcts).ToString() : string.Empty;
+
+                        tblDay.DefaultView.RowFilter = "项目='终身免费保养总金额'";
+                        row["终身免费保养总额"] = tblDay.DefaultView[0]["合计"];
+                    }
+                    #endregion
+
+                    tblresult.Rows.Add(row);
+                }
+
+                IWorkbook workbook = null;
+                ISheet sheet = null;
+                string newfile = string.Empty;
+                string fileName = Utils.GetMapPath(string.Format(@"\App_Data\年度售后数据分析.xls"));
+                newfile = string.Format(@"{0}年度售后数据分析.xls", day.Year);
+                using (FileStream file = new FileStream(fileName, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite))
+                {
+                    workbook = new HSSFWorkbook(file);
+                }
+                sheet = workbook.GetSheetAt(0);
+
+                #region 颜色
+
+                IFont fontblack = workbook.CreateFont();
+                fontblack.Color = HSSFColor.Black.Index;
+
+                ICellStyle cellStyleBlack = workbook.CreateCellStyle();
+                cellStyleBlack.SetFont(fontblack);
+                cellStyleBlack.BorderTop = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyleBlack.BorderRight = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyleBlack.BorderBottom = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyleBlack.BorderLeft = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyleBlack.TopBorderColor = HSSFColor.Black.Index;
+                cellStyleBlack.RightBorderColor = HSSFColor.Black.Index;
+                cellStyleBlack.BottomBorderColor = HSSFColor.Black.Index;
+                cellStyleBlack.LeftBorderColor = HSSFColor.Black.Index;
+
+                ICellStyle cellStyleGreen = workbook.CreateCellStyle();
+                cellStyleGreen.SetFont(fontblack);
+                cellStyleGreen.BorderTop = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyleGreen.BorderRight = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyleGreen.BorderBottom = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyleGreen.BorderLeft = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyleGreen.TopBorderColor = HSSFColor.Black.Index;
+                cellStyleGreen.RightBorderColor = HSSFColor.Black.Index;
+                cellStyleGreen.BottomBorderColor = HSSFColor.Black.Index;
+                cellStyleGreen.LeftBorderColor = HSSFColor.Black.Index;
+                cellStyleGreen.FillForegroundColor = HSSFColor.BrightGreen.Index;
+                cellStyleGreen.FillPattern = FillPattern.SolidForeground;
+
+                ICellStyle cellStyleYellow = workbook.CreateCellStyle();
+                cellStyleYellow.SetFont(fontblack);
+                cellStyleYellow.BorderTop = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyleYellow.BorderRight = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyleYellow.BorderBottom = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyleYellow.BorderLeft = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyleYellow.TopBorderColor = HSSFColor.Black.Index;
+                cellStyleYellow.RightBorderColor = HSSFColor.Black.Index;
+                cellStyleYellow.BottomBorderColor = HSSFColor.Black.Index;
+                cellStyleYellow.LeftBorderColor = HSSFColor.Black.Index;
+                cellStyleYellow.FillForegroundColor = HSSFColor.Yellow.Index;
+                cellStyleYellow.FillPattern = FillPattern.SolidForeground;
+
+                #endregion
+
+                sheet.GetRow(0).GetCell(0).SetCellValue(string.Format("单位名称：{0}   {1}年度含税售后收入业绩汇总表     单位:   万元", ddlCorp.SelectedItem.Text, day.Year));
+
+                int maxrow = 0;
+                for (int i = 0; i < tblresult.Rows.Count;i++ )
+                {
+                    if (!string.IsNullOrEmpty(tblresult.Rows[i]["月份"].ToString()))
+                    {
+                        maxrow = i;
+                        sheet.GetRow(3+i).GetCell(1).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["预算台次"]));
+                        sheet.GetRow(3 + i).GetCell(2).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["来厂台次"]));
+                        sheet.GetRow(3 + i).GetCell(3).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["预算产值"]) / 10000);
+                        sheet.GetRow(3 + i).GetCell(4).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["维修产值"]) / 10000);
+                        sheet.GetRow(3 + i).GetCell(7).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["一般维修额"]) / 10000);
+                        sheet.GetRow(3 + i).GetCell(8).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["首保索赔额"]) / 10000);
+                        sheet.GetRow(3 + i).GetCell(9).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["事故车收入"]) / 10000);
+                        sheet.GetRow(3 + i).GetCell(10).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["终生免费保养的收入"]) / 10000);
+                        sheet.GetRow(3 + i).GetCell(11).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["养护产品的收入"]) / 10000);
+                        sheet.GetRow(3 + i).GetCell(12).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["他牌车收入"]) / 10000);
+                        sheet.GetRow(3 + i).GetCell(13).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["其中事故车台次"]));
+                        sheet.GetRow(3 + i).GetCell(15).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["维修毛利额"]) / 10000);
+                        sheet.GetRow(3 + i).GetCell(16).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["维修毛利率"]) / 100);
+                        sheet.GetRow(3 + i).GetCell(17).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["废旧收入"]) / 10000);
+                        sheet.GetRow(3 + i).GetCell(19).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["含废旧的维修实际毛利率"]) / 100);
+                        sheet.GetRow(3 + i).GetCell(20).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["含废旧的维修预算毛利率"]) / 100);
+                        sheet.GetRow(19 + i).GetCell(1).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["油漆收入"]) / 10000);
+                        sheet.GetRow(19 + i).GetCell(2).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["油漆成本"]) / 10000);
+                        sheet.GetRow(19 + i).GetCell(4).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["占产值收入比例目标"]));
+                        sheet.GetRow(19 + i).GetCell(6).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["其中养护产品毛利率"]));
+                        sheet.GetRow(19 + i).GetCell(7).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["标准库存金额"]) / 10000);
+                        sheet.GetRow(19 + i).GetCell(8).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["期末实际库存额"]) / 10000);
+                        sheet.GetRow(19 + i).GetCell(9).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["其中一年以上库存额"]) / 10000);
+                        sheet.GetRow(19 + i).GetCell(11).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["标准的库存度"]));
+                        sheet.GetRow(19 + i).GetCell(12).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["实际库存度"]));
+                        sheet.GetRow(19 + i).GetCell(14).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["配件毛利率"]) / 100);
+                        sheet.GetRow(19 + i).GetCell(15).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["事故车毛利率"]) / 100);
+                        sheet.GetRow(19 + i).GetCell(16).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["一般维修毛利率"]) / 100);
+                        sheet.GetRow(19 + i).GetCell(17).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["他牌车维修毛利率"]) / 100);
+                        sheet.GetRow(35 + i).GetCell(1).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["续保预算台次"]));
+                        sheet.GetRow(35 + i).GetCell(2).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["续保实际台次"]));
+                        sheet.GetRow(35 + i).GetCell(3).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["续保目标渗透率"]) / 100);
+                        sheet.GetRow(35 + i).GetCell(6).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["续保总额"]) / 10000);
+                        sheet.GetRow(35 + i).GetCell(7).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["续保返利收入"]) / 10000);
+                        sheet.GetRow(35 + i).GetCell(8).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["续保平均单台净收入"]) / 10000);
+                        sheet.GetRow(35 + i).GetCell(9).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["终生免费保养预算台次"]));
+                        sheet.GetRow(35 + i).GetCell(10).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["终生免费保养实际台次"]));
+                        sheet.GetRow(35 + i).GetCell(11).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["终生免费保养目标渗透率"]) / 100);
+                        sheet.GetRow(35 + i).GetCell(12).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["终生免费保养实际渗透率"]) / 100);
+                        sheet.GetRow(35 + i).GetCell(14).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["终身免费保养总额"]) / 10000);
+                        sheet.GetRow(35 + i).GetCell(15).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["延保返利收入"]) / 10000);
+                        sheet.GetRow(35 + i).GetCell(16).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["延保平均单台净收入"]) / 10000);
+                        sheet.GetRow(35 + i).GetCell(17).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["导航升级业务个数"]));
+                        sheet.GetRow(35 + i).GetCell(18).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["导航升级业务平均单台收入"]) / 10000);
+
+                    }
+                    else
+                    {
+                        sheet.GetRow(i + 3).ZeroHeight = true;
+                        sheet.GetRow(i + 19).ZeroHeight = true;
+                        sheet.GetRow(i + 35).ZeroHeight = true;
+                    }
+                }
+                //if (maxrow > 0)
+                //{
+                //    for (int i = 0; i < maxrow; i++)
+                //    {
+                //        sheet.GetRow(i + 3).ZeroHeight = true;
+                //        sheet.GetRow(i + 21).ZeroHeight = true;
+                //        sheet.GetRow(i + 39).ZeroHeight = true;
+                //    }
+                //}
+
+                sheet.ForceFormulaRecalculation = true;
+                using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
+                {
+                    workbook.Write(ms);
+                    Response.Clear();
+                    Response.Buffer = true;
+                    Response.ContentType = "application/vnd.ms-excel";
+                    Response.ContentEncoding = System.Text.Encoding.UTF8;
+                    Response.AppendHeader("Content-Disposition", "attachment; filename=" + HttpUtility.UrlEncode(newfile, Encoding.UTF8).ToString() + "");
+                    Response.BinaryWrite(ms.ToArray());
+                    Response.End();
+                    workbook = null;
+                }
+            }
+        }
+
+        protected void btnJPYearAnalyze_Click(object sender, EventArgs e)
+        {
+
+            DateTime day = DateTime.Today;
+            if (DateTime.TryParse(txtDate.Text, out day))
+            {
+                DataTable tblresult = new DataTable();
+
+                #region 表结构
+
+                tblresult.Columns.Add("月份");
+                tblresult.Columns.Add("预算毛利率");
+                tblresult.Columns.Add("展厅按预算月度产值");
+                tblresult.Columns.Add("展厅实际精品产值");
+                tblresult.Columns.Add("展厅实际的毛利额");
+                tblresult.Columns.Add("展厅实际精品台次");
+                tblresult.Columns.Add("展厅销量");
+                tblresult.Columns.Add("展厅单台目标");
+                tblresult.Columns.Add("网点按预算月度产值");
+                tblresult.Columns.Add("网点实际精品产值");
+                tblresult.Columns.Add("网点精品毛利额");
+                tblresult.Columns.Add("网点精品台次");
+                tblresult.Columns.Add("网点销售量");
+                tblresult.Columns.Add("网点目标单台产值");
+                tblresult.Columns.Add("售后按预算月度产值");
+                tblresult.Columns.Add("售后实际精品产值");
+                tblresult.Columns.Add("售后精品毛利额");
+                tblresult.Columns.Add("售后精品台次");
+                tblresult.Columns.Add("售后来厂台次");
+                tblresult.Columns.Add("售后预算单台产值");
+                tblresult.Columns.Add("期末库存数");
+                tblresult.Columns.Add("3个月以上滞销库存");
+                tblresult.Columns.Add("1年以上滞销库存");
+
+                #endregion
+
+                for (int i = 0; i < 12; i++)
+                {
+                    DataRow row = tblresult.NewRow();
+
+                    decimal ysjpmle = 0,ysjpcz; //预算精品毛利额,预算精品产值
+                    decimal ysztdccz = 0,yswddtcz = 0,ysshdtcz =0; //预算展厅单车产值,预算网点单台产值,预算售后单台产值
+                    decimal ysztxl = 0,yswdxl = 0,ysshlctc = 0; //预算展厅销量，预算网点销量，预算售后來厂台次
+
+                    #region 精品数据
+
+                    day = DateTime.Parse(day.Year.ToString() + "-" + (i + 1).ToString("00") + "-01");
+                    DayReportDep dep = DayReportDep.精品部;
+                    DailyReportQuery query = new DailyReportQuery()
+                    {
+                        DayUnique = day.ToString("yyyyMM"),
+                        CorporationID = DataConvert.SafeInt(ddlCorp.SelectedValue),
+                        DayReportDep = dep
+                    };
+                    query.OrderBy = " [DayUnique] ASC";
+                    List<DailyReportInfo> list = DailyReports.Instance.GetList(query, true);
+                    if (list != null && list.Count > 0)
+                    {
+                        list = list.FindAll(l => l.DailyReportCheckStatus != DailyReportCheckStatus.审核不通过);
+                        MonthlyTargetInfo monthtarget = MonthlyTargets.Instance.GetModel(DataConvert.SafeInt(ddlCorp.SelectedValue), dep, day, true);
+                        int days = 0;
+                        DataTable tblDay = GetReport(dep, list, monthtarget, day, ref days);
+                        DataTable tblKey = GetKeyReport(dep, list, monthtarget, tblDay);
+
+                        row["月份"] = (i + 1);
+                        decimal ysztjpmle = monthtarget == null ? 0 : DataConvert.SafeDecimal(monthtarget.JPysztjpmle); //预算展厅精品毛利额
+                        decimal yswdjpmle = monthtarget == null ? 0 : DataConvert.SafeDecimal(monthtarget.JPyswdjpmle); //预算网点精品毛利额
+                        decimal ysshjpmle = monthtarget == null ? 0 : DataConvert.SafeDecimal(monthtarget.JPysshjpmle); //预算售后精品毛利额
+                        ysjpmle = ysztjpmle + yswdjpmle + ysshjpmle; //预算精品毛利额
+
+                        ysztdccz = monthtarget == null ? 0 : DataConvert.SafeDecimal(monthtarget.JPysztdccz); //预算展厅单车产值
+                        yswddtcz = monthtarget == null ? 0 : DataConvert.SafeDecimal(monthtarget.JPyswddtcz); //预算网点单台产值
+                        ysshdtcz = monthtarget == null ? 0 : DataConvert.SafeDecimal(monthtarget.JPysshdtcz); //预算售后单台产值
+                        //展厅实际精品产值
+                        row["展厅实际精品产值"] = monthtarget == null ? 0 : DataConvert.SafeDecimal(monthtarget.JPztsjjpcz);
+
+                        //展厅实际的毛利额
+                        row["展厅实际的毛利额"] = monthtarget == null ? 0 : DataConvert.SafeDecimal(monthtarget.JPztsjmle);
+
+                        //展厅单台目标
+                        row["展厅单台目标"] = ysztdccz;
+
+                        //网点精品毛利额
+                        row["网点精品毛利额"] = monthtarget == null ? 0 : DataConvert.SafeDecimal(monthtarget.JPwdjpmle); //网点精品毛利额
+
+                        //网点目标单台产值
+                        row["网点目标单台产值"] = yswddtcz;
+
+
+                        //售后精品毛利额
+                        row["售后精品毛利额"] = monthtarget == null ? 0 : DataConvert.SafeDecimal(monthtarget.JPshjpmle); //售后精品毛利额
+
+                        //售后精品台次
+                        tblDay.DefaultView.RowFilter = "项目='服务部安装台次'";
+                        row["售后精品台次"] = tblDay.DefaultView[0]["合计"];
+
+                        //售后预算单台产值
+                        row["售后预算单台产值"] = ysshdtcz;
+
+                        //期末库存数
+                        row["期末库存数"] = monthtarget == null ? 0 : DataConvert.SafeDecimal(monthtarget.JPqmkcs);
+
+                        //其中：3个月以上滞销库存
+                        row["3个月以上滞销库存"] = monthtarget == null ? 0 : DataConvert.SafeDecimal(monthtarget.JPsgyyszxkc);
+
+                        //1年以上滞销库存
+                        row["1年以上滞销库存"] = monthtarget == null ? 0 : DataConvert.SafeDecimal(monthtarget.JPynyszxkc);
+                    }
+
+                    #endregion
+
+                    #region 销售数据
+
+                    day = DateTime.Parse(day.Year.ToString() + "-" + (i + 1).ToString("00") + "-01");
+                    dep = DayReportDep.销售部;
+                    query = new DailyReportQuery()
+                    {
+                        DayUnique = day.ToString("yyyyMM"),
+                        CorporationID = DataConvert.SafeInt(ddlCorp.SelectedValue),
+                        DayReportDep = dep
+                    };
+                    query.OrderBy = " [DayUnique] ASC";
+                    list = DailyReports.Instance.GetList(query, true);
+                    if (list != null && list.Count > 0)
+                    {
+                        list = list.FindAll(l => l.DailyReportCheckStatus != DailyReportCheckStatus.审核不通过);
+                        MonthlyTargetInfo monthtarget = MonthlyTargets.Instance.GetModel(DataConvert.SafeInt(ddlCorp.SelectedValue), dep, day, true);
+                        int days = 0;
+                        DataTable tblDay = GetReport(dep, list, monthtarget, day, ref days);
+                        DataTable tblKey = GetKeyReport(dep, list, monthtarget, tblDay);
+
+
+                        //展厅销量
+                        tblDay.DefaultView.RowFilter = "项目='展厅交车台数'";
+                        ysztxl = DataConvert.SafeDecimal(tblDay.DefaultView[0]["目标值"]);
+                        row["展厅销量"] = tblDay.DefaultView[0]["合计"];
+
+                        //网点销量
+                        tblDay.DefaultView.RowFilter = "项目='二网销售台次'";
+                        yswdxl = DataConvert.SafeDecimal(tblDay.DefaultView[0]["目标值"]);
+                        row["网点销售量"] = tblDay.DefaultView[0]["合计"];
+
+                        //展厅实际精品台次
+                        tblDay.DefaultView.RowFilter = "项目='展厅成交精品台次'";
+                        row["展厅实际精品台次"] = tblDay.DefaultView[0]["合计"];
+
+                        //网点实际精品产值
+                        tblDay.DefaultView.RowFilter = "项目='二网精品金额'";
+                        row["网点实际精品产值"] = tblDay.DefaultView[0]["合计"];
+
+                        //网点精品台次
+                        tblDay.DefaultView.RowFilter = "项目='二网精品台次'";
+                        row["网点精品台次"] = tblDay.DefaultView[0]["合计"];
+
+                    }
+
+                    #endregion
+
+                    #region 售后数据
+
+                    day = DateTime.Parse(day.Year.ToString() + "-" + (i + 1).ToString("00") + "-01");
+                    dep = DayReportDep.售后部;
+                    query = new DailyReportQuery()
+                    {
+                        DayUnique = day.ToString("yyyyMM"),
+                        CorporationID = DataConvert.SafeInt(ddlCorp.SelectedValue),
+                        DayReportDep = dep
+                    };
+                    query.OrderBy = " [DayUnique] ASC";
+                    list = DailyReports.Instance.GetList(query, true);
+                    if (list != null && list.Count > 0)
+                    {
+                        list = list.FindAll(l => l.DailyReportCheckStatus != DailyReportCheckStatus.审核不通过);
+                        MonthlyTargetInfo monthtarget = MonthlyTargets.Instance.GetModel(DataConvert.SafeInt(ddlCorp.SelectedValue), dep, day, true);
+                        int days = 0;
+                        DataTable tblDay = GetReport(dep, list, monthtarget, day, ref days);
+                        DataTable tblKey = GetKeyReport(dep, list, monthtarget, tblDay);
+
+                        //售后來厂台次
+                        tblDay.DefaultView.RowFilter = "项目='来厂台次'";
+                        ysshlctc = DataConvert.SafeDecimal(tblDay.DefaultView[0]["目标值"]);
+                        row["售后来厂台次"] = tblDay.DefaultView[0]["合计"];
+
+                        //售后实际精品产值
+                        tblDay.DefaultView.RowFilter = "项目='精品美容产值'";
+                        row["售后实际精品产值"] = tblDay.DefaultView[0]["合计"];
+                    }
+
+                    #endregion
+
+                    //预算毛利率
+                    ysjpcz = ysztxl * ysztdccz + yswdxl * yswddtcz + ysshlctc * ysshdtcz; //预算精品产值
+                    row["预算毛利率"] = ysjpcz == 0 ? string.Empty : (ysjpmle / ysjpcz).ToString();
+
+                    //展厅按预算月度产值
+                    row["展厅按预算月度产值"] = ysztxl * ysztdccz;
+                    //网点按预算月度产值
+                    row["网点按预算月度产值"] = yswdxl * yswddtcz;
+                    //售后按预算月度产值
+                    row["售后按预算月度产值"] = ysshlctc * ysshdtcz;
+
+
+
+                    tblresult.Rows.Add(row);
+                }
+
+                IWorkbook workbook = null;
+                ISheet sheet = null;
+                string newfile = string.Empty;
+                string fileName = Utils.GetMapPath(string.Format(@"\App_Data\年度精品数据分析.xls"));
+                newfile = string.Format(@"{0}年度精品数据分析.xls", day.Year);
+                using (FileStream file = new FileStream(fileName, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite))
+                {
+                    workbook = new HSSFWorkbook(file);
+                }
+                sheet = workbook.GetSheetAt(0);
+
+                #region 颜色
+
+                IFont fontblack = workbook.CreateFont();
+                fontblack.Color = HSSFColor.Black.Index;
+
+                ICellStyle cellStyleBlack = workbook.CreateCellStyle();
+                cellStyleBlack.SetFont(fontblack);
+                cellStyleBlack.BorderTop = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyleBlack.BorderRight = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyleBlack.BorderBottom = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyleBlack.BorderLeft = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyleBlack.TopBorderColor = HSSFColor.Black.Index;
+                cellStyleBlack.RightBorderColor = HSSFColor.Black.Index;
+                cellStyleBlack.BottomBorderColor = HSSFColor.Black.Index;
+                cellStyleBlack.LeftBorderColor = HSSFColor.Black.Index;
+
+                ICellStyle cellStyleGreen = workbook.CreateCellStyle();
+                cellStyleGreen.SetFont(fontblack);
+                cellStyleGreen.BorderTop = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyleGreen.BorderRight = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyleGreen.BorderBottom = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyleGreen.BorderLeft = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyleGreen.TopBorderColor = HSSFColor.Black.Index;
+                cellStyleGreen.RightBorderColor = HSSFColor.Black.Index;
+                cellStyleGreen.BottomBorderColor = HSSFColor.Black.Index;
+                cellStyleGreen.LeftBorderColor = HSSFColor.Black.Index;
+                cellStyleGreen.FillForegroundColor = HSSFColor.BrightGreen.Index;
+                cellStyleGreen.FillPattern = FillPattern.SolidForeground;
+
+                ICellStyle cellStyleYellow = workbook.CreateCellStyle();
+                cellStyleYellow.SetFont(fontblack);
+                cellStyleYellow.BorderTop = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyleYellow.BorderRight = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyleYellow.BorderBottom = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyleYellow.BorderLeft = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyleYellow.TopBorderColor = HSSFColor.Black.Index;
+                cellStyleYellow.RightBorderColor = HSSFColor.Black.Index;
+                cellStyleYellow.BottomBorderColor = HSSFColor.Black.Index;
+                cellStyleYellow.LeftBorderColor = HSSFColor.Black.Index;
+                cellStyleYellow.FillForegroundColor = HSSFColor.Yellow.Index;
+                cellStyleYellow.FillPattern = FillPattern.SolidForeground;
+
+                #endregion
+
+                sheet.GetRow(0).GetCell(0).SetCellValue(day.Year + "年度精品数据分析表");
+                sheet.GetRow(1).GetCell(3).SetCellValue(ddlCorp.SelectedItem.Text);
+
+                int maxrow = 0;
+                for (int i = 0; i < tblresult.Rows.Count; i++)
+                {
+                    if (!string.IsNullOrEmpty(tblresult.Rows[i]["月份"].ToString()))
+                    {
+                        maxrow = i;
+                        sheet.GetRow(9).GetCell(i + 3).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["预算毛利率"]));
+                        sheet.GetRow(11).GetCell(i + 3).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["展厅按预算月度产值"]) / 10000);
+                        sheet.GetRow(13).GetCell(i + 3).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["展厅实际精品产值"]) / 10000);
+                        sheet.GetRow(14).GetCell(i + 3).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["展厅实际的毛利额"]) / 10000);
+                        sheet.GetRow(16).GetCell(i + 3).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["展厅实际精品台次"]));
+                        sheet.GetRow(17).GetCell(i + 3).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["展厅销量"]));
+                        sheet.GetRow(18).GetCell(i + 3).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["展厅单台目标"]) / 10000);
+                        sheet.GetRow(22).GetCell(i + 3).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["网点按预算月度产值"]) / 10000);
+                        sheet.GetRow(24).GetCell(i + 3).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["网点实际精品产值"]) / 10000);
+                        sheet.GetRow(25).GetCell(i + 3).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["网点精品毛利额"]) / 10000);
+                        sheet.GetRow(27).GetCell(i + 3).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["网点精品台次"]));
+                        sheet.GetRow(28).GetCell(i + 3).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["网点销售量"]));
+                        sheet.GetRow(29).GetCell(i + 3).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["网点目标单台产值"]) / 10000);
+                        sheet.GetRow(33).GetCell(i + 3).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["售后按预算月度产值"]) / 10000);
+                        sheet.GetRow(35).GetCell(i + 3).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["售后实际精品产值"]) / 10000);
+                        sheet.GetRow(36).GetCell(i + 3).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["售后精品毛利额"]) / 10000);
+                        sheet.GetRow(38).GetCell(i + 3).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["售后精品台次"]));
+                        sheet.GetRow(42).GetCell(i + 3).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["售后来厂台次"]));
+                        sheet.GetRow(43).GetCell(i + 3).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["售后预算单台产值"]) / 10000);
+                        sheet.GetRow(44).GetCell(i + 3).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["期末库存数"]));
+                        sheet.GetRow(45).GetCell(i + 3).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["3个月以上滞销库存"]));
+                        sheet.GetRow(46).GetCell(i + 3).SetCellValue(DataConvert.SafeDouble(tblresult.Rows[i]["1年以上滞销库存"]));
+                    }
+                    else if (i < 11 || (i == 11 && maxrow > 0))
+                        sheet.SetColumnHidden(i + 3, true);
+                }
+                if (maxrow > 0)
+                {
+                    for (int i = 0; i < maxrow; i++)
+                    {
+                        sheet.SetColumnHidden(i + 3, true);
+                    }
+                }
+
+                sheet.ForceFormulaRecalculation = true;
+                using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
+                {
+                    workbook.Write(ms);
+                    Response.Clear();
+                    Response.Buffer = true;
+                    Response.ContentType = "application/vnd.ms-excel";
+                    Response.ContentEncoding = System.Text.Encoding.UTF8;
+                    Response.AppendHeader("Content-Disposition", "attachment; filename=" + HttpUtility.UrlEncode(newfile, Encoding.UTF8).ToString() + "");
+                    Response.BinaryWrite(ms.ToArray());
+                    Response.End();
+                    workbook = null;
+                }
+            }
         }
 
         private string CheckForm()

@@ -149,6 +149,16 @@
                             Text="生成月报" />
                         <asp:Button runat="server" ID="btnExportExcel" CssClass="an1" OnClick="btnExportExcel_Click"
                             Text="导出Excel" />
+                        <%if(CurrentDep == DayReportDep.销售部 && CurrentUser.YearGather == "1"){ %>
+                        <asp:Button runat="server" ID="btnXSYearAnalyze" CssClass="an1" OnClick="btnXSYearAnalyze_Click"
+                            Text="年度销售数据分析" />
+                        <%}else if (CurrentDep == DayReportDep.售后部 && CurrentUser.YearGather == "1"){ %>
+                        <asp:Button runat="server" ID="btnSHYearAnalyze" CssClass="an1" OnClick="btnSHYearAnalyze_Click"
+                            Text="年度售后数据分析" />
+                        <%}else if(CurrentDep == DayReportDep.精品部 && CurrentUser.YearGather == "1") {%>
+                        <asp:Button runat="server" ID="btnJPYearAnalyze" CssClass="an1" OnClick="btnJPYearAnalyze_Click"
+                            Text="年度精品数据分析" />
+                        <%} %>
                     </td>
                 </tr>
                 <tr>

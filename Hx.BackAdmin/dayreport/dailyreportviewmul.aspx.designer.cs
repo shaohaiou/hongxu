@@ -121,13 +121,22 @@ namespace Hx.BackAdmin.dayreport {
         protected global::System.Web.UI.WebControls.Button btnDCCCyb;
         
         /// <summary>
-        /// btnXSFollow 控件。
+        /// btnSCFollow 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnXSFollow;
+        protected global::System.Web.UI.WebControls.Button btnSCFollow;
+        
+        /// <summary>
+        /// btnSCdzpxfa 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSCdzpxfa;
         
         /// <summary>
         /// btnXSDayGather 控件。

@@ -3768,7 +3768,7 @@ namespace Hx.BackAdmin.dayreport
             LoadReportCountData();
         }
 
-        protected void btnXSFollow_Click(object sender, EventArgs e)
+        protected void btnSCFollow_Click(object sender, EventArgs e)
         {
             DateTime day = DateTime.Today;
             if (DateTime.TryParse(txtDate2.Text, out day))
@@ -4117,6 +4117,246 @@ namespace Hx.BackAdmin.dayreport
                         else
                             sheet.GetRow(index).Cells[i + 1].CellStyle = cellStyleBlack;
                     }
+                    index++;
+                }
+                sheet.ForceFormulaRecalculation = true;
+                using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
+                {
+                    workbook.Write(ms);
+                    Response.Clear();
+                    Response.Buffer = true;
+                    Response.ContentType = "application/vnd.ms-excel";
+                    Response.ContentEncoding = System.Text.Encoding.UTF8;
+                    Response.AppendHeader("Content-Disposition", "attachment; filename=" + HttpUtility.UrlEncode(newfile, Encoding.UTF8).ToString() + "");
+                    Response.BinaryWrite(ms.ToArray());
+                    Response.End();
+                    workbook = null;
+                }
+            }
+        }
+
+        protected void btnSCdzpxfa_Click(object sender, EventArgs e)
+        {
+            DateTime day = DateTime.Today;
+            if (DateTime.TryParse(txtDate2.Text, out day))
+            {
+                DataTable tblresult = new DataTable();
+
+                #region 表结构
+
+                tblresult.Columns.Add("品牌");
+                tblresult.Columns.Add("展厅新增到店");
+                tblresult.Columns.Add("DCC新增销售线索");
+                tblresult.Columns.Add("DCC订单转换率");
+                tblresult.Columns.Add("展厅成交率");
+                tblresult.Columns.Add("二次邀约到店率");
+                tblresult.Columns.Add("单车附加总产值");
+                tblresult.Columns.Add("粘性产品总渗透率");
+                tblresult.Columns.Add("来厂台次");
+                tblresult.Columns.Add("续保完成率");
+                tblresult.Columns.Add("二手车评估数");
+                tblresult.Columns.Add("老客户转介绍占比");
+
+                #endregion
+
+                List<CorporationInfo> corplist = Corporations.Instance.GetList(true);
+                string[] corppower = hdnDayReportCorp.Value.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
+                corplist = corplist.FindAll(c => corppower.Contains(c.ID.ToString()));
+                for (int i = 0; i < corplist.Count; i++)
+                {
+                    DataRow row = tblresult.NewRow();
+
+                    #region 销售数据
+
+                    DayReportDep dep = DayReportDep.销售部;
+                    DailyReportQuery query = new DailyReportQuery()
+                    {
+                        DayUnique = day.ToString("yyyyMM"),
+                        CorporationID = corplist[i].ID,
+                        DayReportDep = dep
+                    };
+                    query.OrderBy = " [DayUnique] ASC";
+                    List<DailyReportInfo> list = DailyReports.Instance.GetList(query, true);
+                    list = list.FindAll(l => l.DailyReportCheckStatus != DailyReportCheckStatus.审核不通过);
+                    MonthlyTargetInfo monthtarget = MonthlyTargets.Instance.GetModel(corplist[i].ID, dep, day, true);
+                    int days = 0;
+                    DataTable tblDay = GetReport(dep, list, monthtarget, day, corplist[i].ID, ref days);
+                    DataTable tblKey = GetKeyReport(dep, list, monthtarget, tblDay, corplist[i].ID);
+
+                    row["品牌"] = corplist[i].Name;
+                    tblDay.DefaultView.RowFilter = "项目='展厅首次来客批次'";
+                    row["展厅新增到店"] = tblDay.DefaultView[0]["完成率"];
+                    tblKey.DefaultView.RowFilter = "关键指标='展厅成交率'";
+                    row["展厅成交率"] = tblKey.DefaultView[0]["实际"];
+                    tblKey.DefaultView.RowFilter = "关键指标='附加值合计'";
+                    row["单车附加总产值"] = tblKey.DefaultView[0]["完成率"];
+                    tblKey.DefaultView.RowFilter = "关键指标='延保渗透率'";
+                    decimal ybstl = DataConvert.SafeDecimal(tblKey.DefaultView[0]["实际"]);
+                    tblKey.DefaultView.RowFilter = "关键指标='免费保养渗透率'";
+                    decimal mfbystl = DataConvert.SafeDecimal(tblKey.DefaultView[0]["实际"]);
+                    row["粘性产品总渗透率"] = ybstl + mfbystl;
+                    tblDay.DefaultView.RowFilter = "项目='其中老客户转介绍交车台次'";
+                    decimal lkhzjstc = DataConvert.SafeDecimal(tblDay.DefaultView[0]["合计"]);
+                    tblDay.DefaultView.RowFilter = "项目='展厅交车台数'";
+                    decimal ztjctc = DataConvert.SafeDecimal(tblDay.DefaultView[0]["合计"]);
+                    row["老客户转介绍占比"] = ztjctc == 0 ? string.Empty : Math.Round(lkhzjstc * 100 / ztjctc,2).ToString();
+                    tblDay.DefaultView.RowFilter = "项目='推荐二手车评估数'";
+                    decimal tjescpgs = DataConvert.SafeDecimal(tblDay.DefaultView[0]["合计"]);
+
+                    #endregion
+
+                    #region 售后数据
+
+                    dep = DayReportDep.售后部;
+                    query = new DailyReportQuery()
+                    {
+                        DayUnique = day.ToString("yyyyMM"),
+                        CorporationID = corplist[i].ID,
+                        DayReportDep = dep
+                    };
+                    query.OrderBy = " [DayUnique] ASC";
+                    list = DailyReports.Instance.GetList(query, true);
+                    list = list.FindAll(l => l.DailyReportCheckStatus != DailyReportCheckStatus.审核不通过);
+                    monthtarget = MonthlyTargets.Instance.GetModel(corplist[i].ID, dep, day, true);
+                    days = 0;
+                    tblDay = GetReport(dep, list, monthtarget, day, corplist[i].ID, ref days);
+
+                    tblDay.DefaultView.RowFilter = "项目='来厂台次'";
+                    row["来厂台次"] = tblDay.DefaultView[0]["完成率"];
+                    tblDay.DefaultView.RowFilter = "项目='续保数'";
+                    row["续保完成率"] = tblDay.DefaultView[0]["完成率"];
+                    tblDay.DefaultView.RowFilter = "项目='介绍二手车评估数'";
+                    decimal jsescpgs = DataConvert.SafeDecimal(tblDay.DefaultView[0]["合计"]);
+
+                    row["二手车评估数"] = (jsescpgs + tjescpgs).ToString();
+                    #endregion
+
+                    #region DCC数据
+
+                    dep = DayReportDep.DCC部;
+                    query = new DailyReportQuery()
+                    {
+                        DayUnique = day.ToString("yyyyMM"),
+                        CorporationID = corplist[i].ID,
+                        DayReportDep = dep
+                    };
+                    query.OrderBy = " [DayUnique] ASC";
+                    list = DailyReports.Instance.GetList(query, true);
+                    list = list.FindAll(l => l.DailyReportCheckStatus != DailyReportCheckStatus.审核不通过);
+                    monthtarget = MonthlyTargets.Instance.GetModel(corplist[i].ID, dep, day, true);
+                    days = 0;
+                    tblDay = GetReport(dep, list, monthtarget, day, corplist[i].ID, ref days);
+                    hdnKeyReportType.Value = "dcczhhz";
+                    tblKey = GetKeyReport(dep, list, monthtarget, tblDay, corplist[i].ID);
+
+                    tblDay.DefaultView.RowFilter = "项目='新增DCC线索总量'";
+                    row["DCC新增销售线索"] = tblDay.DefaultView[0]["完成率"];
+                    tblKey.DefaultView.RowFilter = "关键指标='订单转化率'";
+                    row["DCC订单转换率"] = tblKey.DefaultView[0]["实际"];
+                    tblDay.DefaultView.RowFilter = "项目='首次邀约到店客户总数'";
+                    decimal scyyddkhs = DataConvert.SafeDecimal(tblDay.DefaultView[0]["合计"]);
+
+                    tblDay.DefaultView.RowFilter = "项目='再次邀约到店数'";
+                    decimal zcyyddkhs = DataConvert.SafeDecimal(tblDay.DefaultView[0]["合计"]);
+
+                    row["二次邀约到店率"] = (zcyyddkhs + scyyddkhs) == 0 ? string.Empty : Math.Round(zcyyddkhs * 100 / (zcyyddkhs + scyyddkhs), 2).ToString();
+
+
+                    #endregion
+
+                    tblresult.Rows.Add(row);
+                }
+
+                IWorkbook workbook = null;
+                ISheet sheet = null;
+                string newfile = string.Empty;
+                string fileName = Utils.GetMapPath(string.Format(@"\App_Data\总经理关键指标排名.xlsx"));
+                newfile = string.Format(@"{0}总经理关键指标排名.xlsx", day.ToString("yyyy年MM月"));
+                using (FileStream file = new FileStream(fileName, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite))
+                {
+                    workbook = new XSSFWorkbook(file);
+                }
+                sheet = workbook.GetSheetAt(0);
+
+                #region 颜色
+
+                IFont fontblack = workbook.CreateFont();
+                fontblack.Color = HSSFColor.Black.Index;
+
+                ICellStyle cellStyleBlack = workbook.CreateCellStyle();
+                cellStyleBlack.SetFont(fontblack);
+                cellStyleBlack.BorderTop = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyleBlack.BorderRight = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyleBlack.BorderBottom = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyleBlack.BorderLeft = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyleBlack.TopBorderColor = HSSFColor.Black.Index;
+                cellStyleBlack.RightBorderColor = HSSFColor.Black.Index;
+                cellStyleBlack.BottomBorderColor = HSSFColor.Black.Index;
+                cellStyleBlack.LeftBorderColor = HSSFColor.Black.Index;
+
+                ICellStyle cellStyleGreen = workbook.CreateCellStyle();
+                cellStyleGreen.SetFont(fontblack);
+                cellStyleGreen.BorderTop = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyleGreen.BorderRight = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyleGreen.BorderBottom = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyleGreen.BorderLeft = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyleGreen.TopBorderColor = HSSFColor.Black.Index;
+                cellStyleGreen.RightBorderColor = HSSFColor.Black.Index;
+                cellStyleGreen.BottomBorderColor = HSSFColor.Black.Index;
+                cellStyleGreen.LeftBorderColor = HSSFColor.Black.Index;
+                cellStyleGreen.FillForegroundColor = HSSFColor.BrightGreen.Index;
+                cellStyleGreen.FillPattern = FillPattern.SolidForeground;
+
+                ICellStyle cellStyleYellow = workbook.CreateCellStyle();
+                cellStyleYellow.SetFont(fontblack);
+                cellStyleYellow.BorderTop = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyleYellow.BorderRight = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyleYellow.BorderBottom = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyleYellow.BorderLeft = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyleYellow.TopBorderColor = HSSFColor.Black.Index;
+                cellStyleYellow.RightBorderColor = HSSFColor.Black.Index;
+                cellStyleYellow.BottomBorderColor = HSSFColor.Black.Index;
+                cellStyleYellow.LeftBorderColor = HSSFColor.Black.Index;
+                cellStyleYellow.FillForegroundColor = HSSFColor.Yellow.Index;
+                cellStyleYellow.FillPattern = FillPattern.SolidForeground;
+
+                ICellStyle cellStyleRed = workbook.CreateCellStyle();
+                cellStyleRed.SetFont(fontblack);
+                cellStyleRed.BorderTop = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyleRed.BorderRight = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyleRed.BorderBottom = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyleRed.BorderLeft = NPOI.SS.UserModel.BorderStyle.Thin;
+                cellStyleRed.TopBorderColor = HSSFColor.Black.Index;
+                cellStyleRed.RightBorderColor = HSSFColor.Black.Index;
+                cellStyleRed.BottomBorderColor = HSSFColor.Black.Index;
+                cellStyleRed.LeftBorderColor = HSSFColor.Black.Index;
+                cellStyleRed.FillForegroundColor = HSSFColor.Red.Index;
+                cellStyleRed.FillPattern = FillPattern.SolidForeground;
+
+                #endregion
+
+                int index = 2;
+                foreach (DataRow drow in tblresult.Rows)
+                {
+                    XSSFRow row = (XSSFRow)sheet.CreateRow(index);
+                    row.CreateCell(0).SetCellValue(drow["品牌"].ToString());
+                    row.CreateCell(1).SetCellValue(string.IsNullOrEmpty(drow["展厅新增到店"].ToString()) ? string.Empty : (drow["展厅新增到店"].ToString() + "%"));
+                    row.CreateCell(2).SetCellValue(string.IsNullOrEmpty(drow["DCC新增销售线索"].ToString()) ? string.Empty : (drow["DCC新增销售线索"].ToString() + "%"));
+                    row.CreateCell(3).SetCellValue(string.IsNullOrEmpty(drow["DCC订单转换率"].ToString()) ? string.Empty : (drow["DCC订单转换率"].ToString() + "%"));
+                    row.CreateCell(4).SetCellValue(string.IsNullOrEmpty(drow["展厅成交率"].ToString()) ? string.Empty : (drow["展厅成交率"].ToString() + "%"));
+                    row.CreateCell(5).SetCellValue(string.IsNullOrEmpty(drow["二次邀约到店率"].ToString()) ? string.Empty : (drow["二次邀约到店率"].ToString() + "%"));
+                    row.CreateCell(6).SetCellValue(string.IsNullOrEmpty(drow["单车附加总产值"].ToString()) ? string.Empty : (drow["单车附加总产值"].ToString() + "%"));
+                    row.CreateCell(7).SetCellValue(string.IsNullOrEmpty(drow["粘性产品总渗透率"].ToString()) ? string.Empty : (drow["粘性产品总渗透率"].ToString() + "%"));
+                    row.CreateCell(8).SetCellValue(string.IsNullOrEmpty(drow["来厂台次"].ToString()) ? string.Empty : (drow["来厂台次"].ToString() + "%"));
+                    row.CreateCell(9).SetCellValue(string.IsNullOrEmpty(drow["续保完成率"].ToString()) ? string.Empty : (drow["续保完成率"].ToString() + "%"));
+                    row.CreateCell(10).SetCellValue(drow["二手车评估数"].ToString());
+                    row.CreateCell(11).SetCellValue(string.IsNullOrEmpty(drow["老客户转介绍占比"].ToString()) ? string.Empty : (drow["老客户转介绍占比"].ToString() + "%"));
+
+                    for (int i = 0; i < tblresult.Columns.Count; i++)
+                    {
+                        sheet.GetRow(index).Cells[i].CellStyle = cellStyleBlack;
+                    }
+
                     index++;
                 }
                 sheet.ForceFormulaRecalculation = true;

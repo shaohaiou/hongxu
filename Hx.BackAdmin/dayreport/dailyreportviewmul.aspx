@@ -279,8 +279,10 @@
                         <asp:Button runat="server" ID="btnDCCCyb" CssClass="an1" OnClick="btnDCCMonthly_Click"
                             Text="DCC月报" />
                         <%}else if(CurrentDep == DayReportDep.市场部) {%>
-                        <asp:Button runat="server" ID="btnXSFollow" CssClass="an1" OnClick="btnXSFollow_Click"
+                        <asp:Button runat="server" ID="btnSCFollow" CssClass="an1" OnClick="btnSCFollow_Click"
                             Text="客源、线索进度下载" />
+                        <asp:Button runat="server" ID="btnSCdzpxfa" CssClass="an1" OnClick="btnSCdzpxfa_Click"
+                            Text="总经理关键指标排名" />
                         <%}
                           else if (CurrentDep == DayReportDep.销售部)
                           {%>

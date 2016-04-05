@@ -1303,16 +1303,24 @@
     <Folder Include="js\ckeditor\samples\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App_Data\2015年度总经理满意度（汇总表）.xls" />
     <None Include="App_Data\DCC日报表模板.xlsx" />
+    <None Include="App_Data\DCC月报.xlsx" />
     <None Include="App_Data\二手车日报表模板.xlsx" />
+    <None Include="App_Data\售后数据分析汇总.xls" />
     <None Include="App_Data\售后日报表模板.xlsx" />
     <None Include="App_Data\客服日报表模板.xlsx" />
     <None Include="App_Data\市场日报表模板.xlsx" />
+    <None Include="App_Data\年度售后数据分析.xls" />
+    <None Include="App_Data\年度精品数据分析.xls" />
+    <None Include="App_Data\年度销售数据分析.xls" />
+    <None Include="App_Data\精品数据分析汇总.xls" />
     <None Include="App_Data\精品日报表模板.xlsx" />
     <None Include="App_Data\行政人事日报表模板.xlsx" />
     <None Include="App_Data\财务日报表模板.xlsx" />
     <None Include="App_Data\金融日报表模板.xlsx" />
     <None Include="App_Data\销售客源、DCC线索周度进度跟进表模版.xls" />
+    <None Include="App_Data\销售数据分析汇总.xls" />
     <None Include="App_Data\销售日报汇总模版.xls" />
     <None Include="App_Data\销售日报表模板.xlsx" />
     <None Include="App_Data\销售日报表模板1.xlsx" />

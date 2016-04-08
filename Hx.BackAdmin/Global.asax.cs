@@ -76,6 +76,7 @@ namespace Hx.BackAdmin
                 Corporations.Instance.ReloadCorporationListCache();
                 CarBrands.Instance.ReloadCarBrandCacheByCorporation();
                 DayReportUsers.Instance.ReloadDayReportUserListCache();
+                DayReportUsers.Instance.ReloadPersonaldataListCache();
                 DayReportModules.Instance.ReloadDailyReportModuleListCache();
                 JobOffers.Instance.ReloadJobOfferListCache();
                 CorpMiens.Instance.ReloadCorpMienListCache();

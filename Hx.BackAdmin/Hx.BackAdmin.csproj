@@ -78,6 +78,7 @@
     <Content Include="biz\jobview.aspx" />
     <Content Include="biz\main.aspx" />
     <Content Include="biz\main_s.aspx" />
+    <Content Include="biz\personaldatamg.aspx" />
     <Content Include="car\automotivetypeedit.aspx" />
     <Content Include="car\automotivetypemg.aspx" />
     <Content Include="car\carcollect.aspx" />
@@ -545,6 +546,13 @@
     </Compile>
     <Compile Include="biz\main_s.aspx.designer.cs">
       <DependentUpon>main_s.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="biz\personaldatamg.aspx.cs">
+      <DependentUpon>personaldatamg.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="biz\personaldatamg.aspx.designer.cs">
+      <DependentUpon>personaldatamg.aspx</DependentUpon>
     </Compile>
     <Compile Include="car\automotivetypeedit.aspx.cs">
       <DependentUpon>automotivetypeedit.aspx</DependentUpon>

@@ -105,6 +105,7 @@
     <Compile Include="Entity\JobOfferInfo.cs" />
     <Compile Include="Entity\MonthlyTargetInfo.cs" />
     <Compile Include="Entity\MonthlyTargetHistoryInfo.cs" />
+    <Compile Include="Entity\PersonaldataInfo.cs" />
     <Compile Include="Entity\PromaryInfo.cs" />
     <Compile Include="Entity\QuestionCompanyInfo.cs" />
     <Compile Include="Entity\QuestionInfo.cs" />

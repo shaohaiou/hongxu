@@ -292,6 +292,29 @@ namespace Hx.Components.Providers
             return entity;
         }
 
+        public abstract List<PersonaldataInfo> GetPersonaldataList();
+
+        public abstract void AddPersonaldata(PersonaldataInfo entity);
+
+        public abstract void UpdatePersonaldata(PersonaldataInfo entity);
+
+        public abstract void DeletePersonaldata(string ids);
+
+        protected PersonaldataInfo PopulatePersonaldata(IDataReader reader)
+        {
+            PersonaldataInfo entity = new PersonaldataInfo
+            {
+                ID = DataConvert.SafeInt(reader["ID"]),
+                Name = reader["Name"] as string,
+                UserID = DataConvert.SafeInt(reader["UserID"]),
+                Filepath = reader["Filepath"] as string
+            };
+
+            return entity;
+        }
+
+
+
         #endregion
 
         #region 日报

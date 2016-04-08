@@ -549,6 +549,65 @@ namespace HX.DALSQLServer
             SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql);
         }
 
+        public override List<PersonaldataInfo> GetPersonaldataList()
+        {
+            List<PersonaldataInfo> list = new List<PersonaldataInfo>();
+            string sql = "SELECT * FROM HX_Personaldata";
+            using (IDataReader reader = SqlHelper.ExecuteReader(_con, CommandType.Text, sql))
+            {
+                while (reader.Read())
+                {
+                    list.Add(PopulatePersonaldata(reader));
+                }
+            }
+
+            return list;
+        }
+
+        public override void AddPersonaldata(PersonaldataInfo entity)
+        {
+            string sql = @"
+                INSERT INTO HX_Personaldata(
+                [Name]
+                ,[UserID]
+                ,[Filepath]
+                )VALUES(
+                @Name
+                ,@UserID
+                ,@Filepath
+                )";
+            SqlParameter[] p = 
+            {
+                new SqlParameter("@Name",entity.Name),
+                new SqlParameter("@UserID",entity.UserID),
+                new SqlParameter("@Filepath",entity.Filepath)
+            };
+            SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql, p);
+        }
+
+        public override void UpdatePersonaldata(PersonaldataInfo entity)
+        {
+            string sql = @"
+                UPDATE HX_Personaldata SET 
+                    [Name] = @Name 
+                    ,[Filepath] = @Filepath
+                WHERE [ID] = @ID";
+            SqlParameter[] p = 
+            {
+                new SqlParameter("@ID",entity.ID),
+                new SqlParameter("@Name",entity.Name),
+                new SqlParameter("@Filepath",entity.Filepath),
+            };
+            SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql, p);
+        }
+
+        public override void DeletePersonaldata(string ids)
+        {
+            string sql = string.Format("DELETE FROM HX_Personaldata WHERE [ID] IN ({0})", ids);
+            SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql);
+        }
+
+
         #endregion
 
         #region 日报

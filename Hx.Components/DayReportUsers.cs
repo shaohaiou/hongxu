@@ -94,5 +94,60 @@ namespace Hx.Components
         {
             CommonDataProvider.Instance().DeleteDayReportUser(ids);
         }
+
+        #region 现有资料管理
+
+        public List<PersonaldataInfo> GetPersonaldataList(bool fromCache = false)
+        {
+            if (!fromCache)
+                return CommonDataProvider.Instance().GetPersonaldataList();
+
+            string key = GlobalKey.PERSONALDATA_LIST;
+            List<PersonaldataInfo> list = MangaCache.Get(key) as List<PersonaldataInfo>;
+            if (list == null)
+            {
+                list = CommonDataProvider.Instance().GetPersonaldataList();
+                MangaCache.Max(key, list);
+            }
+            return list;
+        }
+
+        public void DeletePersonaldata(string ids)
+        {
+            CommonDataProvider.Instance().DeletePersonaldata(ids);
+        }
+
+        public void AddPersonaldata(PersonaldataInfo entity)
+        {
+            CommonDataProvider.Instance().AddPersonaldata(entity);
+        }
+
+        public PersonaldataInfo GetPersonaldata(int id, bool fromCache = false)
+        {
+            PersonaldataInfo entity = null;
+
+            List<PersonaldataInfo> list = GetPersonaldataList(fromCache);
+            if (list.Exists(l => l.ID == id))
+            {
+                entity = list.Find(l => l.ID == id);
+            }
+
+            return entity;
+        }
+
+        public void UpdatePersonaldata(PersonaldataInfo entity)
+        {
+            CommonDataProvider.Instance().UpdatePersonaldata(entity);
+            ReloadPersonaldataListCache();
+        }
+
+        public void ReloadPersonaldataListCache()
+        {
+            string key = GlobalKey.PERSONALDATA_LIST;
+            MangaCache.Remove(key);
+            GetPersonaldataList(true);
+        }
+
+        #endregion
     }
 }

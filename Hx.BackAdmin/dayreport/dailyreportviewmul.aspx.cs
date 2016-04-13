@@ -4145,16 +4145,19 @@ namespace Hx.BackAdmin.dayreport
                 #region 表结构
 
                 tblresult.Columns.Add("品牌");
-                tblresult.Columns.Add("展厅新增到店");
-                tblresult.Columns.Add("DCC新增销售线索");
-                tblresult.Columns.Add("DCC订单转换率");
-                tblresult.Columns.Add("展厅成交率");
-                tblresult.Columns.Add("二次邀约到店率");
-                tblresult.Columns.Add("单车附加总产值");
-                tblresult.Columns.Add("粘性产品总渗透率");
+                tblresult.Columns.Add("展厅销量完成率");
                 tblresult.Columns.Add("来厂台次");
+                tblresult.Columns.Add("售后产值完成率");
+                tblresult.Columns.Add("展厅新增留档潜客到店");
+                tblresult.Columns.Add("展厅成交率");
+                tblresult.Columns.Add("展厅二次到店率");
+                tblresult.Columns.Add("DCC建档线索完成率");
+                tblresult.Columns.Add("DCC订单转换率");
+                tblresult.Columns.Add("单车附加总产值");
                 tblresult.Columns.Add("续保完成率");
+                tblresult.Columns.Add("粘性产品总渗透率");
                 tblresult.Columns.Add("二手车评估数");
+                tblresult.Columns.Add("二手车收购量");
                 tblresult.Columns.Add("老客户转介绍占比");
 
                 #endregion
@@ -4185,11 +4188,25 @@ namespace Hx.BackAdmin.dayreport
 
                     row["品牌"] = corplist[i].Name;
                     tblDay.DefaultView.RowFilter = "项目='展厅首次来客批次'";
-                    row["展厅新增到店"] = tblDay.DefaultView[0]["完成率"];
+                    decimal ztsclkpc = DataConvert.SafeDecimal(tblDay.DefaultView[0]["合计"]);
+                    tblDay.DefaultView.RowFilter = "项目='再次来客批次'";
+                    decimal zclkpc = DataConvert.SafeDecimal(tblDay.DefaultView[0]["合计"]);
+
+                    row["展厅二次到店率"] = (zclkpc + ztsclkpc) == 0 ? string.Empty : Math.Round(zclkpc * 100 / (zclkpc + ztsclkpc), 2).ToString();
+                    tblDay.DefaultView.RowFilter = "项目='展厅交车台数'";
+                    decimal ztjctsmb = DataConvert.SafeDecimal(tblDay.DefaultView[0]["目标值"]);
+                    decimal ztjctshj = DataConvert.SafeDecimal(tblDay.DefaultView[0]["合计"]);
+                    row["展厅销量完成率"] = tblDay.DefaultView[0]["完成率"];
+                    tblDay.DefaultView.RowFilter = "项目='展厅首次来客批次'";
+                    row["展厅新增留档潜客到店"] = tblDay.DefaultView[0]["完成率"];
                     tblKey.DefaultView.RowFilter = "关键指标='展厅成交率'";
                     row["展厅成交率"] = tblKey.DefaultView[0]["实际"];
                     tblKey.DefaultView.RowFilter = "关键指标='附加值合计'";
-                    row["单车附加总产值"] = tblKey.DefaultView[0]["完成率"];
+                    decimal fjzhjmb = DataConvert.SafeDecimal(tblKey.DefaultView[0]["目标"]);
+                    decimal fjzhjsj = DataConvert.SafeDecimal(tblKey.DefaultView[0]["实际"]);
+                    decimal fjzdtmb = ztjctsmb == 0 ? 0 : fjzhjmb / ztjctsmb; //附加值单台目标
+                    decimal fjzdtsj = ztjctshj == 0 ? 0 : fjzhjsj / ztjctshj; //附加值单台实际
+                    row["单车附加总产值"] = fjzdtmb == 0 ? string.Empty : Math.Round(fjzdtsj * 100 / fjzdtmb, 2).ToString();
                     tblKey.DefaultView.RowFilter = "关键指标='延保渗透率'";
                     decimal ybstl = DataConvert.SafeDecimal(tblKey.DefaultView[0]["实际"]);
                     tblKey.DefaultView.RowFilter = "关键指标='免费保养渗透率'";
@@ -4223,12 +4240,36 @@ namespace Hx.BackAdmin.dayreport
 
                     tblDay.DefaultView.RowFilter = "项目='来厂台次'";
                     row["来厂台次"] = tblDay.DefaultView[0]["完成率"];
+                    tblDay.DefaultView.RowFilter = "项目='当日产值'";
+                    row["售后产值完成率"] = tblDay.DefaultView[0]["完成率"];
                     tblDay.DefaultView.RowFilter = "项目='续保数'";
                     row["续保完成率"] = tblDay.DefaultView[0]["完成率"];
                     tblDay.DefaultView.RowFilter = "项目='介绍二手车评估数'";
                     decimal jsescpgs = DataConvert.SafeDecimal(tblDay.DefaultView[0]["合计"]);
 
                     row["二手车评估数"] = (jsescpgs + tjescpgs).ToString();
+                    #endregion
+
+                    #region 二手车数据
+
+                    dep = DayReportDep.二手车部;
+                    query = new DailyReportQuery()
+                    {
+                        DayUnique = day.ToString("yyyyMM"),
+                        CorporationID = corplist[i].ID,
+                        DayReportDep = dep
+                    };
+                    query.OrderBy = " [DayUnique] ASC";
+                    list = DailyReports.Instance.GetList(query, true);
+                    list = list.FindAll(l => l.DailyReportCheckStatus != DailyReportCheckStatus.审核不通过);
+                    monthtarget = MonthlyTargets.Instance.GetModel(corplist[i].ID, dep, day, true);
+                    days = 0;
+                    tblDay = GetReport(dep, list, monthtarget, day, corplist[i].ID, ref days);
+                    tblKey = GetKeyReport(dep, list, monthtarget, tblDay, corplist[i].ID);
+
+                    tblKey.DefaultView.RowFilter = "关键指标='总收购量'";
+                    row["二手车收购量"] = tblKey.DefaultView[0]["实际"];
+
                     #endregion
 
                     #region DCC数据
@@ -4249,18 +4290,10 @@ namespace Hx.BackAdmin.dayreport
                     hdnKeyReportType.Value = "dcczhhz";
                     tblKey = GetKeyReport(dep, list, monthtarget, tblDay, corplist[i].ID);
 
-                    tblDay.DefaultView.RowFilter = "项目='新增DCC线索总量'";
-                    row["DCC新增销售线索"] = tblDay.DefaultView[0]["完成率"];
+                    tblDay.DefaultView.RowFilter = "项目='新增DCC线索建档量'";
+                    row["DCC建档线索完成率"] = tblDay.DefaultView[0]["完成率"];
                     tblKey.DefaultView.RowFilter = "关键指标='订单转化率'";
                     row["DCC订单转换率"] = tblKey.DefaultView[0]["实际"];
-                    tblDay.DefaultView.RowFilter = "项目='首次邀约到店客户总数'";
-                    decimal scyyddkhs = DataConvert.SafeDecimal(tblDay.DefaultView[0]["合计"]);
-
-                    tblDay.DefaultView.RowFilter = "项目='再次邀约到店数'";
-                    decimal zcyyddkhs = DataConvert.SafeDecimal(tblDay.DefaultView[0]["合计"]);
-
-                    row["二次邀约到店率"] = (zcyyddkhs + scyyddkhs) == 0 ? string.Empty : Math.Round(zcyyddkhs * 100 / (zcyyddkhs + scyyddkhs), 2).ToString();
-
 
                     #endregion
 
@@ -4340,17 +4373,20 @@ namespace Hx.BackAdmin.dayreport
                 {
                     XSSFRow row = (XSSFRow)sheet.CreateRow(index);
                     row.CreateCell(0).SetCellValue(drow["品牌"].ToString());
-                    row.CreateCell(1).SetCellValue(string.IsNullOrEmpty(drow["展厅新增到店"].ToString()) ? string.Empty : (drow["展厅新增到店"].ToString() + "%"));
-                    row.CreateCell(2).SetCellValue(string.IsNullOrEmpty(drow["DCC新增销售线索"].ToString()) ? string.Empty : (drow["DCC新增销售线索"].ToString() + "%"));
-                    row.CreateCell(3).SetCellValue(string.IsNullOrEmpty(drow["DCC订单转换率"].ToString()) ? string.Empty : (drow["DCC订单转换率"].ToString() + "%"));
-                    row.CreateCell(4).SetCellValue(string.IsNullOrEmpty(drow["展厅成交率"].ToString()) ? string.Empty : (drow["展厅成交率"].ToString() + "%"));
-                    row.CreateCell(5).SetCellValue(string.IsNullOrEmpty(drow["二次邀约到店率"].ToString()) ? string.Empty : (drow["二次邀约到店率"].ToString() + "%"));
-                    row.CreateCell(6).SetCellValue(string.IsNullOrEmpty(drow["单车附加总产值"].ToString()) ? string.Empty : (drow["单车附加总产值"].ToString() + "%"));
-                    row.CreateCell(7).SetCellValue(string.IsNullOrEmpty(drow["粘性产品总渗透率"].ToString()) ? string.Empty : (drow["粘性产品总渗透率"].ToString() + "%"));
-                    row.CreateCell(8).SetCellValue(string.IsNullOrEmpty(drow["来厂台次"].ToString()) ? string.Empty : (drow["来厂台次"].ToString() + "%"));
-                    row.CreateCell(9).SetCellValue(string.IsNullOrEmpty(drow["续保完成率"].ToString()) ? string.Empty : (drow["续保完成率"].ToString() + "%"));
-                    row.CreateCell(10).SetCellValue(drow["二手车评估数"].ToString());
-                    row.CreateCell(11).SetCellValue(string.IsNullOrEmpty(drow["老客户转介绍占比"].ToString()) ? string.Empty : (drow["老客户转介绍占比"].ToString() + "%"));
+                    row.CreateCell(1).SetCellValue(string.IsNullOrEmpty(drow["展厅销量完成率"].ToString()) ? string.Empty : (drow["展厅销量完成率"].ToString() + "%"));
+                    row.CreateCell(2).SetCellValue(string.IsNullOrEmpty(drow["来厂台次"].ToString()) ? string.Empty : (drow["来厂台次"].ToString() + "%"));
+                    row.CreateCell(3).SetCellValue(string.IsNullOrEmpty(drow["售后产值完成率"].ToString()) ? string.Empty : (drow["售后产值完成率"].ToString() + "%"));
+                    row.CreateCell(4).SetCellValue(string.IsNullOrEmpty(drow["展厅新增留档潜客到店"].ToString()) ? string.Empty : (drow["展厅新增留档潜客到店"].ToString() + "%"));
+                    row.CreateCell(5).SetCellValue(string.IsNullOrEmpty(drow["展厅成交率"].ToString()) ? string.Empty : (drow["展厅成交率"].ToString() + "%"));
+                    row.CreateCell(6).SetCellValue(string.IsNullOrEmpty(drow["展厅二次到店率"].ToString()) ? string.Empty : (drow["展厅二次到店率"].ToString() + "%"));
+                    row.CreateCell(7).SetCellValue(string.IsNullOrEmpty(drow["DCC建档线索完成率"].ToString()) ? string.Empty : (drow["DCC建档线索完成率"].ToString() + "%"));
+                    row.CreateCell(8).SetCellValue(string.IsNullOrEmpty(drow["DCC订单转换率"].ToString()) ? string.Empty : (drow["DCC订单转换率"].ToString() + "%"));
+                    row.CreateCell(9).SetCellValue(string.IsNullOrEmpty(drow["单车附加总产值"].ToString()) ? string.Empty : (drow["单车附加总产值"].ToString() + "%"));
+                    row.CreateCell(10).SetCellValue(string.IsNullOrEmpty(drow["续保完成率"].ToString()) ? string.Empty : (drow["续保完成率"].ToString() + "%"));
+                    row.CreateCell(11).SetCellValue(string.IsNullOrEmpty(drow["粘性产品总渗透率"].ToString()) ? string.Empty : (drow["粘性产品总渗透率"].ToString() + "%"));
+                    row.CreateCell(12).SetCellValue(drow["二手车评估数"].ToString());
+                    row.CreateCell(13).SetCellValue(drow["二手车收购量"].ToString());
+                    row.CreateCell(14).SetCellValue(string.IsNullOrEmpty(drow["老客户转介绍占比"].ToString()) ? string.Empty : (drow["老客户转介绍占比"].ToString() + "%"));
 
                     for (int i = 0; i < tblresult.Columns.Count; i++)
                     {

@@ -63,6 +63,7 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Cache\MangaCache.cs" />
+    <Compile Include="Choicestgoods.cs" />
     <Compile Include="Config\CommConfig.cs" />
     <Compile Include="CorpMiens.cs" />
     <Compile Include="CRMReports.cs" />
@@ -86,6 +87,7 @@
     <Compile Include="Entity\CardpackInfo.cs" />
     <Compile Include="Entity\CardPullRecordInfo.cs" />
     <Compile Include="Entity\CardSettingInfo.cs" />
+    <Compile Include="Entity\ChoicestgoodsInfo.cs" />
     <Compile Include="Entity\CityInfo.cs" />
     <Compile Include="Entity\CorpMienInfo.cs" />
     <Compile Include="Entity\CRMReportInfo.cs" />

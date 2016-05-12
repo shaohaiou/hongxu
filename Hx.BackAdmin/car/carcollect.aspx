@@ -41,6 +41,12 @@
         }
 
     </script>
+<style type="text/css">
+.colortd label em{width: 16px;height: 16px;line-height: 0;overflow: hidden;*zoom: 1;position:absolute;}
+.colortd label em.em-top{width: 16px;height: 8px;z-index: 10;}
+.colortd label em.em-buttom{width: 16px;height: 8px;top: 9px;left: 1px;z-index: 10;}
+.colortd label span{display: inline-block;width: 16px;height: 16px;border: 1px solid #cecece;*display: inline;*zoom: 1;position:relative;}
+</style>
 </head>
 <body>
     <form id="form1" runat="server">
@@ -85,7 +91,7 @@
                                 <asp:TextBox runat="server" ID="txtfZdj" CssClass="srk1"></asp:TextBox>
                             </td>
                         </tr>
-                        <tr>
+                        <%--<tr>
                             <td class="w160 tr">
                                 汽车级别：
                             </td>
@@ -1599,7 +1605,7 @@
                             <td>
                                 <asp:TextBox runat="server" ID="txtcQjsxt" CssClass="srk1"></asp:TextBox>
                             </td>
-                        </tr>
+                        </tr>--%>
                         <tr>
                             <td class="w160 tr">
                                 车身颜色：
@@ -1615,6 +1621,23 @@
                                     </ItemTemplate>
                                 </asp:Repeater>
                                 <input type="hidden" runat="server" id="hdncQcys" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="w160 tr">
+                                内饰颜色：
+                            </td>
+                            <td class="colortd">
+                                <input type="hidden" runat="server" id="hdnInnerColor" />
+                                <asp:Repeater runat="server" ID="rptcNsys">
+                                    <ItemTemplate>
+                                        <label class="blockinline">
+                                            <label class="fll" style="line-height: 18px; _line-height: 22px;">
+                                                <%#Eval("Name")%></label>
+                                                    <%# GetInnerColor(Eval("Color").ToString()) %></label>
+                                        <%#Container.ItemIndex > 0 && (Container.ItemIndex + 1) % 8 == 0 ? "<br />" : string.Empty%>
+                                    </ItemTemplate>
+                                </asp:Repeater>
                             </td>
                         </tr>
                     </tbody>

@@ -90,7 +90,7 @@
             this.textBox6.Name = "textBox6";
             this.textBox6.Size = new System.Drawing.Size(100, 21);
             this.textBox6.TabIndex = 34;
-            this.textBox6.Text = "hongxu";
+            this.textBox6.Text = "baojiaribao";
             // 
             // textBox5
             // 

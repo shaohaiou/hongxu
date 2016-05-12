@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>普通用户管理</title>
+    <title>销售顾问管理</title>
     <link href=<%=ResourceServer%>/css/admin.css rel="stylesheet" type="text/css" />
     <script src=<%=ResourceServer%>/js/jquery-1.3.2.min.js type="text/javascript"></script>
     <script type="text/javascript">
@@ -87,7 +87,7 @@
             ShowDisabledButtons="False" PagingButtonSpacing="">
         </webdiyer:AspNetPager>
         <div style="text-align: center; width: 600px;" class="lan5x">
-            <a href="useredit.aspx?from=<%=CurrentUrl %>">添加用户</a></div>
+            <a href="useredit.aspx?r=<%=GetInt("r") %>&from=<%=CurrentUrl %>">添加用户</a></div>
     </div>
     </form>
 </body>

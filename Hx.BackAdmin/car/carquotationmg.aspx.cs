@@ -24,7 +24,7 @@ namespace Hx.BackAdmin.car
                 return;
             }
             if (!Admin.Administrator
-                && ((int)Admin.UserRole & (int)Components.Enumerations.UserRoleType.销售经理) == 0)
+                && ((int)Admin.UserRole & (int)Components.Enumerations.UserRoleType.销售经理) == 0 && ((int)Admin.UserRole & (int)Components.Enumerations.UserRoleType.财务出纳) == 0)
             {
                 Response.Clear();
                 Response.Write("您没有权限操作！");
@@ -55,11 +55,12 @@ namespace Hx.BackAdmin.car
 
         private void BindControlor()
         {
+            hyName.Text = Admin.Name;
             ddlCarQuotationType.DataSource = EnumExtensions.ToTable<CarQuotationType>();
             ddlCarQuotationType.DataTextField = "Name";
             ddlCarQuotationType.DataValueField = "Value";
             ddlCarQuotationType.DataBind();
-            ddlCarQuotationType.Items.Insert(0, new ListItem("-报价类型-", "-1"));
+            ddlCarQuotationType.Items.Insert(0, new ListItem("-提交类型-", "-1"));
 
             ddlCorporationFilter.DataSource = CorporationList;
             ddlCorporationFilter.DataTextField = "Name";

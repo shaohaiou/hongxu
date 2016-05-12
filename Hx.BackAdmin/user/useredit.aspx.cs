@@ -11,6 +11,7 @@ using Hx.Components;
 using Hx.Tools;
 using Hx.Car;
 using System.Text;
+using Hx.Components.Enumerations;
 
 namespace Hx.BackAdmin.user
 {
@@ -68,6 +69,7 @@ namespace Hx.BackAdmin.user
             hdid.Value = admin.ID.ToString();               //管理员ID
             txtUserName.Text = admin.UserName;//账户名
             txtMobile.Text = admin.Mobile;
+            txtName.Text = admin.Name;
             SetSelectedByValue(ddlCorporation, admin.Corporation);
         }
 
@@ -83,13 +85,15 @@ namespace Hx.BackAdmin.user
             if (txtPassword.Text.Trim().Length != 0)
                 admin.Password = EncryptString.MD5(txtPassword.Text);              //管理员密码
             admin.UserName = txtUserName.Text;//账户名
+            admin.Name = txtName.Text;
             admin.LastLoginIP = string.Empty;
             admin.Mobile = txtMobile.Text;
             if (Admin.Administrator)
                 admin.Corporation = ddlCorporation.SelectedValue;
             else
                 admin.Corporation = Admin.Corporation;
-            admin.UserRole = Components.Enumerations.UserRoleType.销售员;
+            if(GetInt("id") == 0)
+                admin.UserRole = (UserRoleType)GetInt("r");
         }
 
         /// <summary>

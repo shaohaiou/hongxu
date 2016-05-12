@@ -94,13 +94,14 @@ namespace HX.DALSQLServer
         {
             SerializerData data = model.GetSerializerData();
             string sql = @"
-            INSERT INTO HX_AdminUser(UserName,Password,Administrator,LastLoginIP,LastLoginTime,[PropertyNames],[PropertyValues],[UserRole])
-            VALUES (@UserName,@Password,@Administrator,@LastLoginIP,@LastLoginTime,@PropertyNames,@PropertyValues,@UserRole)
+            INSERT INTO HX_AdminUser([UserName],[Password],[Name],[Administrator],[LastLoginIP],[LastLoginTime],[PropertyNames],[PropertyValues],[UserRole])
+            VALUES (@UserName,@Password,@Name,@Administrator,@LastLoginIP,@LastLoginTime,@PropertyNames,@PropertyValues,@UserRole)
             ;SELECT @@IDENTITY";
             SqlParameter[] p = 
             {
                 new SqlParameter("@UserName",model.UserName),
                 new SqlParameter("@Password",model.Password),
+                new SqlParameter("@Name",model.Name),
                 new SqlParameter("@Administrator",model.Administrator),
                 new SqlParameter("@LastLoginIP",model.LastLoginIP),
                 new SqlParameter("@LastLoginTime",model.LastLoginTime),
@@ -121,12 +122,13 @@ namespace HX.DALSQLServer
         {
             SerializerData data = model.GetSerializerData();
             string sql = @"UPDATE HX_AdminUser SET
-            UserName = @UserName
-            ,Password = @Password
-            ,Administrator = @Administrator
-            ,LastLoginIP = @LastLoginIP
-            ,LastLoginTime = @LastLoginTime
-            ,UserRole = @UserRole
+            [UserName] = @UserName
+            ,[Password] = @Password
+            ,[Name] = @Name
+            ,[Administrator] = @Administrator
+            ,[LastLoginIP] = @LastLoginIP
+            ,[LastLoginTime] = @LastLoginTime
+            ,[UserRole] = @UserRole
             ,[PropertyNames] = @PropertyNames
             ,[PropertyValues] = @PropertyValues
             WHERE ID = @ID
@@ -135,6 +137,7 @@ namespace HX.DALSQLServer
             {
                 new SqlParameter("@UserName",model.UserName),
                 new SqlParameter("@Password",model.Password),
+                new SqlParameter("@Name",model.Name),
                 new SqlParameter("@Administrator",model.Administrator),
                 new SqlParameter("@LastLoginIP",model.LastLoginIP),
                 new SqlParameter("@LastLoginTime",model.LastLoginTime),
@@ -220,8 +223,7 @@ namespace HX.DALSQLServer
         public override List<AdminInfo> GetAllAdmins()
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select * from HX_AdminUser WHERE [UserRole] != " + (int)UserRoleType.销售员);
-
+            strSql.Append("select * from HX_AdminUser");
 
             List<AdminInfo> admins = new List<AdminInfo>();
             using (IDataReader reader = SqlHelper.ExecuteReader(_con, CommandType.Text, strSql.ToString()))
@@ -234,10 +236,10 @@ namespace HX.DALSQLServer
             return admins;
         }
 
-        public override List<AdminInfo> GetUsers()
+        public override List<AdminInfo> GetUsers(UserRoleType role)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select * from HX_AdminUser WHERE [UserRole] = " + (int)UserRoleType.销售员);
+            strSql.Append("select * from HX_AdminUser WHERE [UserRole] = " + (int)role);
 
 
             List<AdminInfo> admins = new List<AdminInfo>();
@@ -402,6 +404,63 @@ namespace HX.DALSQLServer
         public override void DeleteBank(string ids)
         {
             string sql = "DELETE FROM HX_Bank WHERE ID IN (" + ids + ")";
+            SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql);
+        }
+
+        #endregion
+
+        #region 精品用品
+
+        public override List<ChoicestgoodsInfo> GetChoicestgoodsList()
+        {
+            List<ChoicestgoodsInfo> list = new List<ChoicestgoodsInfo>();
+            string sql = "SELECT * FROM HX_Choicestgoods";
+            using (IDataReader reader = SqlHelper.ExecuteReader(_con, CommandType.Text, sql))
+            {
+                while (reader.Read())
+                {
+                    list.Add(PopulateChoicestgoods(reader));
+                }
+            }
+
+            return list;
+        }
+
+        public override void AddChoicestgoods(ChoicestgoodsInfo entity)
+        {
+            string sql = @"INSERT INTO HX_Choicestgoods(
+            [Name]
+            ,[Price]
+            )VALUES(
+            @Name
+            ,@Price
+            )";
+            SqlParameter[] p = 
+            {
+                new SqlParameter("@Name",entity.Name),
+				new SqlParameter("@Price", entity.Price)
+            };
+            SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql, p);
+        }
+
+        public override void UpdateChoicestgoods(ChoicestgoodsInfo entity)
+        {
+            string sql = @"UPDATE HX_Choicestgoods SET 
+            [Name] = @Name 
+            ,[Price] = @Price
+            WHERE [ID] = @ID";
+            SqlParameter[] p = 
+            {
+                new SqlParameter("@ID",entity.ID),
+                new SqlParameter("@Name",entity.Name),
+				new SqlParameter("@Price", entity.Price)
+            };
+            SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql, p);
+        }
+
+        public override void DeleteChoicestgoods(string ids)
+        {
+            string sql = "DELETE FROM HX_Choicestgoods WHERE ID IN (" + ids + ")";
             SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql);
         }
 

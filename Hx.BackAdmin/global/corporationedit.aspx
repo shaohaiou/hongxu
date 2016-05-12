@@ -80,15 +80,6 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="vt tr">
-                        相关车辆品牌：
-                    </td>
-                    <td>
-                        <label class="block">
-                            <input type="checkbox" id="cbxAll" class="fll"/>全选</label>
-                    </td>
-                </tr>
-                <tr>
                     <td class="bg1">
                         日报表：
                     </td>
@@ -102,6 +93,15 @@
                     </td>
                     <td>
                         <asp:CheckBox runat="server" ID="cbxDailyreportTPP" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="vt tr">
+                        相关车辆品牌：
+                    </td>
+                    <td>
+                        <label class="block">
+                            <input type="checkbox" id="cbxAll" class="fll"/>全选</label>
                     </td>
                 </tr>
                 <tr>

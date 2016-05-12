@@ -16,6 +16,14 @@
             <tbody>
                 <tr>
                     <td class="bg1">
+                        姓名：
+                    </td>
+                    <td class="bg2">
+                        <asp:TextBox ID="txtName" runat="server"></asp:TextBox>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bg1">
                         联系电话：
                     </td>
                     <td class="bg2">

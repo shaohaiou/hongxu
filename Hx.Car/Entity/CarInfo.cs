@@ -36,7 +36,8 @@ namespace Hx.Car.Entity
         public string fSscs{ get; set; } 
         public string cKsjc{ get; set; } 
         public string cXh{ get; set; } 
-        public string cQcys{ get; set; } 
+        public string cQcys{ get; set; }
+        public string cNsys { get; set; } 
         public string cXntd{ get; set; } 
         /// <summary>
         /// 车型名称

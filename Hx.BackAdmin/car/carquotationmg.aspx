@@ -21,8 +21,14 @@
 </head>
 <body>
     <form id="form1" runat="server">
-    <div class="ht_main">
-        <table width="920" border="0" cellspacing="0" cellpadding="0" class="biaoge4" style="background-color: #f4f8fc;">
+    <%if (Admin.UserRole == Hx.Components.Enumerations.UserRoleType.财务出纳)
+      { %>
+      <div style="height:40px;display:block;line-height:40px;margin-bottom:5px;background:#21363e; text-align:right;color:#fff;">
+        您好，<asp:HyperLink ID="hyName" runat="server"  style="color:#fff;"></asp:HyperLink> <a href="/logout.aspx" target="_parent" style="color:#fff;">[退出]</a> <a href="/user/changewd.aspx" style="color:#fff;">[修改密码]</a> <a href="/user/adminedit.aspx" target="_blank" style="color:#fff;">[完善信息]</a>
+      </div>
+      <%} %>
+    <div class="ht_main" style="max-width:1180px;margin:10px auto;">
+        <table width="1180" border="0" cellspacing="0" cellpadding="0" class="biaoge4" style="background-color: #f4f8fc;">
             <tr>
                 <td class="w40 bold" rowspan="2">
                     查询：
@@ -30,14 +36,14 @@
                 <td>
                     公司：<asp:DropDownList ID="ddlCorporationFilter" runat="server" CssClass="mr10">
                     </asp:DropDownList> 
-                    报价人：<asp:TextBox ID="txtCreator" runat="server" CssClass="srk6 mr10"></asp:TextBox> 
-                    报价类型：<asp:DropDownList ID="ddlCarQuotationType" runat="server">
+                    提交人：<asp:TextBox ID="txtCreator" runat="server" CssClass="srk6 mr10"></asp:TextBox> 
+                    提交类型：<asp:DropDownList ID="ddlCarQuotationType" runat="server">
                     </asp:DropDownList>
                 </td>
             </tr>
             <tr>
                 <td>
-                    报价日期：<asp:TextBox runat="server" ID="txtDate" CssClass="srk5"></asp:TextBox>
+                    提交日期：<asp:TextBox runat="server" ID="txtDate" CssClass="srk5"></asp:TextBox>
                     -
                     <asp:TextBox runat="server" ID="txtDateEnd" CssClass="srk5 mr10"></asp:TextBox>
                     客户姓名：<asp:TextBox runat="server" ID="txtCustomerName" CssClass="srk6"></asp:TextBox>
@@ -51,7 +57,7 @@
                 </td>
             </tr>
         </table>
-        <table width="920" border="0" cellspacing="0" cellpadding="0" class="biaoge2">
+        <table width="1180" border="0" cellspacing="0" cellpadding="0" class="biaoge2">
             <asp:Repeater ID="rptCarQuotation" runat="server">
                 <HeaderTemplate>
                     <tr class="bgbt">
@@ -64,17 +70,26 @@
                         <td class="w300">
                             车型
                         </td>
-                        <td class="w60">
-                            报价类型
-                        </td>
-                        <td class="w60">
-                            报价人
-                        </td>
                         <td class="w120">
                             所属公司
                         </td>
+                        <td class="w60">
+                            提交类型
+                        </td>
+                        <td class="w60">
+                            提交人
+                        </td>
                         <td class="w120">
-                            报价时间
+                            提交时间
+                        </td>
+                        <td class="w80">
+                            复核状态
+                        </td>
+                        <td class="w60">
+                            复核人
+                        </td>
+                        <td class="w120">
+                            复核时间
                         </td>
                         <td>
                             操作
@@ -93,19 +108,28 @@
                             <%#Eval("cCxmc")%>
                         </td>
                         <td>
+                            <%# GetCorpName(Eval("CorporationID"))%>
+                        </td>
+                        <td>
                             <%# (Hx.Car.Enum.CarQuotationType)(int)Eval("CarQuotationType")%>
                         </td>
                         <td>
                             <%#Eval("Creator")%>
                         </td>
                         <td>
-                            <%# GetCorpName(Eval("CorporationID"))%>
-                        </td>
-                        <td>
                             <%#Eval("CreateTime","{0:yyyy-MM-dd HH:mm:ss}")%>
                         </td>
+                        <td>
+                            <%# Eval("CheckStatus").ToString() == "1" ? "<span class=\"green\">已复核</span>" : "<span class=\"red\">未复核</span>"%>
+                        </td>
+                        <td>
+                            <%# Eval("CheckUser")%>
+                        </td>
+                        <td>
+                            <%#Eval("CheckTime")%>
+                        </td>
                         <td class="lan5x">
-                            <a class="btndel" href="quotation.aspx?id=<%#Eval("ID") %>" target="_blank">详细信息</a>
+                            <a class="btndel" href="quotationcheck.aspx?id=<%#Eval("ID") %>" target="_blank"><%# Eval("CheckStatus").ToString() == "0" ? "审核" : "查看"%></a>
                         </td>
                     </tr>
                 </ItemTemplate>

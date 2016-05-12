@@ -56,7 +56,7 @@ namespace Hx.BackAdmin.car
             if (pageindex < 1) pageindex = 1;
             int pagesize = GetInt("pagesize", 10);
 
-            List<CarBrandInfo> carbrandlist = CarBrands.Instance.GetCarBrandListByCorporation(Admin.Corporation);
+            List<CarBrandInfo> carbrandlist = CarBrands.Instance.GetCarBrandListByCorporation(Admin.Administrator ? "-1" : Admin.Corporation);
 
             int total = carbrandlist.Count();
             carbrandlist = carbrandlist.Skip((pageindex - 1) * pagesize).Take(pagesize).ToList<CarBrandInfo>();

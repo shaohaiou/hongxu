@@ -88,6 +88,7 @@
     <Content Include="car\main.aspx" />
     <Content Include="car\main_s.aspx" />
     <Content Include="car\quotation.aspx" />
+    <Content Include="car\quotationcheck.aspx" />
     <Content Include="css\admin.css" />
     <Content Include="css\benzvote.css" />
     <Content Include="css\calculator\calculator.css" />
@@ -616,6 +617,13 @@
     </Compile>
     <Compile Include="car\quotation.aspx.designer.cs">
       <DependentUpon>quotation.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="car\quotationcheck.aspx.cs">
+      <DependentUpon>quotationcheck.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="car\quotationcheck.aspx.designer.cs">
+      <DependentUpon>quotationcheck.aspx</DependentUpon>
     </Compile>
     <Compile Include="dayreport\crmreportcustomerflow.aspx.cs">
       <DependentUpon>crmreportcustomerflow.aspx</DependentUpon>

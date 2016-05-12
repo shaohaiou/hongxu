@@ -231,6 +231,25 @@ namespace Hx.BackAdmin.dayreport
 
                     #endregion
                 }
+                else if (CurrentDep == DayReportDep.粘性产品)
+                {
+                    #region 绑定数据
+
+                    #region 关键指标
+
+                    txtNXCPxsjytcstl.Text = target.NXCPxsjytcstl;
+                    txtNXCPxsblwyfwstl.Text = target.NXCPxsblwyfwstl;
+                    txtNXCPxshhwyfwstl.Text = target.NXCPxshhwyfwstl;
+                    txtNXCPxsybwycfwstl.Text = target.NXCPxsybwycfwstl;
+                    txtNXCPshjytcstl.Text = target.NXCPshjytcstl;
+                    txtNXCPshblwyfwstl.Text = target.NXCPshblwyfwstl;
+                    txtNXCPshhhwyfwstl.Text = target.NXCPshhhwyfwstl;
+                    txtNXCPshybwycfwstl.Text = target.NXCPshybwycfwstl;
+
+                    #endregion
+
+                    #endregion
+                }
             }
             else
             {
@@ -268,12 +287,12 @@ namespace Hx.BackAdmin.dayreport
                 }
             }
             if (CurrentDep == DayReportDep.售后部)
-            { 
+            {
                 int idjsescpgs = 0;
                 int idlctc = 0;
                 if (list.Exists(l => l.Department == CurrentDep && l.Name == "介绍二手车评估数"))
                     idjsescpgs = list.Find(l => l.Department == CurrentDep && l.Name == "介绍二手车评估数").ID;
-                if(list.Exists(l => l.Department == CurrentDep && l.Name == "来厂台次"))
+                if (list.Exists(l => l.Department == CurrentDep && l.Name == "来厂台次"))
                     idlctc = list.Find(l => l.Department == CurrentDep && l.Name == "来厂台次").ID;
                 if (idjsescpgs > 0 && idlctc > 0 && kvp.Keys.Contains(idlctc.ToString()))
                 {
@@ -333,6 +352,17 @@ namespace Hx.BackAdmin.dayreport
             else if (CurrentDep == DayReportDep.售后部)
             {
                 target.SHwxkhzs = txtSHwxkhzs.Text;
+            }
+            else if (CurrentDep == DayReportDep.粘性产品)
+            {
+                target.NXCPxsjytcstl = txtNXCPxsjytcstl.Text;
+                target.NXCPxsblwyfwstl = txtNXCPxsblwyfwstl.Text;
+                target.NXCPxshhwyfwstl = txtNXCPxshhwyfwstl.Text;
+                target.NXCPxsybwycfwstl = txtNXCPxsybwycfwstl.Text;
+                target.NXCPshjytcstl = txtNXCPshjytcstl.Text;
+                target.NXCPshblwyfwstl = txtNXCPshblwyfwstl.Text;
+                target.NXCPshhhwyfwstl = txtNXCPshhhwyfwstl.Text;
+                target.NXCPshybwycfwstl = txtNXCPshybwycfwstl.Text;
             }
         }
 
@@ -445,15 +475,59 @@ namespace Hx.BackAdmin.dayreport
             }
             if (kvp == null) kvp = new Dictionary<string, string>();
 
-            foreach (DailyReportModuleInfo m in list.FindAll(l => l.Ismonthlytarget))
+            if (CurrentDep == DayReportDep.粘性产品)
             {
-                string name = m.Name;
-                string value = kvp.Keys.Contains(m.ID.ToString()) ? kvp[m.ID.ToString()] : string.Empty;
-                string tr = string.Format("<tr><td class=\"bg4 tr\">{0}：</td><td colspan=\"3\"><input id=\"txtmodule{1}\" name=\"txtmodule{1}\" class=\"srk6\" value=\"{2}\" {4} /><span class=\"gray pl10\">{3}</span></td></tr>", name, m.ID, value, m.Description.Replace("当日", "当月"), allowmodify ? string.Empty : "readonly=\"true\"");
-                strb.AppendLine(tr);
+                List<KeyValuePair<string, string>> listcountname = new List<KeyValuePair<string, string>>() 
+                { 
+                    new KeyValuePair<string, string>("新车延保服务购买个数","countxsybfwgmgs"),
+                    new KeyValuePair<string, string>("新车延保服务购买金额","countxsybfwgmje"),
+                    new KeyValuePair<string, string>("售后延保服务购买个数","countshybfwgmgs"),
+                    new KeyValuePair<string, string>("售后延保服务购买金额","countshybfwgmje")
+                };
+                List<KeyValuePair<string, string>> listcountsubname = new List<KeyValuePair<string, string>>() 
+                { 
+                    new KeyValuePair<string, string>("新车延保服务自主购买个数","countxsybfwgmgssub"),
+                    new KeyValuePair<string, string>("新车延保服务厂家购买个数","countxsybfwgmgssub"),
+                    new KeyValuePair<string, string>("新车延保服务自主购买金额","countxsybfwgmjesub"),
+                    new KeyValuePair<string, string>("新车延保服务厂家购买金额","countxsybfwgmjesub"),
+                    new KeyValuePair<string, string>("售后延保服务自主购买个数","countshybfwgmgssub"),
+                    new KeyValuePair<string, string>("售后延保服务厂家购买个数","countshybfwgmgssub"),
+                    new KeyValuePair<string, string>("售后延保服务自主购买金额","countshybfwgmjesub"),
+                    new KeyValuePair<string, string>("售后延保服务厂家购买金额","countshybfwgmjesub")
+                };
+                foreach (DailyReportModuleInfo m in list.FindAll(l => l.Ismonthlytarget))
+                {
+                    string name = m.Name;
+                    string value = kvp.Keys.Contains(m.ID.ToString()) ? kvp[m.ID.ToString()] : string.Empty;
+                    string tr = string.Format("<tr {6}><td class=\"bg4 tr\">{0}：</td><td colspan=\"3\"><input id=\"txtmodule{1}\" name=\"txtmodule{1}\" class=\"srk6 {5} {7}\" value=\"{2}\" {4} /><span class=\"gray pl10\">{3}</span></td></tr>"
+                        , name.Replace("新车", string.Empty).Replace("售后", string.Empty).Replace("续保", string.Empty).Replace("当月来厂基盘车辆数", string.Empty)
+                        , m.ID
+                        , value
+                        , m.Description.Replace("当天", "当月")
+                        , allowmodify ? string.Empty : "readonly=\"true\""
+                        , listcountname.Exists(l => l.Key == name) ? listcountname.Find(l => l.Key == name).Value : string.Empty
+                        , listcountname.Exists(l => l.Key == name) ? "style=\"display:none\"" : string.Empty
+                        , listcountsubname.Exists(l => l.Key == name) ? listcountsubname.Find(l => l.Key == name).Value : string.Empty);
+                    if (name == "新车机油套餐购买个数")
+                        tr = "<tr><td colspan=\"4\" style=\"font-weight:bold;font-size:large;padding-left:20px;\">销售数据</td></tr>" + tr;
+                    if (name == "售后机油套餐购买个数")
+                        tr = "<tr><td colspan=\"4\" style=\"font-weight:bold;font-size:large;padding-left:20px;\">售后数据</td></tr>" + tr;
+                    if (name == "当月来厂基盘车辆数≤18个月")
+                        tr = "<tr><td colspan=\"4\" style=\"font-weight:bold;font-size:large;padding-left:20px;\">来厂基盘车辆</td></tr>" + tr;
+                    strb.AppendLine(tr);
+                }
             }
-            strb.AppendLine(string.Format("<input type=\"hidden\" id=\"hdnallowmodify\" name=\"hdnallowmodify\" value=\"{0}\" />", allowmodify ? "1" : "0"));
-
+            else
+            {
+                foreach (DailyReportModuleInfo m in list.FindAll(l => l.Ismonthlytarget))
+                {
+                    string name = m.Name;
+                    string value = kvp.Keys.Contains(m.ID.ToString()) ? kvp[m.ID.ToString()] : string.Empty;
+                    string tr = string.Format("<tr><td class=\"bg4 tr\">{0}：</td><td colspan=\"3\"><input id=\"txtmodule{1}\" name=\"txtmodule{1}\" class=\"srk6\" value=\"{2}\" {4} /><span class=\"gray pl10\">{3}</span></td></tr>", name, m.ID, value, m.Description.Replace("当日", "当月"), allowmodify ? string.Empty : "readonly=\"true\"");
+                    strb.AppendLine(tr);
+                }
+                strb.AppendLine(string.Format("<input type=\"hidden\" id=\"hdnallowmodify\" name=\"hdnallowmodify\" value=\"{0}\" />", allowmodify ? "1" : "0"));
+            }
             return strb.ToString();
         }
     }

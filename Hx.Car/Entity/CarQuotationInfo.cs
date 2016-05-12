@@ -50,19 +50,29 @@ namespace Hx.Car.Entity
         public string CustomerName { get; set; }
 
         /// <summary>
-        /// 客户QQ
+        /// 销售日期
         /// </summary>
-        public string CustomerQQ { get; set; }
+        public DateTime? SaleDay { get; set; }
 
         /// <summary>
-        /// 客户邮箱
+        /// 订车日期
         /// </summary>
-        public string CustomerEmail { get; set; }
+        public DateTime? PlaceDay { get; set; }
 
         /// <summary>
         /// 客户微信
         /// </summary>
         public string CustomerMicroletter { get; set; }
+
+        /// <summary>
+        /// 车架号
+        /// </summary>
+        public string cCjh { get; set; }
+
+        /// <summary>
+        /// 是否老客户转介绍
+        /// </summary>
+        public int Islkhzjs { get; set; }
 
         /// <summary>
         /// 报价类型
@@ -73,6 +83,21 @@ namespace Hx.Car.Entity
         ///  总价
         /// </summary>
         public string TotalPrinces { get; set; }
+
+        /// <summary>
+        /// 审核状态
+        /// </summary>
+        public int CheckStatus { get; set; }
+
+        /// <summary>
+        /// 审核人
+        /// </summary>
+        public string CheckUser { get; set; }
+
+        /// <summary>
+        /// 审核时间
+        /// </summary>
+        public string CheckTime { get; set; }
 
         #region 基本信息
 
@@ -91,6 +116,29 @@ namespace Hx.Car.Entity
         /// </summary>
         public string cQcys { get; set; }
 
+        public string cQcysName 
+        {
+            get
+            {
+                string result = string.Empty;
+
+                if (!string.IsNullOrEmpty(cQcys) && cQcys.IndexOf(",") > 0)
+                    return cQcys.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries)[0];
+
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// 汽车内饰颜色
+        /// </summary>
+        public string cNsys { get; set; }
+
+        /// <summary>
+        /// 指导价
+        /// </summary>
+        public string fZdj { get; set; }
+
         /// <summary>
         /// 成交价
         /// </summary>
@@ -98,31 +146,100 @@ namespace Hx.Car.Entity
 
         #endregion
 
-        #region 必要花费
+        #region 现金部分
         
         /// <summary>
-        /// 购置税
+        /// 预收附加税
         /// </summary>
         public string cGzs { get; set; }
 
         /// <summary>
-        /// 上牌费
+        /// 上牌及手续费
         /// </summary>
         public string cSpf { get; set; }
+
+        /// <summary>
+        /// 汽车用品加装费用
+        /// </summary>
+        public string ChoicestGoodsPrice { get; set; }
+
+        /// <summary>
+        /// 代收保险费合计
+        /// </summary>
+        public string Bxhj { get; set; }
+
+        /// <summary>
+        /// 无忧服务费用
+        /// </summary>
+        public string Wyfw { get; set; }
+
+        /// <summary>
+        /// 增值费
+        /// </summary>
+        public string Dbsplwf { get; set; }
+
+        /// <summary>
+        /// 其他费用描述
+        /// </summary>
+        public string  Qtfyms { get; set; }
+
+        /// <summary>
+        /// 其他费用
+        /// </summary>
+        public string Qtfy { get; set; }
 
         /// <summary>
         /// 车船税
         /// </summary>
         public string cCcs { get; set; }
 
+        #endregion
+
+        #region 无忧服务
+
         /// <summary>
-        /// 交强险
+        /// 是否选择了机油套餐
         /// </summary>
-        public string cJqs { get; set; }
+        public bool IsWyfwjytc { get; set; }
+
+        /// <summary>
+        /// 无忧服务机油套餐
+        /// </summary>
+        public string Wyfwjytc { get; set; }
+
+        /// <summary>
+        /// 是否选择了玻璃无忧
+        /// </summary>
+        public bool IsWyfwblwyfw { get; set; }
+
+        /// <summary>
+        /// 无忧服务玻璃无忧
+        /// </summary>
+        public string Wyfwblwyfw { get; set; }
+
+        /// <summary>
+        /// 是否选择了划痕无忧
+        /// </summary>
+        public bool IsWyfwhhwyfw { get; set; }
+
+        /// <summary>
+        /// 无忧服务划痕无忧
+        /// </summary>
+        public string Wyfwhhwyfw { get; set; }
+
+        /// <summary>
+        /// 是否选择了延保无忧
+        /// </summary>
+        public bool IsWyfwybwyfw { get; set; }
+
+        /// <summary>
+        /// 无忧服务延保无忧
+        /// </summary>
+        public string Wyfwybwyfw { get; set; }
 
         #endregion
 
-        #region 商业保险
+        #region 代收保险
 
         /// <summary>
         /// 保险公司
@@ -130,9 +247,24 @@ namespace Hx.Car.Entity
         public string Bxgs { get; set; }
 
         /// <summary>
+        /// 是否选择了交强险
+        /// </summary>
+        public bool IscJqs { get; set; }
+
+        /// <summary>
+        /// 交强险
+        /// </summary>
+        public string cJqs { get; set; }
+
+        /// <summary>
         /// 折扣系数
         /// </summary>
         public string Zkxs { get; set; }
+
+        /// <summary>
+        /// 是否选择了车损险
+        /// </summary>
+        public bool IscCsx { get; set; }
 
         /// <summary>
         /// 车损险
@@ -145,9 +277,19 @@ namespace Hx.Car.Entity
         public string Sztb { get; set; }
 
         /// <summary>
+        /// 是否选择了第三者责任险
+        /// </summary>
+        public bool IscDszrx { get; set; }
+
+        /// <summary>
         /// 第三者责任险
         /// </summary>
         public string cDszrx { get; set; }
+
+        /// <summary>
+        /// 是否选择了盗抢险
+        /// </summary>
+        public bool IscDqx { get; set; }
 
         /// <summary>
         /// 盗抢险
@@ -250,7 +392,7 @@ namespace Hx.Car.Entity
         public string cZdwx { get; set; }
 
         /// <summary>
-        ///  续保押金
+        ///  押金
         /// </summary>
         public string cXbyj { get; set; }
 
@@ -312,20 +454,19 @@ namespace Hx.Car.Entity
 
         #endregion
 
+        #region 汽车用品
+
         /// <summary>
         /// 精品
         /// </summary>
         public string ChoicestGoods { get; set; }
 
         /// <summary>
-        /// 精品价格
-        /// </summary>
-        public string ChoicestGoodsPrice { get; set; }
-
-        /// <summary>
         /// 礼品
         /// </summary>
         public string Gift { get; set; }
+
+        #endregion
 
         #region 其他
 
@@ -335,19 +476,24 @@ namespace Hx.Car.Entity
         public bool IsSwap { get; set; }
 
         /// <summary>
+        /// 是否大客户
+        /// </summary>
+        public bool IsDkh { get; set; }
+
+        /// <summary>
+        /// 是否忠诚客户
+        /// </summary>
+        public bool IsZcyh { get; set; }
+
+        /// <summary>
         /// 二手车描述
         /// </summary>
         public string SwapDetail { get; set; }
 
         /// <summary>
-        /// 履约风险金
+        /// 代收风险金
         /// </summary>
         public string Lyfxj { get; set; }
-
-        /// <summary>
-        /// 代办上牌劳务费
-        /// </summary>
-        public string Dbsplwf { get; set; }
 
         /// <summary>
         /// 代办分期付款手续费、劳务费

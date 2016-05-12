@@ -70,6 +70,50 @@
                 });
             }
 
+            if ($(".countxsybfwgmgs").length > 0 && $(".countxsybfwgmgssub").length > 0) {
+                $(".countxsybfwgmgssub").unbind("change");
+                $(".countxsybfwgmgssub").change(function () {
+                    var countxsybfwgmgs = 0;
+                    $(".countxsybfwgmgssub").each(function () {
+                        countxsybfwgmgs += $.trim($(this).val()) == "" ? 0 : parseInt($(this).val());
+                    });
+                    $(".countxsybfwgmgs").val(countxsybfwgmgs);
+                });
+            }
+
+            if ($(".countxsybfwgmje").length > 0 && $(".countxsybfwgmjesub").length > 0) {
+                $(".countxsybfwgmjesub").unbind("change");
+                $(".countxsybfwgmjesub").change(function () {
+                    var countxsybfwgmje = 0;
+                    $(".countxsybfwgmjesub").each(function () {
+                        countxsybfwgmje += $.trim($(this).val()) == "" ? 0 : parseFloat($(this).val());
+                    });
+                    $(".countxsybfwgmje").val(countxsybfwgmje.toFixed(2));
+                });
+            }
+
+            if ($(".countshybfwgmgs").length > 0 && $(".countshybfwgmgssub").length > 0) {
+                $(".countshybfwgmgssub").unbind("change");
+                $(".countshybfwgmgssub").change(function () {
+                    var countshybfwgmgs = 0;
+                    $(".countshybfwgmgssub").each(function () {
+                        countshybfwgmgs += $.trim($(this).val()) == "" ? 0 : parseInt($(this).val());
+                    });
+                    $(".countshybfwgmgs").val(countshybfwgmgs);
+                });
+            }
+
+            if ($(".countshybfwgmje").length > 0 && $(".countshybfwgmjesub").length > 0) {
+                $(".countshybfwgmjesub").unbind("change");
+                $(".countshybfwgmjesub").change(function () {
+                    var countshybfwgmje = 0;
+                    $(".countshybfwgmjesub").each(function () {
+                        countshybfwgmje += $.trim($(this).val()) == "" ? 0 : parseFloat($(this).val());
+                    });
+                    $(".countshybfwgmje").val(countshybfwgmje.toFixed(2));
+                });
+            }
+
             if ($("#hdnCWycdkdq").length > 0) {
                 $(".cwycdkdq").unbind("change");
                 $(".cwycdkdq").unbind("focus");
@@ -200,6 +244,8 @@
                 <a href="?<%= CurrentQuery%>&dep=<%= (int)DayReportDep.金融部%>">金融部信息</a></li>
             <li <%if(CurrentDep==DayReportDep.DCC部){ %>class="current" <%} %> <%= GetDepHide(DayReportDep.DCC部) %>>
                 <a href="?<%= CurrentQuery%>&dep=<%= (int)DayReportDep.DCC部%>">DCC部信息</a></li>
+            <li <%if(CurrentDep==DayReportDep.粘性产品){ %>class="current" <%} %> <%= GetDepHide(DayReportDep.粘性产品) %>>
+                <a href="?<%= CurrentQuery%>&dep=<%= (int)DayReportDep.粘性产品%>">粘性产品信息</a></li>
         </ul>
         <asp:ScriptManager runat="server" ID="sm">
         </asp:ScriptManager>
@@ -210,7 +256,7 @@
                         日报录入</caption>
                     <tbody>
                         <tr>
-                            <td class="bg4 tr">
+                            <td class="bg3 tr">
                                 公司：
                             </td>
                             <td>
@@ -219,7 +265,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="bg4 tr">
+                            <td class="bg3 tr">
                                 日期：
                             </td>
                             <td>
@@ -230,7 +276,7 @@
                         <%if (CurrentDep == DayReportDep.销售部 || CurrentDep == DayReportDep.售后部)
                           {%>
                         <tr>
-                            <td class="bg4 tr">
+                            <td class="bg3 tr">
                                 数据审核状态：
                             </td>
                             <td>
@@ -238,7 +284,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="bg4 tr">
+                            <td class="bg3 tr">
                                 审核备注：
                             </td>
                             <td>
@@ -251,7 +297,7 @@
                         <%if (CurrentUser.AllowYearGahterInput == "1")
                           { %>
                         <tr>
-                            <td class="bg4 tr" style="background-color: Orange;">
+                            <td class="bg3 tr" style="background-color: Orange;">
                                 本月整车实际销售额：
                             </td>
                             <td>
@@ -259,7 +305,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="bg4 tr" style="background-color: Orange;">
+                            <td class="bg3 tr" style="background-color: Orange;">
                                 本月整车预算销售额：
                             </td>
                             <td>
@@ -267,7 +313,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="bg4 tr" style="background-color: Orange;">
+                            <td class="bg3 tr" style="background-color: Orange;">
                                 本月整车裸车实际毛利额：
                             </td>
                             <td>
@@ -275,7 +321,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="bg4 tr" style="background-color: Orange;">
+                            <td class="bg3 tr" style="background-color: Orange;">
                                 本月整车裸车预算毛利额：
                             </td>
                             <td>
@@ -283,7 +329,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="bg4 tr" style="background-color: Orange;">
+                            <td class="bg3 tr" style="background-color: Orange;">
                                 本月厂方返利实际收入：
                             </td>
                             <td>
@@ -291,7 +337,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="bg4 tr" style="background-color: Orange;">
+                            <td class="bg3 tr" style="background-color: Orange;">
                                 本月厂方返利预算收入：
                             </td>
                             <td>
@@ -299,7 +345,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="bg4 tr" style="background-color: Orange;">
+                            <td class="bg3 tr" style="background-color: Orange;">
                                 本月厂方金融手续费净收入：
                             </td>
                             <td>
@@ -307,7 +353,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="bg4 tr" style="background-color: Orange;">
+                            <td class="bg3 tr" style="background-color: Orange;">
                                 本月美容交车净收入：
                             </td>
                             <td>
@@ -315,7 +361,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="bg4 tr" style="background-color: Orange;">
+                            <td class="bg3 tr" style="background-color: Orange;">
                                 本月精品毛利：
                             </td>
                             <td>
@@ -323,7 +369,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="bg4 tr" style="background-color: Orange;">
+                            <td class="bg3 tr" style="background-color: Orange;">
                                 本月精品预算毛利：
                             </td>
                             <td>
@@ -331,7 +377,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="bg4 tr" style="background-color: Orange;">
+                            <td class="bg3 tr" style="background-color: Orange;">
                                 本月延保毛利：
                             </td>
                             <td>
@@ -339,7 +385,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="bg4 tr" style="background-color: Orange;">
+                            <td class="bg3 tr" style="background-color: Orange;">
                                 本月终生免费保养毛利：
                             </td>
                             <td>
@@ -347,7 +393,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="bg4 tr" style="background-color: Orange;">
+                            <td class="bg3 tr" style="background-color: Orange;">
                                 本月其他收入：
                             </td>
                             <td>
@@ -356,7 +402,7 @@
                         </tr>
                         <%}else{ %>
                         <tr>
-                            <td class="bg4 tr" style="background-color: Orange;">
+                            <td class="bg3 tr" style="background-color: Orange;">
                                 在途车辆：
                             </td>
                             <td>
@@ -364,7 +410,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="bg4 tr" style="background-color: Orange;">
+                            <td class="bg3 tr" style="background-color: Orange;">
                                 周转天数：
                             </td>
                             <td>
@@ -372,7 +418,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="bg4 tr" style="background-color: Orange;">
+                            <td class="bg3 tr" style="background-color: Orange;">
                                 在库平均单台成本价：
                             </td>
                             <td>
@@ -380,7 +426,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="bg4 tr" style="background-color: Orange;">
+                            <td class="bg3 tr" style="background-color: Orange;">
                                 厂家虚出台次：
                             </td>
                             <td>
@@ -388,7 +434,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="bg4 tr" style="background-color: Orange;">
+                            <td class="bg3 tr" style="background-color: Orange;">
                                 在库超3个月台次：
                             </td>
                             <td>
@@ -396,7 +442,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="bg4 tr" style="background-color: Orange;">
+                            <td class="bg3 tr" style="background-color: Orange;">
                                 在库超6个月台次：
                             </td>
                             <td>
@@ -404,7 +450,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="bg4 tr" style="background-color: Orange;">
+                            <td class="bg3 tr" style="background-color: Orange;">
                                 在库超1年台次：
                             </td>
                             <td>
@@ -416,7 +462,7 @@
                           <%if (CurrentUser.AllowYearGahterInput == "1")
                           { %>
                             <tr>
-                                <td class="bg4 tr" style="background-color: Orange;">
+                                <td class="bg3 tr" style="background-color: Orange;">
                                     本月一般维修额：
                                 </td>
                                 <td>
@@ -424,7 +470,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="bg4 tr" style="background-color: Orange;">
+                                <td class="bg3 tr" style="background-color: Orange;">
                                     本月首保索赔额：
                                 </td>
                                 <td>
@@ -432,7 +478,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="bg4 tr" style="background-color: Orange;">
+                                <td class="bg3 tr" style="background-color: Orange;">
                                     本月他品牌收入：
                                 </td>
                                 <td>
@@ -440,7 +486,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="bg4 tr" style="background-color: Orange;">
+                                <td class="bg3 tr" style="background-color: Orange;">
                                     本月维修毛利额：
                                 </td>
                                 <td>
@@ -448,7 +494,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="bg4 tr" style="background-color: Orange;">
+                                <td class="bg3 tr" style="background-color: Orange;">
                                     本月维修毛利率：
                                 </td>
                                 <td>
@@ -456,7 +502,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="bg4 tr" style="background-color: Orange;">
+                                <td class="bg3 tr" style="background-color: Orange;">
                                     本月废旧收入：
                                 </td>
                                 <td>
@@ -464,7 +510,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="bg4 tr" style="background-color: Orange;">
+                                <td class="bg3 tr" style="background-color: Orange;">
                                     本月含废旧的维修实际毛利率：
                                 </td>
                                 <td>
@@ -472,7 +518,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="bg4 tr" style="background-color: Orange;">
+                                <td class="bg3 tr" style="background-color: Orange;">
                                     本月含废旧的维修预算毛利率：
                                 </td>
                                 <td>
@@ -480,7 +526,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="bg4 tr" style="background-color: Orange;">
+                                <td class="bg3 tr" style="background-color: Orange;">
                                     本月油漆收入：
                                 </td>
                                 <td>
@@ -488,7 +534,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="bg4 tr" style="background-color: Orange;">
+                                <td class="bg3 tr" style="background-color: Orange;">
                                     本月油漆成本：
                                 </td>
                                 <td>
@@ -496,7 +542,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="bg4 tr" style="background-color: Orange;">
+                                <td class="bg3 tr" style="background-color: Orange;">
                                     本月养护产品毛利率：
                                 </td>
                                 <td>
@@ -504,7 +550,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="bg4 tr" style="background-color: Orange;">
+                                <td class="bg3 tr" style="background-color: Orange;">
                                     本月标准库存金额：
                                 </td>
                                 <td>
@@ -512,7 +558,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="bg4 tr" style="background-color: Orange;">
+                                <td class="bg3 tr" style="background-color: Orange;">
                                     本月期末实际库存额：
                                 </td>
                                 <td>
@@ -520,7 +566,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="bg4 tr" style="background-color: Orange;">
+                                <td class="bg3 tr" style="background-color: Orange;">
                                     其中一年以上库存额：
                                 </td>
                                 <td>
@@ -528,7 +574,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="bg4 tr" style="background-color: Orange;">
+                                <td class="bg3 tr" style="background-color: Orange;">
                                     本月标准的库存度：
                                 </td>
                                 <td>
@@ -536,7 +582,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="bg4 tr" style="background-color: Orange;">
+                                <td class="bg3 tr" style="background-color: Orange;">
                                     本月实际库存度：
                                 </td>
                                 <td>
@@ -544,7 +590,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="bg4 tr" style="background-color: Orange;">
+                                <td class="bg3 tr" style="background-color: Orange;">
                                     本月配件毛利率：
                                 </td>
                                 <td>
@@ -552,7 +598,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="bg4 tr" style="background-color: Orange;">
+                                <td class="bg3 tr" style="background-color: Orange;">
                                     本月事故车毛利率：
                                 </td>
                                 <td>
@@ -560,7 +606,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="bg4 tr" style="background-color: Orange;">
+                                <td class="bg3 tr" style="background-color: Orange;">
                                     本月一般维修毛利率：
                                 </td>
                                 <td>
@@ -568,7 +614,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="bg4 tr" style="background-color: Orange;">
+                                <td class="bg3 tr" style="background-color: Orange;">
                                     本月他牌车维修毛利率：
                                 </td>
                                 <td>
@@ -576,7 +622,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="bg4 tr" style="background-color: Orange;">
+                                <td class="bg3 tr" style="background-color: Orange;">
                                     本月本月续保返利收入：
                                 </td>
                                 <td>
@@ -584,7 +630,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="bg4 tr" style="background-color: Orange;">
+                                <td class="bg3 tr" style="background-color: Orange;">
                                     本月续保平均单台净收入：
                                 </td>
                                 <td>
@@ -592,7 +638,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="bg4 tr" style="background-color: Orange;">
+                                <td class="bg3 tr" style="background-color: Orange;">
                                     本月延保返利收入：
                                 </td>
                                 <td>
@@ -600,7 +646,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="bg4 tr" style="background-color: Orange;">
+                                <td class="bg3 tr" style="background-color: Orange;">
                                     本月延保平均单台净收入：
                                 </td>
                                 <td>
@@ -608,7 +654,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="bg4 tr" style="background-color: Orange;">
+                                <td class="bg3 tr" style="background-color: Orange;">
                                     本月导航升级业务平均单台收入：
                                 </td>
                                 <td>
@@ -619,7 +665,7 @@
                         <%}else if (CurrentDep == DayReportDep.精品部) {%>
                             <%if(CurrentUser.AllowYearGahterInput == "1"){ %>
                             <tr>
-                                <td class="bg4 tr" style="background-color: Orange;">
+                                <td class="bg3 tr" style="background-color: Orange;">
                                     本月预算展厅精品毛利额：
                                 </td>
                                 <td>
@@ -627,7 +673,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="bg4 tr" style="background-color: Orange;">
+                                <td class="bg3 tr" style="background-color: Orange;">
                                     本月预算网点精品毛利额：
                                 </td>
                                 <td>
@@ -635,7 +681,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="bg4 tr" style="background-color: Orange;">
+                                <td class="bg3 tr" style="background-color: Orange;">
                                     本月预算售后精品毛利额：
                                 </td>
                                 <td>
@@ -643,7 +689,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="bg4 tr" style="background-color: Orange;">
+                                <td class="bg3 tr" style="background-color: Orange;">
                                     本月预算展厅单车产值：
                                 </td>
                                 <td>
@@ -651,7 +697,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="bg4 tr" style="background-color: Orange;">
+                                <td class="bg3 tr" style="background-color: Orange;">
                                     本月预算网点单台产值：
                                 </td>
                                 <td>
@@ -659,7 +705,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="bg4 tr" style="background-color: Orange;">
+                                <td class="bg3 tr" style="background-color: Orange;">
                                     本月预算售后单台产值：
                                 </td>
                                 <td>
@@ -667,7 +713,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="bg4 tr" style="background-color: Orange;">
+                                <td class="bg3 tr" style="background-color: Orange;">
                                     本月展厅实际精品产值：
                                 </td>
                                 <td>
@@ -675,7 +721,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="bg4 tr" style="background-color: Orange;">
+                                <td class="bg3 tr" style="background-color: Orange;">
                                     本月展厅实际的毛利额：
                                 </td>
                                 <td>
@@ -683,7 +729,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="bg4 tr" style="background-color: Orange;">
+                                <td class="bg3 tr" style="background-color: Orange;">
                                     本月网点精品毛利额：
                                 </td>
                                 <td>
@@ -691,7 +737,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="bg4 tr" style="background-color: Orange;">
+                                <td class="bg3 tr" style="background-color: Orange;">
                                     本月售后精品毛利额：
                                 </td>
                                 <td>
@@ -699,7 +745,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="bg4 tr" style="background-color: Orange;">
+                                <td class="bg3 tr" style="background-color: Orange;">
                                     本月期末库存数：
                                 </td>
                                 <td>
@@ -707,7 +753,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="bg4 tr" style="background-color: Orange;">
+                                <td class="bg3 tr" style="background-color: Orange;">
                                     3个月以上滞销库存：
                                 </td>
                                 <td>
@@ -715,7 +761,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="bg4 tr" style="background-color: Orange;">
+                                <td class="bg3 tr" style="background-color: Orange;">
                                     1年以上滞销库存：
                                 </td>
                                 <td>
@@ -727,7 +773,7 @@
                         <%if (CurrentDep == DayReportDep.财务部 && HasMonthlyTargetPower())
                           {%>
                         <tr>
-                            <td class="bg4 tr" style="background-color: Orange;">
+                            <td class="bg3 tr" style="background-color: Orange;">
                                 月初资金余额：
                             </td>
                             <td>
@@ -736,7 +782,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="bg4 tr" style="background-color: Orange;">
+                            <td class="bg3 tr" style="background-color: Orange;">
                                 月初POS未到帐：
                             </td>
                             <td>
@@ -745,7 +791,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="bg4 tr" style="background-color: Orange;">
+                            <td class="bg3 tr" style="background-color: Orange;">
                                 月初银行帐户余额：
                             </td>
                             <td>
@@ -754,7 +800,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="bg4 tr" style="background-color: Orange;">
+                            <td class="bg3 tr" style="background-color: Orange;">
                                 其中农行：
                             </td>
                             <td>
@@ -763,7 +809,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="bg4 tr" style="background-color: Orange;">
+                            <td class="bg3 tr" style="background-color: Orange;">
                                 中行：
                             </td>
                             <td>
@@ -772,7 +818,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="bg4 tr" style="background-color: Orange;">
+                            <td class="bg3 tr" style="background-color: Orange;">
                                 工行：
                             </td>
                             <td>
@@ -781,7 +827,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="bg4 tr" style="background-color: Orange;">
+                            <td class="bg3 tr" style="background-color: Orange;">
                                 建行：
                             </td>
                             <td>
@@ -790,7 +836,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="bg4 tr" style="background-color: Orange;">
+                            <td class="bg3 tr" style="background-color: Orange;">
                                 交行：
                             </td>
                             <td>
@@ -799,7 +845,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="bg4 tr" style="background-color: Orange;">
+                            <td class="bg3 tr" style="background-color: Orange;">
                                 民生：
                             </td>
                             <td>
@@ -808,7 +854,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="bg4 tr" style="background-color: Orange;">
+                            <td class="bg3 tr" style="background-color: Orange;">
                                 平安：
                             </td>
                             <td>
@@ -817,7 +863,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="bg4 tr" style="background-color: Orange;">
+                            <td class="bg3 tr" style="background-color: Orange;">
                                 中信：
                             </td>
                             <td>
@@ -826,7 +872,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="bg4 tr" style="background-color: Orange;">
+                            <td class="bg3 tr" style="background-color: Orange;">
                                 华夏：
                             </td>
                             <td>
@@ -835,7 +881,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="bg4 tr" style="background-color: Orange;">
+                            <td class="bg3 tr" style="background-color: Orange;">
                                 浙商：
                             </td>
                             <td>
@@ -844,7 +890,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="bg4 tr" style="background-color: Orange;">
+                            <td class="bg3 tr" style="background-color: Orange;">
                                 泰隆：
                             </td>
                             <td>
@@ -853,7 +899,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="bg4 tr" style="background-color: Orange;">
+                            <td class="bg3 tr" style="background-color: Orange;">
                                 其他银行：
                             </td>
                             <td>
@@ -862,7 +908,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="bg4 tr" style="background-color: Orange;">
+                            <td class="bg3 tr" style="background-color: Orange;">
                                 月初现金合计：
                             </td>
                             <td>
@@ -871,7 +917,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="bg4 tr" style="background-color: Orange;">
+                            <td class="bg3 tr" style="background-color: Orange;">
                                 月初留存现金：
                             </td>
                             <td>
@@ -880,7 +926,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="bg4 tr" style="background-color: Orange;">
+                            <td class="bg3 tr" style="background-color: Orange;">
                                 银承、贷款到期：
                             </td>
                             <td>
@@ -998,7 +1044,7 @@
                         <%if (CurrentDep == DayReportDep.行政部 && HasMonthlyTargetPower())
                           {%>
                         <tr>
-                            <td class="bg4">
+                            <td class="bg3">
                             </td>
                             <td>
                                 <table width="640" border="0" cellspacing="0" cellpadding="0" class="datatable">
@@ -1291,13 +1337,126 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="bg4 tr gray">
+                            <td class="bg3 tr gray">
                                 注：
                             </td>
                             <td class="gray">
                                 车辆违章包含公司所有试驾车和自备车<br />
                                 当周违章车辆包含上周未处理的违章车辆<br />
                                 如有多辆，都要填写
+                            </td>
+                        </tr>
+                        <%}else if(CurrentDep == DayReportDep.粘性产品){ %>
+                        <tr>
+                            <td class="bg3 tr" style="background-color: Orange;">
+                                本月机油套餐来厂使用车辆数：
+                            </td>
+                            <td>
+                                <asp:TextBox runat="server" ID="txtNXCPbyjytclcsycls" CssClass="srk6 tr number"></asp:TextBox><span class="gray pl10">当月售后来厂车辆中来使用此产品车辆个数</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="bg3 tr" style="background-color: Orange;">
+                                本月机油套餐使用金额：
+                            </td>
+                            <td>
+                                <asp:TextBox runat="server" ID="txtNXCPbyjytcsyje" CssClass="srk6 tr number"></asp:TextBox><span class="gray pl10">当月来厂车辆中来使用此产品与售后结算（合同价）金额</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="bg3 tr" style="background-color: Orange;">
+                                本月划痕无忧服务到期个数：
+                            </td>
+                            <td>
+                                <asp:TextBox runat="server" ID="txtNXCPbyhhwyfwdqgs" CssClass="srk6 tr number"></asp:TextBox><span class="gray pl10">当月购买此产品到期的车辆个数</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="bg3 tr" style="background-color: Orange;">
+                                本月划痕无忧服务到期金额：
+                            </td>
+                            <td>
+                                <asp:TextBox runat="server" ID="txtNXCPbyhhwyfwdqje" CssClass="srk6 tr number"></asp:TextBox><span class="gray pl10">当月购买此产品到期的金额</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="bg3 tr" style="background-color: Orange;">
+                                本月划痕无忧服务到期内赔付个数：
+                            </td>
+                            <td>
+                                <asp:TextBox runat="server" ID="txtNXCPbyhhwyfwdqnpfgs" CssClass="srk6 tr number"></asp:TextBox><span class="gray pl10">当月到期购买此产品数量内总赔付个数</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="bg3 tr" style="background-color: Orange;">
+                                本月划痕无忧服务到期内赔付金额：
+                            </td>
+                            <td>
+                                <asp:TextBox runat="server" ID="txtNXCPbyhhwyfwdqnpfje" CssClass="srk6 tr number"></asp:TextBox><span class="gray pl10">当月到期购买此产品数量内赔付总金额</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="bg3 tr" style="background-color: Orange;">
+                                本月玻璃无忧服务到期个数：
+                            </td>
+                            <td>
+                                <asp:TextBox runat="server" ID="txtNXCPbyblwyfwdqgs" CssClass="srk6 tr number"></asp:TextBox><span class="gray pl10">当月购买此产品到期的车辆个数</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="bg3 tr" style="background-color: Orange;">
+                                本月玻璃无忧服务到期金额：
+                            </td>
+                            <td>
+                                <asp:TextBox runat="server" ID="txtNXCPbyblwyfwdqje" CssClass="srk6 tr number"></asp:TextBox><span class="gray pl10">当月购买此产品到期的金额</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="bg3 tr" style="background-color: Orange;">
+                                本月玻璃无忧服务到期内赔付个数：
+                            </td>
+                            <td>
+                                <asp:TextBox runat="server" ID="txtNXCPbyblwyfwdqnpfgs" CssClass="srk6 tr number"></asp:TextBox><span class="gray pl10">当月到期购买此产品数量内总赔付个数</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="bg3 tr" style="background-color: Orange;">
+                                本月玻璃无忧服务到期内赔付金额：
+                            </td>
+                            <td>
+                                <asp:TextBox runat="server" ID="txtNXCPbyblwyfwdqnpfje" CssClass="srk6 tr number"></asp:TextBox><span class="gray pl10">当月到期购买此产品数量内赔付总金额</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="bg3 tr" style="background-color: Orange;">
+                                本月延保服务到期个数：
+                            </td>
+                            <td>
+                                <asp:TextBox runat="server" ID="txtNXCPbyybfwdqgs" CssClass="srk6 tr number"></asp:TextBox><span class="gray pl10">当月购买此产品到期的车辆个数</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="bg3 tr" style="background-color: Orange;">
+                                本月延保服务到期金额：
+                            </td>
+                            <td>
+                                <asp:TextBox runat="server" ID="txtNXCPbyybfwdqje" CssClass="srk6 tr number"></asp:TextBox><span class="gray pl10">当月购买此产品到期的金额</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="bg3 tr" style="background-color: Orange;">
+                                本月延保服务到期内赔付个数：
+                            </td>
+                            <td>
+                                <asp:TextBox runat="server" ID="txtNXCPbyybfwdqnpfgs" CssClass="srk6 tr number"></asp:TextBox><span class="gray pl10">当月到期购买此产品数量内总赔付个数</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="bg3 tr" style="background-color: Orange;">
+                                本月延保服务到期内赔付金额：
+                            </td>
+                            <td>
+                                <asp:TextBox runat="server" ID="txtNXCPbyybfwdqnpfje" CssClass="srk6 tr number"></asp:TextBox><span class="gray pl10">当月到期购买此产品数量内赔付总金额</span>
                             </td>
                         </tr>
                         <%} %>

@@ -1660,6 +1660,132 @@ namespace Hx.BackAdmin.dayreport {
         protected global::System.Web.UI.WebControls.TextBox txtXZdsizaqsgsse;
         
         /// <summary>
+        /// txtNXCPbyjytclcsycls 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtNXCPbyjytclcsycls;
+        
+        /// <summary>
+        /// txtNXCPbyjytcsyje 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtNXCPbyjytcsyje;
+        
+        /// <summary>
+        /// txtNXCPbyhhwyfwdqgs 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtNXCPbyhhwyfwdqgs;
+        
+        /// <summary>
+        /// txtNXCPbyhhwyfwdqje 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtNXCPbyhhwyfwdqje;
+        
+        /// <summary>
+        /// txtNXCPbyhhwyfwdqnpfgs 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtNXCPbyhhwyfwdqnpfgs;
+        
+        /// <summary>
+        /// txtNXCPbyhhwyfwdqnpfje 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtNXCPbyhhwyfwdqnpfje;
+        
+        /// <summary>
+        /// txtNXCPbyblwyfwdqgs 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtNXCPbyblwyfwdqgs;
+        
+        /// <summary>
+        /// txtNXCPbyblwyfwdqje 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtNXCPbyblwyfwdqje;
+        
+        /// <summary>
+        /// txtNXCPbyblwyfwdqnpfgs 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtNXCPbyblwyfwdqnpfgs;
+        
+        /// <summary>
+        /// txtNXCPbyblwyfwdqnpfje 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtNXCPbyblwyfwdqnpfje;
+        
+        /// <summary>
+        /// txtNXCPbyybfwdqgs 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtNXCPbyybfwdqgs;
+        
+        /// <summary>
+        /// txtNXCPbyybfwdqje 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtNXCPbyybfwdqje;
+        
+        /// <summary>
+        /// txtNXCPbyybfwdqnpfgs 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtNXCPbyybfwdqnpfgs;
+        
+        /// <summary>
+        /// txtNXCPbyybfwdqnpfje 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtNXCPbyybfwdqnpfje;
+        
+        /// <summary>
         /// btnSubmit 控件。
         /// </summary>
         /// <remarks>

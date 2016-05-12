@@ -244,7 +244,7 @@ namespace Hx.BackAdmin.dayreport
                     {
                         for (int i = 0; i < tblReport.Rows.Count; i++)
                         {
-                            if (tblReport.Rows[i]["项目"] == "是否审核") continue;
+                            if (tblReport.Rows[i]["项目"].ToString() == "是否审核") continue;
                             for (int j = 0; j < days; j++)
                             {
                                 if (!string.IsNullOrEmpty(tblReport.Rows[i][(j + 1).ToString()].ToString()))
@@ -451,7 +451,7 @@ namespace Hx.BackAdmin.dayreport
 
                     for (int i = 0; i < tblReport.Rows.Count; i++)
                     {
-                        if (tblReport.Rows[i]["项目"] == "是否审核") continue;
+                        if (tblReport.Rows[i]["项目"].ToString() == "是否审核") continue;
                         for (int j = 0; j < days; j++)
                         {
                             if (!string.IsNullOrEmpty(tblReport.Rows[i][(j + 1).ToString()].ToString()))
@@ -882,6 +882,129 @@ namespace Hx.BackAdmin.dayreport
                     {
                         sheet.GetRow(i + 9).Cells[37].SetCellValue(DataConvert.SafeInt(tblKey.Rows[i]["目标"]));
                     }
+
+                    #endregion
+                }
+                else if (CurrentDep == DayReportDep.粘性产品)
+                {
+                    string fileName = Utils.GetMapPath(@"\App_Data\粘性产品日报表模版.xlsx");
+                    newfile = string.Format(@"粘性产品报表{0}.xlsx", day.ToString("yyyyMM"));
+                    using (FileStream file = new FileStream(fileName, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite))
+                    {
+                        workbook = new XSSFWorkbook(file);
+                    }
+                    sheet = workbook.GetSheetAt(0);
+
+                    #region 各项值设置
+
+                    sheet.GetRow(0).Cells[0].SetCellValue(string.Format("{0}粘性产品报表", day.ToString("yyyy年MM月")));
+                    DataTable tblReport = GetReport(CurrentDep, list, monthtarget, day, ref days);
+
+                    for (int i = 0; i < 16; i++)
+                    {
+                        if (tblReport.Rows[i]["项目"] == "是否审核") continue;
+                        for (int j = 0; j < days; j++)
+                        {
+                            if (!string.IsNullOrEmpty(tblReport.Rows[i][(j + 1).ToString()].ToString()))
+                                sheet.GetRow(i + 3).Cells[4 + j].SetCellValue(DataConvert.SafeDouble(tblReport.Rows[i][(j + 1).ToString()]));
+                        }
+                        if (!string.IsNullOrEmpty(tblReport.Rows[i]["目标值"].ToString()))
+                            sheet.GetRow(i + 3).Cells[36].SetCellValue(DataConvert.SafeDouble(tblReport.Rows[i]["目标值"]));
+                    }
+
+                    if(monthtarget != null && !string.IsNullOrEmpty(monthtarget.NXCPbyjytclcsycls))
+                        sheet.GetRow(19).Cells[days + 3].SetCellValue(DataConvert.SafeDouble(monthtarget.NXCPbyjytclcsycls));
+                    if (monthtarget != null && !string.IsNullOrEmpty(monthtarget.NXCPbyjytclcsycls))
+                        sheet.GetRow(20).Cells[days + 3].SetCellValue(DataConvert.SafeDouble(monthtarget.NXCPbyjytcsyje));
+
+                    for (int i = 16; i < 20; i++)
+                    {
+                        if (tblReport.Rows[i]["项目"] == "是否审核") continue;
+                        for (int j = 0; j < days; j++)
+                        {
+                            if (!string.IsNullOrEmpty(tblReport.Rows[i][(j + 1).ToString()].ToString()))
+                                sheet.GetRow(i + 5).Cells[4 + j].SetCellValue(DataConvert.SafeDouble(tblReport.Rows[i][(j + 1).ToString()]));
+                        }
+                        if (!string.IsNullOrEmpty(tblReport.Rows[i]["目标值"].ToString()))
+                            sheet.GetRow(i + 5).Cells[36].SetCellValue(DataConvert.SafeDouble(tblReport.Rows[i]["目标值"]));
+                    }
+
+                    if (monthtarget != null && !string.IsNullOrEmpty(monthtarget.NXCPbyhhwyfwdqgs))
+                        sheet.GetRow(25).Cells[days + 3].SetCellValue(DataConvert.SafeDouble(monthtarget.NXCPbyhhwyfwdqgs));
+                    if (monthtarget != null && !string.IsNullOrEmpty(monthtarget.NXCPbyhhwyfwdqje))
+                        sheet.GetRow(26).Cells[days + 3].SetCellValue(DataConvert.SafeDouble(monthtarget.NXCPbyhhwyfwdqje));
+                    if (monthtarget != null && !string.IsNullOrEmpty(monthtarget.NXCPbyhhwyfwdqnpfgs))
+                        sheet.GetRow(27).Cells[days + 3].SetCellValue(DataConvert.SafeDouble(monthtarget.NXCPbyhhwyfwdqnpfgs));
+                    if (monthtarget != null && !string.IsNullOrEmpty(monthtarget.NXCPbyhhwyfwdqnpfje))
+                        sheet.GetRow(28).Cells[days + 3].SetCellValue(DataConvert.SafeDouble(monthtarget.NXCPbyhhwyfwdqnpfje));
+
+                    for (int i = 20; i < 24; i++)
+                    {
+                        if (tblReport.Rows[i]["项目"] == "是否审核") continue;
+                        for (int j = 0; j < days; j++)
+                        {
+                            if (!string.IsNullOrEmpty(tblReport.Rows[i][(j + 1).ToString()].ToString()))
+                                sheet.GetRow(i + 9).Cells[4 + j].SetCellValue(DataConvert.SafeDouble(tblReport.Rows[i][(j + 1).ToString()]));
+                        }
+                        if (!string.IsNullOrEmpty(tblReport.Rows[i]["目标值"].ToString()))
+                            sheet.GetRow(i + 9).Cells[36].SetCellValue(DataConvert.SafeDouble(tblReport.Rows[i]["目标值"]));
+                    }
+
+                    if (monthtarget != null && !string.IsNullOrEmpty(monthtarget.NXCPbyblwyfwdqgs))
+                        sheet.GetRow(33).Cells[days + 3].SetCellValue(DataConvert.SafeDouble(monthtarget.NXCPbyblwyfwdqgs));
+                    if (monthtarget != null && !string.IsNullOrEmpty(monthtarget.NXCPbyblwyfwdqje))
+                        sheet.GetRow(34).Cells[days + 3].SetCellValue(DataConvert.SafeDouble(monthtarget.NXCPbyblwyfwdqje));
+                    if (monthtarget != null && !string.IsNullOrEmpty(monthtarget.NXCPbyblwyfwdqnpfgs))
+                        sheet.GetRow(35).Cells[days + 3].SetCellValue(DataConvert.SafeDouble(monthtarget.NXCPbyblwyfwdqnpfgs));
+                    if (monthtarget != null && !string.IsNullOrEmpty(monthtarget.NXCPbyblwyfwdqnpfje))
+                        sheet.GetRow(36).Cells[days + 3].SetCellValue(DataConvert.SafeDouble(monthtarget.NXCPbyblwyfwdqnpfje));
+
+
+                    for (int i = 24; i < 33; i++)
+                    {
+                        if (tblReport.Rows[i]["项目"] == "是否审核") continue;
+                        for (int j = 0; j < days; j++)
+                        {
+                            if (!string.IsNullOrEmpty(tblReport.Rows[i][(j + 1).ToString()].ToString()))
+                                sheet.GetRow(i + 13).Cells[4 + j].SetCellValue(DataConvert.SafeDouble(tblReport.Rows[i][(j + 1).ToString()]));
+                        }
+                        if (!string.IsNullOrEmpty(tblReport.Rows[i]["目标值"].ToString()))
+                            sheet.GetRow(i + 13).Cells[36].SetCellValue(DataConvert.SafeDouble(tblReport.Rows[i]["目标值"]));
+                    }
+
+                    if (monthtarget != null && !string.IsNullOrEmpty(monthtarget.NXCPbyybfwdqgs))
+                        sheet.GetRow(46).Cells[days + 3].SetCellValue(DataConvert.SafeDouble(monthtarget.NXCPbyybfwdqgs));
+                    if (monthtarget != null && !string.IsNullOrEmpty(monthtarget.NXCPbyybfwdqje))
+                        sheet.GetRow(47).Cells[days + 3].SetCellValue(DataConvert.SafeDouble(monthtarget.NXCPbyybfwdqje));
+                    if (monthtarget != null && !string.IsNullOrEmpty(monthtarget.NXCPbyybfwdqnpfgs))
+                        sheet.GetRow(48).Cells[days + 3].SetCellValue(DataConvert.SafeDouble(monthtarget.NXCPbyybfwdqnpfgs));
+                    if (monthtarget != null && !string.IsNullOrEmpty(monthtarget.NXCPbyybfwdqnpfje))
+                        sheet.GetRow(49).Cells[days + 3].SetCellValue(DataConvert.SafeDouble(monthtarget.NXCPbyybfwdqnpfje));
+
+                    for (int i = 33; i < tblReport.Rows.Count; i++)
+                    {
+                        if (tblReport.Rows[i]["项目"] == "是否审核") continue;
+                        for (int j = 0; j < days; j++)
+                        {
+                            if (!string.IsNullOrEmpty(tblReport.Rows[i][(j + 1).ToString()].ToString()))
+                                sheet.GetRow(i + 17).Cells[4 + j].SetCellValue(DataConvert.SafeDouble(tblReport.Rows[i][(j + 1).ToString()]));
+                        }
+                        if (!string.IsNullOrEmpty(tblReport.Rows[i]["目标值"].ToString()))
+                            sheet.GetRow(i + 17).Cells[36].SetCellValue(DataConvert.SafeDouble(tblReport.Rows[i]["目标值"]));
+                    }
+
+                    #endregion
+
+                    #region 关键指标月度目标
+
+                    DataTable tblKey = GetKeyReport(CurrentDep, list, monthtarget, tblReport);
+
+                    sheet.GetRow(6).Cells[40].SetCellValue(DataConvert.SafeInt(tblKey.Rows[0]["目标"]).ToString());
+                    sheet.GetRow(7).Cells[40].SetCellValue(DataConvert.SafeInt(tblKey.Rows[0]["实际"]).ToString());
+
+                    sheet.GetRow(17).Cells[40].SetCellValue(DataConvert.SafeInt(tblKey.Rows[13]["目标"]).ToString());
+                    sheet.GetRow(18).Cells[40].SetCellValue(DataConvert.SafeInt(tblKey.Rows[13]["实际"]).ToString());
+
 
                     #endregion
                 }
@@ -2068,6 +2191,167 @@ namespace Hx.BackAdmin.dayreport
                 tbl.Rows.Add(rowCheck);
                 #endregion
             }
+            else if (dep == DayReportDep.粘性产品 && DateTime.TryParse(txtDate.Text + "-01", out day))
+            {
+                #region 销售数据
+
+                DailyReportQuery query_xs = new DailyReportQuery()
+                {
+                    DayUnique = day.ToString("yyyyMM"),
+                    CorporationID = DataConvert.SafeInt(ddlCorp.SelectedValue),
+                    DayReportDep = DayReportDep.销售部
+                };
+                List<DailyReportInfo> list_xs = DailyReports.Instance.GetList(query_xs, true);
+                list_xs = list_xs.FindAll(l => l.DailyReportCheckStatus != DailyReportCheckStatus.审核不通过);
+                MonthlyTargetInfo monthtarget_xs = MonthlyTargets.Instance.GetModel(DataConvert.SafeInt(ddlCorp.SelectedValue), DayReportDep.销售部, day, true);
+                List<DailyReportModuleInfo> rlist_xs = DayReportModules.Instance.GetList(true);
+                rlist_xs = rlist_xs.FindAll(l => l.Department == DayReportDep.销售部).OrderBy(l => l.Sort).ToList();
+                List<Dictionary<string, string>> data_xs = new List<Dictionary<string, string>>();
+                for (int i = 0; i < list_xs.Count; i++)
+                {
+                    if (!string.IsNullOrEmpty(list_xs[i].SCReport))
+                    {
+                        data_xs.Add(json.Deserialize<Dictionary<string, string>>(list_xs[i].SCReport));
+                    }
+                } Dictionary<string, string> targetdata_xs = new Dictionary<string, string>();
+                if (monthtarget_xs != null && !string.IsNullOrEmpty(monthtarget_xs.SCReport))
+                    targetdata_xs = json.Deserialize<Dictionary<string, string>>(monthtarget_xs.SCReport);
+
+                #endregion
+
+                #region 售后数据
+
+                DailyReportQuery query_sh = new DailyReportQuery()
+                {
+                    DayUnique = day.ToString("yyyyMM"),
+                    CorporationID = DataConvert.SafeInt(ddlCorp.SelectedValue),
+                    DayReportDep = DayReportDep.售后部
+                };
+                List<DailyReportInfo> list_sh = DailyReports.Instance.GetList(query_sh, true);
+                list_sh = list_sh.FindAll(l => l.DailyReportCheckStatus != DailyReportCheckStatus.审核不通过);
+                MonthlyTargetInfo monthtarget_sh = MonthlyTargets.Instance.GetModel(DataConvert.SafeInt(ddlCorp.SelectedValue), DayReportDep.售后部, day, true);
+                List<DailyReportModuleInfo> rlist_sh = DayReportModules.Instance.GetList(true);
+                rlist_sh = rlist_sh.FindAll(l => l.Department == DayReportDep.售后部).OrderBy(l => l.Sort).ToList();
+                List<Dictionary<string, string>> data_sh = new List<Dictionary<string, string>>();
+                for (int i = 0; i < list_sh.Count; i++)
+                {
+                    if (!string.IsNullOrEmpty(list_sh[i].SCReport))
+                    {
+                        data_sh.Add(json.Deserialize<Dictionary<string, string>>(list_sh[i].SCReport));
+                    }
+                } Dictionary<string, string> targetdata_sh = new Dictionary<string, string>();
+                if (monthtarget_sh != null && !string.IsNullOrEmpty(monthtarget_sh.SCReport))
+                    targetdata_sh = json.Deserialize<Dictionary<string, string>>(monthtarget_sh.SCReport);
+
+                #endregion
+
+                #region 表数据
+
+                DataRow[] rows = new DataRow[rlist.Count + 2];
+
+                #region 项目、合计、目标
+
+                for (int i = 0; i < 12; i++)
+                {
+                    rows[i] = tbl.NewRow();
+                    rows[i]["项目"] = rlist[i].Name;
+                    rows[i]["合计"] = !rlist[i].Iscount ? string.Empty : Math.Round(data.Sum(d => d.ContainsKey(rlist[i].ID.ToString()) ? DataConvert.SafeDecimal(d[rlist[i].ID.ToString()]) : 0), 0).ToString();
+                    rows[i]["目标值"] = targetdata.ContainsKey(rlist[i].ID.ToString()) ? targetdata[rlist[i].ID.ToString()] : string.Empty;
+                }
+
+                if (rlist_xs.Exists(l => l.Name == "展厅含DCC保险台次"))
+                {
+                    DailyReportModuleInfo m = rlist_xs.Find(l => l.Name == "展厅含DCC保险台次");
+                    rows[12] = tbl.NewRow();
+                    rows[12]["项目"] = "新保出单量";
+                    rows[12]["合计"] = !m.Iscount ? string.Empty : Math.Round(data_xs.Sum(d => d.ContainsKey(m.ID.ToString()) ? DataConvert.SafeDecimal(d[m.ID.ToString()]) : 0), 0).ToString();
+                    rows[12]["目标值"] = targetdata_xs.ContainsKey(m.ID.ToString()) ? targetdata_xs[m.ID.ToString()] : string.Empty;
+                }
+
+                for (int i = 12; i < rlist.Count; i++)
+                {
+                    rows[i + 1] = tbl.NewRow();
+                    rows[i + 1]["项目"] = rlist[i].Name;
+                    rows[i + 1]["合计"] = !rlist[i].Iscount ? string.Empty : Math.Round(data.Sum(d => d.ContainsKey(rlist[i].ID.ToString()) ? DataConvert.SafeDecimal(d[rlist[i].ID.ToString()]) : 0), 0).ToString();
+                    rows[i + 1]["目标值"] = targetdata.ContainsKey(rlist[i].ID.ToString()) ? targetdata[rlist[i].ID.ToString()] : string.Empty;
+                }
+
+                if (rlist_sh.Exists(l => l.Name == "续保数"))
+                {
+                    DailyReportModuleInfo m = rlist_sh.Find(l => l.Name == "续保数");
+                    rows[rlist.Count + 1] = tbl.NewRow();
+                    rows[rlist.Count + 1]["项目"] = "续保出单量";
+                    rows[rlist.Count + 1]["合计"] = !m.Iscount ? string.Empty : Math.Round(data_sh.Sum(d => d.ContainsKey(m.ID.ToString()) ? DataConvert.SafeDecimal(d[m.ID.ToString()]) : 0), 0).ToString();
+                    rows[rlist.Count + 1]["目标值"] = targetdata_sh.ContainsKey(m.ID.ToString()) ? targetdata_sh[m.ID.ToString()] : string.Empty;
+                }
+
+                #endregion
+
+                #region 完成率
+
+                for (int i = 0; i < rows.Length; i++)
+                {
+                    rows[i]["完成率"] = DataConvert.SafeDecimal(rows[i]["目标值"]) == 0 ? string.Empty : Math.Round(DataConvert.SafeDecimal(rows[i]["合计"]) * 100 / DataConvert.SafeDecimal(rows[i]["目标值"]), 0).ToString();
+                }
+
+                #endregion
+
+                #region 每日数据
+
+                DataRow rowCheck = tbl.NewRow();
+                rowCheck["项目"] = "是否审核";
+
+                for (int i = 1; i <= days; i++)
+                {
+                    rowCheck[i] = "1";
+                    if (DateTime.TryParse(txtDate.Text + "-" + i.ToString("00"), out day) && list.Exists(l => l.DayUnique == day.ToString("yyyyMMdd")))
+                    {
+                        DailyReportInfo r = list.Find(l => l.DayUnique == day.ToString("yyyyMMdd"));
+                        if (!string.IsNullOrEmpty(r.SCReport))
+                        {
+                            Dictionary<string, string> reportdate = json.Deserialize<Dictionary<string, string>>(r.SCReport);
+                            for (int j = 0; j < 12; j++)
+                            {
+                                rows[j][i] = reportdate.ContainsKey(rlist[j].ID.ToString()) ? reportdate[rlist[j].ID.ToString()] : string.Empty;
+                            }
+                            for (int j = 12; j < rlist.Count; j++)
+                            {
+                                rows[j + 1][i] = reportdate.ContainsKey(rlist[j].ID.ToString()) ? reportdate[rlist[j].ID.ToString()] : string.Empty;
+                            }
+                        }
+                        rowCheck[i] = r.DailyReportCheckStatus == DailyReportCheckStatus.未审核 ? "0" : "1";
+                    }
+                    if (DateTime.TryParse(txtDate.Text + "-" + i.ToString("00"), out day) && list_xs.Exists(l => l.DayUnique == day.ToString("yyyyMMdd")))
+                    {
+                        DailyReportModuleInfo m = rlist_xs.Find(l => l.Name == "展厅含DCC保险台次");
+                        DailyReportInfo r = list_xs.Find(l => l.DayUnique == day.ToString("yyyyMMdd"));
+                        if (!string.IsNullOrEmpty(r.SCReport))
+                        {
+                            Dictionary<string, string> reportdate = json.Deserialize<Dictionary<string, string>>(r.SCReport);
+                            rows[12][i] = reportdate.ContainsKey(m.ID.ToString()) ? reportdate[m.ID.ToString()] : string.Empty;
+                        }
+                    }
+                    if (DateTime.TryParse(txtDate.Text + "-" + i.ToString("00"), out day) && list_sh.Exists(l => l.DayUnique == day.ToString("yyyyMMdd")))
+                    {
+                        DailyReportModuleInfo m = rlist_sh.Find(l => l.Name == "续保数");
+                        DailyReportInfo r = list_sh.Find(l => l.DayUnique == day.ToString("yyyyMMdd"));
+                        if (!string.IsNullOrEmpty(r.SCReport))
+                        {
+                            Dictionary<string, string> reportdate = json.Deserialize<Dictionary<string, string>>(r.SCReport);
+                            rows[rlist.Count + 1][i] = reportdate.ContainsKey(m.ID.ToString()) ? reportdate[m.ID.ToString()] : string.Empty;
+                        }
+                    }
+                }
+
+                #endregion
+
+                foreach (DataRow row in rows)
+                {
+                    tbl.Rows.Add(row);
+                }
+                tbl.Rows.Add(rowCheck);
+                #endregion
+            }
 
             return tbl;
         }
@@ -2308,6 +2592,51 @@ namespace Hx.BackAdmin.dayreport
                     strb.AppendFormat("<td class=\"bold bggray\">{0}</td>", row["项目"]);
                     strb.AppendFormat("<td>{0}</td>", string.IsNullOrEmpty(row["目标值"].ToString()) ? "&nbsp;" : FormatNum(row["目标值"].ToString()));
                     strb.AppendFormat("<td>{0}</td>", string.IsNullOrEmpty(row["合计"].ToString()) ? "&nbsp;" : row["合计"].ToString());
+                    for (int i = 1; i <= days; i++)
+                    {
+                        strb.AppendFormat("<td>{0}</td>", string.IsNullOrEmpty(row[i].ToString()) ? "&nbsp;" : row[i].ToString());
+                    }
+                    strb.Append("<td></td>");
+                    strb.Append("</tr>");
+                }
+                strb.AppendLine("</table>");
+
+                #endregion
+            }
+            else if (dep == DayReportDep.粘性产品)
+            {
+                #region 页面输出
+
+                strb.AppendLine("<table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" id=\"tbData\" class=\"datatable\">");
+                strb.Append("<tr class=\"bold tc bggray\">");
+                strb.Append("<td class=\"w160\">项目</td>");
+                strb.Append("<td class=\"w80\">目标值</td>");
+                strb.Append("<td class=\"w80\">合计</td>");
+                strb.Append("<td class=\"w80\">完成率</td>");
+
+                tbl.DefaultView.RowFilter = "项目='是否审核'";
+                for (int i = 1; i <= days; i++)
+                {
+                    string ischeck = tbl.DefaultView[0][i].ToString();
+                    strb.AppendFormat("<td class=\"w40\">{0}</td>", ischeck == "1" ? i.ToString() : string.Format("<span class=\"red\">{0}</span>", i));
+                }
+                strb.Append("<td></td>");
+                strb.Append("</tr>");
+
+                foreach (DataRow row in tbl.Rows)
+                {
+                    if (row["项目"].ToString() == "是否审核") continue;
+                    if (row["项目"].ToString() == "新车机油套餐购买个数")
+                        strb.AppendFormat("<tr><td colspan=\"{0}\" style=\"color:White;background-color:gray;font-weight:bold;font-size:large;padding-left:20px;\">销售数据</td></tr>", tbl.Columns.Count + 1);
+                    else if (row["项目"].ToString() == "售后机油套餐购买个数")
+                        strb.AppendFormat("<tr><td colspan=\"{0}\" style=\"color:White;background-color:gray;font-weight:bold;font-size:large;padding-left:20px;\">售后数据</td></tr>", tbl.Columns.Count + 1);
+                    else if (row["项目"].ToString() == "当月来厂基盘车辆数≤18个月")
+                        strb.AppendFormat("<tr><td colspan=\"{0}\" style=\"color:White;background-color:gray;font-weight:bold;font-size:large;padding-left:20px;\">来厂基盘车辆</td></tr>", tbl.Columns.Count  + 1);
+                    strb.Append("<tr class=\"tc\">");
+                    strb.AppendFormat("<td class=\"bold bggray\">{0}</td>", row["项目"].ToString() != "续保出单量" ? row["项目"].ToString().Replace("新车", string.Empty).Replace("售后", string.Empty).Replace("续保", string.Empty).Replace("当月来厂基盘车辆数", string.Empty) : row["项目"].ToString());
+                    strb.AppendFormat("<td>{0}</td>", string.IsNullOrEmpty(row["目标值"].ToString()) ? "&nbsp;" : FormatNum(row["目标值"].ToString()));
+                    strb.AppendFormat("<td>{0}</td>", string.IsNullOrEmpty(row["合计"].ToString()) ? "&nbsp;" : GetCellValue(FormatNum(row["合计"].ToString()), string.Empty, !string.IsNullOrEmpty(row["完成率"].ToString()) && DataConvert.SafeDecimal(row["完成率"]) < 100, false));
+                    strb.AppendFormat("<td>{0}</td>", string.IsNullOrEmpty(row["完成率"].ToString()) ? "&nbsp;" : (FormatNum(row["完成率"].ToString()) + "%"));
                     for (int i = 1; i <= days; i++)
                     {
                         strb.AppendFormat("<td>{0}</td>", string.IsNullOrEmpty(row[i].ToString()) ? "&nbsp;" : row[i].ToString());
@@ -4219,6 +4548,371 @@ namespace Hx.BackAdmin.dayreport
                     tbl.Rows.Add(row);
                 }
             }
+            else if (dep == DayReportDep.粘性产品)
+            {
+                #region 表结构
+
+                tbl.Columns.Add("关键指标");
+                tbl.Columns.Add("目标");
+                tbl.Columns.Add("实际");
+                tbl.Columns.Add("完成率");
+                tbl.Columns.Add("详细");
+
+                #endregion
+
+                #region 表数据
+
+                DataRow[] rows = new DataRow[34];
+                decimal hjztjcts=0, mbztjcts=0;
+                decimal hjzthdccbxtc=0, mbzthdccbxtc=0;
+                decimal hjlctc=0, mblctc=0,hjxbs = 0,mbxbs = 0;
+                DateTime day = DateTime.Today;
+
+                #region 销售部数据
+
+                if (ddlCorp.SelectedIndex > 0 && DateTime.TryParse(txtDate.Text + "-01", out day))
+                {
+                    DailyReportQuery query_xs = new DailyReportQuery()
+                    {
+                        DayUnique = day.ToString("yyyyMM"),
+                        CorporationID = DataConvert.SafeInt(ddlCorp.SelectedValue),
+                        DayReportDep = DayReportDep.销售部
+                    };
+                    query_xs.OrderBy = " [DayUnique] ASC";
+                    List<DailyReportInfo> list_xs = DailyReports.Instance.GetList(query_xs, true);
+                    MonthlyTargetInfo monthtarget_xs = MonthlyTargets.Instance.GetModel(DataConvert.SafeInt(ddlCorp.SelectedValue), DayReportDep.销售部, day, true);
+
+                    int days = 0;
+                    DataTable tbl_xs = GetReport(DayReportDep.销售部, list_xs, monthtarget_xs, day, ref days);
+
+                    tbl_xs.DefaultView.RowFilter = "项目='展厅交车台数'";
+                    hjztjcts = DataConvert.SafeDecimal(tbl_xs.DefaultView[0]["合计"]);
+                    mbztjcts = DataConvert.SafeDecimal(tbl_xs.DefaultView[0]["目标值"]);
+                    tbl_xs.DefaultView.RowFilter = "项目='展厅含DCC保险台次'";
+                    hjzthdccbxtc = DataConvert.SafeDecimal(tbl_xs.DefaultView[0]["合计"]);
+                    mbzthdccbxtc = DataConvert.SafeDecimal(tbl_xs.DefaultView[0]["目标值"]);
+
+                    rows[0] = tbl.NewRow();
+                    rows[0]["关键指标"] = "新车展厅销量";
+                    rows[0]["目标"] = mbztjcts;
+                    rows[0]["实际"] = hjztjcts;
+                }
+
+                #endregion
+
+                #region 售后数据
+
+                if (ddlCorp.SelectedIndex > 0 && DateTime.TryParse(txtDate.Text + "-01", out day))
+                {
+                    DailyReportQuery query_sh = new DailyReportQuery()
+                    {
+                        DayUnique = day.ToString("yyyyMM"),
+                        CorporationID = DataConvert.SafeInt(ddlCorp.SelectedValue),
+                        DayReportDep = DayReportDep.售后部
+                    };
+                    query_sh.OrderBy = " [DayUnique] ASC";
+                    List<DailyReportInfo> list_sh = DailyReports.Instance.GetList(query_sh, true);
+                    MonthlyTargetInfo monthtarget_sh = MonthlyTargets.Instance.GetModel(DataConvert.SafeInt(ddlCorp.SelectedValue), DayReportDep.售后部, day, true);
+
+                    int days = 0;
+                    DataTable tbl_sh = GetReport(DayReportDep.售后部, list_sh, monthtarget_sh, day, ref days);
+
+                    tbl_sh.DefaultView.RowFilter = "项目='来厂台次'";
+                    hjlctc = DataConvert.SafeDecimal(tbl_sh.DefaultView[0]["合计"]);
+                    mblctc = DataConvert.SafeDecimal(tbl_sh.DefaultView[0]["目标值"]);
+                    tbl_sh.DefaultView.RowFilter = "项目='续保数'";
+                    hjxbs = DataConvert.SafeDecimal(tbl_sh.DefaultView[0]["合计"]);
+                    mbxbs = DataConvert.SafeDecimal(tbl_sh.DefaultView[0]["目标值"]);
+                }
+
+                #endregion
+
+                data.DefaultView.RowFilter = "项目='新车机油套餐购买个数'";
+                decimal hjxcjytcgmgs = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
+                decimal mbxcjytcgmgs = DataConvert.SafeDecimal(data.DefaultView[0]["目标值"]);
+                data.DefaultView.RowFilter = "项目='新车机油套餐购买金额'";
+                decimal hjxcjytcgmje = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
+                decimal mbxcjytcgmje = DataConvert.SafeDecimal(data.DefaultView[0]["目标值"]);
+                data.DefaultView.RowFilter = "项目='新车玻璃无忧服务购买个数'";
+                decimal hjxcblwyfwgmgs = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
+                decimal mbxcblwyfwgmgs = DataConvert.SafeDecimal(data.DefaultView[0]["目标值"]);
+                data.DefaultView.RowFilter = "项目='新车玻璃无忧服务购买金额'";
+                decimal hjxcblwyfwgmje = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
+                decimal mbxcblwyfwgmje = DataConvert.SafeDecimal(data.DefaultView[0]["目标值"]);
+                data.DefaultView.RowFilter = "项目='新车划痕无忧服务购买个数'";
+                decimal hjxchhwyfwgmgs = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
+                decimal mbxchhwyfwgmgs = DataConvert.SafeDecimal(data.DefaultView[0]["目标值"]);
+                data.DefaultView.RowFilter = "项目='新车划痕无忧服务购买金额'";
+                decimal hjxchhwyfwgmje = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
+                decimal mbxchhwyfwgmje = DataConvert.SafeDecimal(data.DefaultView[0]["目标值"]);
+                data.DefaultView.RowFilter = "项目='新车延保服务购买个数'";
+                decimal hjxcybfwgmgs = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
+                decimal mbxcybfwgmgs = DataConvert.SafeDecimal(data.DefaultView[0]["目标值"]);
+                data.DefaultView.RowFilter = "项目='新车延保服务购买金额'";
+                decimal hjxcybfwgmje = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
+                decimal mbxcybfwgmje = DataConvert.SafeDecimal(data.DefaultView[0]["目标值"]);
+                data.DefaultView.RowFilter = "项目='新车延保服务自主购买个数'";
+                decimal hjxcybfwzzgmgs = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
+                decimal mbxcybfwzzgmgs = DataConvert.SafeDecimal(data.DefaultView[0]["目标值"]);
+                data.DefaultView.RowFilter = "项目='新车延保服务自主购买金额'";
+                decimal hjxcybfwzzgmje = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
+                decimal mbxcybfwzzgmje = DataConvert.SafeDecimal(data.DefaultView[0]["目标值"]);
+                data.DefaultView.RowFilter = "项目='新车延保服务厂家购买个数'";
+                decimal hjxcybfwcjgmgs = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
+                decimal mbxcybfwcjgmgs = DataConvert.SafeDecimal(data.DefaultView[0]["目标值"]);
+                data.DefaultView.RowFilter = "项目='新车延保服务厂家购买金额'";
+                decimal hjxcybfwcjgmje = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
+                decimal mbxcybfwcjgmje = DataConvert.SafeDecimal(data.DefaultView[0]["目标值"]);
+                data.DefaultView.RowFilter = "项目='售后机油套餐购买个数'";
+                decimal hjshjytcgmgs = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
+                decimal mbshjytcgmgs = DataConvert.SafeDecimal(data.DefaultView[0]["目标值"]);
+                data.DefaultView.RowFilter = "项目='售后机油套餐购买金额'";
+                decimal hjshjytcgmje = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
+                decimal mbshjytcgmje = DataConvert.SafeDecimal(data.DefaultView[0]["目标值"]);
+                data.DefaultView.RowFilter = "项目='售后机油套餐原已购买客户数'";
+                decimal hjshjytcyymgkhs = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
+                decimal mbshjytcyymgkhs = DataConvert.SafeDecimal(data.DefaultView[0]["目标值"]);
+                data.DefaultView.RowFilter = "项目='当月来厂基盘车辆数≤1年'";
+                decimal hjdylcjpcls1y = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
+                decimal mbdylcjpcls1y = DataConvert.SafeDecimal(data.DefaultView[0]["目标值"]);
+                data.DefaultView.RowFilter = "项目='当月来厂基盘车辆数＞1年≤2年'";
+                decimal hjdylcjpcls1y_2y = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
+                decimal mbdylcjpcls1y_2y = DataConvert.SafeDecimal(data.DefaultView[0]["目标值"]);
+                data.DefaultView.RowFilter = "项目='当月来厂基盘车辆数＞2年≤3年'";
+                decimal hjdylcjpcls2y_3y = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
+                decimal mbdylcjpcls2y_3y = DataConvert.SafeDecimal(data.DefaultView[0]["目标值"]);
+                decimal hjdylcjpcls3y = hjdylcjpcls1y + hjdylcjpcls1y_2y + hjdylcjpcls2y_3y;
+                decimal mbdylcjpcls3y = mbdylcjpcls1y + mbdylcjpcls1y_2y + mbdylcjpcls2y_3y;
+                data.DefaultView.RowFilter = "项目='续保玻璃无忧服务购买个数'";
+                decimal hjxbblwyfwgmgs = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
+                decimal mbxbblwyfwgmgs = DataConvert.SafeDecimal(data.DefaultView[0]["目标值"]);
+                data.DefaultView.RowFilter = "项目='续保玻璃无忧服务购买金额'";
+                decimal hjxbblwyfwgmje = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
+                decimal mbxbblwyfwgmje = DataConvert.SafeDecimal(data.DefaultView[0]["目标值"]);
+                data.DefaultView.RowFilter = "项目='续保划痕无忧服务购买个数'";
+                decimal hjxbhhwyfwgmgs = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
+                decimal mbxbhhwyfwgmgs = DataConvert.SafeDecimal(data.DefaultView[0]["目标值"]);
+                data.DefaultView.RowFilter = "项目='续保划痕无忧服务购买金额'";
+                decimal hjxbhhwyfwgmje = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
+                decimal mbxbhhwyfwgmje = DataConvert.SafeDecimal(data.DefaultView[0]["目标值"]);
+                data.DefaultView.RowFilter = "项目='售后延保服务购买个数'";
+                decimal hjxbybwyfwgmgs = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
+                decimal mbxbybwyfwgmgs = DataConvert.SafeDecimal(data.DefaultView[0]["目标值"]);
+                data.DefaultView.RowFilter = "项目='售后延保服务购买金额'";
+                decimal hjxbybwyfwgmje = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
+                decimal mbxbybwyfwgmje = DataConvert.SafeDecimal(data.DefaultView[0]["目标值"]);
+                data.DefaultView.RowFilter = "项目='售后延保服务自主购买个数'";
+                decimal hjxbybwyfwzzgmgs = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
+                decimal mbxbybwyfwzzgmgs = DataConvert.SafeDecimal(data.DefaultView[0]["目标值"]);
+                data.DefaultView.RowFilter = "项目='售后延保服务自主购买金额'";
+                decimal hjxbybwyfwzzgmje = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
+                decimal mbxbybwyfwzzgmje = DataConvert.SafeDecimal(data.DefaultView[0]["目标值"]);
+                data.DefaultView.RowFilter = "项目='售后延保服务厂家购买个数'";
+                decimal hjxbybwyfwcjgmgs = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
+                decimal mbxbybwyfwcjgmgs = DataConvert.SafeDecimal(data.DefaultView[0]["目标值"]);
+                data.DefaultView.RowFilter = "项目='售后延保服务厂家购买金额'";
+                decimal hjxbybwyfwcjgmje = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
+                decimal mbxbybwyfwcjgmje = DataConvert.SafeDecimal(data.DefaultView[0]["目标值"]);
+
+                //新车机油套餐
+                rows[1] = tbl.NewRow();
+                rows[1]["关键指标"] = "购买个数";
+                rows[1]["目标"] = mbxcjytcgmgs;
+                rows[1]["实际"] = hjxcjytcgmgs;
+                rows[1]["详细"] = string.Empty;
+
+                rows[2] = tbl.NewRow();
+                rows[2]["关键指标"] = "购买金额";
+                rows[2]["目标"] = mbxcjytcgmje;
+                rows[2]["实际"] = hjxcjytcgmje;
+
+                rows[3] = tbl.NewRow();
+                rows[3]["关键指标"] = "渗透率";
+                rows[3]["目标"] = (monthtarget != null && !string.IsNullOrEmpty(monthtarget.NXCPxsjytcstl)) ? monthtarget.NXCPxsjytcstl : (mbztjcts == 0 ? string.Empty : Math.Round(mbxcjytcgmgs * 100 / mbztjcts, 0).ToString());
+                rows[3]["实际"] = hjztjcts == 0 ? string.Empty : Math.Round(hjxcjytcgmgs * 100 / hjztjcts, 0).ToString();
+                rows[3]["详细"] = hjztjcts == 0 ? string.Empty : string.Format("<br />({0}/{1})", Math.Round(hjxcjytcgmgs, 0), Math.Round(hjztjcts, 0));
+
+                //新车玻璃无忧
+                rows[4] = tbl.NewRow();
+                rows[4]["关键指标"] = "购买个数";
+                rows[4]["目标"] = mbxcblwyfwgmgs;
+                rows[4]["实际"] = hjxcblwyfwgmgs;
+
+                rows[5] = tbl.NewRow();
+                rows[5]["关键指标"] = "购买金额";
+                rows[5]["目标"] = mbxcblwyfwgmje;
+                rows[5]["实际"] = hjxcblwyfwgmje;
+
+                rows[6] = tbl.NewRow();
+                rows[6]["关键指标"] = "渗透率";
+                rows[6]["目标"] = (monthtarget != null && !string.IsNullOrEmpty(monthtarget.NXCPxsblwyfwstl)) ? monthtarget.NXCPxsblwyfwstl : (mbzthdccbxtc == 0 ? string.Empty : Math.Round(mbxcblwyfwgmgs * 100 / mbzthdccbxtc, 0).ToString());
+                rows[6]["实际"] = hjzthdccbxtc == 0 ? string.Empty : Math.Round(hjxcblwyfwgmgs * 100 / hjzthdccbxtc, 0).ToString();
+                rows[6]["详细"] = hjzthdccbxtc == 0 ? string.Empty : string.Format("<br />({0}/{1})", Math.Round(hjxcblwyfwgmgs, 0), Math.Round(hjzthdccbxtc, 0));
+
+                //新车划痕无忧
+                rows[7] = tbl.NewRow();
+                rows[7]["关键指标"] = "购买个数";
+                rows[7]["目标"] = mbxchhwyfwgmgs;
+                rows[7]["实际"] = hjxchhwyfwgmgs;
+
+                rows[8] = tbl.NewRow();
+                rows[8]["关键指标"] = "购买金额";
+                rows[8]["目标"] = mbxchhwyfwgmje;
+                rows[8]["实际"] = hjxchhwyfwgmje;
+
+                rows[9] = tbl.NewRow();
+                rows[9]["关键指标"] = "渗透率";
+                rows[9]["目标"] = (monthtarget != null && !string.IsNullOrEmpty(monthtarget.NXCPxshhwyfwstl)) ? monthtarget.NXCPxshhwyfwstl : (mbzthdccbxtc == 0 ? string.Empty : Math.Round(mbxchhwyfwgmgs * 100 / mbzthdccbxtc, 0).ToString());
+                rows[9]["实际"] = hjzthdccbxtc == 0 ? string.Empty : Math.Round(hjxchhwyfwgmgs * 100 / hjzthdccbxtc, 0).ToString();
+                rows[9]["详细"] = hjzthdccbxtc == 0 ? string.Empty : string.Format("<br />({0}/{1})", Math.Round(hjxchhwyfwgmgs, 0), Math.Round(hjzthdccbxtc, 0));
+
+                //新车延保无忧
+                rows[10] = tbl.NewRow();
+                rows[10]["关键指标"] = "购买个数";
+                rows[10]["目标"] = mbxcybfwgmgs;
+                rows[10]["实际"] = hjxcybfwgmgs;
+
+                rows[11] = tbl.NewRow();
+                rows[11]["关键指标"] = "购买金额";
+                rows[11]["目标"] = mbxcybfwgmje;
+                rows[11]["实际"] = hjxcybfwgmje;
+
+                rows[12] = tbl.NewRow();
+                rows[12]["关键指标"] = "渗透率";
+                rows[12]["目标"] = (monthtarget != null && !string.IsNullOrEmpty(monthtarget.NXCPxsybwycfwstl)) ? monthtarget.NXCPxsybwycfwstl : (mbzthdccbxtc == 0 ? string.Empty : Math.Round(mbxcybfwgmgs * 100 / mbzthdccbxtc, 0).ToString());
+                rows[12]["实际"] = hjzthdccbxtc == 0 ? string.Empty : Math.Round(hjxcybfwgmgs * 100 / hjzthdccbxtc, 0).ToString();
+                rows[12]["详细"] = hjzthdccbxtc == 0 ? string.Empty : string.Format("<br />({0}/{1})", Math.Round(hjxcybfwgmgs, 0), Math.Round(hjzthdccbxtc, 0));
+
+                rows[13] = tbl.NewRow();
+                rows[13]["关键指标"] = "自主购买个数";
+                rows[13]["目标"] = mbxcybfwzzgmgs;
+                rows[13]["实际"] = hjxcybfwzzgmgs;
+
+                rows[14] = tbl.NewRow();
+                rows[14]["关键指标"] = "自主购买金额";
+                rows[14]["目标"] = mbxcybfwzzgmje;
+                rows[14]["实际"] = hjxcybfwzzgmje;
+
+                rows[15] = tbl.NewRow();
+                rows[15]["关键指标"] = "厂家购买个数";
+                rows[15]["目标"] = mbxcybfwcjgmgs;
+                rows[15]["实际"] = hjxcybfwcjgmgs;
+
+                rows[16] = tbl.NewRow();
+                rows[16]["关键指标"] = "厂家购买金额";
+                rows[16]["目标"] = mbxcybfwcjgmje;
+                rows[16]["实际"] = hjxcybfwcjgmje;
+
+                //售后來厂台次
+                rows[17] = tbl.NewRow();
+                rows[17]["关键指标"] = "总来厂次";
+                rows[17]["目标"] = mblctc;
+                rows[17]["实际"] = hjlctc;
+
+                //售后机油套餐
+                rows[18] = tbl.NewRow();
+                rows[18]["关键指标"] = "购买个数";
+                rows[18]["目标"] = mbshjytcgmgs;
+                rows[18]["实际"] = hjshjytcgmgs;
+
+                rows[19] = tbl.NewRow();
+                rows[19]["关键指标"] = "购买金额";
+                rows[19]["目标"] = mbshjytcgmje;
+                rows[19]["实际"] = hjshjytcgmje;
+
+                rows[20] = tbl.NewRow();
+                rows[20]["关键指标"] = "渗透率";
+                rows[20]["目标"] = (monthtarget != null && !string.IsNullOrEmpty(monthtarget.NXCPshjytcstl)) ? monthtarget.NXCPshjytcstl : ((mbdylcjpcls3y - mbshjytcyymgkhs) == 0 ? string.Empty : Math.Round(mbshjytcgmgs * 100 / (mbdylcjpcls3y - mbshjytcyymgkhs), 0).ToString());
+                rows[20]["实际"] = (hjdylcjpcls3y - hjshjytcyymgkhs) == 0 ? string.Empty : Math.Round(hjshjytcgmgs * 100 / (hjdylcjpcls3y - mbshjytcyymgkhs), 0).ToString();
+                rows[20]["详细"] = (hjdylcjpcls3y - hjshjytcyymgkhs) == 0 ? string.Empty : string.Format("<br />({0}/{1})", Math.Round(hjshjytcgmgs, 0), Math.Round(hjdylcjpcls3y - mbshjytcyymgkhs, 0));
+
+                //续保玻璃无忧
+                rows[21] = tbl.NewRow();
+                rows[21]["关键指标"] = "购买个数";
+                rows[21]["目标"] = mbxbblwyfwgmgs;
+                rows[21]["实际"] = hjxbblwyfwgmgs;
+
+                rows[22] = tbl.NewRow();
+                rows[22]["关键指标"] = "购买金额";
+                rows[22]["目标"] = mbxbblwyfwgmje;
+                rows[22]["实际"] = hjxbblwyfwgmje;
+
+                rows[23] = tbl.NewRow();
+                rows[23]["关键指标"] = "渗透率";
+                rows[23]["目标"] = (monthtarget != null && !string.IsNullOrEmpty(monthtarget.NXCPshblwyfwstl)) ? monthtarget.NXCPshblwyfwstl : (mbxbs == 0 ? string.Empty : Math.Round(mbxbblwyfwgmgs * 100 / mbxbs, 0).ToString());
+                rows[23]["实际"] = hjxbs == 0 ? string.Empty : Math.Round(hjxbblwyfwgmgs * 100 / hjxbs, 0).ToString();
+                rows[23]["详细"] = hjxbs == 0 ? string.Empty : string.Format("<br />({0}/{1})", Math.Round(hjxbblwyfwgmgs, 0), Math.Round(hjxbs, 0));
+                
+                //续保划痕无忧
+                rows[24] = tbl.NewRow();
+                rows[24]["关键指标"] = "购买个数";
+                rows[24]["目标"] = mbxbhhwyfwgmgs;
+                rows[24]["实际"] = hjxbhhwyfwgmgs;
+
+                rows[25] = tbl.NewRow();
+                rows[25]["关键指标"] = "购买金额";
+                rows[25]["目标"] = mbxbhhwyfwgmje;
+                rows[25]["实际"] = hjxbhhwyfwgmje;
+
+                rows[26] = tbl.NewRow();
+                rows[26]["关键指标"] = "渗透率";
+                rows[26]["目标"] = (monthtarget != null && !string.IsNullOrEmpty(monthtarget.NXCPshhhwyfwstl)) ? monthtarget.NXCPshhhwyfwstl : (mbxbs == 0 ? string.Empty : Math.Round(mbxbhhwyfwgmgs * 100 / mbxbs, 0).ToString());
+                rows[26]["实际"] = hjxbs == 0 ? string.Empty : Math.Round(hjxbhhwyfwgmgs * 100 / hjxbs, 0).ToString();
+                rows[26]["详细"] = hjxbs == 0 ? string.Empty : string.Format("<br />({0}/{1})", Math.Round(hjxbhhwyfwgmgs, 0), Math.Round(hjxbs, 0));
+
+                //延保无忧
+                rows[27] = tbl.NewRow();
+                rows[27]["关键指标"] = "购买个数";
+                rows[27]["目标"] = mbxbybwyfwgmgs;
+                rows[27]["实际"] = hjxbybwyfwgmgs;
+
+                rows[28] = tbl.NewRow();
+                rows[28]["关键指标"] = "购买金额";
+                rows[28]["目标"] = mbxbybwyfwgmje;
+                rows[28]["实际"] = hjxbybwyfwgmje;
+
+                rows[29] = tbl.NewRow();
+                rows[29]["关键指标"] = "渗透率";
+                rows[29]["目标"] = (monthtarget != null && !string.IsNullOrEmpty(monthtarget.NXCPshybwycfwstl)) ? monthtarget.NXCPshybwycfwstl : (mbxbs == 0 ? string.Empty : Math.Round(mbxbybwyfwgmgs * 100 / mbxbs, 0).ToString());
+                rows[29]["实际"] = hjxbs == 0 ? string.Empty : Math.Round(hjxbybwyfwgmgs * 100 / hjxbs, 0).ToString();
+                rows[29]["详细"] = hjxbs == 0 ? string.Empty : string.Format("<br />({0}/{1})", Math.Round(hjxbybwyfwgmgs, 0), Math.Round(hjxbs, 0));
+
+                rows[30] = tbl.NewRow();
+                rows[30]["关键指标"] = "自主购买个数";
+                rows[30]["目标"] = mbxbybwyfwzzgmgs;
+                rows[30]["实际"] = hjxbybwyfwzzgmgs;
+
+                rows[31] = tbl.NewRow();
+                rows[31]["关键指标"] = "自主购买金额";
+                rows[31]["目标"] = mbxbybwyfwzzgmje;
+                rows[31]["实际"] = hjxbybwyfwzzgmje;
+
+                rows[32] = tbl.NewRow();
+                rows[32]["关键指标"] = "厂家购买个数";
+                rows[32]["目标"] = mbxbybwyfwcjgmgs;
+                rows[32]["实际"] = hjxbybwyfwcjgmgs;
+
+                rows[33] = tbl.NewRow();
+                rows[33]["关键指标"] = "厂家购买金额";
+                rows[33]["目标"] = mbxbybwyfwcjgmje;
+                rows[33]["实际"] = hjxbybwyfwcjgmje;
+
+                #endregion
+
+                #region 完成率
+
+                for (int i = 0; i < rows.Length; i++)
+                {
+                    rows[i]["完成率"] = DataConvert.SafeDecimal(rows[i]["目标"]) == 0 ? string.Empty : Math.Round(DataConvert.SafeDecimal(rows[i]["实际"]) * 100 / DataConvert.SafeDecimal(rows[i]["目标"]), 0).ToString();
+                }
+
+                #endregion
+
+                foreach (DataRow row in rows)
+                {
+                    tbl.Rows.Add(row);
+                }
+            }
 
             return tbl;
         }
@@ -5075,6 +5769,235 @@ namespace Hx.BackAdmin.dayreport
                 strb.AppendLine("<tr class=\"tc\">");
                 strb.AppendLine("<td colspan=\"3\" class=\"bold bggray\">传统占总数比</td>");
                 strb.AppendFormat("<td>{0}</td>", DataConvert.SafeDecimal(tbl.Rows[39]["实际"]) == 0 ? "&nbsp;" : (Math.Round(DataConvert.SafeDecimal(tbl.Rows[40]["实际"]) * 100 / DataConvert.SafeDecimal(tbl.Rows[39]["实际"]), 1).ToString() + "%"));
+                strb.AppendLine("</tr>");
+                strb.AppendLine("</table>");
+
+                #endregion
+            }
+            else if (dep == DayReportDep.粘性产品)
+            {
+                #region 页面输出
+
+                strb.AppendLine("<table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" class=\"datatable\" style=\"vertical-align: top;display: inline-block;*display:inline;*zoom:1;\">");
+                strb.AppendLine("<tr><td colspan=\"11\" style=\"color:White;background-color:gray;font-weight:bold;font-size:large;padding-left:20px;\">销售数据</td></tr>");
+                strb.AppendLine("<tr class=\"bold tc\" style=\"background-color:#8BC34A;\">");
+                strb.AppendLine("<td>&nbsp;</td>");
+                strb.AppendLine("<td>新车销量</td>");
+                strb.AppendLine("<td colspan=\"3\">机油套餐</td>");
+                strb.AppendLine("<td colspan=\"3\">玻璃无忧服务</td>");
+                strb.AppendLine("<td colspan=\"3\">划痕无忧服务</td>");
+                strb.AppendLine("</tr>");
+                strb.AppendLine("<tr class=\"bold tc bggray\">");
+                strb.AppendLine("<td class=\"w80\">关键指标</td>");
+                for (int i = 0; i < 10; i++)
+                {
+                    strb.AppendFormat("<td class=\"w100\">{0}</td>", GetCellValue(tbl.Rows[i]["关键指标"].ToString(), string.Empty, false, false));
+                }
+                strb.AppendLine("</tr>");
+                strb.AppendLine("<tr class=\"tc\">");
+                strb.AppendLine("<td class=\"bold bggray\">目标</td>");
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[0]["目标"].ToString(), string.Empty, false, false));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[1]["目标"].ToString(), string.Empty, false, false));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[2]["目标"].ToString(), string.Empty, false, false));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[3]["目标"].ToString(), string.Empty, false, true));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[4]["目标"].ToString(), string.Empty, false, false));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[5]["目标"].ToString(), string.Empty, false, false));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[6]["目标"].ToString(), string.Empty, false, true));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[7]["目标"].ToString(), string.Empty, false, false));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[8]["目标"].ToString(), string.Empty, false, false));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[9]["目标"].ToString(), string.Empty, false, true));
+                strb.AppendLine("</tr>");
+                strb.AppendLine("<tr class=\"tc\">");
+                strb.AppendLine("<td class=\"bold bggray\">实际</td>");
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[0]["实际"].ToString(), string.Empty, !string.IsNullOrEmpty(tbl.Rows[0]["完成率"].ToString()) && DataConvert.SafeDecimal(tbl.Rows[0]["完成率"]) < 100, false));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[1]["实际"].ToString(), string.Empty, !string.IsNullOrEmpty(tbl.Rows[1]["完成率"].ToString()) && DataConvert.SafeDecimal(tbl.Rows[1]["完成率"]) < 100, false));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[2]["实际"].ToString(), string.Empty, !string.IsNullOrEmpty(tbl.Rows[2]["完成率"].ToString()) && DataConvert.SafeDecimal(tbl.Rows[2]["完成率"]) < 100, false));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[3]["实际"].ToString(), tbl.Rows[3]["详细"].ToString(), !string.IsNullOrEmpty(tbl.Rows[3]["完成率"].ToString()) && DataConvert.SafeDecimal(tbl.Rows[3]["完成率"]) < 100, true));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[4]["实际"].ToString(), string.Empty, !string.IsNullOrEmpty(tbl.Rows[4]["完成率"].ToString()) && DataConvert.SafeDecimal(tbl.Rows[4]["完成率"]) < 100, false));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[5]["实际"].ToString(), string.Empty, !string.IsNullOrEmpty(tbl.Rows[5]["完成率"].ToString()) && DataConvert.SafeDecimal(tbl.Rows[5]["完成率"]) < 100, false));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[6]["实际"].ToString(), tbl.Rows[6]["详细"].ToString(), !string.IsNullOrEmpty(tbl.Rows[6]["完成率"].ToString()) && DataConvert.SafeDecimal(tbl.Rows[6]["完成率"]) < 100, true));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[7]["实际"].ToString(), string.Empty, !string.IsNullOrEmpty(tbl.Rows[7]["完成率"].ToString()) && DataConvert.SafeDecimal(tbl.Rows[7]["完成率"]) < 100, false));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[8]["实际"].ToString(), string.Empty, !string.IsNullOrEmpty(tbl.Rows[8]["完成率"].ToString()) && DataConvert.SafeDecimal(tbl.Rows[8]["完成率"]) < 100, false));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[9]["实际"].ToString(), tbl.Rows[9]["详细"].ToString(), !string.IsNullOrEmpty(tbl.Rows[9]["完成率"].ToString()) && DataConvert.SafeDecimal(tbl.Rows[9]["完成率"]) < 100, true));
+                strb.AppendLine("</tr>");
+                strb.AppendLine("<tr class=\"tc\">");
+                strb.AppendLine("<td class=\"bold bggray\">完成率</td>");
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[0]["完成率"].ToString(), string.Empty, false, true));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[1]["完成率"].ToString(), string.Empty, false, true));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[2]["完成率"].ToString(), string.Empty, false, true));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[3]["完成率"].ToString(), string.Empty, false, true));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[4]["完成率"].ToString(), string.Empty, false, true));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[5]["完成率"].ToString(), string.Empty, false, true));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[6]["完成率"].ToString(), string.Empty, false, true));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[7]["目标"].ToString(), string.Empty, false, false));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[8]["目标"].ToString(), string.Empty, false, false));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[9]["目标"].ToString(), string.Empty, false, true));
+                strb.AppendLine("</tr>");
+                strb.AppendLine("<tr class=\"bold tc\" style=\"background-color:#8BC34A;\">");
+                strb.AppendLine("<td>&nbsp;</td>");
+                strb.AppendLine("<td colspan=\"7\">延保无忧车服务</td>");
+                strb.AppendLine("<td>&nbsp;</td>");
+                strb.AppendLine("<td>&nbsp;</td>");
+                strb.AppendLine("<td>&nbsp;</td>");
+                strb.AppendLine("</tr>");
+                strb.AppendLine("<tr class=\"bold tc bggray\">");
+                strb.AppendLine("<td class=\"w80\">关键指标</td>");
+                for (int i = 10; i < 17; i++)
+                {
+                    strb.AppendFormat("<td class=\"w100\">{0}</td>", GetCellValue(tbl.Rows[i]["关键指标"].ToString(), string.Empty, false, false));
+                }
+                strb.AppendFormat("<td>{0}</td>", "&nbsp;");
+                strb.AppendFormat("<td>{0}</td>", "&nbsp;");
+                strb.AppendFormat("<td>{0}</td>", "&nbsp;");
+                strb.AppendLine("</tr>");
+                strb.AppendLine("<tr class=\"tc\">");
+                strb.AppendLine("<td class=\"bold bggray\">目标</td>");
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[10]["目标"].ToString(), string.Empty, false, false));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[11]["目标"].ToString(), string.Empty, false, false));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[12]["目标"].ToString(), string.Empty, false, true));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[13]["目标"].ToString(), string.Empty, false, false));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[14]["目标"].ToString(), string.Empty, false, false));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[15]["目标"].ToString(), string.Empty, false, false));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[16]["目标"].ToString(), string.Empty, false, false));
+                strb.AppendFormat("<td>{0}</td>", "&nbsp;");
+                strb.AppendFormat("<td>{0}</td>", "&nbsp;");
+                strb.AppendFormat("<td>{0}</td>", "&nbsp;");
+                strb.AppendLine("</tr>");
+                strb.AppendLine("<tr class=\"tc\">");
+                strb.AppendLine("<td class=\"bold bggray\">实际</td>");
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[10]["实际"].ToString(), string.Empty, !string.IsNullOrEmpty(tbl.Rows[10]["完成率"].ToString()) && DataConvert.SafeDecimal(tbl.Rows[10]["完成率"]) < 100, false));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[11]["实际"].ToString(), string.Empty, !string.IsNullOrEmpty(tbl.Rows[11]["完成率"].ToString()) && DataConvert.SafeDecimal(tbl.Rows[11]["完成率"]) < 100, false));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[12]["实际"].ToString(), tbl.Rows[12]["详细"].ToString(), !string.IsNullOrEmpty(tbl.Rows[12]["完成率"].ToString()) && DataConvert.SafeDecimal(tbl.Rows[12]["完成率"]) < 100, true));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[13]["实际"].ToString(), string.Empty, !string.IsNullOrEmpty(tbl.Rows[13]["完成率"].ToString()) && DataConvert.SafeDecimal(tbl.Rows[13]["完成率"]) < 100, false));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[14]["实际"].ToString(), string.Empty, !string.IsNullOrEmpty(tbl.Rows[14]["完成率"].ToString()) && DataConvert.SafeDecimal(tbl.Rows[14]["完成率"]) < 100, false));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[15]["实际"].ToString(), string.Empty, !string.IsNullOrEmpty(tbl.Rows[15]["完成率"].ToString()) && DataConvert.SafeDecimal(tbl.Rows[15]["完成率"]) < 100, false));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[16]["实际"].ToString(), string.Empty, !string.IsNullOrEmpty(tbl.Rows[16]["完成率"].ToString()) && DataConvert.SafeDecimal(tbl.Rows[16]["完成率"]) < 100, false));
+                strb.AppendFormat("<td>{0}</td>", "&nbsp;");
+                strb.AppendFormat("<td>{0}</td>", "&nbsp;");
+                strb.AppendFormat("<td>{0}</td>", "&nbsp;");
+                strb.AppendLine("</tr>");
+                strb.AppendLine("<tr class=\"tc\">");
+                strb.AppendLine("<td class=\"bold bggray\">完成率</td>");
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[10]["完成率"].ToString(), string.Empty, false, true));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[11]["完成率"].ToString(), string.Empty, false, true));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[12]["完成率"].ToString(), string.Empty, false, true));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[13]["完成率"].ToString(), string.Empty, false, true));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[14]["完成率"].ToString(), string.Empty, false, true));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[15]["完成率"].ToString(), string.Empty, false, true));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[16]["完成率"].ToString(), string.Empty, false, true));
+                strb.AppendFormat("<td>{0}</td>", "&nbsp;");
+                strb.AppendFormat("<td>{0}</td>", "&nbsp;");
+                strb.AppendFormat("<td>{0}</td>", "&nbsp;");
+                strb.AppendLine("</tr>");
+                strb.AppendLine("<tr><td colspan=\"11\" style=\"color:White;background-color:gray;font-weight:bold;font-size:large;padding-left:20px;\">售后数据</td></tr>");
+                strb.AppendLine("<tr class=\"bold tc\" style=\"background-color:#8BC34A;\">");
+                strb.AppendLine("<td>&nbsp;</td>");
+                strb.AppendLine("<td>来厂台次</td>");
+                strb.AppendLine("<td colspan=\"3\">机油套餐</td>");
+                strb.AppendLine("<td colspan=\"3\">玻璃无忧服务</td>");
+                strb.AppendLine("<td colspan=\"3\">划痕无忧服务</td>");
+                strb.AppendLine("</tr>");
+                strb.AppendLine("<tr class=\"bold tc bggray\">");
+                strb.AppendLine("<td>关键指标</td>");
+                for (int i = 17; i < 27; i++)
+                {
+                    strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[i]["关键指标"].ToString(), string.Empty, false, false));
+                }
+                strb.AppendLine("</tr>");
+                strb.AppendLine("<tr class=\"tc\">");
+                strb.AppendLine("<td class=\"bold bggray\">目标</td>");
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[17]["目标"].ToString(), string.Empty, false, false));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[18]["目标"].ToString(), string.Empty, false, false));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[19]["目标"].ToString(), string.Empty, false, false));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[20]["目标"].ToString(), string.Empty, false, true));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[21]["目标"].ToString(), string.Empty, false, false));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[22]["目标"].ToString(), string.Empty, false, false));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[23]["目标"].ToString(), string.Empty, false, true));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[24]["目标"].ToString(), string.Empty, false, false));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[25]["目标"].ToString(), string.Empty, false, false));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[26]["目标"].ToString(), string.Empty, false, true));
+                strb.AppendLine("</tr>");
+                strb.AppendLine("<tr class=\"tc\">");
+                strb.AppendLine("<td class=\"bold bggray\">实际</td>");
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[17]["实际"].ToString(), string.Empty, !string.IsNullOrEmpty(tbl.Rows[17]["完成率"].ToString()) && DataConvert.SafeDecimal(tbl.Rows[17]["完成率"]) < 100, false));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[18]["实际"].ToString(), string.Empty, !string.IsNullOrEmpty(tbl.Rows[18]["完成率"].ToString()) && DataConvert.SafeDecimal(tbl.Rows[18]["完成率"]) < 100, false));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[19]["实际"].ToString(), string.Empty, !string.IsNullOrEmpty(tbl.Rows[19]["完成率"].ToString()) && DataConvert.SafeDecimal(tbl.Rows[19]["完成率"]) < 100, false));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[20]["实际"].ToString(), tbl.Rows[20]["详细"].ToString(), !string.IsNullOrEmpty(tbl.Rows[20]["完成率"].ToString()) && DataConvert.SafeDecimal(tbl.Rows[20]["完成率"]) < 100, true));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[21]["实际"].ToString(), string.Empty, !string.IsNullOrEmpty(tbl.Rows[21]["完成率"].ToString()) && DataConvert.SafeDecimal(tbl.Rows[21]["完成率"]) < 100, false));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[22]["实际"].ToString(), string.Empty, !string.IsNullOrEmpty(tbl.Rows[22]["完成率"].ToString()) && DataConvert.SafeDecimal(tbl.Rows[22]["完成率"]) < 100, false));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[23]["实际"].ToString(), tbl.Rows[23]["详细"].ToString(), !string.IsNullOrEmpty(tbl.Rows[23]["完成率"].ToString()) && DataConvert.SafeDecimal(tbl.Rows[23]["完成率"]) < 100, true));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[24]["实际"].ToString(), string.Empty, !string.IsNullOrEmpty(tbl.Rows[24]["完成率"].ToString()) && DataConvert.SafeDecimal(tbl.Rows[24]["完成率"]) < 100, false));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[25]["实际"].ToString(), string.Empty, !string.IsNullOrEmpty(tbl.Rows[25]["完成率"].ToString()) && DataConvert.SafeDecimal(tbl.Rows[25]["完成率"]) < 100, false));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[26]["实际"].ToString(), tbl.Rows[26]["详细"].ToString(), !string.IsNullOrEmpty(tbl.Rows[26]["完成率"].ToString()) && DataConvert.SafeDecimal(tbl.Rows[26]["完成率"]) < 100, true));
+                strb.AppendLine("</tr>");
+                strb.AppendLine("<tr class=\"tc\">");
+                strb.AppendLine("<td class=\"bold bggray\">完成率</td>");
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[17]["完成率"].ToString(), string.Empty, false, true));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[18]["完成率"].ToString(), string.Empty, false, true));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[19]["完成率"].ToString(), string.Empty, false, true));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[20]["完成率"].ToString(), string.Empty, false, true));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[21]["完成率"].ToString(), string.Empty, false, true));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[22]["完成率"].ToString(), string.Empty, false, true));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[23]["完成率"].ToString(), string.Empty, false, true));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[24]["完成率"].ToString(), string.Empty, false, true));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[25]["完成率"].ToString(), string.Empty, false, true));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[26]["完成率"].ToString(), string.Empty, false, true));
+                strb.AppendLine("</tr>");
+                strb.AppendLine("<tr class=\"bold tc\" style=\"background-color:#8BC34A;\">");
+                strb.AppendLine("<td>&nbsp;</td>");
+                strb.AppendLine("<td colspan=\"7\">延保无忧车服务</td>");
+                strb.AppendLine("<td>&nbsp;</td>");
+                strb.AppendLine("<td>&nbsp;</td>");
+                strb.AppendLine("<td>&nbsp;</td>");
+                strb.AppendLine("</tr>");
+                strb.AppendLine("<tr class=\"bold tc bggray\">");
+                strb.AppendLine("<td>关键指标</td>");
+                for (int i = 27; i < 34; i++)
+                {
+                    strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[i]["关键指标"].ToString(), string.Empty, false, false));
+                }
+                strb.AppendFormat("<td>{0}</td>", "&nbsp;");
+                strb.AppendFormat("<td>{0}</td>", "&nbsp;");
+                strb.AppendFormat("<td>{0}</td>", "&nbsp;");
+                strb.AppendLine("</tr>");
+                strb.AppendLine("<tr class=\"tc\">");
+                strb.AppendLine("<td class=\"bold bggray\">目标</td>");
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[27]["目标"].ToString(), string.Empty, false, false));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[28]["目标"].ToString(), string.Empty, false, false));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[29]["目标"].ToString(), string.Empty, false, true));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[30]["目标"].ToString(), string.Empty, false, false));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[31]["目标"].ToString(), string.Empty, false, false));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[32]["目标"].ToString(), string.Empty, false, false));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[33]["目标"].ToString(), string.Empty, false, false));
+                strb.AppendFormat("<td>{0}</td>", "&nbsp;");
+                strb.AppendFormat("<td>{0}</td>", "&nbsp;");
+                strb.AppendFormat("<td>{0}</td>", "&nbsp;");
+                strb.AppendLine("</tr>");
+                strb.AppendLine("<tr class=\"tc\">");
+                strb.AppendLine("<td class=\"bold bggray\">实际</td>");
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[27]["实际"].ToString(), string.Empty, !string.IsNullOrEmpty(tbl.Rows[27]["完成率"].ToString()) && DataConvert.SafeDecimal(tbl.Rows[27]["完成率"]) < 100, false));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[28]["实际"].ToString(), string.Empty, !string.IsNullOrEmpty(tbl.Rows[28]["完成率"].ToString()) && DataConvert.SafeDecimal(tbl.Rows[28]["完成率"]) < 100, false));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[29]["实际"].ToString(), tbl.Rows[29]["详细"].ToString(), !string.IsNullOrEmpty(tbl.Rows[29]["完成率"].ToString()) && DataConvert.SafeDecimal(tbl.Rows[29]["完成率"]) < 100, true));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[30]["实际"].ToString(), string.Empty, !string.IsNullOrEmpty(tbl.Rows[30]["完成率"].ToString()) && DataConvert.SafeDecimal(tbl.Rows[30]["完成率"]) < 100, false));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[31]["实际"].ToString(), string.Empty, !string.IsNullOrEmpty(tbl.Rows[31]["完成率"].ToString()) && DataConvert.SafeDecimal(tbl.Rows[31]["完成率"]) < 100, false));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[32]["实际"].ToString(), string.Empty, !string.IsNullOrEmpty(tbl.Rows[32]["完成率"].ToString()) && DataConvert.SafeDecimal(tbl.Rows[32]["完成率"]) < 100, false));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[33]["实际"].ToString(), string.Empty, !string.IsNullOrEmpty(tbl.Rows[33]["完成率"].ToString()) && DataConvert.SafeDecimal(tbl.Rows[33]["完成率"]) < 100, false));
+                strb.AppendFormat("<td>{0}</td>", "&nbsp;");
+                strb.AppendFormat("<td>{0}</td>", "&nbsp;");
+                strb.AppendFormat("<td>{0}</td>", "&nbsp;");
+                strb.AppendLine("</tr>");
+                strb.AppendLine("<tr class=\"tc\">");
+                strb.AppendLine("<td class=\"bold bggray\">完成率</td>");
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[27]["完成率"].ToString(), string.Empty, false, true));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[28]["完成率"].ToString(), string.Empty, false, true));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[29]["完成率"].ToString(), string.Empty, false, true));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[30]["完成率"].ToString(), string.Empty, false, true));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[31]["完成率"].ToString(), string.Empty, false, true));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[32]["完成率"].ToString(), string.Empty, false, true));
+                strb.AppendFormat("<td>{0}</td>", GetCellValue(tbl.Rows[33]["完成率"].ToString(), string.Empty, false, true));
+                strb.AppendFormat("<td>{0}</td>", "&nbsp;");
+                strb.AppendFormat("<td>{0}</td>", "&nbsp;");
+                strb.AppendFormat("<td>{0}</td>", "&nbsp;");
                 strb.AppendLine("</tr>");
                 strb.AppendLine("</table>");
 

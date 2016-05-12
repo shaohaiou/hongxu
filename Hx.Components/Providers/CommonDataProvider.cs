@@ -138,7 +138,7 @@ namespace Hx.Components.Providers
         /// 获取普通用户
         /// </summary>
         /// <returns></returns>
-        public abstract List<AdminInfo> GetUsers();
+        public abstract List<AdminInfo> GetUsers(UserRoleType role);
 
         /// <summary>
         /// 修改密码
@@ -165,6 +165,7 @@ namespace Hx.Components.Providers
         {
             AdminInfo admin = new AdminInfo();
             admin.ID = (int)reader["ID"];
+            admin.Name = reader["Name"] as string;
             admin.Administrator = DataConvert.SafeBool(reader["Administrator"]);
             admin.LastLoginIP = reader["LastLoginIP"] as string;
             admin.LastLoginTime = reader["LastLoginTime"] as DateTime?;
@@ -238,6 +239,30 @@ namespace Hx.Components.Providers
             data.Keys = reader["PropertyNames"] as string;
             data.Values = reader["PropertyValues"] as string;
             entity.SetSerializerData(data);
+
+            return entity;
+        }
+
+        #endregion
+
+        #region 精品用品
+
+        public abstract List<ChoicestgoodsInfo> GetChoicestgoodsList();
+
+        public abstract void AddChoicestgoods(ChoicestgoodsInfo entity);
+
+        public abstract void UpdateChoicestgoods(ChoicestgoodsInfo entity);
+
+        public abstract void DeleteChoicestgoods(string ids);
+
+        protected ChoicestgoodsInfo PopulateChoicestgoods(IDataReader reader)
+        {
+            ChoicestgoodsInfo entity = new ChoicestgoodsInfo 
+            { 
+                ID = DataConvert.SafeInt(reader["ID"]),
+                Name = reader["Name"] as string,
+                Price = reader["Price"] as string             
+            };
 
             return entity;
         }

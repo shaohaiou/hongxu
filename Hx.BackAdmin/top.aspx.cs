@@ -15,7 +15,7 @@ namespace Hx.BackAdmin
         {
             if (!Page.IsPostBack)
             {
-                hyName.Text = AdminName;
+                hyName.Text = Admin.Name;
             }
         }
 

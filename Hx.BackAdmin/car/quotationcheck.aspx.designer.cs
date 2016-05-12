@@ -7,36 +7,36 @@
 // </自动生成>
 //------------------------------------------------------------------------------
 
-namespace Hx.BackAdmin.user {
+namespace Hx.BackAdmin.car {
     
     
-    public partial class main_s {
+    public partial class quotationcheck {
         
         /// <summary>
-        /// adminlist 控件。
+        /// form1 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor adminlist;
+        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
         
         /// <summary>
-        /// userlist1 控件。
+        /// btnCheck 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor userlist1;
+        protected global::System.Web.UI.WebControls.Button btnCheck;
         
         /// <summary>
-        /// userlist3 控件。
+        /// btnBack 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor userlist3;
+        protected global::System.Web.UI.WebControls.Button btnBack;
     }
 }

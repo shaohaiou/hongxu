@@ -12,6 +12,7 @@ using Hx.Car;
 using Hx.Components;
 using Hx.Tools.Web;
 using Hx.Components.Entity;
+using Hx.Components.Enumerations;
 
 namespace Hx.BackAdmin.user
 {
@@ -39,6 +40,7 @@ namespace Hx.BackAdmin.user
                 }
                 else
                 {
+                    UserRoleType role = (UserRoleType)GetInt("r");
                     int pageindex = GetInt("page", 1);
                     if (pageindex < 1)
                     {
@@ -46,7 +48,7 @@ namespace Hx.BackAdmin.user
                     }
                     int pagesize = GetInt("pagesize", 10);
                     int total = 0;
-                    List<AdminInfo> adminlist = Admins.Instance.GetUsers(Admin.Corporation);
+                    List<AdminInfo> adminlist = Admins.Instance.GetUsers(Admin.Administrator ? "-1" : Admin.Corporation, role);
                     if (GetInt("corp") > 0)
                         adminlist = adminlist.FindAll(l => l.Corporation == GetString("corp"));
                     if (!string.IsNullOrEmpty(GetString("username")))
@@ -82,7 +84,7 @@ namespace Hx.BackAdmin.user
 
         protected void btnFilter_Click(object sender, EventArgs e)
         {
-            Response.Redirect("userlist.aspx?corp=" + ddlCorporationFilter.SelectedValue + "&username=" + txtUserName.Text);
+            Response.Redirect("userlist.aspx?corp=" + ddlCorporationFilter.SelectedValue + "&username=" + txtUserName.Text + "&r=" + GetString("r"));
         }
 
         protected string GetCorporationName(string id)

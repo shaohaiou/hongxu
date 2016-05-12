@@ -63,8 +63,10 @@ namespace Hx.BackAdmin
                             Admins.Instance.UpdateAdmin(admin);
                             Session[GlobalKey.SESSION_ADMIN] = admin;
                             ManageCookies.CreateCookie(GlobalKey.SESSION_ADMIN, id.ToString(), true, DateTime.Today.AddDays(1), HXContext.Current.CookieDomain);
-                            if(admin.UserRole == Components.Enumerations.UserRoleType.销售员)
+                            if (admin.UserRole == Components.Enumerations.UserRoleType.销售员)
                                 Response.Redirect("car/carquotation.aspx");
+                            else if (admin.UserRole == Components.Enumerations.UserRoleType.财务出纳)
+                                Response.Redirect("car/carquotationmg.aspx");
                             else
                                 Response.Redirect("index.aspx");
                         }

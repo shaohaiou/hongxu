@@ -1413,5 +1413,229 @@ namespace Hx.Components.Entity
 
         #endregion
 
+        #region 粘性产品月度目标
+
+        /// <summary>
+        /// 销售机油套餐渗透率
+        /// </summary>
+        [JsonIgnore]
+        public string NXCPxsjytcstl
+        {
+            get { return GetString("NXCPxsjytcstl", ""); }
+            set { SetExtendedAttribute("NXCPxsjytcstl", value); }
+        }
+
+        /// <summary>
+        /// 销售玻璃无忧服务渗透率
+        /// </summary>
+        [JsonIgnore]
+        public string NXCPxsblwyfwstl
+        {
+            get { return GetString("NXCPxsblwyfwstl", ""); }
+            set { SetExtendedAttribute("NXCPxsblwyfwstl", value); }
+        }
+
+        /// <summary>
+        /// 销售划痕无忧服务渗透率
+        /// </summary>
+        [JsonIgnore]
+        public string NXCPxshhwyfwstl
+        {
+            get { return GetString("NXCPxshhwyfwstl", ""); }
+            set { SetExtendedAttribute("NXCPxshhwyfwstl", value); }
+        }
+
+        /// <summary>
+        /// 销售延保无忧车服务渗透率
+        /// </summary>
+        [JsonIgnore]
+        public string NXCPxsybwycfwstl
+        {
+            get { return GetString("NXCPxsybwycfwstl", ""); }
+            set { SetExtendedAttribute("NXCPxsybwycfwstl", value); }
+        }
+
+        /// <summary>
+        /// 售后机油套餐渗透率
+        /// </summary>
+        [JsonIgnore]
+        public string NXCPshjytcstl
+        {
+            get { return GetString("NXCPshjytcstl", ""); }
+            set { SetExtendedAttribute("NXCPshjytcstl", value); }
+        }
+
+        /// <summary>
+        /// 售后玻璃无忧服务渗透率
+        /// </summary>
+        [JsonIgnore]
+        public string NXCPshblwyfwstl
+        {
+            get { return GetString("NXCPshblwyfwstl", ""); }
+            set { SetExtendedAttribute("NXCPshblwyfwstl", value); }
+        }
+
+        /// <summary>
+        /// 售后划痕无忧服务渗透率
+        /// </summary>
+        [JsonIgnore]
+        public string NXCPshhhwyfwstl
+        {
+            get { return GetString("NXCPshhhwyfwstl", ""); }
+            set { SetExtendedAttribute("NXCPshhhwyfwstl", value); }
+        }
+
+        /// <summary>
+        /// 售后延保无忧车服务渗透率
+        /// </summary>
+        [JsonIgnore]
+        public string NXCPshybwycfwstl
+        {
+            get { return GetString("NXCPshybwycfwstl", ""); }
+            set { SetExtendedAttribute("NXCPshybwycfwstl", value); }
+        }
+
+        /// <summary>
+        /// 本月机油套餐来厂使用车辆数
+        /// </summary>
+        [JsonIgnore]
+        public string NXCPbyjytclcsycls
+        {
+            get { return GetString("NXCPbyjytclcsycls", ""); }
+            set { SetExtendedAttribute("NXCPbyjytclcsycls", value); }
+        }
+
+        /// <summary>
+        /// 本月机油套餐使用金额
+        /// </summary>
+        [JsonIgnore]
+        public string NXCPbyjytcsyje
+        {
+            get { return GetString("NXCPbyjytcsyje", ""); }
+            set { SetExtendedAttribute("NXCPbyjytcsyje", value); }
+        }
+
+        /// <summary>
+        /// 本月划痕无忧服务到期个数
+        /// </summary>
+        [JsonIgnore]
+        public string NXCPbyhhwyfwdqgs
+        {
+            get { return GetString("NXCPbyhhwyfwdqgs", ""); }
+            set { SetExtendedAttribute("NXCPbyhhwyfwdqgs", value); }
+        }
+
+        /// <summary>
+        /// 本月划痕无忧服务到期金额
+        /// </summary>
+        [JsonIgnore]
+        public string NXCPbyhhwyfwdqje
+        {
+            get { return GetString("NXCPbyhhwyfwdqje", ""); }
+            set { SetExtendedAttribute("NXCPbyhhwyfwdqje", value); }
+        }
+
+        /// <summary>
+        /// 本月划痕无忧服务到期内赔付个数
+        /// </summary>
+        [JsonIgnore]
+        public string NXCPbyhhwyfwdqnpfgs
+        {
+            get { return GetString("NXCPbyhhwyfwdqnpfgs", ""); }
+            set { SetExtendedAttribute("NXCPbyhhwyfwdqnpfgs", value); }
+        }
+
+        /// <summary>
+        /// 本月划痕无忧服务到期内赔付金额
+        /// </summary>
+        [JsonIgnore]
+        public string NXCPbyhhwyfwdqnpfje
+        {
+            get { return GetString("NXCPbyhhwyfwdqnpfje", ""); }
+            set { SetExtendedAttribute("NXCPbyhhwyfwdqnpfje", value); }
+        }
+
+        /// <summary>
+        /// 本月玻璃无忧服务到期个数
+        /// </summary>
+        [JsonIgnore]
+        public string NXCPbyblwyfwdqgs
+        {
+            get { return GetString("NXCPbyblwyfwdqgs", ""); }
+            set { SetExtendedAttribute("NXCPbyblwyfwdqgs", value); }
+        }
+
+        /// <summary>
+        /// 本月玻璃无忧服务到期金额
+        /// </summary>
+        [JsonIgnore]
+        public string NXCPbyblwyfwdqje
+        {
+            get { return GetString("NXCPbyblwyfwdqje", ""); }
+            set { SetExtendedAttribute("NXCPbyblwyfwdqje", value); }
+        }
+
+        /// <summary>
+        /// 本月玻璃无忧服务到期内赔付个数
+        /// </summary>
+        [JsonIgnore]
+        public string NXCPbyblwyfwdqnpfgs
+        {
+            get { return GetString("NXCPbyblwyfwdqnpfgs", ""); }
+            set { SetExtendedAttribute("NXCPbyblwyfwdqnpfgs", value); }
+        }
+
+        /// <summary>
+        /// 本月玻璃无忧服务到期内赔付金额
+        /// </summary>
+        [JsonIgnore]
+        public string NXCPbyblwyfwdqnpfje
+        {
+            get { return GetString("NXCPbyblwyfwdqnpfje", ""); }
+            set { SetExtendedAttribute("NXCPbyblwyfwdqnpfje", value); }
+        }
+
+        /// <summary>
+        /// 本月延保服务到期个数
+        /// </summary>
+        [JsonIgnore]
+        public string NXCPbyybfwdqgs
+        {
+            get { return GetString("NXCPbyybfwdqgs", ""); }
+            set { SetExtendedAttribute("NXCPbyybfwdqgs", value); }
+        }
+
+        /// <summary>
+        /// 本月延保服务到期金额
+        /// </summary>
+        [JsonIgnore]
+        public string NXCPbyybfwdqje
+        {
+            get { return GetString("NXCPbyybfwdqje", ""); }
+            set { SetExtendedAttribute("NXCPbyybfwdqje", value); }
+        }
+
+        /// <summary>
+        /// 本月延保服务到期内赔付个数
+        /// </summary>
+        [JsonIgnore]
+        public string NXCPbyybfwdqnpfgs
+        {
+            get { return GetString("NXCPbyybfwdqnpfgs", ""); }
+            set { SetExtendedAttribute("NXCPbyybfwdqnpfgs", value); }
+        }
+
+        /// <summary>
+        /// 本月延保服务到期内赔付金额
+        /// </summary>
+        [JsonIgnore]
+        public string NXCPbyybfwdqnpfje
+        {
+            get { return GetString("NXCPbyybfwdqnpfje", ""); }
+            set { SetExtendedAttribute("NXCPbyybfwdqnpfje", value); }
+        }
+
+        #endregion
+
     }
 }

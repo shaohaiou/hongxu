@@ -8,6 +8,6 @@ namespace Hx.Car.Enum
     public enum CarQuotationType
     {
         全款购车,
-        贷款购车
+        金融购车
     }
 }

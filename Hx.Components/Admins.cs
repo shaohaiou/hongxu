@@ -101,7 +101,7 @@ namespace Hx.Components
         }
 
         /// <summary>
-        /// 返回所有用户
+        /// 返回管理员用户
         /// </summary>
         /// <returns></returns>
         public List<AdminInfo> GetAllAdmins()
@@ -113,9 +113,9 @@ namespace Hx.Components
         /// 获取普通用户
         /// </summary>
         /// <returns></returns>
-        public List<AdminInfo> GetUsers(string corp)
+        public List<AdminInfo> GetUsers(string corp,UserRoleType role)
         {
-            List<AdminInfo> users = CommonDataProvider.Instance().GetUsers();
+            List<AdminInfo> users = CommonDataProvider.Instance().GetUsers(role);
 
             if (corp != "-1")
             {

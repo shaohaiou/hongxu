@@ -27,6 +27,8 @@ namespace Hx.Components.Enumerations
         [Description("HX_DailyReportJRB")]
         金融部,
         [Description("HX_DailyReportDCCB")]
-        DCC部
+        DCC部,
+        [Description("HX_DailyReportNXCP")]
+        粘性产品
     }
 }

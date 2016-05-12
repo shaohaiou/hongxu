@@ -128,6 +128,7 @@ namespace Hx.Car.Providers
                 cKsjc = reader["cKsjc"] as string,
                 cXh = reader["cXh"] as string,
                 cQcys = reader["cQcys"] as string,
+                cNsys = reader["cNsys"] as string,
                 cXntd = reader["cXntd"] as string,
                 cCxmc = reader["cCxmc"] as string,
                 cJgqj = DataConvert.SafeDecimal(reader["cJgqj"]),
@@ -331,6 +332,8 @@ namespace Hx.Car.Providers
 
         public abstract List<CarQuotationInfo> GetCarQuotationList(int pageindex, int pagesize, CarQuotationQuery query, ref int recordcount);
 
+        public abstract void CheckCarQuotation(CarQuotationInfo entity);
+
         public static CarQuotationInfo PopulateQuotationInfo(IDataReader reader)
         {
             return new CarQuotationInfo()
@@ -339,23 +342,41 @@ namespace Hx.Car.Providers
                 UCode = DataConvert.SafeInt(reader["UCode"]),
                 CustomerMobile = reader["CustomerMobile"] as string,
                 CustomerName = reader["CustomerName"] as string,
-                CustomerQQ = reader["CustomerQQ"] as string,
-                CustomerEmail = reader["CustomerEmail"] as string,
+                SaleDay = reader["SaleDay"] as DateTime?,
+                PlaceDay = reader["PlaceDay"] as DateTime?,
+                Islkhzjs = DataConvert.SafeInt(reader["Islkhzjs"]),
                 CustomerMicroletter = reader["CustomerMicroletter"] as string,
+                cCjh = reader["cCjh"] as string,
                 CarQuotationType = (CarQuotationType)(byte)reader["CarQuotationType"],
                 TotalFirstPrinces = reader["TotalFirstPrinces"] as string,
                 TotalPrinces = reader["TotalPrinces"] as string,
                 cChangs = reader["cChangs"] as string,
                 cCxmc = reader["cCxmc"] as string,
                 cQcys = reader["cQcys"] as string,
+                cNsys = reader["cNsys"] as string,
+                fZdj = reader["fZdj"] as string,
                 fCjj = reader["fCjj"] as string,
                 cGzs = reader["cGzs"] as string,
                 cSpf = reader["cSpf"] as string,
                 cCcs = reader["cCcs"] as string,
+                IscJqs = (bool)reader["IscJqs"],
                 cJqs = reader["cJqs"] as string,
                 Bxgs = reader["Bxgs"] as string,
+                Bxhj = reader["Bxhj"] as string,
+                Wyfw = reader["Wyfw"] as string,
+                IsWyfwjytc = (bool)reader["IsWyfwjytc"],
+                Wyfwjytc = reader["Wyfwjytc"] as string,
+                IsWyfwblwyfw = (bool)reader["IsWyfwblwyfw"],
+                Wyfwblwyfw = reader["Wyfwblwyfw"] as string,
+                IsWyfwhhwyfw = (bool)reader["IsWyfwhhwyfw"],
+                Wyfwhhwyfw = reader["Wyfwhhwyfw"] as string,
+                IsWyfwybwyfw = (bool)reader["IsWyfwybwyfw"],
+                Wyfwybwyfw = reader["Wyfwybwyfw"] as string,
+                IscCsx = (bool)reader["IscCsx"],
                 cCsx = reader["cCsx"] as string,
+                IscDszrx = (bool)reader["IscDszrx"],
                 cDszrx = reader["cDszrx"] as string,
+                IscDqx = (bool)reader["IscDqx"],
                 cDqx = reader["cDqx"] as string,
                 IscSj = (bool)reader["IscSj"],
                 cSj = reader["cSj"] as string,
@@ -384,6 +405,8 @@ namespace Hx.Car.Providers
                 ChoicestGoodsPrice = reader["ChoicestGoodsPrice"] as string,
                 Gift = reader["Gift"] as string,
                 IsSwap = (bool)reader["IsSwap"],
+                IsDkh = (bool)reader["IsDkh"],
+                IsZcyh = (bool)reader["IsZcyh"],
                 SwapDetail = reader["SwapDetail"] as string,
                 cBjmp = reader["cBjmp"] as string,
                 cZdwx = reader["cZdwx"] as string,
@@ -402,7 +425,12 @@ namespace Hx.Car.Providers
                 cBjmptb = reader["cBjmptb"] as string,
                 Creator = reader["Creator"] as string,
                 CreateTime = reader["CreateTime"] as DateTime?,
-                CorporationID = reader["CorporationID"] as string
+                CorporationID = reader["CorporationID"] as string,
+                CheckUser = reader["CheckUser"] as string,
+                CheckTime = reader["CheckTime"] as string,
+                CheckStatus = DataConvert.SafeInt(reader["CheckStatus"]),
+                Qtfy = reader["Qtfy"] as string,
+                Qtfyms = reader["Qtfyms"] as string,
             };
         }
 

@@ -81,5 +81,17 @@ namespace Hx.Car
         {
             return CarDataProvider.Instance().GetCarQuotationList(pageindex, pagesize, query, ref recordcount);
         }
+
+        public void Check(CarQuotationInfo entity)
+        {
+            CarDataProvider.Instance().CheckCarQuotation(entity);
+
+            if (!string.IsNullOrEmpty(entity.CustomerMobile))
+            {
+                string key = GlobalKey.CARQUOTATION_KEY + "_mobile_" + entity.CustomerMobile + "_qt_" + ((int)entity.CarQuotationType).ToString();
+                MangaCache.Remove(key);
+                GetList(entity.CustomerMobile, entity.CarQuotationType);
+            }
+        }
     }
 }

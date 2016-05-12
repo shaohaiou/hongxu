@@ -87,6 +87,7 @@ namespace Hx.BackAdmin.user
             hdid.Value = admin.ID.ToString();               //管理员ID
             cbIsAdmin.Checked = admin.Administrator;        //是否是超级管理员
             txtUserName.Text = admin.UserName;//账户名
+            txtName.Text = admin.Name;
             txtMobile.Text = admin.Mobile;
             SetSelectedByValue(ddlCorporation, admin.Corporation);
             hdnUserRoleType.Value = ((int)admin.UserRole).ToString();
@@ -104,6 +105,7 @@ namespace Hx.BackAdmin.user
             if (txtPassword.Text.Trim().Length != 0)
                 admin.Password = EncryptString.MD5(txtPassword.Text);              //管理员密码
             admin.UserName = txtUserName.Text;//账户名
+            admin.Name = txtName.Text;
             admin.LastLoginIP = string.Empty;
             admin.Mobile = txtMobile.Text;
             admin.Corporation = ddlCorporation.SelectedValue;

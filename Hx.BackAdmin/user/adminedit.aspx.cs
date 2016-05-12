@@ -37,6 +37,7 @@ namespace Hx.BackAdmin.user
         private void LoadData()
         {
             txtMobile.Text = Admin.Mobile;
+            txtName.Text = Admin.Name;
         }
 
         protected void btSave_Click(object sender, EventArgs e)
@@ -45,6 +46,7 @@ namespace Hx.BackAdmin.user
             if (entity != null)
             {
                 entity.Mobile = txtMobile.Text;
+                entity.Name = txtName.Text;
 
                 Admins.Instance.UpdateAdmin(entity);
 

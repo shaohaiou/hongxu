@@ -16,7 +16,7 @@ namespace Hx.BackAdmin.user
             if (!Admin.Administrator)
             {
                 adminlist.Visible = false;
-                userlist.Attributes["class"] = "current";
+                userlist1.Attributes["class"] = "current";
             }
         }
 

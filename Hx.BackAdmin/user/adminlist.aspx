@@ -19,6 +19,27 @@
 <body>
     <form id="form1" runat="server">
     <div class="ht_main">
+        <table width="690" border="0" cellspacing="0" cellpadding="0" class="biaoge4" style="background-color: #f4f8fc;">
+            <tr>
+                <td class="w40 bold">
+                    查询：
+                </td>
+                <td>
+                    公司：<asp:DropDownList ID="ddlCorporationFilter" runat="server" CssClass="mr10">
+                    </asp:DropDownList>
+                    用户名：<asp:TextBox ID="txtUserName" runat="server" CssClass="srk6 mr10"></asp:TextBox>
+                    角色：<asp:DropDownList ID="ddlUserRoleTypeFilter" runat="server">
+                    </asp:DropDownList>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                </td>
+                <td>
+                    <asp:Button runat="server" ID="btnFilter" CssClass="an1" Text="确定" OnClick="btnFilter_Click" />
+                </td>
+            </tr>
+        </table>
         <table width="790" border="0" cellspacing="0" cellpadding="0" class="biaoge2">
             <asp:Repeater ID="rpadmin" runat="server">
                 <HeaderTemplate>

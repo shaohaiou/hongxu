@@ -16,14 +16,15 @@
 <body style="background: url(../images/xdd.gif) repeat-x;">
     <div class="right_nav">
         <a href="adminlist.aspx" target="ztk" id="adminlist" runat="server" class="current">管理员管理</a> <a
-            href="userlist.aspx" target="ztk" id="userlist" runat="server">用户管理</a>
+            href="userlist.aspx?r=2" target="ztk" id="userlist1" runat="server">销售顾问</a><a
+            href="userlist.aspx?r=512" target="ztk" id="userlist3" runat="server">财务收银</a>
     </div>
     <div class="r_sy" id="daohan">
         当前位置：用户管理 &gt;&gt; <span id="daohan_sp">
             <%if (Admin.Administrator)
               { %>管理员管理<%}
               else
-              { %>用户管理<%} %></span>
+              { %>销售顾问<%} %></span>
     </div>
 </body>
 <script language="javascript" type="text/javascript">

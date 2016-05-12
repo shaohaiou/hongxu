@@ -7,7 +7,7 @@ namespace Hx.Car.Enum
 {
     public enum BankingType
     {
-        传统金融,
+        银行金融,
         厂方金融
     }
 }

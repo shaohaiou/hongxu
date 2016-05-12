@@ -76,24 +76,6 @@ namespace Hx.BackAdmin.car {
         protected global::System.Web.UI.WebControls.DropDownList ddlQuotationHistory;
         
         /// <summary>
-        /// txtCustomerQQ 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtCustomerQQ;
-        
-        /// <summary>
-        /// txtCustomerEmail 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtCustomerEmail;
-        
-        /// <summary>
         /// txtCustomerMicroletter 控件。
         /// </summary>
         /// <remarks>
@@ -103,6 +85,33 @@ namespace Hx.BackAdmin.car {
         protected global::System.Web.UI.WebControls.TextBox txtCustomerMicroletter;
         
         /// <summary>
+        /// txtcCjh 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtcCjh;
+        
+        /// <summary>
+        /// txtSaleDay 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtSaleDay;
+        
+        /// <summary>
+        /// txtPlaceDay 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtPlaceDay;
+        
+        /// <summary>
         /// lblTotalPrinces 控件。
         /// </summary>
         /// <remarks>
@@ -110,6 +119,15 @@ namespace Hx.BackAdmin.car {
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox lblTotalPrinces;
+        
+        /// <summary>
+        /// cbxIslkhzjs 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox cbxIslkhzjs;
         
         /// <summary>
         /// lblTotalFirstPrinces 控件。
@@ -157,13 +175,22 @@ namespace Hx.BackAdmin.car {
         protected global::System.Web.UI.WebControls.Repeater rptcQcys;
         
         /// <summary>
-        /// txtfZdj 控件。
+        /// hdnInnerColor 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtfZdj;
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hdnInnerColor;
+        
+        /// <summary>
+        /// rptcNsys 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater rptcNsys;
         
         /// <summary>
         /// txtfCjj 控件。
@@ -173,6 +200,15 @@ namespace Hx.BackAdmin.car {
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtfCjj;
+        
+        /// <summary>
+        /// txtfZdj 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtfZdj;
         
         /// <summary>
         /// txtcGzs 控件。
@@ -193,13 +229,202 @@ namespace Hx.BackAdmin.car {
         protected global::System.Web.UI.WebControls.TextBox txtcSpf;
         
         /// <summary>
-        /// txtcCcs 控件。
+        /// cbxQcypjz 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtcCcs;
+        protected global::System.Web.UI.WebControls.CheckBox cbxQcypjz;
+        
+        /// <summary>
+        /// txtQcypjz 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtQcypjz;
+        
+        /// <summary>
+        /// trQcypjz 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableRow trQcypjz;
+        
+        /// <summary>
+        /// hdnQcyp 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hdnQcyp;
+        
+        /// <summary>
+        /// rptQcyp 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater rptQcyp;
+        
+        /// <summary>
+        /// txtBxhj 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtBxhj;
+        
+        /// <summary>
+        /// cbxWyfw 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox cbxWyfw;
+        
+        /// <summary>
+        /// txtWyfw 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtWyfw;
+        
+        /// <summary>
+        /// trWyfw 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableRow trWyfw;
+        
+        /// <summary>
+        /// cbxWyfwjytc 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox cbxWyfwjytc;
+        
+        /// <summary>
+        /// txtWyfwjytc 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtWyfwjytc;
+        
+        /// <summary>
+        /// cbxWyfwblwyfw 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox cbxWyfwblwyfw;
+        
+        /// <summary>
+        /// txtWyfwblwyfw 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtWyfwblwyfw;
+        
+        /// <summary>
+        /// cbxWyfwhhwyfw 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox cbxWyfwhhwyfw;
+        
+        /// <summary>
+        /// txtWyfwhhwyfw 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtWyfwhhwyfw;
+        
+        /// <summary>
+        /// cbxWyfwybwyfw 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox cbxWyfwybwyfw;
+        
+        /// <summary>
+        /// txtWyfwybwyfw 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtWyfwybwyfw;
+        
+        /// <summary>
+        /// txtDbsplwf 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtDbsplwf;
+        
+        /// <summary>
+        /// txtQtfy 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtQtfy;
+        
+        /// <summary>
+        /// txtQtfyms 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtQtfyms;
+        
+        /// <summary>
+        /// ddlSybx 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlSybx;
+        
+        /// <summary>
+        /// cbxcJqs 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox cbxcJqs;
         
         /// <summary>
         /// txtcJqs 控件。
@@ -211,22 +436,13 @@ namespace Hx.BackAdmin.car {
         protected global::System.Web.UI.WebControls.TextBox txtcJqs;
         
         /// <summary>
-        /// ddlZkxs 控件。
+        /// cbxcCsx 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlZkxs;
-        
-        /// <summary>
-        /// ddlBlcd 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlBlcd;
+        protected global::System.Web.UI.WebControls.CheckBox cbxcCsx;
         
         /// <summary>
         /// txtcCsx 控件。
@@ -236,6 +452,15 @@ namespace Hx.BackAdmin.car {
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtcCsx;
+        
+        /// <summary>
+        /// cbxcDszrx 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox cbxcDszrx;
         
         /// <summary>
         /// ddlSztb 控件。
@@ -256,6 +481,15 @@ namespace Hx.BackAdmin.car {
         protected global::System.Web.UI.WebControls.TextBox txtcDszrx;
         
         /// <summary>
+        /// cbxcDqx 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox cbxcDqx;
+        
+        /// <summary>
         /// txtcDqx 控件。
         /// </summary>
         /// <remarks>
@@ -263,15 +497,6 @@ namespace Hx.BackAdmin.car {
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtcDqx;
-        
-        /// <summary>
-        /// hdnZws 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hdnZws;
         
         /// <summary>
         /// cbxcSj 控件。
@@ -472,24 +697,6 @@ namespace Hx.BackAdmin.car {
         protected global::System.Web.UI.HtmlControls.HtmlInputHidden hdncBjmptb;
         
         /// <summary>
-        /// lblBxhj 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblBxhj;
-        
-        /// <summary>
-        /// ddlLoanType 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlLoanType;
-        
-        /// <summary>
         /// ddlBankingType 控件。
         /// </summary>
         /// <remarks>
@@ -497,24 +704,6 @@ namespace Hx.BackAdmin.car {
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlBankingType;
-        
-        /// <summary>
-        /// ddlBank 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlBank;
-        
-        /// <summary>
-        /// txtProfitMargin 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtProfitMargin;
         
         /// <summary>
         /// txtRepaymentPerMonth 控件。
@@ -616,33 +805,6 @@ namespace Hx.BackAdmin.car {
         protected global::System.Web.UI.WebControls.TextBox txtDcf;
         
         /// <summary>
-        /// txtChoicestGoods 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtChoicestGoods;
-        
-        /// <summary>
-        /// txtChoicestGoodsPrice 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtChoicestGoodsPrice;
-        
-        /// <summary>
-        /// txtDbsplwf 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtDbsplwf;
-        
-        /// <summary>
         /// cbxIsSwap 控件。
         /// </summary>
         /// <remarks>
@@ -668,6 +830,24 @@ namespace Hx.BackAdmin.car {
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlTextArea txtSwapDetail;
+        
+        /// <summary>
+        /// cbxIsDkh 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox cbxIsDkh;
+        
+        /// <summary>
+        /// cbxIsZcyh 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox cbxIsZcyh;
         
         /// <summary>
         /// txtGift 控件。

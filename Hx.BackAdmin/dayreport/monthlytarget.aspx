@@ -36,6 +36,50 @@
                 WdatePicker({ 'readOnly': 'true', dateFmt: 'yyyy-MM', isShowToday: false, isShowClear: false });
             });
 
+            if ($(".countxsybfwgmgs").length > 0 && $(".countxsybfwgmgssub").length > 0) {
+                $(".countxsybfwgmgssub").unbind("change");
+                $(".countxsybfwgmgssub").change(function () {
+                    var countxsybfwgmgs = 0;
+                    $(".countxsybfwgmgssub").each(function () {
+                        countxsybfwgmgs += $.trim($(this).val()) == "" ? 0 : parseInt($(this).val());
+                    });
+                    $(".countxsybfwgmgs").val(countxsybfwgmgs);
+                });
+            }
+
+            if ($(".countxsybfwgmje").length > 0 && $(".countxsybfwgmjesub").length > 0) {
+                $(".countxsybfwgmjesub").unbind("change");
+                $(".countxsybfwgmjesub").change(function () {
+                    var countxsybfwgmje = 0;
+                    $(".countxsybfwgmjesub").each(function () {
+                        countxsybfwgmje += $.trim($(this).val()) == "" ? 0 : parseFloat($(this).val());
+                    });
+                    $(".countxsybfwgmje").val(countxsybfwgmje.toFixed(2));
+                });
+            }
+
+            if ($(".countshybfwgmgs").length > 0 && $(".countshybfwgmgssub").length > 0) {
+                $(".countshybfwgmgssub").unbind("change");
+                $(".countshybfwgmgssub").change(function () {
+                    var countshybfwgmgs = 0;
+                    $(".countshybfwgmgssub").each(function () {
+                        countshybfwgmgs += $.trim($(this).val()) == "" ? 0 : parseInt($(this).val());
+                    });
+                    $(".countshybfwgmgs").val(countshybfwgmgs);
+                });
+            }
+
+            if ($(".countshybfwgmje").length > 0 && $(".countshybfwgmjesub").length > 0) {
+                $(".countshybfwgmjesub").unbind("change");
+                $(".countshybfwgmjesub").change(function () {
+                    var countshybfwgmje = 0;
+                    $(".countshybfwgmjesub").each(function () {
+                        countshybfwgmje += $.trim($(this).val()) == "" ? 0 : parseFloat($(this).val());
+                    });
+                    $(".countshybfwgmje").val(countshybfwgmje.toFixed(2));
+                });
+            }
+
             if (timer_bindevent)
                 clearTimeout(timer_bindevent);
             timer_bindevent = setTimeout(function () {
@@ -68,6 +112,8 @@
                 <a href="?<%= CurrentQuery%>&dep=<%= (int)DayReportDep.金融部%>">金融部</a></li>
             <li <%if(CurrentDep==DayReportDep.DCC部){ %>class="current" <%} %> <%= GetDepHide(DayReportDep.DCC部) %>>
                 <a href="?<%= CurrentQuery%>&dep=<%= (int)DayReportDep.DCC部%>">DCC部</a></li>
+            <li <%if(CurrentDep==DayReportDep.粘性产品){ %>class="current" <%} %> <%= GetDepHide(DayReportDep.粘性产品) %>>
+                <a href="?<%= CurrentQuery%>&dep=<%= (int)DayReportDep.粘性产品%>">粘性产品</a></li>
         </ul>
         <asp:ScriptManager runat="server" ID="sm">
         </asp:ScriptManager>
@@ -128,12 +174,6 @@
                                 <span class="pl10 gray">到上月底粉丝量总量</span>
                             </td>
                         </tr>
-                        <tr>
-                            <td colspan="4" style="background-color: #ccc; color: Black; font-weight: bold;">
-                                各项目标值
-                            </td>
-                        </tr>
-                        <%=GetTableStr()%>
                         <%}
                           else if (CurrentDep == DayReportDep.售后部)
                           {%>
@@ -151,12 +191,6 @@
                                 <span class="gray pl10">截止<%=DateTime.Today.Year + 1 %>年1月1号微信客户总数目标</span>
                             </td>
                         </tr>
-                        <tr>
-                            <td colspan="4" style="background-color: #ccc; color: Black; font-weight: bold;">
-                                各项目标值
-                            </td>
-                        </tr>
-                        <%=GetTableStr()%>
                         <%}
                           else if (CurrentDep == DayReportDep.销售部)
                           {%>
@@ -356,22 +390,95 @@
                             </td>
                         </tr>
                         <%} %>
-                        <tr>
-                            <td colspan="4" style="background-color: #ccc; color: Black; font-weight: bold;">
-                                各项目标值
-                            </td>
-                        </tr>
-                        <%=GetTableStr()%>
                         <%}
-                          else
+                          else if (CurrentDep == DayReportDep.粘性产品)
                           {%>
                         <tr>
                             <td colspan="4" style="background-color: #ccc; color: Black; font-weight: bold;">
+                                关键指标
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" style="font-weight:bold;font-size:large;padding-left:20px;">
+                                销售数据
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="tr">
+                                机油套餐渗透率：
+                            </td>
+                            <td class="dq1">
+                                <asp:TextBox runat="server" ID="txtNXCPxsjytcstl" CssClass="srk4 tr"></asp:TextBox>
+                                %
+                            </td>
+                            <td class="tr w160">
+                                玻璃无忧服务渗透率：
+                            </td>
+                            <td>
+                                <asp:TextBox runat="server" ID="txtNXCPxsblwyfwstl" CssClass="srk4 tr"></asp:TextBox>
+                                %
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="tr">
+                                划痕无忧服务渗透率：
+                            </td>
+                            <td class="dq1">
+                                <asp:TextBox runat="server" ID="txtNXCPxshhwyfwstl" CssClass="srk4 tr"></asp:TextBox>
+                                %
+                            </td>
+                            <td class="tr w160">
+                                延保无忧车服务渗透率：
+                            </td>
+                            <td>
+                                <asp:TextBox runat="server" ID="txtNXCPxsybwycfwstl" CssClass="srk4 tr"></asp:TextBox>
+                                %
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" style="font-weight:bold;font-size:large;padding-left:20px;">
+                                售后数据
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="tr">
+                                机油套餐渗透率：
+                            </td>
+                            <td class="dq1">
+                                <asp:TextBox runat="server" ID="txtNXCPshjytcstl" CssClass="srk4 tr"></asp:TextBox>
+                                %
+                            </td>
+                            <td class="tr w160">
+                                玻璃无忧服务渗透率：
+                            </td>
+                            <td>
+                                <asp:TextBox runat="server" ID="txtNXCPshblwyfwstl" CssClass="srk4 tr"></asp:TextBox>
+                                %
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="tr">
+                                划痕无忧服务渗透率：
+                            </td>
+                            <td class="dq1">
+                                <asp:TextBox runat="server" ID="txtNXCPshhhwyfwstl" CssClass="srk4 tr"></asp:TextBox>
+                                %
+                            </td>
+                            <td class="tr w160">
+                                延保无忧车服务渗透率：
+                            </td>
+                            <td>
+                                <asp:TextBox runat="server" ID="txtNXCPshybwycfwstl" CssClass="srk4 tr"></asp:TextBox>
+                                %
+                            </td>
+                        </tr>
+                        <%} %>
+                        <tr>
+                            <td colspan="4" style="background-color: #ccc; color: Black; font-weight: bold;">
                                 各项目标值
                             </td>
                         </tr>
                         <%=GetTableStr()%>
-                        <%} %>
                     </tbody>
                 </table>
             </ContentTemplate>

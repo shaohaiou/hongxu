@@ -32,6 +32,12 @@ namespace Hx.Components.Entity
         public string Password { get; set; }
 
         /// <summary>
+        /// 姓名
+        /// </summary>
+        [JsonProperty("Name")]
+        public string Name { get; set; }
+
+        /// <summary>
         /// 用户是否是超级管理员
         /// </summary>
         [JsonProperty("Administrator")]

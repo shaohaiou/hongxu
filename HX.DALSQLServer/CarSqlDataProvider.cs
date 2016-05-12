@@ -73,7 +73,7 @@ namespace HX.DALSQLServer
                     ,[cQzfs],[cHzfs],[cHphj],[cDdhbx],[cGps],[cDwfw],[cCsdp],[cNzyp],[cCzdh],[cCzds],[cHpyjp],[cIpod],[cMp3],[cDdcd],[cXndd],[cDuodcd]
                     ,[cDddvd],[cDuodvd],[c23lb],[c45lb],[c67lb],[c8lb],[cXqdd],[cLed],[cRjxcd],[cZdtd],[cZxtd],[cQwd],[cGdkt],[cQxzz],[cCnfwd]
                     ,[cQddcc],[cHddcc],[cFjs],[cFzwx],[cHsjtj],[cHsjjr],[cFxm],[cZdzd],[cHsjjy],[cHfdz],[cHpcz],[cHzj],[cHys],[cGyys],[cSdkt]
-                    ,[cZdkt],[cDlkt],[cHzcfk],[cWdkz],[cKqtj],[cCzbx],[cPcrw],[cBxfz],[cZdsc],[cZtzx],[cYsxt],[cFpxs],[cZsyxh],[cQjsxt],[cQcys]
+                    ,[cZdkt],[cDlkt],[cHzcfk],[cWdkz],[cKqtj],[cCzbx],[cPcrw],[cBxfz],[cZdsc],[cZtzx],[cYsxt],[cFpxs],[cZsyxh],[cQjsxt],[cQcys],[cNsys]
                     )VALUES(
                     @cCxmc,@fZdj,@cChangs,@cJibie,@cFdj,@cBsx,@cCkg,@cCsjg,@cZgcs,@cGfjs,@cScjs,@cSczd,@cScyh,@cGxbyh,@cZczb,@cChang,@cKuan,@cGao,@cZhouju,@cQnju,@cHnju,@cLdjx,@cZbzl,@cChesjg
                     ,@cCms,@cZws,@cYxrj,@cXlxrj,@cFdjxh,@fPail,@cJqxs,@cQgpl,@fQgs,@cQms,@cYsb,@cPqjg,@cGangj,@cChongc,@cZdml,@cZdgl,@cZhuans,@cZdlz,@cLzzs,@cTyjs,@cRlxs,@cRybh,@cGyfs,@cGgcl,@cGtcl,@cHbbz
@@ -85,8 +85,17 @@ namespace HX.DALSQLServer
                     ,@cQzfs,@cHzfs,@cHphj,@cDdhbx,@cGps,@cDwfw,@cCsdp,@cNzyp,@cCzdh,@cCzds,@cHpyjp,@cIpod,@cMp3,@cDdcd,@cXndd,@cDuodcd
                     ,@cDddvd,@cDuodvd,@c23lb,@c45lb,@c67lb,@c8lb,@cXqdd,@cLed,@cRjxcd,@cZdtd,@cZxtd,@cQwd,@cGdkt,@cQxzz,@cCnfwd
                     ,@cQddcc,@cHddcc,@cFjs,@cFzwx,@cHsjtj,@cHsjjr,@cFxm,@cZdzd,@cHsjjy,@cHfdz,@cHpcz,@cHzj,@cHys,@cGyys,@cSdkt
-                    ,@cZdkt,@cDlkt,@cHzcfk,@cWdkz,@cKqtj,@cCzbx,@cPcrw,@cBxfz,@cZdsc,@cZtzx,@cYsxt,@cFpxs,@cZsyxh,@cQjsxt,@cQcys
+                    ,@cZdkt,@cDlkt,@cHzcfk,@cWdkz,@cKqtj,@cCzbx,@cPcrw,@cBxfz,@cZdsc,@cZtzx,@cYsxt,@cFpxs,@cZsyxh,@cQjsxt,@cQcys,@cNsys
                     )
+                END
+                ELSE 
+                BEGIN
+                    UPDATE t_QcCs SET
+                        [fZdj] = @fZdj
+                        ,[cChangs] = @cChangs
+                        ,[cQcys] = @cQcys
+                        ,[cNsys] = @cNsys
+                    WHERE [cCxmc] = @cCxmc
                 END
                 ";
             SqlParameter[] p = 
@@ -105,6 +114,7 @@ namespace HX.DALSQLServer
                 new SqlParameter("@cKsjc",car.cKsjc),
                 new SqlParameter("@cXh",car.cXh),
                 new SqlParameter("@cQcys",car.cQcys),
+                new SqlParameter("@cNsys",car.cNsys),
                 new SqlParameter("@cXntd",car.cXntd),
                 new SqlParameter("@cCxmc",car.cCxmc),
                 new SqlParameter("@cJgqj",car.cJgqj),
@@ -341,23 +351,41 @@ namespace HX.DALSQLServer
                 new SqlParameter("@Creator",entity.Creator),
                 new SqlParameter("@CustomerMobile",entity.CustomerMobile),
                 new SqlParameter("@CustomerName",entity.CustomerName),
-                new SqlParameter("@CustomerQQ",entity.CustomerQQ),
-                new SqlParameter("@CustomerEmail",entity.CustomerEmail),
                 new SqlParameter("@CustomerMicroletter",entity.CustomerMicroletter),
+                new SqlParameter("@cCjh",entity.cCjh),
+                new SqlParameter("@SaleDay",entity.SaleDay),
+                new SqlParameter("@PlaceDay",entity.PlaceDay),
+                new SqlParameter("@Islkhzjs",entity.Islkhzjs),
                 new SqlParameter("@CarQuotationType",entity.CarQuotationType),
                 new SqlParameter("@TotalFirstPrinces",entity.TotalFirstPrinces),
                 new SqlParameter("@TotalPrinces",entity.TotalPrinces),
                 new SqlParameter("@cChangs",entity.cChangs),
                 new SqlParameter("@cCxmc",entity.cCxmc),
                 new SqlParameter("@cQcys",entity.cQcys),
+                new SqlParameter("@cNsys",entity.cNsys),
+                new SqlParameter("@fZdj",entity.fZdj),
                 new SqlParameter("@fCjj",entity.fCjj),
                 new SqlParameter("@cGzs",entity.cGzs),
                 new SqlParameter("@cSpf",entity.cSpf),
                 new SqlParameter("@cCcs",entity.cCcs),
+                new SqlParameter("@IscJqs",entity.IscJqs),
                 new SqlParameter("@cJqs",entity.cJqs),
                 new SqlParameter("@Bxgs",entity.Bxgs),
+                new SqlParameter("@Bxhj",entity.Bxhj),
+                new SqlParameter("@Wyfw",entity.Wyfw),
+                new SqlParameter("@IsWyfwjytc",entity.IsWyfwjytc),
+                new SqlParameter("@Wyfwjytc",entity.Wyfwjytc),
+                new SqlParameter("@IsWyfwblwyfw",entity.IsWyfwblwyfw),
+                new SqlParameter("@Wyfwblwyfw",entity.Wyfwblwyfw),
+                new SqlParameter("@IsWyfwhhwyfw",entity.IsWyfwhhwyfw),
+                new SqlParameter("@Wyfwhhwyfw",entity.Wyfwhhwyfw),
+                new SqlParameter("@IsWyfwybwyfw",entity.IsWyfwybwyfw),
+                new SqlParameter("@Wyfwybwyfw",entity.Wyfwybwyfw),
+                new SqlParameter("@IscCsx",entity.IscCsx),
                 new SqlParameter("@cCsx",entity.cCsx),
+                new SqlParameter("@IscDszrx",entity.IscDszrx),
                 new SqlParameter("@cDszrx",entity.cDszrx),
+                new SqlParameter("@IscDqx",entity.IscDqx),
                 new SqlParameter("@cDqx",entity.cDqx),
                 new SqlParameter("@IscSj",entity.IscSj),
                 new SqlParameter("@cSj",entity.cSj),
@@ -386,6 +414,8 @@ namespace HX.DALSQLServer
                 new SqlParameter("@ChoicestGoodsPrice",entity.ChoicestGoodsPrice),
                 new SqlParameter("@Gift",entity.Gift),
                 new SqlParameter("@IsSwap",entity.IsSwap),
+                new SqlParameter("@IsDkh",entity.IsDkh),
+                new SqlParameter("@IsZcyh",entity.IsZcyh),
                 new SqlParameter("@SwapDetail",entity.SwapDetail),
                 new SqlParameter("@cBjmp",entity.cBjmp),
                 new SqlParameter("@cZdwx",entity.cZdwx),
@@ -401,7 +431,9 @@ namespace HX.DALSQLServer
                 new SqlParameter("@cSjtb",entity.cSjtb),
                 new SqlParameter("@cCktb",entity.cCktb),
                 new SqlParameter("@IscZdwx",entity.IscZdwx),
-                new SqlParameter("@cBjmptb",entity.cBjmptb)
+                new SqlParameter("@cBjmptb",entity.cBjmptb),
+                new SqlParameter("@Qtfy",entity.Qtfy),
+                new SqlParameter("@Qtfyms",entity.Qtfyms)
             };
             SqlHelper.ExecuteNonQuery(_con, CommandType.StoredProcedure, sql, p);
         }
@@ -462,6 +494,25 @@ namespace HX.DALSQLServer
             recordcount = DataConvert.SafeInt(p.Value);
 
             return list;
+        }
+
+        public override void CheckCarQuotation(CarQuotationInfo entity)
+        {
+            string sql = @"
+            UPDATE HX_CarQuotation SET
+                [CheckStatus] = @CheckStatus
+                ,[CheckTime] = @CheckTime
+                ,[CheckUser] = @CheckUser
+            WHERE [ID] = @ID
+            ";
+            SqlParameter[] p = 
+            {
+                new SqlParameter("@CheckStatus",entity.CheckStatus),
+                new SqlParameter("@CheckTime",entity.CheckTime),
+                new SqlParameter("@CheckUser",entity.CheckUser),
+                new SqlParameter("@ID",entity.ID)
+            };
+            SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql, p);
         }
 
         #endregion

@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1" runat="server">
     <title>添加/编辑选手信息</title>
-    <link href='<%=ResourceServer%>/css/admin.css' rel="stylesheet" type="text/css" />
+    <link href=<%=ResourceServer%>/css/admin.css rel="stylesheet" type="text/css" />
     <script src=<%=ResourceServer%>/js/jquery-1.3.2.min.js type="text/javascript"></script>
     <script src=<%=ResourceServer%>/js/ajaxupload.js type="text/javascript"></script>
     <script type="text/javascript">

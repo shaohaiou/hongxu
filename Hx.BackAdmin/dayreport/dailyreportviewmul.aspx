@@ -212,6 +212,8 @@
                 <a href="?<%= CurrentQuery%>&dep=<%= (int)DayReportDep.金融部%><%= NewQuery %>">金融部</a></li>
             <li <%if(CurrentDep==DayReportDep.DCC部){ %>class="current" <%} %> <%= GetDepHide(DayReportDep.DCC部) %>>
                 <a href="?<%= CurrentQuery%>&dep=<%= (int)DayReportDep.DCC部%><%= NewQuery %>">DCC部</a></li>
+            <li <%if(CurrentDep==DayReportDep.粘性产品){ %>class="current" <%} %> <%= GetDepHide(DayReportDep.粘性产品) %>>
+                <a href="?<%= CurrentQuery%>&dep=<%= (int)DayReportDep.粘性产品%><%= NewQuery %>">粘性产品</a></li>
         </ul>
         <form id="form1" runat="server">
         <table width="100%" border="0" cellspacing="0" cellpadding="0" class="biaoge3">
@@ -302,6 +304,9 @@
                         <asp:Button runat="server" ID="btnJPYearGather" CssClass="an1" OnClick="btnJPYearGather_Click"
                             Text="精品数据分析汇总" />
                             <%} %>                            
+                        <%}else if(CurrentDep == DayReportDep.粘性产品){ %>
+                        <asp:Button runat="server" ID="btnNXCPDataGather" CssClass="an1" OnClick="btnNXCPDataGather_Click"
+                            Text="粘性产品数据分析汇总" />
                         <%} %>
                         <input type="button" name="btnExportExcel" id="btnExportExcel" value="导出Excel" onclick="exportExcel()"
                             class="an1" />

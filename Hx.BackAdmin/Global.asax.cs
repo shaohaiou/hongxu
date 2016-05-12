@@ -73,6 +73,7 @@ namespace Hx.BackAdmin
                 Cars.Instance.ReloadCarListBycChangs();
                 Sybxs.Instance.ReloadSybxListCache();
                 Banks.Instance.ReloadBankListCache();
+                Choicestgoods.Instance.ReloadChoicestgoodsListCache();
                 Corporations.Instance.ReloadCorporationListCache();
                 CarBrands.Instance.ReloadCarBrandCacheByCorporation();
                 DayReportUsers.Instance.ReloadDayReportUserListCache();

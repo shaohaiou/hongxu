@@ -125,8 +125,8 @@ namespace Hx.Car
         }
 
         public void UpdateBrand(CarBrandInfo entity)
-        { 
-            
+        {
+            CarDataProvider.Instance().UpdateBrand(entity);
         }
     }
 }

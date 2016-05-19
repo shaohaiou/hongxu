@@ -307,6 +307,29 @@ namespace HX.DALSQLServer
             SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql, p);
         }
 
+        public override void UpdateCar(CarInfo car)
+        {
+            string sql = @"
+                UPDATE t_QcCs SET
+                    [fZdj] = @fZdj
+                    ,[cChangs] = @cChangs
+                    ,[cQcys] = @cQcys
+                    ,[cNsys] = @cNsys
+                    ,[cCxmc] = @cCxmc
+                WHERE [ID] = @ID
+            ";
+            SqlParameter[] p = 
+            {
+                new SqlParameter("@fZdj",car.fZdj),
+                new SqlParameter("@cChangs",car.cChangs),
+                new SqlParameter("@cQcys",car.cQcys),
+                new SqlParameter("@cNsys",car.cNsys),
+                new SqlParameter("@cCxmc",car.cCxmc),
+                new SqlParameter("@ID",car.id)
+            };
+            SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql, p);
+        }
+
         #endregion
 
         #region 车辆品牌
@@ -336,6 +359,21 @@ namespace HX.DALSQLServer
                 new SqlParameter("@NameIndex",entity.NameIndex)
             };
             SqlHelper.ExecuteNonQuery(_con, CommandType.StoredProcedure, sql, p);
+        }
+
+        public override void UpdateBrand(CarBrandInfo entity)
+        {
+            string sql = @"
+            UPDATE HX_CarBrand SET
+                [NameIndex] = @NameIndex
+            WHERE [ID] = @ID
+            ";
+            SqlParameter[] p = 
+            {
+                new SqlParameter("@NameIndex",entity.NameIndex),
+                new SqlParameter("@ID",entity.ID)
+            };
+            SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql, p);
         }
 
         #endregion
@@ -510,6 +548,48 @@ namespace HX.DALSQLServer
                 new SqlParameter("@CheckStatus",entity.CheckStatus),
                 new SqlParameter("@CheckTime",entity.CheckTime),
                 new SqlParameter("@CheckUser",entity.CheckUser),
+                new SqlParameter("@ID",entity.ID)
+            };
+            SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql, p);
+        }
+
+        public override void JLCheckCarQuotation(CarQuotationInfo entity)
+        {
+            string sql = @"
+            UPDATE HX_CarQuotation SET
+                [JLCheckStatus] = @JLCheckStatus
+                ,[JLCheckRemark] = @JLCheckRemark
+                ,[JLCheckTime] = @JLCheckTime
+                ,[JLCheckUser] = @JLCheckUser
+            WHERE [ID] = @ID
+            ";
+            SqlParameter[] p = 
+            {
+                new SqlParameter("@JLCheckStatus",entity.JLCheckStatus),
+                new SqlParameter("@JLCheckTime",entity.JLCheckTime),
+                new SqlParameter("@JLCheckUser",entity.JLCheckUser),
+                new SqlParameter("@JLCheckRemark",entity.JLCheckRemark),
+                new SqlParameter("@ID",entity.ID)
+            };
+            SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql, p);
+        }
+
+        public override void ZJLCheckCarQuotation(CarQuotationInfo entity)
+        {
+            string sql = @"
+            UPDATE HX_CarQuotation SET
+                [ZJLCheckStatus] = @ZJLCheckStatus
+                ,[ZJLCheckRemark] = @ZJLCheckRemark
+                ,[ZJLCheckTime] = @ZJLCheckTime
+                ,[ZJLCheckUser] = @ZJLCheckUser
+            WHERE [ID] = @ID
+            ";
+            SqlParameter[] p = 
+            {
+                new SqlParameter("@ZJLCheckStatus",entity.ZJLCheckStatus),
+                new SqlParameter("@ZJLCheckTime",entity.ZJLCheckTime),
+                new SqlParameter("@ZJLCheckUser",entity.ZJLCheckUser),
+                new SqlParameter("@ZJLCheckRemark",entity.ZJLCheckRemark),
                 new SqlParameter("@ID",entity.ID)
             };
             SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql, p);

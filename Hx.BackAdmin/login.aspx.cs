@@ -67,6 +67,8 @@ namespace Hx.BackAdmin
                                 Response.Redirect("car/carquotation.aspx");
                             else if (admin.UserRole == Components.Enumerations.UserRoleType.财务出纳)
                                 Response.Redirect("car/carquotationmg.aspx");
+                            else if (admin.UserRole == Components.Enumerations.UserRoleType.车型管理员)
+                                Response.Redirect("car/cxmg.aspx");
                             else
                                 Response.Redirect("index.aspx");
                         }

@@ -22,7 +22,8 @@ namespace Hx.BackAdmin.car
                 Response.Redirect("~/Login.aspx");
                 return;
             }
-            if (!Admin.Administrator 
+            if (!Admin.Administrator
+                && ((int)Admin.UserRole & (int)Components.Enumerations.UserRoleType.总经理) == 0
                 && ((int)Admin.UserRole & (int)Components.Enumerations.UserRoleType.销售经理) == 0
                 && ((int)Admin.UserRole & (int)Components.Enumerations.UserRoleType.销售员) == 0)
             {

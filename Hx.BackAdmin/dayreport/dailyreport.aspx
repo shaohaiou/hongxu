@@ -70,28 +70,6 @@
                 });
             }
 
-            if ($(".countxsybfwgmgs").length > 0 && $(".countxsybfwgmgssub").length > 0) {
-                $(".countxsybfwgmgssub").unbind("change");
-                $(".countxsybfwgmgssub").change(function () {
-                    var countxsybfwgmgs = 0;
-                    $(".countxsybfwgmgssub").each(function () {
-                        countxsybfwgmgs += $.trim($(this).val()) == "" ? 0 : parseInt($(this).val());
-                    });
-                    $(".countxsybfwgmgs").val(countxsybfwgmgs);
-                });
-            }
-
-            if ($(".countxsybfwgmje").length > 0 && $(".countxsybfwgmjesub").length > 0) {
-                $(".countxsybfwgmjesub").unbind("change");
-                $(".countxsybfwgmjesub").change(function () {
-                    var countxsybfwgmje = 0;
-                    $(".countxsybfwgmjesub").each(function () {
-                        countxsybfwgmje += $.trim($(this).val()) == "" ? 0 : parseFloat($(this).val());
-                    });
-                    $(".countxsybfwgmje").val(countxsybfwgmje.toFixed(2));
-                });
-            }
-
             if ($(".countshybfwgmgs").length > 0 && $(".countshybfwgmgssub").length > 0) {
                 $(".countshybfwgmgssub").unbind("change");
                 $(".countshybfwgmgssub").change(function () {
@@ -111,6 +89,28 @@
                         countshybfwgmje += $.trim($(this).val()) == "" ? 0 : parseFloat($(this).val());
                     });
                     $(".countshybfwgmje").val(countshybfwgmje.toFixed(2));
+                });
+            }
+
+            if ($(".countxsybwycfwgmgs").length > 0 && $(".countxsybwycfwgmgssub").length > 0) {
+                $(".countxsybwycfwgmgssub").unbind("change");
+                $(".countxsybwycfwgmgssub").change(function () {
+                    var countxsybwycfwgmgs = 0;
+                    $(".countxsybwycfwgmgssub").each(function () {
+                        countxsybwycfwgmgs += $.trim($(this).val()) == "" ? 0 : parseInt($(this).val());
+                    });
+                    $(".countxsybwycfwgmgs").val(countxsybwycfwgmgs);
+                });
+            }
+
+            if ($(".countxsybwycfwgmje").length > 0 && $(".countxsybwycfwgmjesub").length > 0) {
+                $(".countxsybwycfwgmjesub").unbind("change");
+                $(".countxsybwycfwgmjesub").change(function () {
+                    var countxsybwycfwgmje = 0;
+                    $(".countxsybwycfwgmjesub").each(function () {
+                        countxsybwycfwgmje += $.trim($(this).val()) == "" ? 0 : parseFloat($(this).val());
+                    });
+                    $(".countxsybwycfwgmje").val(countxsybwycfwgmje.toFixed(2));
                 });
             }
 
@@ -244,8 +244,8 @@
                 <a href="?<%= CurrentQuery%>&dep=<%= (int)DayReportDep.金融部%>">金融部信息</a></li>
             <li <%if(CurrentDep==DayReportDep.DCC部){ %>class="current" <%} %> <%= GetDepHide(DayReportDep.DCC部) %>>
                 <a href="?<%= CurrentQuery%>&dep=<%= (int)DayReportDep.DCC部%>">DCC部信息</a></li>
-            <li <%if(CurrentDep==DayReportDep.粘性产品){ %>class="current" <%} %> <%= GetDepHide(DayReportDep.粘性产品) %>>
-                <a href="?<%= CurrentQuery%>&dep=<%= (int)DayReportDep.粘性产品%>">粘性产品信息</a></li>
+            <li <%if(CurrentDep==DayReportDep.无忧产品){ %>class="current" <%} %> <%= GetDepHide(DayReportDep.无忧产品) %>>
+                <a href="?<%= CurrentQuery%>&dep=<%= (int)DayReportDep.无忧产品%>">无忧产品信息</a></li>
         </ul>
         <asp:ScriptManager runat="server" ID="sm">
         </asp:ScriptManager>
@@ -386,7 +386,7 @@
                         </tr>
                         <tr>
                             <td class="bg3 tr" style="background-color: Orange;">
-                                本月终生免费保养毛利：
+                                本月免费保养毛利：
                             </td>
                             <td>
                                 <asp:TextBox runat="server" ID="txtXSbyzsmfbyml" CssClass="srk6 tr number"></asp:TextBox>
@@ -1346,7 +1346,7 @@
                                 如有多辆，都要填写
                             </td>
                         </tr>
-                        <%}else if(CurrentDep == DayReportDep.粘性产品){ %>
+                        <%}else if(CurrentDep == DayReportDep.无忧产品){ %>
                         <tr>
                             <td class="bg3 tr" style="background-color: Orange;">
                                 本月机油套餐来厂使用车辆数：
@@ -1360,7 +1360,7 @@
                                 本月机油套餐使用金额：
                             </td>
                             <td>
-                                <asp:TextBox runat="server" ID="txtNXCPbyjytcsyje" CssClass="srk6 tr number"></asp:TextBox><span class="gray pl10">当月来厂车辆中来使用此产品与售后结算（合同价）金额</span>
+                                <asp:TextBox runat="server" ID="txtNXCPbyjytcsyje" CssClass="srk6 tr number"></asp:TextBox><span class="gray pl10">当月来厂车辆中来使用此产品与售后结算（合同价）金额（万元）</span>
                             </td>
                         </tr>
                         <tr>
@@ -1376,7 +1376,7 @@
                                 本月划痕无忧服务到期金额：
                             </td>
                             <td>
-                                <asp:TextBox runat="server" ID="txtNXCPbyhhwyfwdqje" CssClass="srk6 tr number"></asp:TextBox><span class="gray pl10">当月购买此产品到期的金额</span>
+                                <asp:TextBox runat="server" ID="txtNXCPbyhhwyfwdqje" CssClass="srk6 tr number"></asp:TextBox><span class="gray pl10">当月购买此产品到期的金额（万元）</span>
                             </td>
                         </tr>
                         <tr>
@@ -1392,7 +1392,7 @@
                                 本月划痕无忧服务到期内赔付金额：
                             </td>
                             <td>
-                                <asp:TextBox runat="server" ID="txtNXCPbyhhwyfwdqnpfje" CssClass="srk6 tr number"></asp:TextBox><span class="gray pl10">当月到期购买此产品数量内赔付总金额</span>
+                                <asp:TextBox runat="server" ID="txtNXCPbyhhwyfwdqnpfje" CssClass="srk6 tr number"></asp:TextBox><span class="gray pl10">当月到期购买此产品数量内赔付总金额（万元）</span>
                             </td>
                         </tr>
                         <tr>
@@ -1408,7 +1408,7 @@
                                 本月玻璃无忧服务到期金额：
                             </td>
                             <td>
-                                <asp:TextBox runat="server" ID="txtNXCPbyblwyfwdqje" CssClass="srk6 tr number"></asp:TextBox><span class="gray pl10">当月购买此产品到期的金额</span>
+                                <asp:TextBox runat="server" ID="txtNXCPbyblwyfwdqje" CssClass="srk6 tr number"></asp:TextBox><span class="gray pl10">当月购买此产品到期的金额（万元）</span>
                             </td>
                         </tr>
                         <tr>
@@ -1424,7 +1424,7 @@
                                 本月玻璃无忧服务到期内赔付金额：
                             </td>
                             <td>
-                                <asp:TextBox runat="server" ID="txtNXCPbyblwyfwdqnpfje" CssClass="srk6 tr number"></asp:TextBox><span class="gray pl10">当月到期购买此产品数量内赔付总金额</span>
+                                <asp:TextBox runat="server" ID="txtNXCPbyblwyfwdqnpfje" CssClass="srk6 tr number"></asp:TextBox><span class="gray pl10">当月到期购买此产品数量内赔付总金额（万元）</span>
                             </td>
                         </tr>
                         <tr>
@@ -1440,7 +1440,7 @@
                                 本月延保服务到期金额：
                             </td>
                             <td>
-                                <asp:TextBox runat="server" ID="txtNXCPbyybfwdqje" CssClass="srk6 tr number"></asp:TextBox><span class="gray pl10">当月购买此产品到期的金额</span>
+                                <asp:TextBox runat="server" ID="txtNXCPbyybfwdqje" CssClass="srk6 tr number"></asp:TextBox><span class="gray pl10">当月购买此产品到期的金额（万元）</span>
                             </td>
                         </tr>
                         <tr>
@@ -1456,7 +1456,7 @@
                                 本月延保服务到期内赔付金额：
                             </td>
                             <td>
-                                <asp:TextBox runat="server" ID="txtNXCPbyybfwdqnpfje" CssClass="srk6 tr number"></asp:TextBox><span class="gray pl10">当月到期购买此产品数量内赔付总金额</span>
+                                <asp:TextBox runat="server" ID="txtNXCPbyybfwdqnpfje" CssClass="srk6 tr number"></asp:TextBox><span class="gray pl10">当月到期购买此产品数量内赔付总金额（万元）</span>
                             </td>
                         </tr>
                         <%} %>

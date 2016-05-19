@@ -184,15 +184,6 @@ namespace Hx.BackAdmin.dayreport {
         protected global::System.Web.UI.WebControls.TextBox txtXSmrdt;
         
         /// <summary>
-        /// txtXSybstl 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtXSybstl;
-        
-        /// <summary>
         /// txtXSztjpqzl 控件。
         /// </summary>
         /// <remarks>
@@ -274,15 +265,6 @@ namespace Hx.BackAdmin.dayreport {
         protected global::System.Web.UI.WebControls.TextBox txtXSzjsl;
         
         /// <summary>
-        /// txtXSblxstl 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtXSblxstl;
-        
-        /// <summary>
         /// txtXStppxstc 控件。
         /// </summary>
         /// <remarks>
@@ -317,42 +299,6 @@ namespace Hx.BackAdmin.dayreport {
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtXStpppjdt;
-        
-        /// <summary>
-        /// txtNXCPxsjytcstl 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtNXCPxsjytcstl;
-        
-        /// <summary>
-        /// txtNXCPxsblwyfwstl 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtNXCPxsblwyfwstl;
-        
-        /// <summary>
-        /// txtNXCPxshhwyfwstl 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtNXCPxshhwyfwstl;
-        
-        /// <summary>
-        /// txtNXCPxsybwycfwstl 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtNXCPxsybwycfwstl;
         
         /// <summary>
         /// txtNXCPshjytcstl 控件。

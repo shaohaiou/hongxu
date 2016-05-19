@@ -258,10 +258,14 @@ namespace Hx.Components.Providers
         protected ChoicestgoodsInfo PopulateChoicestgoods(IDataReader reader)
         {
             ChoicestgoodsInfo entity = new ChoicestgoodsInfo 
-            { 
+            {
                 ID = DataConvert.SafeInt(reader["ID"]),
+                CorporationID = DataConvert.SafeInt(reader["CorporationID"]),
                 Name = reader["Name"] as string,
-                Price = reader["Price"] as string             
+                Price = reader["Price"] as string,
+                ProductType = reader["ProductType"] as string,
+                Inpoint = reader["Inpoint"] as string,
+                Remark = reader["Remark"] as string            
             };
 
             return entity;

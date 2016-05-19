@@ -25,7 +25,7 @@ namespace Hx.BackAdmin
                 weixin_page.Visible = false;
                 zhaopin_page.Visible = false;
                 carquotationindex_page.Visible = false;
-                if (((int)Admin.UserRole & (int)UserRoleType.销售经理) > 0)
+                if (((int)Admin.UserRole & (int)UserRoleType.销售经理) > 0 || ((int)Admin.UserRole & (int)UserRoleType.总经理) > 0)
                 {
                     userindex_page.Visible = true;
                     carquotationindex_page.Visible = true;

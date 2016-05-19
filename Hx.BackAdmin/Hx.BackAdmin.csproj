@@ -82,8 +82,11 @@
     <Content Include="car\automotivetypeedit.aspx" />
     <Content Include="car\automotivetypemg.aspx" />
     <Content Include="car\carcollect.aspx" />
+    <Content Include="car\carmodeledit.aspx" />
     <Content Include="car\carquotation.aspx" />
     <Content Include="car\carquotationmg.aspx" />
+    <Content Include="car\cxedit.aspx" />
+    <Content Include="car\cxmg.aspx" />
     <Content Include="car\index.aspx" />
     <Content Include="car\main.aspx" />
     <Content Include="car\main_s.aspx" />
@@ -576,6 +579,13 @@
     <Compile Include="car\carcollect.aspx.designer.cs">
       <DependentUpon>carcollect.aspx</DependentUpon>
     </Compile>
+    <Compile Include="car\carmodeledit.aspx.cs">
+      <DependentUpon>carmodeledit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="car\carmodeledit.aspx.designer.cs">
+      <DependentUpon>carmodeledit.aspx</DependentUpon>
+    </Compile>
     <Compile Include="car\carquotation.aspx.cs">
       <DependentUpon>carquotation.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -589,6 +599,20 @@
     </Compile>
     <Compile Include="car\carquotationmg.aspx.designer.cs">
       <DependentUpon>carquotationmg.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="car\cxedit.aspx.cs">
+      <DependentUpon>cxedit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="car\cxedit.aspx.designer.cs">
+      <DependentUpon>cxedit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="car\cxmg.aspx.cs">
+      <DependentUpon>cxmg.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="car\cxmg.aspx.designer.cs">
+      <DependentUpon>cxmg.aspx</DependentUpon>
     </Compile>
     <Compile Include="car\index.aspx.cs">
       <DependentUpon>index.aspx</DependentUpon>
@@ -1331,6 +1355,8 @@
     <None Include="App_Data\年度精品数据分析.xls" />
     <None Include="App_Data\年度销售数据分析.xls" />
     <None Include="App_Data\总经理关键指标排名.xlsx" />
+    <None Include="App_Data\粘性产品数据分析汇总.xls" />
+    <None Include="App_Data\粘性产品日报表模版.xlsx" />
     <None Include="App_Data\精品数据分析汇总.xls" />
     <None Include="App_Data\精品日报表模板.xlsx" />
     <None Include="App_Data\行政人事日报表模板.xlsx" />

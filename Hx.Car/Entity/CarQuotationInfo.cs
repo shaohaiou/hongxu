@@ -99,6 +99,46 @@ namespace Hx.Car.Entity
         /// </summary>
         public string CheckTime { get; set; }
 
+        /// <summary>
+        /// 经理审核状态
+        /// </summary>
+        public int JLCheckStatus { get; set; }
+
+        /// <summary>
+        /// 经理审核人
+        /// </summary>
+        public string JLCheckUser { get; set; }
+
+        /// <summary>
+        /// 经理审核备注
+        /// </summary>
+        public string JLCheckRemark { get; set; }
+
+        /// <summary>
+        /// 经理审核时间
+        /// </summary>
+        public string JLCheckTime { get; set; }
+
+        /// <summary>
+        /// 总经理审核状态
+        /// </summary>
+        public int ZJLCheckStatus { get; set; }
+
+        /// <summary>
+        /// 总经理审核人
+        /// </summary>
+        public string ZJLCheckUser { get; set; }
+
+        /// <summary>
+        /// 总经理审核备注
+        /// </summary>
+        public string ZJLCheckRemark { get; set; }
+
+        /// <summary>
+        /// 总经理审核时间
+        /// </summary>
+        public string ZJLCheckTime { get; set; }
+
         #region 基本信息
 
         /// <summary>

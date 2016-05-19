@@ -565,9 +565,9 @@ namespace Hx.BackAdmin.dayreport
 
             #endregion
 
-            #region 粘性产品特殊处理
+            #region 无忧产品特殊处理
 
-            if (CurrentDep == DayReportDep.粘性产品)
+            if (CurrentDep == DayReportDep.无忧产品)
             {
                 MonthlyTargetInfo target = null;
                 DateTime daytarget = DateTime.Today;
@@ -962,9 +962,9 @@ namespace Hx.BackAdmin.dayreport
 
                     #endregion
 
-                    #region 粘性产品特殊处理
+                    #region 无忧产品特殊处理
 
-                    if (CurrentDep == DayReportDep.粘性产品)
+                    if (CurrentDep == DayReportDep.无忧产品)
                     {
                         MonthlyTargetInfo target = null;
                         target = MonthlyTargets.Instance.GetModel(DataConvert.SafeInt(ddlCorp.SelectedValue), CurrentDep, day, true);
@@ -1108,37 +1108,47 @@ namespace Hx.BackAdmin.dayreport
                     strb.AppendLine(tr);
                 }
             }
-            else if (CurrentDep == DayReportDep.销售部 && day.ToString("dd") == "01")
+            else if (CurrentDep == DayReportDep.销售部)
             {
+                List<KeyValuePair<string, string>> listcountname = new List<KeyValuePair<string, string>>() 
+                { 
+                    new KeyValuePair<string, string>("延保无忧车服务购买个数","countxsybwycfwgmgs"),
+                    new KeyValuePair<string, string>("延保无忧车服务购买金额","countxsybwycfwgmje")
+                };
+                List<KeyValuePair<string, string>> listcountsubname = new List<KeyValuePair<string, string>>() 
+                { 
+                    new KeyValuePair<string, string>("自主延保无忧车服务购买个数","countxsybwycfwgmgssub"),
+                    new KeyValuePair<string, string>("厂家延保无忧车服务购买个数","countxsybwycfwgmgssub"),
+                    new KeyValuePair<string, string>("自主延保无忧车服务购买金额","countxsybwycfwgmjesub"),
+                    new KeyValuePair<string, string>("厂家延保无忧车服务购买金额","countxsybwycfwgmjesub")
+                };
                 foreach (DailyReportModuleInfo m in list.FindAll(l => mp.Contains(l.ID.ToString())))
                 {
                     string name = m.Name;
                     string value = kvp.Keys.Contains(m.ID.ToString()) ? kvp[m.ID.ToString()] : string.Empty;
                     string tr;
-                    if (name == "展厅订单台数")
+                    if (name == "展厅订单台数" && day.ToString("dd") == "01")
                         tr = string.Format("<tr><td class=\"bg4 tr\">{0}：</td><td><input id=\"txtmodule{1}\" name=\"txtmodule{1}\" class=\"number srk6 {5} {7}\" value=\"{2}\" {3} />{6}<span class=\"gray pl10\">{4}</span></td></tr>", name, m.ID, string.IsNullOrEmpty(value) ? "需包含上月留单" : value, string.IsNullOrEmpty(value) || allowmodify ? string.Empty : "readonly=\"true\"", m.Description, m.Mustinput ? "required" : string.Empty, m.Mustinput ? "<span class=\"red pl10\">*</span>" : string.Empty, string.IsNullOrEmpty(value) ? "remind gray" : string.Empty);
-                    else if (name == "入库台次")
+                    else if (name == "入库台次" && day.ToString("dd") == "01")
                         tr = string.Format("<tr><td class=\"bg4 tr\">{0}：</td><td><input id=\"txtmodule{1}\" name=\"txtmodule{1}\" class=\"number srk6 {5} {7}\" value=\"{2}\" {3} />{6}<span class=\"gray pl10\">{4}</span></td></tr>", name, m.ID, string.IsNullOrEmpty(value) ? "需包含上月在库数" : value, string.IsNullOrEmpty(value) || allowmodify ? string.Empty : "readonly=\"true\"", m.Description, m.Mustinput ? "required" : string.Empty, m.Mustinput ? "<span class=\"red pl10\">*</span>" : string.Empty, string.IsNullOrEmpty(value) ? "remind gray" : string.Empty);
+                    else if (listcountname.Exists(l => l.Key == name))
+                        tr = string.Format("<tr style=\"display:none\"><td class=\"bg4 tr\">{0}：</td><td><input id=\"txtmodule{1}\" name=\"txtmodule{1}\" class=\"number srk6 {5} {7}\" value=\"{2}\" {3} />{6}<span class=\"gray pl10\">{4}</span></td></tr>", name, m.ID, value, string.IsNullOrEmpty(value) || allowmodify ? string.Empty : "readonly=\"true\"", m.Description, m.Mustinput ? "required" : string.Empty, m.Mustinput ? "<span class=\"red pl10\">*</span>" : string.Empty, listcountname.Find(l => l.Key == name).Value);
+                    else if (listcountsubname.Exists(l => l.Key == name))
+                        tr = string.Format("<tr><td class=\"bg4 tr\">{0}：</td><td><input id=\"txtmodule{1}\" name=\"txtmodule{1}\" class=\"number srk6 {5} {7}\" value=\"{2}\" {3} />{6}<span class=\"gray pl10\">{4}</span></td></tr>", name, m.ID, value, string.IsNullOrEmpty(value) || allowmodify ? string.Empty : "readonly=\"true\"", m.Description, m.Mustinput ? "required" : string.Empty, m.Mustinput ? "<span class=\"red pl10\">*</span>" : string.Empty, listcountsubname.Find(l => l.Key == name).Value);
                     else
                         tr = string.Format("<tr><td class=\"bg4 tr\">{0}：</td><td><input id=\"txtmodule{1}\" name=\"txtmodule{1}\" class=\"number srk6 {5}\" value=\"{2}\" {3} />{6}<span class=\"gray pl10\">{4}</span></td></tr>", name, m.ID, value, string.IsNullOrEmpty(value) || allowmodify ? string.Empty : "readonly=\"true\"", m.Description, m.Mustinput ? "required" : string.Empty, m.Mustinput ? "<span class=\"red pl10\">*</span>" : string.Empty);
                     strb.AppendLine(tr);
                 }
             }
-            else if (CurrentDep == DayReportDep.粘性产品)
+            else if (CurrentDep == DayReportDep.无忧产品)
             {
                 List<KeyValuePair<string, string>> listcountname = new List<KeyValuePair<string, string>>() 
                 { 
-                    new KeyValuePair<string, string>("新车延保服务购买个数","countxsybfwgmgs"),
-                    new KeyValuePair<string, string>("新车延保服务购买金额","countxsybfwgmje"),
                     new KeyValuePair<string, string>("售后延保服务购买个数","countshybfwgmgs"),
                     new KeyValuePair<string, string>("售后延保服务购买金额","countshybfwgmje")
                 };
                 List<KeyValuePair<string, string>> listcountsubname = new List<KeyValuePair<string, string>>() 
                 { 
-                    new KeyValuePair<string, string>("新车延保服务自主购买个数","countxsybfwgmgssub"),
-                    new KeyValuePair<string, string>("新车延保服务厂家购买个数","countxsybfwgmgssub"),
-                    new KeyValuePair<string, string>("新车延保服务自主购买金额","countxsybfwgmjesub"),
-                    new KeyValuePair<string, string>("新车延保服务厂家购买金额","countxsybfwgmjesub"),
                     new KeyValuePair<string, string>("售后延保服务自主购买个数","countshybfwgmgssub"),
                     new KeyValuePair<string, string>("售后延保服务厂家购买个数","countshybfwgmgssub"),
                     new KeyValuePair<string, string>("售后延保服务自主购买金额","countshybfwgmjesub"),
@@ -1149,7 +1159,7 @@ namespace Hx.BackAdmin.dayreport
                     string name = m.Name;
                     string value = kvp.Keys.Contains(m.ID.ToString()) ? kvp[m.ID.ToString()] : string.Empty;
                     string tr = string.Format("<tr {8}><td class=\"bg4 tr\">{0}：</td><td><input id=\"txtmodule{1}\" name=\"txtmodule{1}\" class=\"{7} number srk6 {5} {9}\" value=\"{2}\" {3} />{6}<span class=\"gray pl10\">{4}</span></td></tr>"
-                        , name.Replace("新车", string.Empty).Replace("售后", string.Empty).Replace("续保", string.Empty).Replace("当月来厂基盘车辆数", string.Empty)
+                        , name.Replace("售后", string.Empty).Replace("续保", string.Empty).Replace("当月来厂基盘车辆数", string.Empty)
                         , m.ID
                         , value
                         , string.IsNullOrEmpty(value) || allowmodify ? string.Empty : "readonly=\"true\""
@@ -1159,8 +1169,6 @@ namespace Hx.BackAdmin.dayreport
                         , listcountname.Exists(l => l.Key == name) ? listcountname.Find(l => l.Key == name).Value : string.Empty
                         , listcountname.Exists(l => l.Key == name) ? "style=\"display:none\"" : string.Empty
                         , listcountsubname.Exists(l => l.Key == name) ? listcountsubname.Find(l => l.Key == name).Value : string.Empty);
-                    if (name == "新车机油套餐购买个数")
-                        tr = "<tr><td colspan=\"2\" style=\"color:White;background-color:gray;font-weight:bold;font-size:large;padding-left:20px;\">销售数据</td></tr>" + tr;
                     if (name == "售后机油套餐购买个数")
                         tr = "<tr><td colspan=\"2\" style=\"color:White;background-color:gray;font-weight:bold;font-size:large;padding-left:20px;\">售后数据</td></tr>" + tr;
                     if (name == "当月来厂基盘车辆数≤18个月")

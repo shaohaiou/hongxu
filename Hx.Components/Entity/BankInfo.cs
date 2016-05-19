@@ -20,6 +20,16 @@ namespace Hx.Components.Entity
         public string Name { get; set; }
 
         /// <summary>
+        /// 所属公司ID
+        /// </summary>
+        [JsonIgnore]
+        public int CorporationID
+        {
+            get { return GetInt("CorporationID", 0); }
+            set { SetExtendedAttribute("CorporationID", value.ToString()); }
+        }
+
+        /// <summary>
         /// 贷款利率（3年）
         /// </summary>
         [JsonIgnore]

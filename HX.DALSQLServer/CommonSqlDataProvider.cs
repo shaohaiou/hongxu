@@ -429,16 +429,28 @@ namespace HX.DALSQLServer
         public override void AddChoicestgoods(ChoicestgoodsInfo entity)
         {
             string sql = @"INSERT INTO HX_Choicestgoods(
-            [Name]
+            [CorporationID]
+            ,[Name]
             ,[Price]
+            ,[ProductType]
+            ,[Inpoint]
+            ,[Remark]
             )VALUES(
-            @Name
+            @CorporationID
+            ,@Name
             ,@Price
+            ,@ProductType
+            ,@Inpoint
+            ,@Remark
             )";
             SqlParameter[] p = 
             {
+                new SqlParameter("@CorporationID",entity.CorporationID),
                 new SqlParameter("@Name",entity.Name),
-				new SqlParameter("@Price", entity.Price)
+				new SqlParameter("@Price", entity.Price),
+				new SqlParameter("@ProductType", entity.ProductType),
+				new SqlParameter("@Inpoint", entity.Inpoint),
+				new SqlParameter("@Remark", entity.Remark)
             };
             SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql, p);
         }
@@ -447,13 +459,21 @@ namespace HX.DALSQLServer
         {
             string sql = @"UPDATE HX_Choicestgoods SET 
             [Name] = @Name 
-            ,[Price] = @Price
+            ,[CorporationID] = @CorporationID 
+            ,[Price] = @Price 
+            ,[ProductType] = @ProductType 
+            ,[Inpoint] = @Inpoint 
+            ,[Remark] = @Remark
             WHERE [ID] = @ID";
             SqlParameter[] p = 
             {
                 new SqlParameter("@ID",entity.ID),
+                new SqlParameter("@CorporationID",entity.CorporationID),
                 new SqlParameter("@Name",entity.Name),
-				new SqlParameter("@Price", entity.Price)
+				new SqlParameter("@Price", entity.Price),
+				new SqlParameter("@ProductType", entity.ProductType),
+				new SqlParameter("@Inpoint", entity.Inpoint),
+				new SqlParameter("@Remark", entity.Remark)
             };
             SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql, p);
         }

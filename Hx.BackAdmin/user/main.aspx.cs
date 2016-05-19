@@ -23,7 +23,7 @@ namespace Hx.BackAdmin.user
                 Response.Redirect("~/Login.aspx");
                 return;
             }
-            if (!Admin.Administrator && ((int)HXContext.Current.AdminUser.UserRole & (int)Components.Enumerations.UserRoleType.销售经理) == 0)
+            if (!Admin.Administrator && ((int)HXContext.Current.AdminUser.UserRole & (int)Components.Enumerations.UserRoleType.销售经理) == 0 && ((int)HXContext.Current.AdminUser.UserRole & (int)Components.Enumerations.UserRoleType.总经理) == 0)
             {
                 Response.Clear();
                 Response.Write("您没有权限操作！");

@@ -42,7 +42,7 @@
         <div style="text-align: center; font-size: 26px;padding-bottom:5px;font-weight:bolder;">
             整车销售审核单
         </div>
-        <div style="width:100%;height:505px;border:1px solid #000;font-size:18px;line-height:32px;">
+        <div style="width:100%;border:1px solid #000;font-size:18px;line-height:32px;">
             <table border="0" cellpadding="0" cellspacing="0" width="100%">
                 <tr>
                     <td class="tc bold br bb w140">
@@ -71,7 +71,10 @@
                 <tr>
                     <td class="bb pl5 w220"><span class="bold">标准车价：</span><span style="width: 90px;line-height:18px;" class="bb blockinline tr"><%=string.IsNullOrEmpty(CQ.fZdj) ? "&nbsp;" : CQ.fZdj%></span><span class="bold">元</span></td>
                     <td class="bb pl10" style="width:280px"><span class="bold">实际销售车价：</span><span style="width: 90px;line-height:18px;" class="bb blockinline tr"><%=string.IsNullOrEmpty(CQ.fCjj) ? "&nbsp;" : CQ.fCjj%></span><span class="bold">元</span></td>
-                    <td class="bb"><span class="bold">差价审核（领导签字）：</span><span style="width: 80px;line-height:18px;" class="bb blockinline">&nbsp;</span></td>
+                    <td class="bb"><span class="bold">差价审核（领导签字）：</span><span style="width: 74px;line-height:18px;" class="bb blockinline"><%if (CQ.ZJLCheckStatus == 1)
+                                                                          { %><span style="line-height:12px;font-size:12px;padding:2px 6px;border:2px solid red;font-weight:bolder" class="red blockinline notprint"><%=CQ.ZJLCheckUser%></span><%}
+                                                                          else
+                                                                          { %>&nbsp;<%} %></span></td>
                 </tr>
             </table>
             <table border="0" cellpadding="0" cellspacing="0" width="100%" style="line-height:28px;">
@@ -90,11 +93,7 @@
                                 <td class="bold" style="width:30px">元</td>
                             </tr>
                             <tr style="height:28px;">
-                                <td><span class="blockinline bold">上牌及手续费：</span><span style="width: 78px;line-height:18px;" class="bb blockinline tr"><%=CQ.CarQuotationType == Hx.Car.Enum.CarQuotationType.金融购车 ? "&nbsp;" : (string.IsNullOrEmpty(CQ.cSpf) ? "&nbsp;" : CQ.cSpf)%></span></td>
-                                <td class="bold" style="width:30px">元</td>
-                            </tr>
-                            <tr style="height:28px;">
-                                <td><span class="blockinline bold">汽车用品加装：</span><span style="width: 78px;line-height:18px;" class="bb blockinline tr"><%= CQ.CarQuotationType == Hx.Car.Enum.CarQuotationType.金融购车 ? "&nbsp;" : (string.IsNullOrEmpty(CQ.ChoicestGoods) ? "&nbsp;" : CQ.ChoicestGoodsPrice)%></span></td>
+                                <td><span class="blockinline bold">代收保险费：</span><span style="width: 96px;line-height:18px;" class="bb blockinline tr"><%=CQ.CarQuotationType == Hx.Car.Enum.CarQuotationType.金融购车 ? "&nbsp;" : (string.IsNullOrEmpty(CQ.Bxhj) ? "&nbsp;" : CQ.Bxhj)%></span></td>
                                 <td class="bold" style="width:30px">元</td>
                             </tr>
                             <tr style="height:28px;">
@@ -102,11 +101,15 @@
                                 <td class="bold" style="width:30px">元</td>
                             </tr>
                             <tr style="height:28px;">
-                                <td><span class="blockinline bold">代收保险费：</span><span style="width: 96px;line-height:18px;" class="bb blockinline tr"><%=CQ.CarQuotationType == Hx.Car.Enum.CarQuotationType.金融购车 ? "&nbsp;" : (string.IsNullOrEmpty(CQ.Bxhj) ? "&nbsp;" : CQ.Bxhj)%></span></td>
+                                <td><span class="blockinline bold">上牌及手续费：</span><span style="width: 76px;line-height:18px;" class="bb blockinline tr"><%=CQ.CarQuotationType == Hx.Car.Enum.CarQuotationType.金融购车 ? "&nbsp;" : (string.IsNullOrEmpty(CQ.cSpf) ? "&nbsp;" : CQ.cSpf)%></span></td>
                                 <td class="bold" style="width:30px">元</td>
                             </tr>
                             <tr style="height:28px;">
-                                <td><span class="blockinline bold">无忧服务费用：</span><span style="width: 78px;line-height:18px;" class="bb blockinline tr"><%= CQ.CarQuotationType == Hx.Car.Enum.CarQuotationType.金融购车 ? "&nbsp;" : (string.IsNullOrEmpty(CQ.Wyfw) ? "&nbsp;" : CQ.Wyfw)%></span></td>
+                                <td><span class="blockinline bold">汽车用品：</span><span style="width: 114px;line-height:18px;" class="bb blockinline tr"><%= CQ.CarQuotationType == Hx.Car.Enum.CarQuotationType.金融购车 ? "&nbsp;" : (string.IsNullOrEmpty(CQ.ChoicestGoods) ? "&nbsp;" : CQ.ChoicestGoodsPrice)%></span></td>
+                                <td class="bold" style="width:30px">元</td>
+                            </tr>
+                            <tr style="height:28px;">
+                                <td><span class="blockinline bold">无忧服务费：</span><span style="width: 96px;line-height:18px;" class="bb blockinline tr"><%= CQ.CarQuotationType == Hx.Car.Enum.CarQuotationType.金融购车 ? "&nbsp;" : (string.IsNullOrEmpty(CQ.Wyfw) ? "&nbsp;" : CQ.Wyfw)%></span></td>
                                 <td class="bold" style="width:30px">元</td>
                             </tr>
                             <tr style="height:28px;">
@@ -149,7 +152,7 @@
                                 <td class="bold" style="width:30px">元</td>
                             </tr>
                             <tr style="height:28px;">
-                                <td><span class="blockinline bold">无忧服务费用：</span><span style="width: 118px;line-height:18px;" class="bb blockinline tr"><%= CQ.CarQuotationType == Hx.Car.Enum.CarQuotationType.全款购车 ? "&nbsp;" : (string.IsNullOrEmpty(CQ.Wyfw) ? "&nbsp;" : CQ.Wyfw)%></span></td>
+                                <td><span class="blockinline bold">无忧服务费：</span><span style="width: 136px;line-height:18px;" class="bb blockinline tr"><%= CQ.CarQuotationType == Hx.Car.Enum.CarQuotationType.全款购车 ? "&nbsp;" : (string.IsNullOrEmpty(CQ.Wyfw) ? "&nbsp;" : CQ.Wyfw)%></span></td>
                                 <td class="bold" style="width:30px">元</td>
                             </tr>
                             <tr style="height:28px;">
@@ -174,11 +177,18 @@
                         
                         <table border="0" cellpadding="0" cellspacing="0" width="100%">
                             <tr>
-                                <td colspan="2" class="bold" style="font-size:20px;">&nbsp;</td>
+                                <td colspan="2" class="bold" style="font-size:20px;"><%if (CQ.JLCheckStatus == 1)
+                                                                          { %><span style="line-height:18px;font-size:12px;" class="pl5 gray blockinline notprint"><%= CQ.ZJLCheckRemark%></span><%}
+                                                                          else
+                                                                          { %>&nbsp;<%} %></td>
                             </tr>
                             <tr style="height:28px;">
                                 <td><span class="blockinline bold">贷款额：</span><span style="width: 160px;line-height:18px;" class="bb blockinline tr"><%= CQ.CarQuotationType == Hx.Car.Enum.CarQuotationType.全款购车 ? "&nbsp;" : (string.IsNullOrEmpty(CQ.LoanValue) ? "&nbsp;" : CQ.LoanValue)%></span></td>
                                 <td class="bold" style="width:30px">元</td>
+                            </tr>
+                            <tr style="height:28px;">
+                                <td><span class="blockinline bold">银<span class="blockinline" style="width:30px;">&nbsp;</span>行：</span><span style="width: 146px;line-height:18px;" class="bb blockinline tr"><%=(CQ.CarQuotationType == Hx.Car.Enum.CarQuotationType.全款购车  || CQ.BankingType == Hx.Car.Enum.BankingType.厂方金融) ? "&nbsp;" : (string.IsNullOrEmpty(CQ.BankName) ? "&nbsp;" : CQ.BankName)%></span></td>
+                                <td class="bold" style="width:30px">&nbsp;</td>
                             </tr>
                             <tr style="height:28px;">
                                 <td><span class="blockinline bold">预收附加税：</span><span style="width: 122px;line-height:18px;" class="bb blockinline tr"><%= CQ.CarQuotationType == Hx.Car.Enum.CarQuotationType.全款购车 ? "&nbsp;" : (string.IsNullOrEmpty(CQ.cGzs) ? "&nbsp;" : CQ.cGzs)%></span></td>
@@ -201,12 +211,8 @@
                                 <td class="bold" style="width:30px">元</td>
                             </tr>
                             <tr style="height:28px;">
-                                <td><span class="blockinline bold">延保费：</span><span style="width: 160px;line-height:18px;" class="bb blockinline tr">&nbsp;</span></td>
-                                <td class="bold" style="width:30px">元</td>
-                            </tr>
-                            <tr style="height:28px;">
-                                <td><span class="blockinline bold">保养费：</span><span style="width: 160px;line-height:18px;" class="bb blockinline tr">&nbsp;</span></td>
-                                <td class="bold" style="width:30px">元</td>
+                                <td>&nbsp;</td>
+                                <td class="bold" style="width:30px">&nbsp;</td>
                             </tr>
                             <tr style="height:28px;">
                                 <td>&nbsp;</td>
@@ -223,7 +229,7 @@
             <table border="0" cellpadding="0" cellspacing="0" width="100%">
                 <tr>
                     <td class="bb pl5 bold" style="width:40%;">销售员签字确认：</td>
-                    <td class="bb bold">销售负责人签字确认：</td>
+                    <td class="bb bold">销售负责人签字确认：<%if(CQ.JLCheckStatus == 1){ %><span style="line-height:12px;font-size:12px;padding:2px 6px;border:2px solid red;" class="red blockinline notprint"><%=CQ.JLCheckUser %></span><span style="line-height:18px;font-size:12px;" class="pl5 gray blockinline notprint"><%= CQ.JLCheckRemark %></span><%} %></td>
                 </tr>
             </table>
             <table border="0" cellpadding="0" cellspacing="0" width="100%" style="line-height:28px;">
@@ -243,6 +249,14 @@
         <%} %>
         <%if(((int)Admin.UserRole & (int)Hx.Components.Enumerations.UserRoleType.销售员) > 0 || Admin.Administrator){ %>
         <asp:Button runat="server" ID="btnBack" Text="返回" CssClass="an1" OnClick="btnBack_Click" />
+        <%} %>
+        <%if (CQ.CheckStatus == 0 && CQ.JLCheckStatus == 0 && (((int)Admin.UserRole & (int)Hx.Components.Enumerations.UserRoleType.销售经理) > 0 || Admin.Administrator))
+          { %>
+        <asp:TextBox runat="server" ID="txtJLCheckRemark" CssClass="srk3"></asp:TextBox> <asp:Button runat="server" ID="btnJLCheck" Text="审核通过" CssClass="an1" OnClick="btnJLCheck_Click" />
+        <%} %>
+        <%if (CQ.CheckStatus == 0 && CQ.ZJLCheckStatus == 0 && (((int)Admin.UserRole & (int)Hx.Components.Enumerations.UserRoleType.总经理) > 0 || Admin.Administrator))
+          { %>
+        <asp:TextBox runat="server" ID="txtZJLCheckRemark" CssClass="srk3"></asp:TextBox> <asp:Button runat="server" ID="btnZJLCheck" Text="审核通过" CssClass="an1" OnClick="btnZJLCheck_Click" />
         <%} %>
         <input type="button" class="an1" value="打印" onclick="printme();" />
         </form>

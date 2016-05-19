@@ -109,6 +109,12 @@ namespace Hx.Car.Providers
         /// <param name="car"></param>
         public abstract void AddCar(CarInfo car);
 
+        /// <summary>
+        /// 编辑车辆信息
+        /// </summary>
+        /// <param name="car"></param>
+        public abstract void UpdateCar(CarInfo car);
+
         public static CarInfo PopulateCarInfo(IDataReader reader)
         {
             return new CarInfo()
@@ -334,6 +340,10 @@ namespace Hx.Car.Providers
 
         public abstract void CheckCarQuotation(CarQuotationInfo entity);
 
+        public abstract void JLCheckCarQuotation(CarQuotationInfo entity);
+
+        public abstract void ZJLCheckCarQuotation(CarQuotationInfo entity);
+
         public static CarQuotationInfo PopulateQuotationInfo(IDataReader reader)
         {
             return new CarQuotationInfo()
@@ -429,6 +439,14 @@ namespace Hx.Car.Providers
                 CheckUser = reader["CheckUser"] as string,
                 CheckTime = reader["CheckTime"] as string,
                 CheckStatus = DataConvert.SafeInt(reader["CheckStatus"]),
+                JLCheckUser = reader["JLCheckUser"] as string,
+                JLCheckTime = reader["JLCheckTime"] as string,
+                JLCheckStatus = DataConvert.SafeInt(reader["JLCheckStatus"]),
+                JLCheckRemark = reader["JLCheckRemark"] as string,
+                ZJLCheckUser = reader["ZJLCheckUser"] as string,
+                ZJLCheckTime = reader["ZJLCheckTime"] as string,
+                ZJLCheckStatus = DataConvert.SafeInt(reader["ZJLCheckStatus"]),
+                ZJLCheckRemark = reader["ZJLCheckRemark"] as string,
                 Qtfy = reader["Qtfy"] as string,
                 Qtfyms = reader["Qtfyms"] as string,
             };
@@ -441,6 +459,8 @@ namespace Hx.Car.Providers
         public abstract List<CarBrandInfo> GetCarBrandList();
 
         public abstract void AddCarBrand(CarBrandInfo entity);
+
+        public abstract void UpdateBrand(CarBrandInfo entity);
 
         public static CarBrandInfo PopulateCarBrandInfo(IDataReader reader)
         {

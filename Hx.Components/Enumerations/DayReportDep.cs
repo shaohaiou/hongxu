@@ -29,6 +29,6 @@ namespace Hx.Components.Enumerations
         [Description("HX_DailyReportDCCB")]
         DCC部,
         [Description("HX_DailyReportNXCP")]
-        粘性产品
+        无忧产品
     }
 }

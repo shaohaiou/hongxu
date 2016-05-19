@@ -46,6 +46,18 @@ namespace Hx.Components
             return list;
         }
 
+        /// <summary>
+        /// 根据公司获取精品数据
+        /// </summary>
+        /// <param name="corpid"></param>
+        /// <param name="fromCache"></param>
+        /// <returns></returns>
+        public List<ChoicestgoodsInfo> GetList(int corpid,bool fromCache = false)
+        {
+            List<ChoicestgoodsInfo> list = GetList(fromCache);
+            return list.FindAll(l=>l.CorporationID == 0 || l.CorporationID == corpid);
+        }
+
         public void ReloadChoicestgoodsListCache()
         {
             string key = GlobalKey.CHOICESTGOODS_LIST;

@@ -16,6 +16,8 @@
 <body style="background: url(../images/xdd.gif) repeat-x;">
     <div class="right_nav">
         <a href="adminlist.aspx" target="ztk" id="adminlist" runat="server" class="current">管理员管理</a> <a
+            href="userlist.aspx?r=1024" target="ztk" id="userlistzjl" runat="server">总经理</a><a
+            href="userlist.aspx?r=1" target="ztk" id="userlistjl" runat="server">销售经理</a><a
             href="userlist.aspx?r=2" target="ztk" id="userlist1" runat="server">销售顾问</a><a
             href="userlist.aspx?r=512" target="ztk" id="userlist3" runat="server">财务收银</a>
     </div>

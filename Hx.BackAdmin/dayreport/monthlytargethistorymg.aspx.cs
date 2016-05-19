@@ -172,7 +172,6 @@ namespace Hx.BackAdmin.dayreport
                         result += "<div><span>上牌率:</span>" + CurrentHistory.Modify.XSspl + "</div>";
                         result += "<div><span>展厅保险率:</span>" + CurrentHistory.Modify.XSztbxl + "</div>";
                         result += "<div><span>美容交车率:</span>" + CurrentHistory.Modify.XSmrjcl + "</div>";
-                        result += "<div><span>延保渗透率:</span>" + CurrentHistory.Modify.XSybstl + "</div>";
                         result += "<div><span>展厅精品前装率:</span>" + CurrentHistory.Modify.XSztjpqzl + "</div>";
                         result += "<div><span>按揭率:</span>" + CurrentHistory.Modify.XSajl + "</div>";
                         result += "<div><span>免费保养渗透率:</span>" + CurrentHistory.Modify.XSmfbystl + "</div>";

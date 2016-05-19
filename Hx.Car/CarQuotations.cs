@@ -93,5 +93,29 @@ namespace Hx.Car
                 GetList(entity.CustomerMobile, entity.CarQuotationType);
             }
         }
+
+        public void JLCheck(CarQuotationInfo entity)
+        {
+            CarDataProvider.Instance().JLCheckCarQuotation(entity);
+
+            if (!string.IsNullOrEmpty(entity.CustomerMobile))
+            {
+                string key = GlobalKey.CARQUOTATION_KEY + "_mobile_" + entity.CustomerMobile + "_qt_" + ((int)entity.CarQuotationType).ToString();
+                MangaCache.Remove(key);
+                GetList(entity.CustomerMobile, entity.CarQuotationType);
+            }
+        }
+
+        public void ZJLCheck(CarQuotationInfo entity)
+        {
+            CarDataProvider.Instance().ZJLCheckCarQuotation(entity);
+
+            if (!string.IsNullOrEmpty(entity.CustomerMobile))
+            {
+                string key = GlobalKey.CARQUOTATION_KEY + "_mobile_" + entity.CustomerMobile + "_qt_" + ((int)entity.CarQuotationType).ToString();
+                MangaCache.Remove(key);
+                GetList(entity.CustomerMobile, entity.CarQuotationType);
+            }
+        }
     }
 }

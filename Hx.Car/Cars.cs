@@ -82,6 +82,12 @@ namespace Hx.Car
             GetAllCarList(true);
         }
 
+        public CarInfo GetCarInfo(int id, bool fromCache = false)
+        {
+            List<CarInfo> list = GetAllCarList(fromCache);
+            return list.Find(c => c.id == id);
+        }
+
         public List<CarInfo> GetCarList(int pageindex, int pagesize, CarQuery query, out int recordcount)
         {
             return CarDataProvider.Instance().GetCars(pageindex, pagesize, query, out recordcount);
@@ -126,6 +132,22 @@ namespace Hx.Car
         public void Add(CarInfo car)
         {
             CarDataProvider.Instance().AddCar(car);
+        }
+
+        public void Update(CarInfo car, bool haschangebrand)
+        {
+            CarDataProvider.Instance().UpdateCar(car);
+            List<CarInfo> listcar = GetAllCarList(true);
+            if (listcar != null && listcar.Exists(c => c.id == car.id))
+                listcar[listcar.FindIndex(c => c.id == car.id)] = car;
+            if (haschangebrand)
+                ReloadCarListBycChangs();
+            else
+            {
+                listcar = GetCarListBycChangs(car.cChangs, true);
+                if(listcar != null && listcar.Exists(c => c.id == car.id))
+                    listcar[listcar.FindIndex(c => c.id == car.id)] = car;
+            }
         }
 
         #endregion

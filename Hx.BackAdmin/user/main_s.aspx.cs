@@ -16,7 +16,13 @@ namespace Hx.BackAdmin.user
             if (!Admin.Administrator)
             {
                 adminlist.Visible = false;
+                userlistzjl.Visible = false;
                 userlist1.Attributes["class"] = "current";
+            }
+            if (!Admin.Administrator && ((int)Admin.UserRole & (int)Components.Enumerations.UserRoleType.总经理) == 0)
+            {
+                userlist3.Visible = false;
+                userlistjl.Visible = false;
             }
         }
 
@@ -27,7 +33,9 @@ namespace Hx.BackAdmin.user
                 Response.Redirect("~/Login.aspx");
                 return;
             }
-            if (!Admin.Administrator && ((int)Admin.UserRole & (int)Components.Enumerations.UserRoleType.销售经理) == 0)
+            if (!Admin.Administrator 
+                && ((int)Admin.UserRole & (int)Components.Enumerations.UserRoleType.销售经理) == 0
+                && ((int)Admin.UserRole & (int)Components.Enumerations.UserRoleType.总经理) == 0)
             {
                 Response.Clear();
                 Response.Write("您没有权限操作！");

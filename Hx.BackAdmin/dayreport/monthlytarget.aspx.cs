@@ -190,7 +190,6 @@ namespace Hx.BackAdmin.dayreport
                     txtXSspl.Text = target.XSspl;
                     txtXSztbxl.Text = target.XSztbxl;
                     txtXSmrjcl.Text = target.XSmrjcl;
-                    txtXSybstl.Text = target.XSybstl;
                     txtXSztjpqzl.Text = target.XSztjpqzl;
                     txtXSajl.Text = target.XSajl;
                     txtXSmfbystl.Text = target.XSmfbystl;
@@ -205,7 +204,6 @@ namespace Hx.BackAdmin.dayreport
                     txtXSajpjdt.Text = target.XSajpjdt;
                     txtXSmfbydt.Text = target.XSmfbydt;
                     txtXSzjsl.Text = target.XSzjsl;
-                    txtXSblxstl.Text = target.XSblxstl;
 
                     if (CurrentCorporation != null && CurrentCorporation.DailyreportTpp == 1)
                     {
@@ -231,16 +229,12 @@ namespace Hx.BackAdmin.dayreport
 
                     #endregion
                 }
-                else if (CurrentDep == DayReportDep.粘性产品)
+                else if (CurrentDep == DayReportDep.无忧产品)
                 {
                     #region 绑定数据
 
                     #region 关键指标
 
-                    txtNXCPxsjytcstl.Text = target.NXCPxsjytcstl;
-                    txtNXCPxsblwyfwstl.Text = target.NXCPxsblwyfwstl;
-                    txtNXCPxshhwyfwstl.Text = target.NXCPxshhwyfwstl;
-                    txtNXCPxsybwycfwstl.Text = target.NXCPxsybwycfwstl;
                     txtNXCPshjytcstl.Text = target.NXCPshjytcstl;
                     txtNXCPshblwyfwstl.Text = target.NXCPshblwyfwstl;
                     txtNXCPshhhwyfwstl.Text = target.NXCPshhhwyfwstl;
@@ -324,7 +318,6 @@ namespace Hx.BackAdmin.dayreport
                 target.XSspl = txtXSspl.Text;
                 target.XSztbxl = txtXSztbxl.Text;
                 target.XSmrjcl = txtXSmrjcl.Text;
-                target.XSybstl = txtXSybstl.Text;
                 target.XSztjpqzl = txtXSztjpqzl.Text;
                 target.XSajl = txtXSajl.Text;
                 target.XSmfbystl = txtXSmfbystl.Text;
@@ -339,7 +332,6 @@ namespace Hx.BackAdmin.dayreport
                 target.XSajpjdt = txtXSajpjdt.Text;
                 target.XSmfbydt = txtXSmfbydt.Text;
                 target.XSzjsl = txtXSzjsl.Text;
-                target.XSblxstl = txtXSblxstl.Text;
 
                 if (CurrentCorporation != null && CurrentCorporation.DailyreportTpp == 1)
                 {
@@ -353,12 +345,8 @@ namespace Hx.BackAdmin.dayreport
             {
                 target.SHwxkhzs = txtSHwxkhzs.Text;
             }
-            else if (CurrentDep == DayReportDep.粘性产品)
+            else if (CurrentDep == DayReportDep.无忧产品)
             {
-                target.NXCPxsjytcstl = txtNXCPxsjytcstl.Text;
-                target.NXCPxsblwyfwstl = txtNXCPxsblwyfwstl.Text;
-                target.NXCPxshhwyfwstl = txtNXCPxshhwyfwstl.Text;
-                target.NXCPxsybwycfwstl = txtNXCPxsybwycfwstl.Text;
                 target.NXCPshjytcstl = txtNXCPshjytcstl.Text;
                 target.NXCPshblwyfwstl = txtNXCPshblwyfwstl.Text;
                 target.NXCPshhhwyfwstl = txtNXCPshhhwyfwstl.Text;
@@ -475,7 +463,7 @@ namespace Hx.BackAdmin.dayreport
             }
             if (kvp == null) kvp = new Dictionary<string, string>();
 
-            if (CurrentDep == DayReportDep.粘性产品)
+            if (CurrentDep == DayReportDep.无忧产品)
             {
                 List<KeyValuePair<string, string>> listcountname = new List<KeyValuePair<string, string>>() 
                 { 
@@ -514,6 +502,34 @@ namespace Hx.BackAdmin.dayreport
                         tr = "<tr><td colspan=\"4\" style=\"font-weight:bold;font-size:large;padding-left:20px;\">售后数据</td></tr>" + tr;
                     if (name == "当月来厂基盘车辆数≤18个月")
                         tr = "<tr><td colspan=\"4\" style=\"font-weight:bold;font-size:large;padding-left:20px;\">来厂基盘车辆</td></tr>" + tr;
+                    strb.AppendLine(tr);
+                }
+            }
+            else if (CurrentDep == DayReportDep.销售部)
+            {
+                List<KeyValuePair<string, string>> listcountname = new List<KeyValuePair<string, string>>() 
+                { 
+                    new KeyValuePair<string, string>("延保无忧车服务购买个数","countxsybwycfwgmgs"),
+                    new KeyValuePair<string, string>("延保无忧车服务购买金额","countxsybwycfwgmje")
+                };
+                List<KeyValuePair<string, string>> listcountsubname = new List<KeyValuePair<string, string>>() 
+                { 
+                    new KeyValuePair<string, string>("自主延保无忧车服务购买个数","countxsybwycfwgmgssub"),
+                    new KeyValuePair<string, string>("厂家延保无忧车服务购买个数","countxsybwycfwgmgssub"),
+                    new KeyValuePair<string, string>("自主延保无忧车服务购买金额","countxsybwycfwgmjesub"),
+                    new KeyValuePair<string, string>("厂家延保无忧车服务购买金额","countxsybwycfwgmjesub")
+                };
+                foreach (DailyReportModuleInfo m in list.FindAll(l => l.Ismonthlytarget))
+                {
+                    string name = m.Name;
+                    string value = kvp.Keys.Contains(m.ID.ToString()) ? kvp[m.ID.ToString()] : string.Empty;
+                    string tr;
+                    if (listcountname.Exists(l => l.Key == name))
+                        tr = string.Format("<tr style=\"display:none\"><td class=\"bg4 tr\">{0}：</td><td colspan=\"3\"><input id=\"txtmodule{1}\" name=\"txtmodule{1}\" class=\"number srk6 {5} {7}\" value=\"{2}\" {3} />{6}<span class=\"gray pl10\">{4}</span></td></tr>", name, m.ID, value, string.IsNullOrEmpty(value) || allowmodify ? string.Empty : "readonly=\"true\"", m.Description, m.Mustinput ? "required" : string.Empty, m.Mustinput ? "<span class=\"red pl10\">*</span>" : string.Empty, listcountname.Find(l => l.Key == name).Value);
+                    else if (listcountsubname.Exists(l => l.Key == name))
+                        tr = string.Format("<tr><td class=\"bg4 tr\">{0}：</td><td colspan=\"3\"><input id=\"txtmodule{1}\" name=\"txtmodule{1}\" class=\"number srk6 {5} {7}\" value=\"{2}\" {3} />{6}<span class=\"gray pl10\">{4}</span></td></tr>", name, m.ID, value, string.IsNullOrEmpty(value) || allowmodify ? string.Empty : "readonly=\"true\"", m.Description, m.Mustinput ? "required" : string.Empty, m.Mustinput ? "<span class=\"red pl10\">*</span>" : string.Empty, listcountsubname.Find(l => l.Key == name).Value);
+                    else
+                        tr = string.Format("<tr><td class=\"bg4 tr\">{0}：</td><td colspan=\"3\"><input id=\"txtmodule{1}\" name=\"txtmodule{1}\" class=\"number srk6 {5}\" value=\"{2}\" {3} />{6}<span class=\"gray pl10\">{4}</span></td></tr>", name, m.ID, value, string.IsNullOrEmpty(value) || allowmodify ? string.Empty : "readonly=\"true\"", m.Description, m.Mustinput ? "required" : string.Empty, m.Mustinput ? "<span class=\"red pl10\">*</span>" : string.Empty);
                     strb.AppendLine(tr);
                 }
             }

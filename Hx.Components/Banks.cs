@@ -46,6 +46,18 @@ namespace Hx.Components
             return list;
         }
 
+        /// <summary>
+        /// 根据公司获取数据
+        /// </summary>
+        /// <param name="corpid"></param>
+        /// <param name="fromCache"></param>
+        /// <returns></returns>
+        public List<BankInfo> GetList(int corpid, bool fromCache = false)
+        {
+            List<BankInfo> list = GetList(fromCache);
+            return list.FindAll(l => l.CorporationID == 0 || l.CorporationID == corpid);
+        }
+
         public void ReloadBankListCache()
         {
             string key = GlobalKey.BANK_LIST;

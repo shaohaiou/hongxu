@@ -45,7 +45,7 @@
         }
     </script>
     <style type="text/css">
-    .yxcx ul{display:inline-block;width:330px;*display:inline;*zoom:1;vertical-align:top;margin-left:3px;}
+    .yxcx ul{display:inline-block;width:240px;*display:inline;*zoom:1;vertical-align:top;margin-left:3px;}
     .nh{color:White;font-weight:bold;font-size:18px;background:#222;text-indent:5px;}
     </style>
 </head>
@@ -79,11 +79,11 @@
                     <asp:Repeater runat="server" ID="rptAutomotivetype">
                         <ItemTemplate>
                             <%# GetNewAutomotivetypeStr(Eval("cCxmc").ToString())%>
-                            <li class="blockinline" style="width: 320px; line-height: 18px;">
+                            <li class="blockinline" style="width: 240px; line-height: 18px;">
                                 <label class="blockinline" style="line-height: 18px;">
                                     <input type="checkbox" id="cbxAutomotivetype" class="fll cbxAutomotivetype" value="<%# Eval("id") %>"
                                         <%# SetAutomotive(Eval("id").ToString()) %> />
-                                    <%# Eval("cCxmc")%></label>
+                                    <%# Eval("cCxmc").ToString().Substring(Eval("cCxmc").ToString().IndexOf(" ") + 1)%></label>
                             </li>
                         </ItemTemplate>
                         <FooterTemplate>

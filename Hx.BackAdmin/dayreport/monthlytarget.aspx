@@ -80,6 +80,28 @@
                 });
             }
 
+            if ($(".countxsybwycfwgmgs").length > 0 && $(".countxsybwycfwgmgssub").length > 0) {
+                $(".countxsybwycfwgmgssub").unbind("change");
+                $(".countxsybwycfwgmgssub").change(function () {
+                    var countxsybwycfwgmgs = 0;
+                    $(".countxsybwycfwgmgssub").each(function () {
+                        countxsybwycfwgmgs += $.trim($(this).val()) == "" ? 0 : parseInt($(this).val());
+                    });
+                    $(".countxsybwycfwgmgs").val(countxsybwycfwgmgs);
+                });
+            }
+
+            if ($(".countxsybwycfwgmje").length > 0 && $(".countxsybwycfwgmjesub").length > 0) {
+                $(".countxsybwycfwgmjesub").unbind("change");
+                $(".countxsybwycfwgmjesub").change(function () {
+                    var countxsybwycfwgmje = 0;
+                    $(".countxsybwycfwgmjesub").each(function () {
+                        countxsybwycfwgmje += $.trim($(this).val()) == "" ? 0 : parseFloat($(this).val());
+                    });
+                    $(".countxsybwycfwgmje").val(countxsybwycfwgmje.toFixed(2));
+                });
+            }
+
             if (timer_bindevent)
                 clearTimeout(timer_bindevent);
             timer_bindevent = setTimeout(function () {
@@ -112,8 +134,8 @@
                 <a href="?<%= CurrentQuery%>&dep=<%= (int)DayReportDep.金融部%>">金融部</a></li>
             <li <%if(CurrentDep==DayReportDep.DCC部){ %>class="current" <%} %> <%= GetDepHide(DayReportDep.DCC部) %>>
                 <a href="?<%= CurrentQuery%>&dep=<%= (int)DayReportDep.DCC部%>">DCC部</a></li>
-            <li <%if(CurrentDep==DayReportDep.粘性产品){ %>class="current" <%} %> <%= GetDepHide(DayReportDep.粘性产品) %>>
-                <a href="?<%= CurrentQuery%>&dep=<%= (int)DayReportDep.粘性产品%>">粘性产品</a></li>
+            <li <%if(CurrentDep==DayReportDep.无忧产品){ %>class="current" <%} %> <%= GetDepHide(DayReportDep.无忧产品) %>>
+                <a href="?<%= CurrentQuery%>&dep=<%= (int)DayReportDep.无忧产品%>">无忧产品</a></li>
         </ul>
         <asp:ScriptManager runat="server" ID="sm">
         </asp:ScriptManager>
@@ -277,41 +299,34 @@
                         </tr>
                         <tr>
                             <td class="tr">
-                                延保渗透率：
-                            </td>
-                            <td>
-                                <asp:TextBox runat="server" ID="txtXSybstl" CssClass="srk4 tr"></asp:TextBox>
-                                %
-                            </td>
-                            <td class="tr">
                                 展厅精品前装率：
                             </td>
                             <td>
                                 <asp:TextBox runat="server" ID="txtXSztjpqzl" CssClass="srk4"></asp:TextBox>
                                 %
                             </td>
-                        </tr>
-                        <tr>
                             <td class="tr">
                                 展厅精品平均单台：
                             </td>
                             <td>
                                 <asp:TextBox runat="server" ID="txtXSztjppjdt" CssClass="srk6"></asp:TextBox>
                             </td>
+                        </tr>
+                        <tr>
                             <td class="tr">
                                 二网精品平均单台：
                             </td>
                             <td>
                                 <asp:TextBox runat="server" ID="txtXSewjppjdt" CssClass="srk6"></asp:TextBox>
                             </td>
-                        </tr>
-                        <tr>
                             <td class="tr">
                                 销售置换台次：
                             </td>
                             <td>
                                 <asp:TextBox runat="server" ID="txtXSxszhtc" CssClass="srk6"></asp:TextBox>
                             </td>
+                        </tr>
+                        <tr>
                             <td class="tr">
                                 按揭率：
                             </td>
@@ -319,14 +334,14 @@
                                 <asp:TextBox runat="server" ID="txtXSajl" CssClass="srk4 tr"></asp:TextBox>
                                 %
                             </td>
-                        </tr>
-                        <tr>
                             <td class="tr">
                                 按揭平均单台：
                             </td>
                             <td>
                                 <asp:TextBox runat="server" ID="txtXSajpjdt" CssClass="srk6"></asp:TextBox>
                             </td>
+                        </tr>
+                        <tr>
                             <td class="tr">
                                 免费保养渗透率：
                             </td>
@@ -334,28 +349,19 @@
                                 <asp:TextBox runat="server" ID="txtXSmfbystl" CssClass="srk4"></asp:TextBox>
                                 %
                             </td>
-                        </tr>
-                        <tr>
                             <td class="tr">
                                 免费保养单台：
                             </td>
                             <td>
                                 <asp:TextBox runat="server" ID="txtXSmfbydt" CssClass="srk6"></asp:TextBox>
                             </td>
-                            <td class="tr">
-                                转介绍率：
-                            </td>
-                            <td>
-                                <asp:TextBox runat="server" ID="txtXSzjsl" CssClass="srk4"></asp:TextBox>
-                                %
-                            </td>
                         </tr>
                         <tr>
                             <td class="tr">
-                                玻璃险渗透率：
+                                转介绍率：
                             </td>
                             <td colspan="3">
-                                <asp:TextBox runat="server" ID="txtXSblxstl" CssClass="srk4"></asp:TextBox>
+                                <asp:TextBox runat="server" ID="txtXSzjsl" CssClass="srk4"></asp:TextBox>
                                 %
                             </td>
                         </tr>
@@ -391,48 +397,11 @@
                         </tr>
                         <%} %>
                         <%}
-                          else if (CurrentDep == DayReportDep.粘性产品)
+                          else if (CurrentDep == DayReportDep.无忧产品)
                           {%>
                         <tr>
                             <td colspan="4" style="background-color: #ccc; color: Black; font-weight: bold;">
                                 关键指标
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="4" style="font-weight:bold;font-size:large;padding-left:20px;">
-                                销售数据
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="tr">
-                                机油套餐渗透率：
-                            </td>
-                            <td class="dq1">
-                                <asp:TextBox runat="server" ID="txtNXCPxsjytcstl" CssClass="srk4 tr"></asp:TextBox>
-                                %
-                            </td>
-                            <td class="tr w160">
-                                玻璃无忧服务渗透率：
-                            </td>
-                            <td>
-                                <asp:TextBox runat="server" ID="txtNXCPxsblwyfwstl" CssClass="srk4 tr"></asp:TextBox>
-                                %
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="tr">
-                                划痕无忧服务渗透率：
-                            </td>
-                            <td class="dq1">
-                                <asp:TextBox runat="server" ID="txtNXCPxshhwyfwstl" CssClass="srk4 tr"></asp:TextBox>
-                                %
-                            </td>
-                            <td class="tr w160">
-                                延保无忧车服务渗透率：
-                            </td>
-                            <td>
-                                <asp:TextBox runat="server" ID="txtNXCPxsybwycfwstl" CssClass="srk4 tr"></asp:TextBox>
-                                %
                             </td>
                         </tr>
                         <tr>

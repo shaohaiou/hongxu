@@ -230,7 +230,7 @@ namespace Hx.Components.Entity
         }
 
         /// <summary>
-        /// 本月终生免费保养毛利
+        /// 本月免费保养毛利
         /// </summary>
         [JsonIgnore]
         public string XSbyzsmfbyml
@@ -307,16 +307,6 @@ namespace Hx.Components.Entity
         {
             get { return GetString("XSmrjcl", ""); }
             set { SetExtendedAttribute("XSmrjcl", value); }
-        }
-
-        /// <summary>
-        /// 延保渗透率
-        /// </summary>
-        [JsonIgnore]
-        public string XSybstl
-        {
-            get { return GetString("XSybstl", ""); }
-            set { SetExtendedAttribute("XSybstl", value); }
         }
 
         /// <summary>
@@ -447,16 +437,6 @@ namespace Hx.Components.Entity
         {
             get { return GetString("XSzjsl", ""); }
             set { SetExtendedAttribute("XSzjsl", value); }
-        }
-
-        /// <summary>
-        /// 转介绍率
-        /// </summary>
-        [JsonIgnore]
-        public string XSblxstl
-        {
-            get { return GetString("XSblxstl", ""); }
-            set { SetExtendedAttribute("XSblxstl", value); }
         }
 
         /// <summary>
@@ -1414,46 +1394,6 @@ namespace Hx.Components.Entity
         #endregion
 
         #region 粘性产品月度目标
-
-        /// <summary>
-        /// 销售机油套餐渗透率
-        /// </summary>
-        [JsonIgnore]
-        public string NXCPxsjytcstl
-        {
-            get { return GetString("NXCPxsjytcstl", ""); }
-            set { SetExtendedAttribute("NXCPxsjytcstl", value); }
-        }
-
-        /// <summary>
-        /// 销售玻璃无忧服务渗透率
-        /// </summary>
-        [JsonIgnore]
-        public string NXCPxsblwyfwstl
-        {
-            get { return GetString("NXCPxsblwyfwstl", ""); }
-            set { SetExtendedAttribute("NXCPxsblwyfwstl", value); }
-        }
-
-        /// <summary>
-        /// 销售划痕无忧服务渗透率
-        /// </summary>
-        [JsonIgnore]
-        public string NXCPxshhwyfwstl
-        {
-            get { return GetString("NXCPxshhwyfwstl", ""); }
-            set { SetExtendedAttribute("NXCPxshhwyfwstl", value); }
-        }
-
-        /// <summary>
-        /// 销售延保无忧车服务渗透率
-        /// </summary>
-        [JsonIgnore]
-        public string NXCPxsybwycfwstl
-        {
-            get { return GetString("NXCPxsybwycfwstl", ""); }
-            set { SetExtendedAttribute("NXCPxsybwycfwstl", value); }
-        }
 
         /// <summary>
         /// 售后机油套餐渗透率

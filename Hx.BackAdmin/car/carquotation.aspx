@@ -58,13 +58,17 @@
             $("#cbxcSj").unbind("click");
             $("#cbxcCk").unbind("click");
             $("#ddlSztb").unbind("change");
+            $("#ddlBankingType").unbind("change");
             $("#pnlcal").unbind("blur");
             $("#cbxIsSwap").unbind("click");
             $("#cbxQcypjz").unbind("click");
             $("#cbxWyfw").unbind("click");
+            $(".wyfw").unbind("click");
+            $(".txtwyfw").unbind("change");
             $("#txtQtfyms").unbind("focus").unbind("blur");
+            $("#btnQcypadd").unbind("click");
+            $(".ypdel").unbind("click");
             $(".Date").unbind("click");
-            $(".qcyp").unbind("click");
 //            $(".bxcheck").unbind("click");
 //            $(".bxfy").unbind("change");
             $(".number").focus(function () {
@@ -87,14 +91,6 @@
             });
             $(".Date").click(function () {
                 WdatePicker({ 'readOnly': 'true', dateFmt: 'yyyy-MM-dd'});
-            });
-            $(".qcyp").click(function(){
-                var qcypjz = 0;
-                $("#hdnQcyp").val($(".qcyp:checked").map(function(){
-                    qcypjz += parseFloat($(this).attr("data-price"));
-                    return $(this).attr("data-id");
-                }).get().join('|'));
-                $("#txtQcypjz").val(qcypjz);
             });
 
             //计算总价
@@ -122,28 +118,6 @@
             <%} %>
             $("#lblTotalFirstPrinces").val(Math.round(firsttotal));
 
-            //计算保险合计
-//            $(".bxfy").change(function(){
-//                var bxtotal = 0;
-//                bxtotal = parseFloat($("#txtcBjmp").val());
-//                $(".bxfy").each(function () {
-//                    if($("#" + $(this).attr("id").replace("txt","cbx")).attr("checked")){
-//                        bxtotal += parseFloat($(this).val());
-//                    }
-//                });
-//                $("#txtBxhj").val(Math.round(bxtotal * 1//            });
-//            $(".bxcheck").click(function(){00) / 100);
-
-//                var bxtotal = 0;
-//                bxtotal = parseFloat($("#txtcBjmp").val());
-//                $(".bxfy").each(function () {
-//                    if($("#" + $(this).attr("id").replace("txt","cbx")).attr("checked")){
-//                        bxtotal += parseFloat($(this).val());
-//                    }
-//                });
-//                $("#txtBxhj").val(Math.round(bxtotal * 100) / 100);
-//            });
-
             //绑定汽车颜色
             if ($("#hdnColor").val() != "") {
                 $("input[name='rdocQcys']").each(function () {
@@ -167,16 +141,12 @@
                 CountBjmp();
             });
 
-            $("#cbxcSj").click(function () {
-                CountBjmp();
-            });
-
-            $("#cbxcCk").click(function () {
-                CountBjmp();
-            });
-
-            $("#ddlSztb").change(function () {
-                CountBjmp();
+            $("#ddlBankingType").change(function(){
+                if($("#ddlBankingType option:selected").html() == "<%= Hx.Car.Enum.BankingType.银行金融.ToString() %>"){
+                    $("#ddlBank").attr("class","");
+                }else{
+                    $("#ddlBank").attr("class","hidden");
+                }
             });
 
             $("#cbxIsSwap").click(function () {
@@ -191,6 +161,29 @@
                 $("#trWyfw").attr("style", $(this).attr("checked") ? "" : "display:none;");
             });
 
+            $(".wyfw").click(function () {
+                CountWyfw();
+            });
+
+            $(".txtwyfw").change(function () {
+                CountWyfw();
+            });
+
+            $("#btnQcypadd").click(function(){
+                var id = $("#ddlQcyp option:selected").val();
+                var name = $("#ddlQcyp option:selected").html();
+                var price = $("#ddlQcyp option:selected").attr("data-price");
+                if($("#ulQcyp li[data-id=\"" + id + "\"]").length == 0)
+                    $("#ulQcyp").append("<li class=\"blockinline fll\" data-id=\"" + id + "\" data-price=\"" + price + "\"  style=\"width:200px;line-height: 18px; _line-height: 22px;\">" + name + "<span style=\"color:Gray\">(￥" + price + ")</span><a onclick=\"javascript:void(0);\" class=\"ypdel\"></a></li>");
+
+                CountQcyp();
+            });
+
+            $(".ypdel").click(function(){
+                $(this).parent().remove();
+                CountQcyp();
+            });
+
             if (timer_bindevent)
                 clearTimeout(timer_bindevent);
             timer_bindevent = setTimeout(function () {
@@ -199,35 +192,33 @@
         }
 
         function CountBjmp() {
-//            var bjmp = 0;
-//            var zkxs = parseFloat($("#ddlZkxs").val());
-//            var gcj = parseFloat($("#txtfCjj").val());
-//            var zws = parseInt($("#hdnZws").val());
-//            $(".cbxcBjmp").each(function () {
-//                if ($(this).attr("checked")) {
-//                    if ($(this).attr("title") == "车损")
-//                        bjmp += (566 + (gcj * 1.35 / 100)) * zkxs * 0.15;
-//                    if ($(this).attr("title") == "三者")
-//                        bjmp += $("#ddlSztb option:selected").attr("num") * zkxs * 0.15;
-//                    if ($(this).attr("title") == "人员") {
-//                        if ($("#cbxcSj").attr("checked"))
-//                            bjmp += parseFloat($("#txtcSjtb").val()) * 10000 * 0.41 / 100 * zkxs * 0.15;
-//                        if ($("#cbxcCk").attr("checked"))
-//                            bjmp += parseFloat($("#txtcCktb").val()) * 10000 * 0.26 / 100 * zkxs * (zws - 1) * 0.15;
-//                    }
-//                    if ($(this).attr("title") == "盗抢")
-//                        bjmp += (120 + (gcj * 0.41 / 100)) * zkxs * 0.2;
-//                }
-//            });
-//            $("#txtcBjmp").val(Math.round(bjmp * 100) / 100);
             $("#hdncBjmptb").val("");
             var cbjmptb = $(".cbxcBjmp:checked").map(function () {
                 return $(this).attr("title");
             }).get().join('|');
             if (cbjmptb != "") $("#hdncBjmptb").val("|" + cbjmptb + "|");
         }
+
+        function CountQcyp(){
+            var qcypjz = 0;
+            $("#hdnQcyp").val($("#ulQcyp li").map(function(){
+                qcypjz += parseFloat($(this).attr("data-price"));
+                return $(this).attr("data-id");
+            }).get().join('|'));
+            $("#txtQcypjz").val(qcypjz);
+        }
+
+        function CountWyfw(){
+            var wyfwjz = 0;
+            $(".wyfw input:checked").each(function(){
+                wyfwjz += parseFloat($(this).parent().parent().next().val());
+            });
+
+            $("#txtWyfw").val(wyfwjz);
+        }
     </script>
 <style type="text/css">
+.ypdel{cursor:pointer;width:18px;height:18px;background:url(../images/del.png) no-repeat;position:absolute;margin-left:2px;}
 .colortd label em{width: 16px;height: 16px;line-height: 0;overflow: hidden;*zoom: 1;position:absolute;}
 .colortd label em.em-top{width: 16px;height: 8px;z-index: 10;}
 .colortd label em.em-buttom{width: 16px;height: 8px;top: 9px;left: 1px;z-index: 10;}
@@ -428,7 +419,7 @@
                             <td colspan="3">
                                 <asp:TextBox runat="server" ID="txtQcypjz" CssClass="srk5 tr number money needcount"
                                     Text="0"></asp:TextBox> 
-                                元
+                                元<label class="pl10"><asp:DropDownList runat="server" ID="ddlQcyp"></asp:DropDownList><input type="button" id="btnQcypadd" class="ml10" value="添加" /></label>
                             </td>
                         </tr>
                         <tr id="trQcypjz" style="display:none;" runat="server">
@@ -437,14 +428,15 @@
                             </td>
                             <td colspan="3">
                                 <input type="hidden" runat="server" id="hdnQcyp" value="" />
-                                <asp:Repeater runat="server" ID="rptQcyp" OnItemDataBound="rptQcyp_ItemDataBound">
+                                        <ul style="width:800px" id="ulQcyp">
+                                <asp:Repeater runat="server" ID="rptQcyp">
                                     <ItemTemplate>
-                                    <input type="hidden" runat="server" id="hdnQcypID" />
-                                        <label class="blockinline" style="line-height: 18px; margin-right: 10px; _line-height: 22px;">
-                                    <input type="checkbox" runat="server" ID="cbxQcyp" class="fll qcyp" /><%# Eval("Name") %><span style="color:Gray">(￥<%# Eval("Price") %>)</span></label>
-                                    <%# (Container.ItemIndex > 0 && (Container.ItemIndex + 1) % 5 == 0) ? "<br />" : string.Empty%>
+                                        <li class="blockinline fll" data-id="<%#Eval("ID") %>" data-price="<%# Eval("Price") %>" style="width:200px;line-height: 18px; _line-height: 22px;">
+                                            <%# Eval("Name") %><span style="color:Gray">(￥<%# Eval("Price") %>)</span><a onclick="javascript:void(0);" class="ypdel"></a>
+                                        </li>
                                     </ItemTemplate>
                                 </asp:Repeater>
+                                        </ul>
                             </td>
                         </tr>
                         <tr>
@@ -453,7 +445,7 @@
                             </td>
                             <td colspan="3">
                                 <asp:TextBox runat="server" ID="txtBxhj" Text="0" CssClass="srk5 tr number money mustcount"></asp:TextBox>
-                                元
+                                元 
                             </td>
                         </tr>
                         <tr>
@@ -474,19 +466,19 @@
                             <td colspan="3">
                                 <label class="blockinline" style="line-height: 18px; margin-right: 10px; _line-height: 22px;">
                                     <asp:CheckBox runat="server" ID="cbxWyfwjytc" Checked="false" CssClass="fll wyfw" />机油套餐：</label><asp:TextBox
-                                            runat="server" ID="txtWyfwjytc" CssClass="w60 srk5 tr number money" Text="0"></asp:TextBox>
+                                            runat="server" ID="txtWyfwjytc" CssClass="w60 srk5 tr number money txtwyfw" Text="0"></asp:TextBox>
                                 元
                                 <label class="blockinline" style="line-height: 18px; margin-right: 10px; _line-height: 22px;">
                                     <asp:CheckBox runat="server" ID="cbxWyfwblwyfw" Checked="false" CssClass="fll wyfw" />玻璃无忧服务：</label><asp:TextBox
-                                            runat="server" ID="txtWyfwblwyfw" CssClass="w60 srk5 tr number money" Text="0"></asp:TextBox>
+                                            runat="server" ID="txtWyfwblwyfw" CssClass="w60 srk5 tr number money txtwyfw" Text="0"></asp:TextBox>
                                 元
                                 <label class="blockinline" style="line-height: 18px; margin-right: 10px; _line-height: 22px;">
                                     <asp:CheckBox runat="server" ID="cbxWyfwhhwyfw" Checked="false" CssClass="fll wyfw" />划痕无忧服务：</label><asp:TextBox
-                                            runat="server" ID="txtWyfwhhwyfw" CssClass="w60 srk5 tr number money" Text="0"></asp:TextBox>
+                                            runat="server" ID="txtWyfwhhwyfw" CssClass="w60 srk5 tr number money txtwyfw" Text="0"></asp:TextBox>
                                 元
                                 <label class="blockinline" style="line-height: 18px; margin-right: 10px; _line-height: 22px;">
                                     <asp:CheckBox runat="server" ID="cbxWyfwybwyfw" Checked="false" CssClass="fll wyfw" />延保无忧车服务：</label><asp:TextBox
-                                            runat="server" ID="txtWyfwybwyfw" CssClass="w60 srk5 tr number money" Text="0"></asp:TextBox>
+                                            runat="server" ID="txtWyfwybwyfw" CssClass="w60 srk5 tr number money txtwyfw" Text="0"></asp:TextBox>
                                 元
                             </td>
                         </tr>
@@ -693,24 +685,15 @@
                         </tr>--%>
                         <tr>
                             <td class="bg11">
-                                利率：
+                                方案：
                             </td>
-                            <td class="bg3">
+                            <td colspan="3">
                                 <asp:DropDownList runat="server" ID="ddlBankingType">
                                 </asp:DropDownList>
-                                <%--<asp:DropDownList runat="server" ID="ddlBank" CssClass="hidden" AutoPostBack="true"
-                                    OnSelectedIndexChanged="ddlBank_SelectedIndexChanged">
+                                <asp:DropDownList runat="server" ID="ddlBank">
                                 </asp:DropDownList>
-                                <asp:TextBox runat="server" ID="txtProfitMargin" CssClass="srk7" Text="306.7" AutoPostBack="true"
+                                <%--<asp:TextBox runat="server" ID="txtProfitMargin" CssClass="srk7" Text="306.7" AutoPostBack="true"
                                     OnTextChanged="txtProfitMargin_TextChanged"></asp:TextBox>--%>
-                            </td>
-                            <td class="bg11">
-                                月还款额：
-                            </td>
-                            <td>
-                                <asp:TextBox runat="server" ID="txtRepaymentPerMonth" CssClass="srk5 tr number money firstcount"
-                                    Text="0"></asp:TextBox>
-                                元
                             </td>
                         </tr>
                         <tr>
@@ -763,17 +746,27 @@
                         </tr>
                         <tr>
                             <td class="bg11">
-                                押金：
+                                月还款额：
                             </td>
                             <td class="bg3">
-                                <asp:TextBox runat="server" ID="txtcXbyj" CssClass="srk5 tr number money mustcount"
+                                <asp:TextBox runat="server" ID="txtRepaymentPerMonth" CssClass="srk5 tr number money firstcount"
                                     Text="0"></asp:TextBox>
                                 元
                             </td>
                             <td class="bg11">
-                                代收风险金：
+                                押金：
                             </td>
                             <td>
+                                <asp:TextBox runat="server" ID="txtcXbyj" CssClass="srk5 tr number money mustcount"
+                                    Text="0"></asp:TextBox>
+                                元
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="bg11">
+                                代收风险金：
+                            </td>
+                            <td colspan="3">
                                 <asp:TextBox runat="server" ID="txtLyfxj" CssClass="srk5 tr number money mustcount"
                                     Text="0"></asp:TextBox>
                                 元

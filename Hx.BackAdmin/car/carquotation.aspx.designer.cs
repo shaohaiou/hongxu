@@ -247,6 +247,15 @@ namespace Hx.BackAdmin.car {
         protected global::System.Web.UI.WebControls.TextBox txtQcypjz;
         
         /// <summary>
+        /// ddlQcyp 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlQcyp;
+        
+        /// <summary>
         /// trQcypjz 控件。
         /// </summary>
         /// <remarks>
@@ -706,13 +715,13 @@ namespace Hx.BackAdmin.car {
         protected global::System.Web.UI.WebControls.DropDownList ddlBankingType;
         
         /// <summary>
-        /// txtRepaymentPerMonth 控件。
+        /// ddlBank 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtRepaymentPerMonth;
+        protected global::System.Web.UI.WebControls.DropDownList ddlBank;
         
         /// <summary>
         /// ddlSfbl 控件。
@@ -758,6 +767,15 @@ namespace Hx.BackAdmin.car {
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtInterest;
+        
+        /// <summary>
+        /// txtRepaymentPerMonth 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtRepaymentPerMonth;
         
         /// <summary>
         /// txtcXbyj 控件。

@@ -73,6 +73,8 @@ namespace Hx.BackAdmin.global
                 }
             }
 
+            Sybxs.Instance.ReloadSybxListCache();
+
             WriteSuccessMessage("保存成功！", "数据已经成功保存！",string.IsNullOrEmpty(FromUrl) ? "~/global/sybxmg.aspx" : FromUrl);
         }
     }

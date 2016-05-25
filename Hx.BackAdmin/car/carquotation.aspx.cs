@@ -388,7 +388,7 @@ namespace Hx.BackAdmin.car
                     hdnColor.Value = cq.cQcys;
                     hdnInnerColor.Value = cq.cNsys;
                     hdnQcyp.Value = cq.ChoicestGoods;
-                    txtQcypjz.Text = cq.ChoicestGoodsPrice;
+                    txtQcypjz.Text = string.IsNullOrEmpty(cq.ChoicestGoodsPrice) ? "0" : cq.ChoicestGoodsPrice;
                     string[] goods = cq.ChoicestGoods.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
 
                     foreach (ListItem item in ddlQcyp.Items)
@@ -401,18 +401,28 @@ namespace Hx.BackAdmin.car
                     List<ChoicestgoodsInfo> clist = Choicestgoods.Instance.GetList(true);
                     rptQcyp.DataSource = clist.FindAll(c => goods.Contains(c.ID.ToString()));
                     rptQcyp.DataBind();
-                    if (!string.IsNullOrEmpty(cq.ChoicestGoods))
+                    if (DataConvert.SafeInt(cq.ChoicestGoodsPrice) > 0)
                     {
                         trQcypjz.Style.Value = "";
                         cbxQcypjz.Checked = true;
+                    }
+                    else
+                    {
+                        trQcypjz.Style.Value = "display:none;";
+                        cbxQcypjz.Checked = false;
                     }
                     if (!string.IsNullOrEmpty(cq.Wyfw))
                     {
                         trWyfw.Style.Value = "";
                         cbxWyfw.Checked = true;
                     }
+                    else
+                    {
+                        trWyfw.Style.Value = "display:none;";
+                        cbxWyfw.Checked = false;
+                    }
                     txtBxhj.Text = cq.Bxhj;
-                    txtWyfw.Text = cq.Wyfw;
+                    txtWyfw.Text = string.IsNullOrEmpty(cq.Wyfw) ? "0" : cq.Wyfw;
                     cbxWyfwjytc.Checked = cq.IsWyfwjytc;
                     txtWyfwjytc.Text = cq.Wyfwjytc;
                     cbxWyfwblwyfw.Checked = cq.IsWyfwblwyfw;
@@ -456,24 +466,15 @@ namespace Hx.BackAdmin.car
                     cbxIsZcyh.Checked = cq.IsZcyh;
                     txtSwapDetail.Value = cq.SwapDetail;
                     trSwap.Attributes["style"] = cbxIsSwap.Checked ? "" : "display:none;";
-                    txtQtfy.Text = cq.Qtfy;
+                    txtQtfy.Text = string.IsNullOrEmpty(cq.Qtfy) ? "0" : cq.Qtfy;
                     txtQtfyms.Text = cq.Qtfyms;
-                    if (!string.IsNullOrEmpty(cq.Qtfyms))
-                        txtQtfyms.Style.Value = "color:Black;";
-                    else
-                    {
-                        txtQtfyms.Text = "描述...";
-                        txtQtfyms.Style.Value = "color:#ccc;";
-                    }
-
                     txtcXbyj.Text = cq.cXbyj;
                     txtcBjmp.Text = cq.cBjmp;
                     txtcZdwx.Text = cq.cZdwx;
                     txtLyfxj.Text = cq.Lyfxj;
-                    txtDbsplwf.Text = cq.Dbsplwf;
-                    txtDbfqlwf.Text = cq.Dbfqlwf;
-                    txtZxf.Text = cq.Zxf;
-                    txtDcf.Text = cq.Dcf;
+                    txtDbsplwf.Text = string.IsNullOrEmpty(cq.Dbsplwf) ? "0" : cq.Dbsplwf;
+                    txtDbfqlwf.Text = string.IsNullOrEmpty(cq.Dbfqlwf) ? "0" : cq.Dbfqlwf;
+                    txtGzf.Text = string.IsNullOrEmpty(cq.Gzf) ? "0" : cq.Gzf;
                     hdncBjmptb.Value = cq.cBjmptb;
                     string[] bjmptb = hdncBjmptb.Value.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
                     cbxcBjmpcs.Checked = bjmptb.Contains("车损");
@@ -482,6 +483,7 @@ namespace Hx.BackAdmin.car
                     cbxcBjmpdq.Checked = bjmptb.Contains("盗抢");
 
                     txtGift.Text = cq.Gift;
+                    txtFirstPayment.Text = cq.FirstPayment;
 
                     SetSelectedByText(ddlSztb, cq.Sztb);
                     SetSelectedByText(ddlSybx, cq.Bxgs);
@@ -571,7 +573,7 @@ namespace Hx.BackAdmin.car
                 cJqs = txtcJqs.Text,
                 Bxgs = ddlSybx.SelectedItem.Text,
                 Bxhj = txtBxhj.Text,
-                Wyfw = DataConvert.SafeFloat(txtWyfw.Text) > 0 ? txtWyfw.Text : string.Empty,
+                Wyfw = cbxWyfw.Checked ? txtWyfw.Text : string.Empty,
                 IsWyfwjytc = cbxWyfwjytc.Checked,
                 Wyfwjytc = txtWyfwjytc.Text,
                 IsWyfwblwyfw = cbxWyfwblwyfw.Checked,
@@ -614,7 +616,7 @@ namespace Hx.BackAdmin.car
                 OtherCost = string.Empty,
                 AccountManagementCost = string.Empty,
                 ChoicestGoods = hdnQcyp.Value,
-                ChoicestGoodsPrice = txtQcypjz.Text,
+                ChoicestGoodsPrice = cbxQcypjz.Checked ? txtQcypjz.Text : string.Empty,
                 Gift = txtGift.Text,
                 IsSwap = cbxIsSwap.Checked,
                 IsDkh = cbxIsDkh.Checked,
@@ -626,12 +628,13 @@ namespace Hx.BackAdmin.car
                 cZdwx = txtcZdwx.Text,
                 cXbyj = txtcXbyj.Text,
                 Lyfxj = txtLyfxj.Text,
-                Dbsplwf = txtDbsplwf.Text,
-                Dbfqlwf = txtDbfqlwf.Text,
-                Zxf = txtZxf.Text,
-                Dcf = txtDcf.Text,
-                Qtfy = txtQtfy.Text,
-                Qtfyms = txtQtfyms.Text == "描述..." ? string.Empty : txtQtfyms.Text
+                Dbsplwf = DataConvert.SafeInt(txtDbsplwf.Text) > 0 ? txtDbsplwf.Text : string.Empty,
+                Dbfqlwf = DataConvert.SafeInt(txtDbfqlwf.Text) > 0 ? txtDbfqlwf.Text : string.Empty,
+                Zxf = string.Empty,
+                Dcf = string.Empty,
+                Gzf = DataConvert.SafeInt(txtGzf.Text) > 0 ? txtGzf.Text : string.Empty,
+                Qtfy = DataConvert.SafeInt(txtQtfy.Text) > 0 ? txtQtfy.Text : string.Empty,
+                Qtfyms = txtQtfyms.Text
             };
             if (!string.IsNullOrEmpty(txtSaleDay.Text))
                 info.SaleDay = DateTime.Parse(txtSaleDay.Text);

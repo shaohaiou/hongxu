@@ -70,6 +70,7 @@ namespace Hx.BackAdmin.user
             txtUserName.Text = admin.UserName;//账户名
             txtMobile.Text = admin.Mobile;
             txtName.Text = admin.Name;
+            txtOAID.Text = admin.OAID;
             SetSelectedByValue(ddlCorporation, admin.Corporation);
         }
 
@@ -88,6 +89,7 @@ namespace Hx.BackAdmin.user
             admin.Name = txtName.Text;
             admin.LastLoginIP = string.Empty;
             admin.Mobile = txtMobile.Text;
+            admin.OAID = txtOAID.Text;
             if (Admin.Administrator)
                 admin.Corporation = ddlCorporation.SelectedValue;
             else

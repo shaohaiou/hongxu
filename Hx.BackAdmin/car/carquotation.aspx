@@ -54,6 +54,7 @@
 
         function bindnumberboxevent() {
             $(".number").unbind("focus");
+            $(".number").unbind("keyup");
             $(".cbxcBjmp").unbind("click");
             $("#cbxcSj").unbind("click");
             $("#cbxcCk").unbind("click");
@@ -65,7 +66,6 @@
             $("#cbxWyfw").unbind("click");
             $(".wyfw").unbind("click");
             $(".txtwyfw").unbind("change");
-            $("#txtQtfyms").unbind("focus").unbind("blur");
             $("#btnQcypadd").unbind("click");
             $(".ypdel").unbind("click");
             $(".Date").unbind("click");
@@ -75,16 +75,8 @@
                 var t = this;
                 setTimeout(function () { t.select() }, 0);
             });
-            $("#txtQtfyms").focus(function(){
-                if($(this).val() == "描述...") {
-                    $(this).val('');
-                    $(this).attr("style","color:Black;");
-                }
-            }).blur(function(){
-                if($(this).val() == "") {
-                    $(this).val('描述...');
-                    $(this).attr("style","color:#ccc;");
-                }
+            $(".number").keyup(function(){
+                $(this).val($(this).val().replace(/[^\0-9\.]/g,''));
             });
             $("#pnlcal").blur(function () {
                 $("#pnlcal").hide();
@@ -96,12 +88,12 @@
             //计算总价
             var total = 0;
             $(".mustcount").each(function () {
-                total += parseFloat($(this).val());
+                total += parseFloat($.trim($(this).val()) == "" ? "0" : $.trim($(this).val()));
             });
             $(".needcount").each(function () {
             
                 if($("#" + $(this).attr("id").replace("txt","cbx")).attr("checked")){
-                    total += parseFloat($(this).val());
+                    total += parseFloat($.trim($(this).val()) == "" ? "0" : $.trim($(this).val()));
                 }
             });
             $("#lblTotalPrinces").val(Math.round(total) + " 元");
@@ -111,10 +103,10 @@
             firsttotal = total;
             <%if(CQType == CarQuotationType.金融购车){ %>
                 $(".firstcount").each(function(){
-                    firsttotal += parseFloat($(this).val());
+                    firsttotal += parseFloat($.trim($(this).val()) == "" ? "0" : $.trim($(this).val()));
                 });
-                firsttotal -=  parseFloat($("#txtfCjj").val());
-                firsttotal -=  parseFloat($("#txtInterest").val());
+                firsttotal -=  parseFloat($.trim($("#txtfCjj").val()) == "" ? "0" : $.trim($("#txtfCjj").val()));
+                firsttotal -=  parseFloat($.trim($("#txtInterest").val()) == "" ? "0" : $.trim($("#txtInterest").val()));
             <%} %>
             $("#lblTotalFirstPrinces").val(Math.round(firsttotal));
 
@@ -155,10 +147,12 @@
 
             $("#cbxQcypjz").click(function () {
                 $("#trQcypjz").attr("style", $(this).attr("checked") ? "" : "display:none;");
+                CountQcyp();
             });
 
             $("#cbxWyfw").click(function () {
                 $("#trWyfw").attr("style", $(this).attr("checked") ? "" : "display:none;");
+                CountWyfw();
             });
 
             $(".wyfw").click(function () {
@@ -499,7 +493,7 @@
                             <td colspan="3">
                                 <asp:TextBox runat="server" ID="txtQtfy" CssClass="srk5 tr number money mustcount"
                                     Text="0"></asp:TextBox>
-                                元<asp:TextBox runat="server" ID="txtQtfyms" Text="描述..." style="color:#ccc;" CssClass="ml10"></asp:TextBox>
+                                元<asp:TextBox runat="server" ID="txtQtfyms" placeholder="描述..." CssClass="ml10"></asp:TextBox>
                             </td>
                         </tr>
                         <tr>
@@ -766,23 +760,31 @@
                             <td class="bg11">
                                 代收风险金：
                             </td>
-                            <td colspan="3">
+                            <td class="bg3">
                                 <asp:TextBox runat="server" ID="txtLyfxj" CssClass="srk5 tr number money mustcount"
+                                    Text="0"></asp:TextBox>
+                                元
+                            </td>
+                            <td class="bg11">
+                                代收资信调查费：
+                            </td>
+                            <td>
+                                <asp:TextBox runat="server" ID="txtDbfqlwf" CssClass="srk5 tr number money mustcount"
+                                    Text="0"></asp:TextBox>
+                                元
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="bg11">
+                                代收公证费：
+                            </td>
+                            <td colspan="3">
+                                <asp:TextBox runat="server" ID="txtGzf" CssClass="srk5 tr number money mustcount"
                                     Text="0"></asp:TextBox>
                                 元
                             </td>
                         </tr>
                         <tr class="hide">
-                            <td class="bg11">
-                                代办分期付款手续费、劳务费：
-                            </td>
-                            <td colspan="3">
-                                <asp:TextBox runat="server" ID="txtDbfqlwf" CssClass="srk5 tr number money mustcount"
-                                    Text="0"></asp:TextBox>
-                                元，其中 资信费：<asp:TextBox runat="server" ID="txtZxf" CssClass="srk5 tr number money"
-                                    Text="0"></asp:TextBox>
-                                调查费：<asp:TextBox runat="server" ID="txtDcf" CssClass="srk5 tr number money" Text="0"></asp:TextBox>
-                            </td>
                         </tr>
                         <%} %>
                         <tr>

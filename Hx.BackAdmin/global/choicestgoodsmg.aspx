@@ -41,6 +41,7 @@
 <body>
     <form id="form1" runat="server">
     <div class="ht_main">
+        <%if(Admin.Administrator){ %>
         <ul class="xnav">
             <li><a href="sybxmg.aspx">商业保险</a></li>
             <li><a href="bankingmg.aspx">金融方案</a></li>
@@ -49,7 +50,7 @@
             <li><a href="bankmg.aspx">银行</a></li>
             <li><a href="corporationmg.aspx">公司管理</a></li>
         </ul>
-    
+        <%} %>
         <table width="820" border="0" cellspacing="0" cellpadding="0" class="biaoge4" style="background-color: #f4f8fc;">
             <tr>
                 <td class="w40 bold">

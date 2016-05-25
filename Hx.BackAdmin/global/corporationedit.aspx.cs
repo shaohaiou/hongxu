@@ -8,11 +8,28 @@ using Hx.Components.BasePage;
 using Hx.Car;
 using Hx.Car.Entity;
 using Hx.Components;
+using Hx.Components.Web;
 
 namespace Hx.BackAdmin.global
 {
     public partial class corporationedit : AdminBase
     {
+        protected override void Check()
+        {
+            if (!HXContext.Current.AdminCheck)
+            {
+                Response.Redirect("~/Login.aspx");
+                return;
+            }
+            if (!Admin.Administrator
+                && ((int)Admin.UserRole & (int)Components.Enumerations.UserRoleType.车型管理员) == 0)
+            {
+                Response.Clear();
+                Response.Write("您没有权限操作！");
+                Response.End();
+                return;
+            }
+        }
         private CorporationInfo _currentcorporation = null;
         private CorporationInfo CurrentCorporation
         {

@@ -18,8 +18,10 @@
      <a href="carcollect.aspx" target="ztk" id="carcollect" runat="server" class="current">信息采集</a>
      <a href="carquotation.aspx?t=0" target="_blank" id="carquotation" runat="server" class="nohover">车辆报价</a>
      <a href="automotivetypemg.aspx" target="ztk" id="automotivetypemg" runat="server">有效车型</a>
+     <%if(Admin.Administrator || ((int)Admin.UserRole & (int)Hx.Components.Enumerations.UserRoleType.车型管理员 ) > 0){ %>
      <a href="cxmg.aspx" target="ztk" id="cxmg" runat="server">车型管理</a>
-     <a href="carquotationmg.aspx" target="ztk" id="carquotationmg" runat="server">报价记录</a>
+     <%} %>
+     <a href="carquotationmg.aspx" target="ztk" id="carquotationmg" runat="server">整车审核</a>
 </div>
 
 <div class="r_sy" id="daohan">

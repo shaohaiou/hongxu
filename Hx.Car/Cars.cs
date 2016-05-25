@@ -132,6 +132,8 @@ namespace Hx.Car
         public void Add(CarInfo car)
         {
             CarDataProvider.Instance().AddCar(car);
+            Cars.Instance.ReloadAllCarList();
+            Cars.Instance.ReloadCarListBycChangs();
         }
 
         public void Update(CarInfo car, bool haschangebrand)

@@ -426,6 +426,7 @@ namespace Hx.Car.Providers
                 Dbfqlwf = reader["Dbfqlwf"] as string,
                 Zxf = reader["Zxf"] as string,
                 Dcf = reader["Dcf"] as string,
+                Gzf = reader["Gzf"] as string,
                 Zkxs = reader["Zkxs"] as string,
                 Sztb = reader["Sztb"] as string,
                 Blcd = reader["Blcd"] as string,

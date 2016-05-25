@@ -10,6 +10,7 @@ using Hx.Components;
 using Hx.Car.Entity;
 using Hx.Tools;
 using Hx.Car;
+using Hx.Components.Entity;
 
 namespace Hx.BackAdmin.car
 {
@@ -65,6 +66,12 @@ namespace Hx.BackAdmin.car
             }
         }
 
+        private class WyfwInfo
+        {
+            public string Name { get; set; }
+            public string Price { get; set; }
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -78,7 +85,18 @@ namespace Hx.BackAdmin.car
             if (string.IsNullOrEmpty(FromUrl))
                 btnBack.Visible = false;
 
+            List<WyfwInfo> wyfwlist = new List<WyfwInfo>();
+            if (CQ.IsWyfwjytc) wyfwlist.Add(new WyfwInfo() { Name = "机油套餐", Price = CQ.Wyfwjytc });
+            if (CQ.IsWyfwblwyfw) wyfwlist.Add(new WyfwInfo() { Name = "玻璃无忧服务", Price = CQ.Wyfwblwyfw });
+            if (CQ.IsWyfwhhwyfw) wyfwlist.Add(new WyfwInfo() { Name = "划痕无忧服务", Price = CQ.Wyfwhhwyfw });
+            if (CQ.IsWyfwybwyfw) wyfwlist.Add(new WyfwInfo() { Name = "延保无忧车服务", Price = CQ.Wyfwybwyfw });
+            rptWyfw.DataSource = wyfwlist;
+            rptWyfw.DataBind();
 
+            string[] goods = CQ.ChoicestGoods.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
+            List<ChoicestgoodsInfo> clist = Choicestgoods.Instance.GetList(true);
+            rptQcyp.DataSource = clist.FindAll(c => goods.Contains(c.ID.ToString()));
+            rptQcyp.DataBind();
         }
 
         protected void btnBack_Click(object sender, EventArgs e)
@@ -115,7 +133,7 @@ namespace Hx.BackAdmin.car
 
             CQ.CheckStatus = 1;
             CQ.CheckTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-            CQ.CheckUser = AdminName;
+            CQ.CheckUser = string.IsNullOrEmpty(Admin.Name) ? AdminName : Admin.Name;
 
             CarQuotations.Instance.Check(CQ);
         }
@@ -149,7 +167,7 @@ namespace Hx.BackAdmin.car
 
             CQ.JLCheckStatus = 1;
             CQ.JLCheckTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-            CQ.JLCheckUser = AdminName;
+            CQ.JLCheckUser = string.IsNullOrEmpty(Admin.Name) ? AdminName : Admin.Name;
             CQ.JLCheckRemark = txtJLCheckRemark.Text;
 
             CarQuotations.Instance.JLCheck(CQ);
@@ -184,7 +202,7 @@ namespace Hx.BackAdmin.car
 
             CQ.ZJLCheckStatus = 1;
             CQ.ZJLCheckTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-            CQ.ZJLCheckUser = AdminName;
+            CQ.ZJLCheckUser = string.IsNullOrEmpty(Admin.Name) ? AdminName : Admin.Name;
             CQ.ZJLCheckRemark = txtZJLCheckRemark.Text;
 
             CarQuotations.Instance.ZJLCheck(CQ);

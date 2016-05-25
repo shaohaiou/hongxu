@@ -50,6 +50,7 @@ namespace Hx.BackAdmin.car
         private void LoadData()
         {
             int id = GetInt("id");
+            int bid = GetInt("bid");
             if (id > 0)
             {
                 CarInfo car = Cars.Instance.GetCarInfo(id,true);
@@ -124,27 +125,62 @@ namespace Hx.BackAdmin.car
                     rptcNsys.DataBind();
                 }
             }
+            else if (bid > 0)
+            {
+                CarBrandInfo brand = CarBrands.Instance.GetModel(bid,true);
+                if (brand == null)
+                {
+                    WriteErrorMessage("错误", "错误品牌标识", "~/car/cxmg.aspx");
+                    return;
+                }
+                txtcChangs.Text = brand.Name;
+            }
         }
 
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
-            int id = GetInt("id");
-            if (id > 0)
+            if (!string.IsNullOrEmpty(txtcChangs.Text) && !string.IsNullOrEmpty(txtcCxmc.Text) && !string.IsNullOrEmpty(txtfZdj.Text))
             {
-                bool haschangebrand = false;
-                CarInfo car = Cars.Instance.GetCarInfo(id);
+                int id = GetInt("id");
+                int bid = GetInt("bid");
+                if (id > 0)
+                {
+                    bool haschangebrand = false;
+                    CarInfo car = Cars.Instance.GetCarInfo(id);
 
-                haschangebrand = car.cChangs != txtcChangs.Text;
-                car.cChangs = txtcChangs.Text;
-                car.cCxmc = txtcCxmc.Text;
-                car.fZdj = DataConvert.SafeDecimal(txtfZdj.Text);
-                car.cQcys = hdncQcys.Value;
-                car.cNsys = hdnInnerColor.Value;
+                    haschangebrand = car.cChangs != txtcChangs.Text;
+                    car.cChangs = txtcChangs.Text;
+                    car.cCxmc = txtcCxmc.Text;
+                    car.fZdj = DataConvert.SafeDecimal(txtfZdj.Text);
+                    car.cQcys = hdncQcys.Value;
+                    car.cNsys = hdnInnerColor.Value;
 
-                Cars.Instance.Update(car, haschangebrand);
+                    Cars.Instance.Update(car, haschangebrand);
 
-                WriteSuccessMessage("保存成功", "数据已经成功保存！", string.IsNullOrEmpty(FromUrl) ? "~/car/cxmg.aspx" : FromUrl);
+                    WriteSuccessMessage("保存成功", "数据已经成功保存！", string.IsNullOrEmpty(FromUrl) ? "~/car/cxmg.aspx" : FromUrl);
+                }
+                else if (bid > 0)
+                {
+                    CarInfo car = new CarInfo();
+                    car.cChangs = txtcChangs.Text;
+                    car.cCxmc = txtcCxmc.Text;
+                    car.fZdj = DataConvert.SafeDecimal(txtfZdj.Text);
+                    car.cQcys = hdncQcys.Value;
+                    car.cNsys = hdnInnerColor.Value;
+                    Cars.Instance.Add(car);
+
+                    WriteSuccessMessage("保存成功", "数据已经成功保存！", "~/car/cxedit.aspx?id=" + bid);
+                }
             }
+            else
+            {
+                txtMsg.InnerText = "请完善信息";
+            }
+        }
+
+        protected void btnBack_Click(object sender, EventArgs e)
+        {
+            Response.Redirect(string.IsNullOrEmpty(FromUrl) ? "~/car/cxmg.aspx" : FromUrl);
         }
 
         protected string GetInnerColor(string colors)

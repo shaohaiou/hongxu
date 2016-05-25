@@ -121,6 +121,16 @@
                         </asp:DropDownList>
                     </td>
                 </tr>
+                <%if(Admin.Administrator){ %>
+                <tr>
+                    <td class="bg1">
+                        OAID：
+                    </td>
+                    <td class="bg2">
+                        <asp:TextBox ID="txtOAID" runat="server"></asp:TextBox>
+                    </td>
+                </tr>
+                <%} %>
                 <tr>
                     <td class="bg1">
                         是否是超级管理员：

@@ -33,7 +33,7 @@ namespace Hx.BackAdmin.car
         }
 
         private CarBrandInfo _currentcarbrand = null;
-        private CarBrandInfo CurrentCarbrand
+        protected CarBrandInfo CurrentCarbrand
         {
             get
             {
@@ -76,6 +76,11 @@ namespace Hx.BackAdmin.car
             lblCarbrand.Text = CurrentCarbrand.Name;
         }
 
+        protected void btnBack_Click(object sender, EventArgs e)
+        {
+            Response.Redirect(string.IsNullOrEmpty(FromUrl) ? "~/car/cxmg.aspx" : FromUrl);
+        }
+
         protected string GetNewAutomotivetypeStr(string name)
         {
             string result = string.Empty;
@@ -83,12 +88,12 @@ namespace Hx.BackAdmin.car
             if (string.IsNullOrEmpty(CurrentAutomotivetype))
             {
                 CurrentAutomotivetype = name.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)[0];
-                result += string.Format("<ul><li class=\"nh\"><span class=\"stext\">{0}</span><input type=\"text\" value=\"{0}\" class=\"hide sname\"><a href=\"javascript:void(0);\" class=\"ssave hide\"></a></li>", CurrentAutomotivetype);
+                result += string.Format("<ul><li class=\"nh\"><span class=\"stext\">{0}</span><input type=\"text\" value=\"{0}\" class=\"hide sname\"><a href=\"javascript:void(0);\" data-sname=\"{0}\" class=\"ssave hide\"></a></li>", CurrentAutomotivetype);
             }
             else if (!CurrentAutomotivetype.Equals(name.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)[0], StringComparison.OrdinalIgnoreCase))
             {
                 CurrentAutomotivetype = name.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)[0];
-                result += string.Format("</ul><ul><li class=\"nh\"><span class=\"stext\">{0}</span><input type=\"text\" value=\"{0}\" class=\"hide sname\"><a href=\"javascript:void(0);\" class=\"ssave hide\"></a></li>", CurrentAutomotivetype);
+                result += string.Format("</ul><ul><li class=\"nh\"><span class=\"stext\">{0}</span><input type=\"text\" value=\"{0}\" class=\"hide sname\"><a href=\"javascript:void(0);\" data-sname=\"{0}\" class=\"ssave hide\"></a></li>", CurrentAutomotivetype);
             }
 
 

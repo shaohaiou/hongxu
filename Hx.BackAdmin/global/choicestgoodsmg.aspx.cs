@@ -10,11 +10,29 @@ using Hx.Tools;
 using Hx.Components.Entity;
 using Hx.Car;
 using Hx.Car.Entity;
+using Hx.Components.Web;
 
 namespace Hx.BackAdmin.global
 {
     public partial class choicestgoodsmg : AdminBase
     {
+        protected override void Check()
+        {
+            if (!HXContext.Current.AdminCheck)
+            {
+                Response.Redirect("~/Login.aspx");
+                return;
+            }
+            if (!Admin.Administrator
+                && ((int)Admin.UserRole & (int)Components.Enumerations.UserRoleType.总经理) == 0
+                && ((int)Admin.UserRole & (int)Components.Enumerations.UserRoleType.销售经理) == 0)
+            {
+                Response.Clear();
+                Response.Write("您没有权限操作！");
+                Response.End();
+                return;
+            }
+        }
         private List<CorporationInfo> corplist = null;
         private List<CorporationInfo> Corplist
         {
@@ -55,9 +73,14 @@ namespace Hx.BackAdmin.global
             int total = 0;
 
             SetSelectedByValue(ddlCorporationFilter, GetInt("corpid").ToString());
+            if (!Admin.Administrator)
+            {
+                SetSelectedByValue(ddlCorporationFilter,Admin.Corporation);
+                ddlCorporationFilter.Enabled = false;
+            }
 
             List<ChoicestgoodsInfo> list = Choicestgoods.Instance.GetList(DataConvert.SafeInt(ddlCorporationFilter.SelectedValue), true);
-            list = list.FindAll(l => l.CorporationID == GetInt("corpid"));
+            list = list.FindAll(l => l.CorporationID == DataConvert.SafeInt(ddlCorporationFilter.SelectedValue));
             total = list.Count();
             list = list.Skip((pageindex - 1) * pagesize).Take(pagesize).ToList<ChoicestgoodsInfo>();
 

@@ -89,6 +89,7 @@ namespace Hx.BackAdmin.user
             txtUserName.Text = admin.UserName;//账户名
             txtName.Text = admin.Name;
             txtMobile.Text = admin.Mobile;
+            txtOAID.Text = admin.OAID;
             SetSelectedByValue(ddlCorporation, admin.Corporation);
             hdnUserRoleType.Value = ((int)admin.UserRole).ToString();
         }
@@ -109,6 +110,7 @@ namespace Hx.BackAdmin.user
             admin.LastLoginIP = string.Empty;
             admin.Mobile = txtMobile.Text;
             admin.Corporation = ddlCorporation.SelectedValue;
+            admin.OAID = txtOAID.Text;
             admin.UserRole = (UserRoleType)DataConvert.SafeInt(hdnUserRoleType.Value);
         }
 

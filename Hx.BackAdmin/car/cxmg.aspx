@@ -11,13 +11,6 @@
 </head>
 <body>
     <form id="form1" runat="server">
-    <%if (Admin.UserRole == Hx.Components.Enumerations.UserRoleType.销售员)
-      { %>
-      <div style="height:40px;display:block;line-height:40px;margin-bottom:5px;background:#21363e; text-align:right;color:#fff;">
-        您好，<asp:HyperLink ID="hyName" runat="server"  style="color:#fff;"></asp:HyperLink> <a href="/logout.aspx" target="_parent" style="color:#fff;">[退出]</a> <a href="/user/changewd.aspx" style="color:#fff;">[修改密码]</a> <a href="/user/adminedit.aspx" target="_blank" style="color:#fff;">[完善信息]</a>
-      </div>
-      <%} %>
-    <div>
     <div class="ht_main">
         <table width="400" border="0" cellspacing="0" cellpadding="0" class="biaoge2">
             <asp:Repeater ID="rptData" runat="server">
@@ -46,6 +39,8 @@
                         <td>
                             <a href="cxedit.aspx?id=<%#Eval("ID") %>&from=<%=CurrentUrl %>">
                                 管理</a>
+                            <a href="carmodeledit.aspx?bid=<%#Eval("ID") %>">
+                                新增车型</a>
                         </td>
                     </tr>
                 </ItemTemplate>

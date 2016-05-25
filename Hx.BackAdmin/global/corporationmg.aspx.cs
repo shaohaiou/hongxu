@@ -8,11 +8,29 @@ using Hx.Components.BasePage;
 using Hx.Car;
 using Hx.Tools;
 using Hx.Car.Entity;
+using Hx.Components.Web;
 
 namespace Hx.BackAdmin.global
 {
     public partial class corporationmg : AdminBase
     {
+        protected override void Check()
+        {
+            if (!HXContext.Current.AdminCheck)
+            {
+                Response.Redirect("~/Login.aspx");
+                return;
+            }
+            if (!Admin.Administrator
+                && ((int)Admin.UserRole & (int)Components.Enumerations.UserRoleType.车型管理员) == 0)
+            {
+                Response.Clear();
+                Response.Write("您没有权限操作！");
+                Response.End();
+                return;
+            }
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -27,6 +45,9 @@ namespace Hx.BackAdmin.global
             rptcarbrand.DataBind();
             rptCorporation.DataSource = Corporations.Instance.GetList(true);
             rptCorporation.DataBind();
+
+            if (!Admin.Administrator)
+                btnSubmit.Visible = false;
         }
 
         protected void rptCorporation_ItemDataBound(object sender, RepeaterItemEventArgs e)

@@ -7,7 +7,37 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>购车审核单</title>
     <link href=<%=ResourceServer%>/css/admin.css rel="stylesheet" type="text/css" />
+    <script src=<%=ResourceServer%>/js/jquery-1.3.2.min.js type="text/javascript"></script>
+    <script src=<%=ResourceServer%>/js/jquery-ui-1.7.3.custom.min.js type="text/javascript"></script>
+    <link href=<%=ResourceServer%>/css/newstart/jquery-ui-1.7.3.custom.css rel="stylesheet" type="text/css" />
     <script language="javascript">
+        var diagwyfw;
+        var diagqcyp;
+        $(function () {
+            var diagwyfw = $("#showwyfw"); //弹出区域显示框
+            diagwyfw.dialog({
+                width: 250,
+                modal: true,
+                resizable: false,
+                autoOpen: false,
+                title: '无忧服务项'
+            });
+            var diagqcyp = $("#showqcyp"); //弹出区域显示框
+            diagqcyp.dialog({
+                width: 250,
+                modal: true,
+                resizable: false,
+                autoOpen: false,
+                title: '汽车用品详情'
+            });
+
+            $(".wyfw").click(function () {
+                diagwyfw.dialog("open");
+            });
+            $(".qcyp").click(function () {
+                diagqcyp.dialog("open");
+            });
+        });
         function printme() {
             var bodyhtml = document.body.innerHTML;
             document.body.innerHTML = document.getElementById('printframe').innerHTML;
@@ -24,6 +54,8 @@
         td{word-break:break-all;position: relative;}
         .paper{width:1000px;margin:10px auto;background:#fff; padding-top: 24px;}
         .shadow{ box-shadow: 0 0 3px #000;}
+        .wyfw,.qcyp{cursor:pointer;}
+        .wyfw:hover,.qcyp:hover{text-decoration:underline;}
     </style>
     <style type="text/css" media="print">
         @media Print
@@ -105,11 +137,11 @@
                                 <td class="bold" style="width:30px">元</td>
                             </tr>
                             <tr style="height:28px;">
-                                <td><span class="blockinline bold">汽车用品：</span><span style="width: 114px;line-height:18px;" class="bb blockinline tr"><%= CQ.CarQuotationType == Hx.Car.Enum.CarQuotationType.金融购车 ? "&nbsp;" : (string.IsNullOrEmpty(CQ.ChoicestGoods) ? "&nbsp;" : CQ.ChoicestGoodsPrice)%></span></td>
+                                <td><span class="blockinline bold qcyp">汽车用品：</span><span style="width: 114px;line-height:18px;" class="bb blockinline tr"><%= CQ.CarQuotationType == Hx.Car.Enum.CarQuotationType.金融购车 ? "&nbsp;" : (string.IsNullOrEmpty(CQ.ChoicestGoods) ? "&nbsp;" : CQ.ChoicestGoodsPrice)%></span></td>
                                 <td class="bold" style="width:30px">元</td>
                             </tr>
                             <tr style="height:28px;">
-                                <td><span class="blockinline bold">无忧服务费：</span><span style="width: 96px;line-height:18px;" class="bb blockinline tr"><%= CQ.CarQuotationType == Hx.Car.Enum.CarQuotationType.金融购车 ? "&nbsp;" : (string.IsNullOrEmpty(CQ.Wyfw) ? "&nbsp;" : CQ.Wyfw)%></span></td>
+                                <td><span class="blockinline bold wyfw">无忧服务费：</span><span style="width: 96px;line-height:18px;" class="bb blockinline tr"><%= CQ.CarQuotationType == Hx.Car.Enum.CarQuotationType.金融购车 ? "&nbsp;" : (string.IsNullOrEmpty(CQ.Wyfw) ? "&nbsp;" : CQ.Wyfw)%></span></td>
                                 <td class="bold" style="width:30px">元</td>
                             </tr>
                             <tr style="height:28px;">
@@ -132,7 +164,7 @@
                                 <td colspan="2" class="bold" style="font-size:20px;">按揭：</td>
                             </tr>
                             <tr style="height:28px;">
-                                <td><span class="blockinline bold">车款首付：</span><span style="width: 154px;line-height:18px;" class="bb blockinline tr"><%= CQ.CarQuotationType == Hx.Car.Enum.CarQuotationType.全款购车 ? "&nbsp;" : (string.IsNullOrEmpty(CQ.TotalFirstPrinces) ? "&nbsp;" : CQ.TotalFirstPrinces.Replace("元", string.Empty).Trim())%></span></td>
+                                <td><span class="blockinline bold">车款首付：</span><span style="width: 154px;line-height:18px;" class="bb blockinline tr"><%= CQ.CarQuotationType == Hx.Car.Enum.CarQuotationType.全款购车 ? "&nbsp;" : (string.IsNullOrEmpty(CQ.FirstPayment) ? "&nbsp;" : CQ.FirstPayment.Replace("元", string.Empty).Trim())%></span></td>
                                 <td class="bold" style="width:30px">元</td>
                             </tr>
                             <tr style="height:28px;">
@@ -140,11 +172,11 @@
                                 <td class="bold" style="width:30px">年</td>
                             </tr>
                             <tr style="height:28px;">
-                                <td><span class="blockinline bold">代收公证费：</span><span style="width: 136px;line-height:18px;" class="bb blockinline tr">&nbsp;</span></td>
+                                <td><span class="blockinline bold">代收公证费：</span><span style="width: 136px;line-height:18px;" class="bb blockinline tr"><%= CQ.CarQuotationType == Hx.Car.Enum.CarQuotationType.全款购车 ? "&nbsp;" : (string.IsNullOrEmpty(CQ.Gzf) ? "&nbsp;" : CQ.Gzf)%></span></td>
                                 <td class="bold" style="width:30px">元</td>
                             </tr>
                             <tr style="height:28px;">
-                                <td><span class="blockinline bold">代收资信调查费：</span><span style="width: 98px;line-height:18px;" class="bb blockinline tr">&nbsp;</span></td>
+                                <td><span class="blockinline bold">代收资信调查费：</span><span style="width: 98px;line-height:18px;" class="bb blockinline tr"><%= CQ.CarQuotationType == Hx.Car.Enum.CarQuotationType.全款购车 ? "&nbsp;" : (string.IsNullOrEmpty(CQ.Dbfqlwf) ? "&nbsp;" : CQ.Dbfqlwf)%></span></td>
                                 <td class="bold" style="width:30px">元</td>
                             </tr>
                             <tr style="height:28px;">
@@ -152,7 +184,7 @@
                                 <td class="bold" style="width:30px">元</td>
                             </tr>
                             <tr style="height:28px;">
-                                <td><span class="blockinline bold">无忧服务费：</span><span style="width: 136px;line-height:18px;" class="bb blockinline tr"><%= CQ.CarQuotationType == Hx.Car.Enum.CarQuotationType.全款购车 ? "&nbsp;" : (string.IsNullOrEmpty(CQ.Wyfw) ? "&nbsp;" : CQ.Wyfw)%></span></td>
+                                <td><span class="blockinline bold wyfw">无忧服务费：</span><span style="width: 136px;line-height:18px;" class="bb blockinline tr"><%= CQ.CarQuotationType == Hx.Car.Enum.CarQuotationType.全款购车 ? "&nbsp;" : (string.IsNullOrEmpty(CQ.Wyfw) ? "&nbsp;" : CQ.Wyfw)%></span></td>
                                 <td class="bold" style="width:30px">元</td>
                             </tr>
                             <tr style="height:28px;">
@@ -160,7 +192,7 @@
                                 <td class="bold" style="width:30px">元</td>
                             </tr>
                             <tr style="height:28px;">
-                                <td><span class="blockinline bold">汽车用品：</span><span style="width: 154px;line-height:18px;" class="bb blockinline tr"><%= CQ.CarQuotationType == Hx.Car.Enum.CarQuotationType.全款购车 ? "&nbsp;" : (string.IsNullOrEmpty(CQ.ChoicestGoods) ? "&nbsp;" : CQ.ChoicestGoodsPrice.Replace("元", string.Empty).Trim())%></span></td>
+                                <td><span class="blockinline bold qcyp">汽车用品：</span><span style="width: 154px;line-height:18px;" class="bb blockinline tr"><%= CQ.CarQuotationType == Hx.Car.Enum.CarQuotationType.全款购车 ? "&nbsp;" : (string.IsNullOrEmpty(CQ.ChoicestGoods) ? "&nbsp;" : CQ.ChoicestGoodsPrice.Replace("元", string.Empty).Trim())%></span></td>
                                 <td class="bold" style="width:30px">元</td>
                             </tr>
                             <tr style="height:28px;">
@@ -215,7 +247,7 @@
                                 <td class="bold" style="width:30px">&nbsp;</td>
                             </tr>
                             <tr style="height:28px;">
-                                <td>&nbsp;</td>
+                                <td><span style="line-height:18px;font-size:12px;" class="pl5 gray blockinline notprint"><%= string.IsNullOrEmpty(CQ.Qtfyms) ? "&nbsp;" : ("(" + CQ.Qtfyms + ")")%></span></td>
                                 <td class="bold" style="width:30px">&nbsp;</td>
                             </tr>
                             <tr style="height:28px;">
@@ -252,15 +284,37 @@
         <%} %>
         <%if (CQ.CheckStatus == 0 && CQ.JLCheckStatus == 0 && (((int)Admin.UserRole & (int)Hx.Components.Enumerations.UserRoleType.销售经理) > 0 || Admin.Administrator))
           { %>
-        <asp:TextBox runat="server" ID="txtJLCheckRemark" CssClass="srk3"></asp:TextBox> <asp:Button runat="server" ID="btnJLCheck" Text="审核通过" CssClass="an1" OnClick="btnJLCheck_Click" />
+        <asp:TextBox runat="server" ID="txtJLCheckRemark" CssClass="srk3" placeholder="销售经理审核意见"></asp:TextBox> <asp:Button runat="server" ID="btnJLCheck" Text="审核通过" CssClass="an1" OnClick="btnJLCheck_Click" />
         <%} %>
         <%if (CQ.CheckStatus == 0 && CQ.ZJLCheckStatus == 0 && (((int)Admin.UserRole & (int)Hx.Components.Enumerations.UserRoleType.总经理) > 0 || Admin.Administrator))
           { %>
-        <asp:TextBox runat="server" ID="txtZJLCheckRemark" CssClass="srk3"></asp:TextBox> <asp:Button runat="server" ID="btnZJLCheck" Text="审核通过" CssClass="an1" OnClick="btnZJLCheck_Click" />
+        <asp:TextBox runat="server" ID="txtZJLCheckRemark" CssClass="srk3" placeholder="总经理审核意见"></asp:TextBox> <asp:Button runat="server" ID="btnZJLCheck" Text="审核通过" CssClass="an1" OnClick="btnZJLCheck_Click" />
         <%} %>
         <input type="button" class="an1" value="打印" onclick="printme();" />
         </form>
     </div>
+    </div>
+    <div id="showwyfw" class="notprint" style="display: none">
+        <ul class="gl_k_nr" style="margin-left: 20px">
+            <asp:Repeater ID="rptWyfw" runat="server">
+                <ItemTemplate>
+                    <li style="width: 200px;">
+                        <span><%# Eval("Name") %></span><span style="color:Gray">(￥<%# Eval("Price") %>)</span>
+                    </li>
+                </ItemTemplate>
+            </asp:Repeater>
+        </ul>
+    </div>
+    <div id="showqcyp" class="notprint" style="display: none">
+        <ul class="gl_k_nr" style="margin-left: 20px">
+            <asp:Repeater ID="rptQcyp" runat="server">
+                <ItemTemplate>
+                    <li style="width: 200px;">
+                        <span><%# Eval("Name") %></span><span style="color:Gray">(￥<%# Eval("Price") %>)</span>
+                    </li>
+                </ItemTemplate>
+            </asp:Repeater>
+        </ul>
     </div>
 </body>
 </html>

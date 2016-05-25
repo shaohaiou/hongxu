@@ -536,7 +536,7 @@ namespace Hx.Car.Entity
         public string Lyfxj { get; set; }
 
         /// <summary>
-        /// 代办分期付款手续费、劳务费
+        /// 代收资信调查费
         /// </summary>
         public string Dbfqlwf { get; set; }
 
@@ -549,6 +549,11 @@ namespace Hx.Car.Entity
         /// 调查费
         /// </summary>
         public string Dcf { get; set; }
+
+        /// <summary>
+        /// 代收公证费
+        /// </summary>
+        public string Gzf { get; set; }
 
         /// <summary>
         /// 首付金额合计

@@ -67,8 +67,20 @@ namespace Hx.BackAdmin
                                 Response.Redirect("car/carquotation.aspx");
                             else if (admin.UserRole == Components.Enumerations.UserRoleType.财务出纳)
                                 Response.Redirect("car/carquotationmg.aspx");
-                            else if (admin.UserRole == Components.Enumerations.UserRoleType.车型管理员)
-                                Response.Redirect("car/cxmg.aspx");
+                            else if (Admin.UserRole == Components.Enumerations.UserRoleType.总经理 && !string.IsNullOrEmpty(Admin.OAID))
+                            {
+                                if (Admin.Password == EncryptString.MD5("123456"))
+                                {
+                                    Response.Redirect("~/user/changewd.aspx");
+                                }
+                                else
+                                {
+                                    string nm = Admin.Name;
+                                    int Id = DataConvert.SafeInt(Admin.OAID);
+                                    int mn = (DateTime.Now.Year + DateTime.Now.Month + DateTime.Now.Day) * Id * 3;
+                                    Response.Redirect("~/dayreport/main_i.aspx?Nm=" + nm + "&Id=" + Id + "&Mm=" + mn);
+                                }
+                            }
                             else
                                 Response.Redirect("index.aspx");
                         }

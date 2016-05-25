@@ -81,6 +81,16 @@ namespace Hx.Components.Entity
             set { SetExtendedAttribute("Corporation", value); }
         }
 
+        /// <summary>
+        /// OA标识
+        /// </summary>
+        [JsonIgnore]
+        public string OAID
+        {
+            get { return GetString("OAID", ""); }
+            set { SetExtendedAttribute("OAID", value); }
+        }
+
         #endregion Model
     }
 }

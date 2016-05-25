@@ -49,6 +49,7 @@ namespace Hx.BackAdmin.user
                     int pagesize = GetInt("pagesize", 10);
                     int total = 0;
                     List<AdminInfo> adminlist = Admins.Instance.GetUsers(Admin.Administrator ? "-1" : Admin.Corporation, role);
+                    adminlist = adminlist.FindAll(l=>!l.Administrator);
                     if (GetInt("corp") > 0)
                         adminlist = adminlist.FindAll(l => l.Corporation == GetString("corp"));
                     if (!string.IsNullOrEmpty(GetString("username")))

@@ -84,3 +84,24 @@ function copyToClipboard(txt) {
         alert("您使用的浏览器暂不支持复制功能，请使用Ctrl+C或者鼠标右键。");
     }
 }
+
+function showLoading(msg) {
+    if ($(".overlay").length == 0) {
+        var html = "<div class=\"overlay\"></div>";
+        $("body").append(html);
+    }
+    if ($(".showbox").length == 0) {
+        var html = "<div id=\"AjaxLoading\" class=\"showbox\">"
+         + "<div class=\"loadingWord\"><img src=\"/images/waiting.gif\">" + msg + "</div>"
+         + "</div>";
+        $("body").append(html);
+    }
+
+    $(".overlay").css({ 'display': 'block', 'opacity': '0.8' });
+    $(".showbox").css({ 'margin-top': '200px', 'opacity': '1' });
+}
+
+function closeLoading() {
+    $(".overlay").remove();
+    $(".showbox").remove();
+}

@@ -92,6 +92,7 @@
 <body>
     <form id="form1" runat="server">
     <div class="ht_main">
+        <%if(Admin.Administrator){ %>
         <ul class="xnav">
             <li><a href="sybxmg.aspx">商业保险</a></li>
             <li><a href="bankingmg.aspx">金融方案</a></li>
@@ -100,6 +101,7 @@
             <li><a href="bankmg.aspx">银行</a></li>
             <li class="current"><a href="corporationmg.aspx">公司管理</a></li>
         </ul>
+        <%} %>
         <table width="500" border="0" cellspacing="0" cellpadding="0" class="biaoge2" id="tblbank">
             <asp:Repeater ID="rptCorporation" runat="server" OnItemDataBound="rptCorporation_ItemDataBound">
                 <HeaderTemplate>

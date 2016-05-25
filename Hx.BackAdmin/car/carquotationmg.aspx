@@ -61,6 +61,9 @@
             <asp:Repeater ID="rptCarQuotation" runat="server">
                 <HeaderTemplate>
                     <tr class="bgbt">
+                        <td>
+                            操作
+                        </td>
                         <td class="w60">
                             客户姓名
                         </td>
@@ -91,13 +94,13 @@
                         <td class="w120">
                             复核时间
                         </td>
-                        <td>
-                            操作
-                        </td>
                     </tr>
                 </HeaderTemplate>
                 <ItemTemplate>
                     <tr>
+                        <td class="lan5x">
+                            <a class="btndel" href="quotationcheck.aspx?id=<%#Eval("ID") %>" target="_blank"><%# Eval("CheckStatus").ToString() == "0" ? "审核" : "查看"%></a>
+                        </td>
                         <td>
                             <%#Eval("CustomerName")%>
                         </td>
@@ -127,9 +130,6 @@
                         </td>
                         <td>
                             <%#Eval("CheckTime")%>
-                        </td>
-                        <td class="lan5x">
-                            <a class="btndel" href="quotationcheck.aspx?id=<%#Eval("ID") %>" target="_blank"><%# Eval("CheckStatus").ToString() == "0" ? "审核" : "查看"%></a>
                         </td>
                     </tr>
                 </ItemTemplate>

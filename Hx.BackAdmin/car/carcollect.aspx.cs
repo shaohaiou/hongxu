@@ -863,8 +863,6 @@ namespace Hx.BackAdmin.car
             car.cNsys = hdnInnerColor.Value;
 
             Cars.Instance.Add(car);
-            Cars.Instance.ReloadAllCarList();
-            Cars.Instance.ReloadCarListBycChangs();
 
             WriteSuccessMessage("保存成功", "数据已经成功保存！", string.IsNullOrEmpty(FromUrl) ? "~/car/carcollect.aspx" : FromUrl);
         }

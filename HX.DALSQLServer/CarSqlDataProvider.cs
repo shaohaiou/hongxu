@@ -463,6 +463,7 @@ namespace HX.DALSQLServer
                 new SqlParameter("@Dbfqlwf",entity.Dbfqlwf),
                 new SqlParameter("@Zxf",entity.Zxf),
                 new SqlParameter("@Dcf",entity.Dcf),
+                new SqlParameter("@Gzf",entity.Gzf),
                 new SqlParameter("@Zkxs",entity.Zkxs),
                 new SqlParameter("@Sztb",entity.Sztb),
                 new SqlParameter("@Blcd",entity.Blcd),

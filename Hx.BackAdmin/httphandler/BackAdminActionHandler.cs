@@ -10,6 +10,7 @@ using Hx.Car;
 using Hx.Components;
 using Hx.Components.Entity;
 using Hx.Tools;
+using Hx.Car.Entity;
 
 namespace Hx.BackAdmin.HttpHandler
 {
@@ -44,6 +45,14 @@ namespace Hx.BackAdmin.HttpHandler
                 {
                     RefreshBackadminCache();
                 }
+                else if (action == "updateseriesname") //修改车系名称
+                {
+                    UpdateSeriesname();
+                }
+                else if (action == "updatecxmc") //修改车型名称
+                {
+                    UpdateCxmc();
+                }
                 else
                 {
                     result = string.Format(result, "fail", "非法操作");
@@ -72,6 +81,47 @@ namespace Hx.BackAdmin.HttpHandler
                 result = string.Format(result, "success", "");
             }
             catch { result = string.Format(result, "fail", "执行失败"); }
+        }
+
+        private void UpdateSeriesname()
+        {
+            try
+            {
+                string bname = WebHelper.GetString("bname");
+                string sname = WebHelper.GetString("sname");
+                string snameold = WebHelper.GetString("snameold");
+
+                List<CarInfo> clist = Cars.Instance.GetCarListBycChangs(bname,true);
+                clist = clist.FindAll(c=>c.cCxmc.StartsWith(snameold + " "));
+                foreach (CarInfo entity in clist)
+                {
+                    entity.cCxmc = sname + entity.cCxmc.Substring(snameold.Length);
+                    Cars.Instance.Update(entity, false);
+                }
+                result = string.Format(result, "success", "");
+            }
+            catch
+            {
+                result = string.Format(result, "fail", "执行失败");
+            }
+        }
+
+        private void UpdateCxmc()
+        {
+            try
+            {
+                int id = WebHelper.GetInt("id");
+                string mname = WebHelper.GetString("mname");
+                CarInfo car = Cars.Instance.GetCarInfo(id,true);
+
+                car.cCxmc = mname;
+                Cars.Instance.Update(car, false);
+                result = string.Format(result, "success", "");
+            }
+            catch
+            {
+                result = string.Format(result, "fail", "执行失败");
+            }
         }
     }
 

@@ -98,6 +98,36 @@
     <Content Include="css\card.css" />
     <Content Include="css\escpg.css" />
     <Content Include="css\gb61.css" />
+    <Content Include="css\newstart\images\ui-bg_flat_55_999999_40x100.png" />
+    <Content Include="css\newstart\images\ui-bg_flat_75_aaaaaa_40x100.png" />
+    <Content Include="css\newstart\images\ui-bg_glass_45_0078ae_1x400.png" />
+    <Content Include="css\newstart\images\ui-bg_glass_55_f8da4e_1x400.png" />
+    <Content Include="css\newstart\images\ui-bg_glass_75_79c9ec_1x400.png" />
+    <Content Include="css\newstart\images\ui-bg_gloss-wave_45_e14f1c_500x100.png" />
+    <Content Include="css\newstart\images\ui-bg_gloss-wave_50_6eac2c_500x100.png" />
+    <Content Include="css\newstart\images\ui-bg_gloss-wave_75_2191c0_500x100.png" />
+    <Content Include="css\newstart\images\ui-bg_inset-hard_100_fcfdfd_1x100.png" />
+    <Content Include="css\newstart\images\ui-icons_0078ae_256x240.png" />
+    <Content Include="css\newstart\images\ui-icons_056b93_256x240.png" />
+    <Content Include="css\newstart\images\ui-icons_222222_256x240.png" />
+    <Content Include="css\newstart\images\ui-icons_454545_256x240.png" />
+    <Content Include="css\newstart\images\ui-icons_d8e7f3_256x240.png" />
+    <Content Include="css\newstart\images\ui-icons_e0fdff_256x240.png" />
+    <Content Include="css\newstart\images\ui-icons_f5e175_256x240.png" />
+    <Content Include="css\newstart\images\ui-icons_f7a50d_256x240.png" />
+    <Content Include="css\newstart\images\ui-icons_fcd113_256x240.png" />
+    <Content Include="css\newstart\jquery-ui-1.7.3.custom.css" />
+    <Content Include="css\newstart\ui.accordion.css" />
+    <Content Include="css\newstart\ui.all.css" />
+    <Content Include="css\newstart\ui.base.css" />
+    <Content Include="css\newstart\ui.core.css" />
+    <Content Include="css\newstart\ui.datepicker.css" />
+    <Content Include="css\newstart\ui.dialog.css" />
+    <Content Include="css\newstart\ui.progressbar.css" />
+    <Content Include="css\newstart\ui.resizable.css" />
+    <Content Include="css\newstart\ui.slider.css" />
+    <Content Include="css\newstart\ui.tabs.css" />
+    <Content Include="css\newstart\ui.theme.css" />
     <Content Include="css\spectrum.css" />
     <Content Include="css\style.css" />
     <Content Include="css\jituanvote.css" />
@@ -157,6 +187,9 @@
     <Content Include="images\chabei.jpg" />
     <Content Include="images\check.gif" />
     <Content Include="images\color_mb.png" />
+    <Content Include="images\del.png" />
+    <Content Include="images\edit.png" />
+    <Content Include="images\editb.png" />
     <Content Include="images\fm.jpg" />
     <Content Include="images\fuhao.gif" />
     <Content Include="images\glk.gif" />
@@ -181,6 +214,8 @@
     <Content Include="images\msgr.png" />
     <Content Include="images\nt.jpg" />
     <Content Include="images\rose.png" />
+    <Content Include="images\save.png" />
+    <Content Include="images\saveb.png" />
     <Content Include="images\sj.gif" />
     <Content Include="images\sj2.gif" />
     <Content Include="images\waiting.gif" />
@@ -414,7 +449,10 @@
     <Content Include="login.aspx" />
     <Content Include="logout.aspx" />
     <Content Include="main.aspx" />
+    <Content Include="main_x.aspx" />
     <Content Include="message\showmessage.aspx" />
+    <Content Include="main_s.aspx" />
+    <Content Include="navigation.aspx" />
     <Content Include="test.aspx" />
     <Content Include="top.aspx" />
     <Content Include="user\adminedit.aspx" />
@@ -907,12 +945,33 @@
     <Compile Include="main.aspx.designer.cs">
       <DependentUpon>main.aspx</DependentUpon>
     </Compile>
+    <Compile Include="main_x.aspx.cs">
+      <DependentUpon>main_x.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="main_x.aspx.designer.cs">
+      <DependentUpon>main_x.aspx</DependentUpon>
+    </Compile>
     <Compile Include="message\showmessage.aspx.cs">
       <DependentUpon>showmessage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="message\showmessage.aspx.designer.cs">
       <DependentUpon>showmessage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="main_s.aspx.cs">
+      <DependentUpon>main_s.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="main_s.aspx.designer.cs">
+      <DependentUpon>main_s.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="navigation.aspx.cs">
+      <DependentUpon>navigation.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="navigation.aspx.designer.cs">
+      <DependentUpon>navigation.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="test.aspx.cs">

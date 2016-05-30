@@ -99,18 +99,20 @@ namespace Hx.Components
         /// <param name="accesstoken">通信密钥</param>
         /// <param name="openid">用户标识</param>
         /// <returns></returns>
-        public Dictionary<string, string> GetOpeninfo(string accesstoken, string openid)
+        public Dictionary<string, object> GetOpeninfo(string accesstoken, string openid)
         {
             string url_openinfo = string.Format("https://api.weixin.qq.com/cgi-bin/user/info?access_token={0}&openid={1}&lang=zh_CN"
                             , accesstoken
                             , openid);
             string str_openinfo = Http.GetPageByWebClientUTF8(url_openinfo);
-            Dictionary<string, string> dic_openinfo = new Dictionary<string, string>();
+            Dictionary<string, object> dic_openinfo = new Dictionary<string, object>();
             try
             {
-                dic_openinfo = json.Deserialize<Dictionary<string, string>>(str_openinfo);
+                dic_openinfo = json.Deserialize<Dictionary<string, object>>(str_openinfo);
             }
             catch { }
+            if (dic_openinfo.Count == 0)
+                dic_openinfo.Add("error",str_openinfo);
             return dic_openinfo;
         }
 

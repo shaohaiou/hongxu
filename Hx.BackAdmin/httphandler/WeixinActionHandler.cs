@@ -120,17 +120,17 @@ namespace Hx.BackAdmin.HttpHandler
                     string access_token = WeixinActs.Instance.GetAccessToken();
                     if (!string.IsNullOrEmpty(access_token))
                     {
-                        Dictionary<string, string> dic_openinfo = WeixinActs.Instance.GetOpeninfo(access_token, openid);
+                        Dictionary<string, object> dic_openinfo = WeixinActs.Instance.GetOpeninfo(access_token, openid);
                         if (!dic_openinfo.ContainsKey("errcode"))
                         {
                             WeixinActInfo entity = new WeixinActInfo();
                             entity.Openid = openid;
-                            entity.Nickname = dic_openinfo.ContainsKey("nickname") ? dic_openinfo["nickname"] : string.Empty;
+                            entity.Nickname = dic_openinfo.ContainsKey("nickname") ? (dic_openinfo["nickname"] as string) : string.Empty;
                             entity.Sex = dic_openinfo.ContainsKey("sex") ? DataConvert.SafeByte(dic_openinfo["sex"]) : (byte)0;
-                            entity.City = dic_openinfo.ContainsKey("city") ? dic_openinfo["city"] : string.Empty;
-                            entity.Country = dic_openinfo.ContainsKey("country") ? dic_openinfo["country"] : string.Empty;
-                            entity.Province = dic_openinfo.ContainsKey("province") ? dic_openinfo["province"] : string.Empty;
-                            entity.Subscribetime = dic_openinfo.ContainsKey("subscribe_time") ? dic_openinfo["subscribe_time"] : string.Empty;
+                            entity.City = dic_openinfo.ContainsKey("city") ? (dic_openinfo["city"] as string) : string.Empty;
+                            entity.Country = dic_openinfo.ContainsKey("country") ? (dic_openinfo["country"] as string) : string.Empty;
+                            entity.Province = dic_openinfo.ContainsKey("province") ? (dic_openinfo["province"] as string) : string.Empty;
+                            entity.Subscribetime = dic_openinfo.ContainsKey("subscribe_time") ? (dic_openinfo["subscribe_time"] as string) : string.Empty;
 
                             if (WeixinActs.Instance.Add(entity))
                                 result = string.Format(result, "success", "");
@@ -219,7 +219,7 @@ namespace Hx.BackAdmin.HttpHandler
 
                     if (!string.IsNullOrEmpty(access_token))
                     {
-                        Dictionary<string, string> dic_openinfo = WeixinActs.Instance.GetOpeninfo(access_token, openid);
+                        Dictionary<string, object> dic_openinfo = WeixinActs.Instance.GetOpeninfo(access_token, openid);
                         if (!dic_openinfo.ContainsKey("errcode"))
                         {
                             int pid = DataConvert.SafeInt(id);
@@ -232,14 +232,14 @@ namespace Hx.BackAdmin.HttpHandler
                                 entity.AthleteID = pid;
                                 entity.AthleteName = pinfo.Name;
                                 entity.SerialNumber = pinfo.SerialNumber;
-                                entity.Voter = dic_openinfo.ContainsKey("nickname") ? dic_openinfo["nickname"] : string.Empty;
+                                entity.Voter = dic_openinfo.ContainsKey("nickname") ? (dic_openinfo["nickname"] as string) : string.Empty;
                                 entity.AddTime = DateTime.Now;
                                 entity.Openid = openid;
                                 entity.Nickname = entity.Voter;
                                 entity.Sex = dic_openinfo.ContainsKey("sex") ? DataConvert.SafeInt(dic_openinfo["sex"]) : 0;
-                                entity.City = dic_openinfo.ContainsKey("city") ? dic_openinfo["city"] : string.Empty;
-                                entity.Country = dic_openinfo.ContainsKey("country") ? dic_openinfo["country"] : string.Empty;
-                                entity.Province = dic_openinfo.ContainsKey("province") ? dic_openinfo["province"] : string.Empty;
+                                entity.City = dic_openinfo.ContainsKey("city") ? (dic_openinfo["city"] as string) : string.Empty;
+                                entity.Country = dic_openinfo.ContainsKey("country") ? (dic_openinfo["country"] as string) : string.Empty;
+                                entity.Province = dic_openinfo.ContainsKey("province") ? (dic_openinfo["province"] as string) : string.Empty;
 
                                 string dianzancode = string.Empty;
                                 lock (sync_helper)
@@ -296,7 +296,7 @@ namespace Hx.BackAdmin.HttpHandler
 
                     if (!string.IsNullOrEmpty(access_token))
                     {
-                        Dictionary<string, string> dic_openinfo = WeixinActs.Instance.GetOpeninfo(access_token, openid);
+                        Dictionary<string, object> dic_openinfo = WeixinActs.Instance.GetOpeninfo(access_token, openid);
                         if (!dic_openinfo.ContainsKey("errcode"))
                         {
                             int pid = DataConvert.SafeInt(id);
@@ -309,14 +309,14 @@ namespace Hx.BackAdmin.HttpHandler
                                 entity.AthleteID = pid;
                                 entity.AthleteName = pinfo.Name;
                                 entity.SerialNumber = pinfo.SerialNumber;
-                                entity.Voter = dic_openinfo.ContainsKey("nickname") ? dic_openinfo["nickname"] : string.Empty;
+                                entity.Voter = dic_openinfo.ContainsKey("nickname") ? (dic_openinfo["nickname"] as string) : string.Empty;
                                 entity.AddTime = DateTime.Now;
                                 entity.Openid = openid;
                                 entity.Nickname = entity.Voter;
                                 entity.Sex = dic_openinfo.ContainsKey("sex") ? DataConvert.SafeInt(dic_openinfo["sex"]) : 0;
-                                entity.City = dic_openinfo.ContainsKey("city") ? dic_openinfo["city"] : string.Empty;
-                                entity.Country = dic_openinfo.ContainsKey("country") ? dic_openinfo["country"] : string.Empty;
-                                entity.Province = dic_openinfo.ContainsKey("province") ? dic_openinfo["province"] : string.Empty;
+                                entity.City = dic_openinfo.ContainsKey("city") ? (dic_openinfo["city"] as string) : string.Empty;
+                                entity.Country = dic_openinfo.ContainsKey("country") ? (dic_openinfo["country"] as string) : string.Empty;
+                                entity.Province = dic_openinfo.ContainsKey("province") ? (dic_openinfo["province"] as string) : string.Empty;
 
                                 string dianzancode = string.Empty;
                                 lock (sync_helper)
@@ -591,7 +591,7 @@ namespace Hx.BackAdmin.HttpHandler
                     if (setting != null && setting.Switch == 1)
                     {
                         string accesstoken = WeixinActs.Instance.GetAccessToken(setting.AppID, setting.AppSecret);
-                        Dictionary<string, string> openinfo = WeixinActs.Instance.GetOpeninfo(accesstoken, openid);
+                        Dictionary<string, object> openinfo = WeixinActs.Instance.GetOpeninfo(accesstoken, openid);
                         if (setting.MustAttention == 1 && (!openinfo.Keys.Contains("subscribe") || openinfo["subscribe"] == "0"))
                         {
                             result = string.Format(result, "attention", string.Format("{0}|{1}", setting.AppName, setting.AppNumber));
@@ -664,7 +664,7 @@ namespace Hx.BackAdmin.HttpHandler
                                     {
                                         string username = string.Empty;
                                         if (openinfo.ContainsKey("nickname"))
-                                            username = openinfo["nickname"];
+                                            username = (openinfo["nickname"] as string);
 
                                         int maxrange = cardids.Count * 100 / setting.WinRate;
                                         Random r = new Random(DataConvert.SafeInt(DateTime.Now.ToString("ddmm") + DateTime.Now.Millisecond.ToString()));
@@ -793,7 +793,7 @@ namespace Hx.BackAdmin.HttpHandler
 
                     if (!string.IsNullOrEmpty(access_token))
                     {
-                        Dictionary<string, string> dic_openinfo = WeixinActs.Instance.GetOpeninfo(access_token, openid);
+                        Dictionary<string, object> dic_openinfo = WeixinActs.Instance.GetOpeninfo(access_token, openid);
                         if (!dic_openinfo.ContainsKey("errcode"))
                         {
                             int pid = DataConvert.SafeInt(id);
@@ -807,14 +807,14 @@ namespace Hx.BackAdmin.HttpHandler
                                 entity.AthleteID = pid;
                                 entity.AthleteName = pinfo.Name;
                                 entity.SerialNumber = pinfo.SerialNumber;
-                                entity.Voter = dic_openinfo.ContainsKey("nickname") ? dic_openinfo["nickname"] : string.Empty;
+                                entity.Voter = dic_openinfo.ContainsKey("nickname") ? (dic_openinfo["nickname"] as string) : string.Empty;
                                 entity.AddTime = DateTime.Now;
                                 entity.Openid = openid;
                                 entity.Nickname = entity.Voter;
                                 entity.Sex = dic_openinfo.ContainsKey("sex") ? DataConvert.SafeInt(dic_openinfo["sex"]) : 0;
-                                entity.City = dic_openinfo.ContainsKey("city") ? dic_openinfo["city"] : string.Empty;
-                                entity.Country = dic_openinfo.ContainsKey("country") ? dic_openinfo["country"] : string.Empty;
-                                entity.Province = dic_openinfo.ContainsKey("province") ? dic_openinfo["province"] : string.Empty;
+                                entity.City = dic_openinfo.ContainsKey("city") ? (dic_openinfo["city"] as string) : string.Empty;
+                                entity.Country = dic_openinfo.ContainsKey("country") ? (dic_openinfo["country"] as string) : string.Empty;
+                                entity.Province = dic_openinfo.ContainsKey("province") ? (dic_openinfo["province"] as string) : string.Empty;
 
                                 string dianzancode = string.Empty;
                                 lock (sync_helper)
@@ -872,7 +872,7 @@ namespace Hx.BackAdmin.HttpHandler
 
                     if (!string.IsNullOrEmpty(access_token))
                     {
-                        Dictionary<string, string> dic_openinfo = WeixinActs.Instance.GetOpeninfo(access_token, openid);
+                        Dictionary<string, object> dic_openinfo = WeixinActs.Instance.GetOpeninfo(access_token, openid);
                         if (!dic_openinfo.ContainsKey("errcode"))
                         {
                             int pid = DataConvert.SafeInt(id);
@@ -881,7 +881,7 @@ namespace Hx.BackAdmin.HttpHandler
                                 result = string.Format(result, "fail", "不存在此选手");
                             else
                             {
-                                string commenter = dic_openinfo.ContainsKey("nickname") ? dic_openinfo["nickname"] : string.Empty;
+                                string commenter = dic_openinfo.ContainsKey("nickname") ? (dic_openinfo["nickname"] as string) : string.Empty;
                                 VoteCommentInfo entity = new VoteCommentInfo()
                                 {
                                     AthleteID = pid,

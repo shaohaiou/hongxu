@@ -117,6 +117,8 @@ namespace Hx.BackAdmin.dayreport
 
         public static int FirstCellRowCount { get; set; }
 
+        public static int TowRowCount { get; set; }
+
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -165,6 +167,7 @@ namespace Hx.BackAdmin.dayreport
         {
             tblView.Attributes.Remove("style");
             FirstCellRowCount = 2;
+            TowRowCount = 5;
 
             DateTime day = DateTime.Today;
             DateTime day2 = DateTime.Today;
@@ -228,6 +231,10 @@ namespace Hx.BackAdmin.dayreport
             DataTable tblresult = new DataTable();
 
             tblresult.Columns.Add("公司");
+            tblresult.Columns.Add("录入");
+            tblresult.Columns.Add("差值");
+            tblresult.Columns.Add("差值合计");
+            tblresult.Columns.Add("未及时填报");
 
             List<CorporationInfo> corplist = Corporations.Instance.GetList(true);
             string[] corppower = hdnDayReportCorp.Value.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
@@ -263,13 +270,25 @@ namespace Hx.BackAdmin.dayreport
                     }
                 }
                 DataRow row = tblresult.NewRow();
-                row[0] = corplist[i].Name;
+                row["公司"] = corplist[i].Name;
+                row["录入"] = list.Count;
+                row["差值"] = list.Count - day2.Subtract(day).Days - 1; 
+                int subcount = 0;
+                int subcount1 = 0;
+                for (int j = 0; j <= day2.Subtract(day).Days; j++)
+                {
+                    subcount += list.FindAll(l => l.CreateTime > day && l.CreateTime < day.AddDays(j + 1) && DataConvert.SafeInt(l.DayUnique) >= DataConvert.SafeInt(day.ToString("yyyyMMdd")) && DataConvert.SafeInt(l.DayUnique) <= DataConvert.SafeInt(day.AddDays(j + 1).ToString("yyyyMMdd"))).Count - j - 1;
+                    subcount1 += list.FindAll(l => l.CreateTime > day.AddDays(j) && l.CreateTime < day.AddDays(j + 1) && DataConvert.SafeInt(l.DayUnique) >= DataConvert.SafeInt(day.AddDays(j).ToString("yyyyMMdd")) && DataConvert.SafeInt(l.DayUnique) <= DataConvert.SafeInt(day.AddDays(j + 1).ToString("yyyyMMdd"))).Count > 0 ? 0 : 1;
+                }
+                row["差值合计"] = subcount;
+                row["未及时填报"] = subcount1;
+
                 for (int j = 0; j < tbl.Rows.Count; j++)
                 {
                     if (CurrentDep == DayReportDep.财务部)
-                        row[j + 1] = tbl.Rows[j]["期初余额"].ToString() + "|" + tbl.Rows[j]["合计"].ToString();
+                        row[j + 5] = tbl.Rows[j]["期初余额"].ToString() + "|" + tbl.Rows[j]["合计"].ToString();
                     else
-                        row[j + 1] = tbl.Rows[j]["目标值"].ToString() + "|" + tbl.Rows[j]["合计"].ToString();
+                        row[j + 5] = tbl.Rows[j]["目标值"].ToString() + "|" + tbl.Rows[j]["合计"].ToString();
                 }
                 tblresult.Rows.Add(row);
             }
@@ -289,14 +308,18 @@ namespace Hx.BackAdmin.dayreport
             strb.AppendLine("<table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" id=\"tbData\" class=\"datatable\">");
             strb.Append("<tr class=\"bold tc bggray\">");
             strb.Append("<td class=\"w120\" rowspan=\"2\">公司</td>");
-            for (int i = 1; i < tbl.Columns.Count; i++)
+            strb.Append("<td class=\"w80\" rowspan=\"2\">录入</td>");
+            strb.Append("<td class=\"w80\" rowspan=\"2\">差值</td>");
+            strb.Append("<td class=\"w80\" rowspan=\"2\">差值合计</td>");
+            strb.Append("<td class=\"w100\" rowspan=\"2\">未及时填报</td>");
+            for (int i = 5; i < tbl.Columns.Count; i++)
             {
                 strb.AppendFormat("<td class=\"w160\" colspan=\"2\">{0}</td>", reg.IsMatch(tbl.Columns[i].ToString()) ? regreplace.Replace(tbl.Columns[i].ToString(), string.Empty) : tbl.Columns[i].ToString());
             }
             strb.Append("<td></td>");
             strb.Append("</tr>");
             strb.Append("<tr class=\"bold tc bggray\">");
-            for (int i = 1; i < tbl.Columns.Count; i++)
+            for (int i = 5; i < tbl.Columns.Count; i++)
             {
                 if (CurrentDep == DayReportDep.财务部)
                     strb.Append("<td class=\"w80\">期初余额</td>");
@@ -311,7 +334,11 @@ namespace Hx.BackAdmin.dayreport
             {
                 strb.Append("<tr class=\"tc\">");
                 strb.AppendFormat("<td class=\"bold bggray\">{0}</td>", tbl.Rows[i]["公司"]);
-                for (int j = 1; j < tbl.Columns.Count; j++)
+                strb.AppendFormat("<td>{0}</td>", tbl.Rows[i]["录入"]);
+                strb.AppendFormat("<td>{0}</td>", tbl.Rows[i]["差值"]);
+                strb.AppendFormat("<td>{0}</td>", tbl.Rows[i]["差值合计"]);
+                strb.AppendFormat("<td>{0}</td>", tbl.Rows[i]["未及时填报"]);
+                for (int j = 5; j < tbl.Columns.Count; j++)
                 {
                     string[] vals = tbl.Rows[i][tbl.Columns[j].ToString()].ToString().Split(new char[] { '|' }, StringSplitOptions.None);
                     strb.AppendFormat("<td class=\"w80\">{0}</td>", string.IsNullOrEmpty(vals[0]) ? "&nbsp;" : vals[0]);
@@ -6889,7 +6916,7 @@ namespace Hx.BackAdmin.dayreport
                     int colspan = 0;
                     if (reg_colspan.IsMatch(columnCollection[td].Groups[0].Value))
                         colspan = DataConvert.SafeInt(reg_colspan.Match(columnCollection[td].Groups[0].Value).Groups[1].Value) - 1;
-                    int colindex = td + colspancount + (i == 1 && FirstCellRowCount == 2 ? 1 : 0);
+                    int colindex = td + colspancount + (i == 1 && FirstCellRowCount == 2 ? (TowRowCount > 0 ? TowRowCount : 1) : 0);
                     ICell cell = row.CreateCell(colindex);
                     cell.SetCellValue(columnCollection[td].Groups[1].Value == "&nbsp;" ? string.Empty : columnCollection[td].Groups[1].Value);
 
@@ -6898,8 +6925,19 @@ namespace Hx.BackAdmin.dayreport
             }
             if (FirstCellRowCount == 2)
             {
-                CellRangeAddress cellRangeAddress = new CellRangeAddress(0, 1, 0, 0);
-                sheet1.AddMergedRegion(cellRangeAddress);
+                if (TowRowCount > 0)
+                {
+                    for (int i = 0; i < TowRowCount; i++)
+                    {
+                        CellRangeAddress cellRangeAddress = new CellRangeAddress(0, 1, i, i);
+                        sheet1.AddMergedRegion(cellRangeAddress);
+                    }
+                }
+                else
+                {
+                    CellRangeAddress cellRangeAddress = new CellRangeAddress(0, 1, 0, 0);
+                    sheet1.AddMergedRegion(cellRangeAddress);
+                }
             }
             colspancount = 0;
             rowContent = rowCollection[0].Value;

@@ -79,6 +79,7 @@ namespace Hx.BackAdmin.weixin
         {
             if (!IsPostBack)
             {
+
                 NeedAttention = false;
                 Code = GetString("code");
                 SID = GetInt("sid", 1);
@@ -94,8 +95,8 @@ namespace Hx.BackAdmin.weixin
                 if (!string.IsNullOrEmpty(Openid))
                 {
                     string accesstoken = WeixinActs.Instance.GetAccessToken(CurrentSetting.AppID, CurrentSetting.AppSecret);
-                    Dictionary<string, string> openinfo = WeixinActs.Instance.GetOpeninfo(accesstoken, Openid);
-                    if (!openinfo.Keys.Contains("subscribe") || openinfo["subscribe"] == "0")
+                    Dictionary<string, object> openinfo = WeixinActs.Instance.GetOpeninfo(accesstoken, Openid);
+                    if (!openinfo.Keys.Contains("subscribe") || (openinfo["subscribe"] as string) == "0")
                     {
                         NeedAttention = true;
                     }

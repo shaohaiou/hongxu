@@ -39,8 +39,8 @@ a{text-decoration:none;}
     .btnBelittle{color:Orange;}
     .commentmore{display:none;}
     
-    .btnDetail,.btnComment,.btnCommentMore{border:1px solid #003a45;padding:1% 2%;color:#003a45;}
-    .btnVote{border:1px solid Purple;padding:1% 2%;color:Purple;}
+    .btnDetail,.btnComment,.btnCommentMore{border:1px solid #003a45;padding:1% 2%;color:#003a45;border-radius: 5px;box-shadow: 1px 1px 1px #999;}
+    .btnVote{border:1px solid Purple;padding:1% 2%;color:Purple;border-radius: 5px;box-shadow: 1px 1px 1px #999;}
     .btnDetail1{border:2px solid Orange;padding:3% 6%;color:Orange;font-size:90%;cursor:auto;}
     .btnDetail2{border-bottom:4px solid Orange;padding:3% 10%;color:Black;font-size:90%;cursor:auto;}
 

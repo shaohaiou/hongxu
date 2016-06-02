@@ -90,8 +90,9 @@ namespace Hx.BackAdmin.weixin
             txtBallot.Text = pothunter.Ballot.ToString();
             txtIntroduce.Text = pothunter.Introduce;
             txtDeclare.Text = pothunter.Declare;
-            imgpic.Src = pothunter.PicPath;
-            hdimage_pic.Value = pothunter.PicPath; if (!string.IsNullOrEmpty(pothunter.IntroducePic1))
+            imgpic.Src = ImgServer + pothunter.PicPath;
+            hdimage_pic.Value = pothunter.PicPath; 
+            if (!string.IsNullOrEmpty(pothunter.IntroducePic1))
             {
                 imgpics1.Src = ImgServer + pothunter.IntroducePic1;
                 imgpics1.Attributes["val"] = ImgServer + pothunter.IntroducePic1;

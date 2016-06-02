@@ -125,12 +125,12 @@ namespace Hx.BackAdmin.HttpHandler
                         {
                             WeixinActInfo entity = new WeixinActInfo();
                             entity.Openid = openid;
-                            entity.Nickname = dic_openinfo.ContainsKey("nickname") ? (dic_openinfo["nickname"] as string) : string.Empty;
-                            entity.Sex = dic_openinfo.ContainsKey("sex") ? DataConvert.SafeByte(dic_openinfo["sex"]) : (byte)0;
-                            entity.City = dic_openinfo.ContainsKey("city") ? (dic_openinfo["city"] as string) : string.Empty;
-                            entity.Country = dic_openinfo.ContainsKey("country") ? (dic_openinfo["country"] as string) : string.Empty;
-                            entity.Province = dic_openinfo.ContainsKey("province") ? (dic_openinfo["province"] as string) : string.Empty;
-                            entity.Subscribetime = dic_openinfo.ContainsKey("subscribe_time") ? (dic_openinfo["subscribe_time"] as string) : string.Empty;
+                            entity.Nickname = dic_openinfo.ContainsKey("nickname") ? (dic_openinfo["nickname"].ToString()) : string.Empty;
+                            entity.Sex = dic_openinfo.ContainsKey("sex") ? DataConvert.SafeByte(dic_openinfo["sex"].ToString()) : (byte)0;
+                            entity.City = dic_openinfo.ContainsKey("city") ? (dic_openinfo["city"].ToString()) : string.Empty;
+                            entity.Country = dic_openinfo.ContainsKey("country") ? (dic_openinfo["country"].ToString()) : string.Empty;
+                            entity.Province = dic_openinfo.ContainsKey("province") ? (dic_openinfo["province"].ToString()) : string.Empty;
+                            entity.Subscribetime = dic_openinfo.ContainsKey("subscribe_time") ? (dic_openinfo["subscribe_time"].ToString()) : string.Empty;
 
                             if (WeixinActs.Instance.Add(entity))
                                 result = string.Format(result, "success", "");
@@ -232,14 +232,14 @@ namespace Hx.BackAdmin.HttpHandler
                                 entity.AthleteID = pid;
                                 entity.AthleteName = pinfo.Name;
                                 entity.SerialNumber = pinfo.SerialNumber;
-                                entity.Voter = dic_openinfo.ContainsKey("nickname") ? (dic_openinfo["nickname"] as string) : string.Empty;
+                                entity.Voter = dic_openinfo.ContainsKey("nickname") ? (dic_openinfo["nickname"].ToString()) : string.Empty;
                                 entity.AddTime = DateTime.Now;
                                 entity.Openid = openid;
                                 entity.Nickname = entity.Voter;
                                 entity.Sex = dic_openinfo.ContainsKey("sex") ? DataConvert.SafeInt(dic_openinfo["sex"]) : 0;
-                                entity.City = dic_openinfo.ContainsKey("city") ? (dic_openinfo["city"] as string) : string.Empty;
-                                entity.Country = dic_openinfo.ContainsKey("country") ? (dic_openinfo["country"] as string) : string.Empty;
-                                entity.Province = dic_openinfo.ContainsKey("province") ? (dic_openinfo["province"] as string) : string.Empty;
+                                entity.City = dic_openinfo.ContainsKey("city") ? (dic_openinfo["city"].ToString()) : string.Empty;
+                                entity.Country = dic_openinfo.ContainsKey("country") ? (dic_openinfo["country"].ToString()) : string.Empty;
+                                entity.Province = dic_openinfo.ContainsKey("province") ? (dic_openinfo["province"].ToString()) : string.Empty;
 
                                 string dianzancode = string.Empty;
                                 lock (sync_helper)
@@ -309,14 +309,14 @@ namespace Hx.BackAdmin.HttpHandler
                                 entity.AthleteID = pid;
                                 entity.AthleteName = pinfo.Name;
                                 entity.SerialNumber = pinfo.SerialNumber;
-                                entity.Voter = dic_openinfo.ContainsKey("nickname") ? (dic_openinfo["nickname"] as string) : string.Empty;
+                                entity.Voter = dic_openinfo.ContainsKey("nickname") ? (dic_openinfo["nickname"].ToString()) : string.Empty;
                                 entity.AddTime = DateTime.Now;
                                 entity.Openid = openid;
                                 entity.Nickname = entity.Voter;
                                 entity.Sex = dic_openinfo.ContainsKey("sex") ? DataConvert.SafeInt(dic_openinfo["sex"]) : 0;
-                                entity.City = dic_openinfo.ContainsKey("city") ? (dic_openinfo["city"] as string) : string.Empty;
-                                entity.Country = dic_openinfo.ContainsKey("country") ? (dic_openinfo["country"] as string) : string.Empty;
-                                entity.Province = dic_openinfo.ContainsKey("province") ? (dic_openinfo["province"] as string) : string.Empty;
+                                entity.City = dic_openinfo.ContainsKey("city") ? (dic_openinfo["city"].ToString()) : string.Empty;
+                                entity.Country = dic_openinfo.ContainsKey("country") ? (dic_openinfo["country"].ToString()) : string.Empty;
+                                entity.Province = dic_openinfo.ContainsKey("province") ? (dic_openinfo["province"].ToString()) : string.Empty;
 
                                 string dianzancode = string.Empty;
                                 lock (sync_helper)
@@ -592,7 +592,7 @@ namespace Hx.BackAdmin.HttpHandler
                     {
                         string accesstoken = WeixinActs.Instance.GetAccessToken(setting.AppID, setting.AppSecret);
                         Dictionary<string, object> openinfo = WeixinActs.Instance.GetOpeninfo(accesstoken, openid);
-                        if (setting.MustAttention == 1 && (!openinfo.Keys.Contains("subscribe") || openinfo["subscribe"] == "0"))
+                        if (setting.MustAttention == 1 && (!openinfo.Keys.Contains("subscribe") || openinfo["subscribe"].ToString() == "0"))
                         {
                             result = string.Format(result, "attention", string.Format("{0}|{1}", setting.AppName, setting.AppNumber));
                             return;
@@ -664,7 +664,7 @@ namespace Hx.BackAdmin.HttpHandler
                                     {
                                         string username = string.Empty;
                                         if (openinfo.ContainsKey("nickname"))
-                                            username = (openinfo["nickname"] as string);
+                                            username = (openinfo["nickname"].ToString());
 
                                         int maxrange = cardids.Count * 100 / setting.WinRate;
                                         Random r = new Random(DataConvert.SafeInt(DateTime.Now.ToString("ddmm") + DateTime.Now.Millisecond.ToString()));
@@ -807,14 +807,14 @@ namespace Hx.BackAdmin.HttpHandler
                                 entity.AthleteID = pid;
                                 entity.AthleteName = pinfo.Name;
                                 entity.SerialNumber = pinfo.SerialNumber;
-                                entity.Voter = dic_openinfo.ContainsKey("nickname") ? (dic_openinfo["nickname"] as string) : string.Empty;
+                                entity.Voter = dic_openinfo.ContainsKey("nickname") ? (dic_openinfo["nickname"].ToString()) : string.Empty;
                                 entity.AddTime = DateTime.Now;
                                 entity.Openid = openid;
                                 entity.Nickname = entity.Voter;
                                 entity.Sex = dic_openinfo.ContainsKey("sex") ? DataConvert.SafeInt(dic_openinfo["sex"]) : 0;
-                                entity.City = dic_openinfo.ContainsKey("city") ? (dic_openinfo["city"] as string) : string.Empty;
-                                entity.Country = dic_openinfo.ContainsKey("country") ? (dic_openinfo["country"] as string) : string.Empty;
-                                entity.Province = dic_openinfo.ContainsKey("province") ? (dic_openinfo["province"] as string) : string.Empty;
+                                entity.City = dic_openinfo.ContainsKey("city") ? (dic_openinfo["city"].ToString()) : string.Empty;
+                                entity.Country = dic_openinfo.ContainsKey("country") ? (dic_openinfo["country"].ToString()) : string.Empty;
+                                entity.Province = dic_openinfo.ContainsKey("province") ? (dic_openinfo["province"].ToString()) : string.Empty;
 
                                 string dianzancode = string.Empty;
                                 lock (sync_helper)
@@ -881,7 +881,7 @@ namespace Hx.BackAdmin.HttpHandler
                                 result = string.Format(result, "fail", "不存在此选手");
                             else
                             {
-                                string commenter = dic_openinfo.ContainsKey("nickname") ? (dic_openinfo["nickname"] as string) : string.Empty;
+                                string commenter = dic_openinfo.ContainsKey("nickname") ? (dic_openinfo["nickname"].ToString()) : string.Empty;
                                 VoteCommentInfo entity = new VoteCommentInfo()
                                 {
                                     AthleteID = pid,

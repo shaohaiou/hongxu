@@ -67,7 +67,7 @@
                     <span class="ballot green">票数:<%= CurrentPothunterInfo.Ballot%></span> <span class="paiming green">
                         排名:<%= CurrentPothunterInfo.Order%></span>
                     <div class="opt">
-                        <a href="javascript:void(0);" class="btnComment">马上评论</a> <a href="javascript:toupiao(<%= CurrentPothunterInfo.ID %>);"
+                        <a href="javascript:void(0);" class="btnComment">马上留言</a> <a href="javascript:toupiao(<%= CurrentPothunterInfo.ID %>);"
                             class="btnVote hide">投票</a></div>
                 </div>
             </div>
@@ -116,16 +116,16 @@
                 </dt>
                 <dt id="posComment" name="posComment">
                     <dl>
-                        <a class="btnDetail2" href="javascript:void(0);">评论内容</a>
+                        <a class="btnDetail2" href="javascript:void(0);">留言内容</a>
                     </dl>
                     <dr>
-                       <a href="javascript:void(0);" class="btnComment fr" style="font-size:90%;">马上评论</a>
+                       <a href="javascript:void(0);" class="btnComment fr" style="font-size:90%;">马上留言</a>
                     </dr>
                 </dt>
                 <dt>
                     <div class="d-comment">
                         <div class="commenthead">
-                            最新评论</div>
+                            最新留言</div>
                         <table id="tblCommentFirstTwo" style="margin-bottom: 10px;">
                             <asp:Repeater runat="server" ID="rptCommentFirstTwo">
                                 <ItemTemplate>
@@ -156,7 +156,7 @@
                         </div>
                         <%} %>
                         <div class="commenthead" id="dvAllComment">
-                            全部评论<a class="fr btnCommentMore" href="javascript:void(0)">更多>></a></div>
+                            全部留言<a class="fr btnCommentMore" href="javascript:void(0)">更多>></a></div>
                         <div id="dvlComment">
                             <table id="tblComment">
                                 <asp:Repeater runat="server" ID="rptComment">
@@ -361,7 +361,7 @@
             $("#dvComment").fadeOut(200);
         });
 
-        //提交评论
+        //提交留言
         $("#btnCommentSubmit").click(function () {
             if ($.trim($("#txtComment").val()) != "") {
                 $.ajax({
@@ -384,8 +384,8 @@
                             + "<a href=\"javascript:void(0);\" class=\"btnBelittle\" val=\"" + id + "\">鸡蛋</a>(<span id=\"spBelittle" + id + "\">0</span>)"
                             + "</div></td></tr>");
                             $("#tblCommentFirstTwo").prepend($newrow);
-                            var comments = parseInt($("#txtComments").text().replace("被评论:", "")) + 1;
-                            $("#txtComments").text("被评论:" + comments);
+                            var comments = parseInt($("#txtComments").text().replace("被留言:", "")) + 1;
+                            $("#txtComments").text("被留言:" + comments);
 
                             $("html,body").animate({ scrollTop: $("#posComment").offset().top }, 500);
 
@@ -406,7 +406,7 @@
 
                 $("#dvComment").hide();
             } else {
-                $("#commentmsg").text("请输入评论内容");
+                $("#commentmsg").text("请输入留言内容");
                 setTimeout(function () {
                     $("#commentmsg").text("");
                 }, 1000);
@@ -422,7 +422,7 @@
             var id = $(this).attr("val");
             CommentBelittle(id);
         });
-        //更多评论
+        //更多留言
         $(".btnCommentMore").click(function () {
             GetCommentMore();
         });
@@ -478,7 +478,7 @@
     }
     function GetCommentMore() { 
         if(commentpageindex >= commentpagecount){
-            alert("没有更多评论了");
+            alert("没有更多留言了");
             return;
         }
         else{

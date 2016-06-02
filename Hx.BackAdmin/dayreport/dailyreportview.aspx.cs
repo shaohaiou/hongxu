@@ -4066,8 +4066,8 @@ namespace Hx.BackAdmin.dayreport
 
                 rows[9] = tbl.NewRow();
                 rows[9]["关键指标"] = "线索转化率";
-                rows[9]["目标"] = mbxzwlxszl == 0 ? string.Empty : Math.Round(mbdccdds * 100 / mbxzdccxszl, 1).ToString();
-                rows[9]["实际"] = hjxzwlxszl == 0 ? string.Empty : Math.Round(hjdccdds * 100 / hjxzdccxszl, 1).ToString();
+                rows[9]["目标"] = mbxzdccxszl == 0 ? string.Empty : Math.Round(mbdccdds * 100 / mbxzdccxszl, 1).ToString();
+                rows[9]["实际"] = hjxzdccxszl == 0 ? string.Empty : Math.Round(hjdccdds * 100 / hjxzdccxszl, 1).ToString();
                 rows[9]["详细"] = hjxzwlxszl == 0 ? string.Empty : string.Format("<br />({0}/{1})", Math.Round(hjdccdds, 0), Math.Round(hjxzdccxszl, 0));
 
                 rows[10] = tbl.NewRow();

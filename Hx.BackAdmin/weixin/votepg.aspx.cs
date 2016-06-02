@@ -18,7 +18,7 @@ namespace Hx.BackAdmin.weixin
         public string Openid { get; set; }
         public int SID { get; set; }
         protected int PageIndex = 1;
-        protected int PageSize = 30;
+        protected int PageSize = 100;
         protected int PageCount = 1;
         public bool NeedAttention { get; set; }
         private VoteSettingInfo currentsetting = null;
@@ -96,10 +96,8 @@ namespace Hx.BackAdmin.weixin
                 {
                     string accesstoken = WeixinActs.Instance.GetAccessToken(CurrentSetting.AppID, CurrentSetting.AppSecret);
                     Dictionary<string, object> openinfo = WeixinActs.Instance.GetOpeninfo(accesstoken, Openid);
-                    if (!openinfo.Keys.Contains("subscribe") || (openinfo["subscribe"] as string) == "0")
-                    {
+                    if (!openinfo.Keys.Contains("subscribe") || openinfo["subscribe"].ToString() == "0")
                         NeedAttention = true;
-                    }
                 }
                 LoadData();
             }

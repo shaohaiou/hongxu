@@ -48,6 +48,7 @@
         </div>
     </div>
     <form id="form1" runat="server">
+    <input type="hidden" runat="server" id="hdntest" />
     <div class="wrap">
         <div class="dad">
             <%if (CurrentSetting != null && !string.IsNullOrEmpty(CurrentSetting.PageHeadImg))
@@ -88,8 +89,8 @@
                                     <img src="../images/benzvote/xiangqing.png" alt="详情" /></a></span><span class="toupiao"><a
                                         href="javascript:void(0);" onclick="javascript:toupiao(<%# Eval("ID") %>,this);"><img
                                             src="../images/benzvote/toupiao.png" alt="投票" /></a></span><a href="javascript:void(0);"
-                                                class="btnComment hide" val="<%#Eval("ID") %>"> 评论</a> <a href="javascript:void(0);"
-                                                    class="btnCommentMore" val="<%#Eval("ID") %>">更多评论 </a>
+                                                class="btnComment hide" val="<%#Eval("ID") %>"> 留言</a> <a href="javascript:void(0);"
+                                                    class="btnCommentMore" val="<%#Eval("ID") %>">更多留言 </a>
                             </div>
                         </div>
                         <div class="d-comment" id="d-comment<%#Eval("ID") %>">
@@ -302,7 +303,7 @@
         $(".btnCommentMore").click(function () {
             location.href = "votepothunterdetail.aspx?id=" + $(this).attr("val") + "&sid=<%=SID %>&code=<%=Code %>&from=<%=CurrentUrl %>#dvAllComment";
         });
-        //提交评论
+        //提交留言
         $("#btnCommentSubmit").click(function () {
             if ($.trim($("#txtComment").val()) != "") {
                 $.ajax({
@@ -332,8 +333,8 @@
                             else {
                                 $("#tblCommentFirstOne" + $("#hdnCurrentid").val()).prepend($newrow);
                             }
-//                            var comments = parseInt($("#txtComments" + $("#hdnCurrentid").val()).text().replace("被评论:", "")) + 1;
-//                            $("#txtComments" + $("#hdnCurrentid").val()).text("被评论:" + comments);
+//                            var comments = parseInt($("#txtComments" + $("#hdnCurrentid").val()).text().replace("被留言:", "")) + 1;
+//                            $("#txtComments" + $("#hdnCurrentid").val()).text("被留言:" + comments);
 
                             $newrow.find(".btnPraise").click(function () {
                                 CommentPraise(id);
@@ -350,7 +351,7 @@
 
                 $("#dvComment").hide();
             } else {
-                $("#commentmsg").text("请输入评论内容");
+                $("#commentmsg").text("请输入留言内容");
                 setTimeout(function () {
                     $("#commentmsg").text("");
                 }, 1000);

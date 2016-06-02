@@ -21,6 +21,7 @@ namespace Hx.BackAdmin
             try
             {
                 double weather = DataConvert.SafeDouble(MangaCache.Get("weather"));
+                double weatherold = DataConvert.SafeDouble(MangaCache.Get("weatherold"));
                 if (weather == 0)
                 {
                     lock (sync_helper)
@@ -60,7 +61,12 @@ namespace Hx.BackAdmin
                             double[] ws = new double[] { curweather_zh, curweather_yahoo, curweather_ra };
 
                             weather = ws.Max();
+                            if (weatherold > weather && (weatherold - weather) > 5)
+                                weather = weatherold;
+                            else
+                                weatherold = weather;
                             MangaCache.Add("weather", weather, 60);
+                            MangaCache.Max("weatherold", weatherold);
                         }
                     }
                 }

@@ -20,6 +20,13 @@ namespace Hx.BackAdmin
         {
             try
             {
+                int temp = WebHelper.GetInt("temp");
+                if (temp > 0)
+                {
+                    MangaCache.Add("weather", temp, 60);
+                    MangaCache.Max("weatherold", temp);
+                    return;
+                }
                 double weather = DataConvert.SafeDouble(MangaCache.Get("weather"));
                 double weatherold = DataConvert.SafeDouble(MangaCache.Get("weatherold"));
                 if (weather == 0)

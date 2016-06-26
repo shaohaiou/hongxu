@@ -183,11 +183,12 @@ namespace Hx.Components.HttpHandler
             object[] o = new object[2];
             o[0] = b;
             o[1] = context.Request.Files[0].FileName;
-            string result = DynamicWebServices.InvokeWebService("http://" + context.Request.Url.Host + "/webservice/UploadServices.asmx", "CkeditorUpload", o).ToString();
+            //string result = DynamicWebServices.InvokeWebService("http://" + context.Request.Url.Host + "/webservice/UploadServices.asmx", "CkeditorUpload", o).ToString();
+            string result = DynamicWebServices.InvokeWebService(url + "/webservice/UploadServices.asmx", "CkeditorUpload", o).ToString();
             if (!string.IsNullOrEmpty(result))
             {
                 string callback = context.Request["CKEditorFuncNum"];
-                return "<script type=\"text/javascript\">window.parent.CKEDITOR.tools.callFunction(" + callback + ",'" + result + "','')</script>";
+                return "<script type=\"text/javascript\">window.parent.CKEDITOR.tools.callFunction(" + callback + ",'" + url + result + "','')</script>";
             }
             else
             {

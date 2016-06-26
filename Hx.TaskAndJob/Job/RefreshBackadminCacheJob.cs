@@ -50,7 +50,13 @@ namespace Hx.TaskAndJob.Job
                 double[] ws = new double[] { curweather_zh, curweather_yahoo, curweather_ra };
 
                 weather = ws.Max();
+                double weatherold = DataConvert.SafeDouble(MangaCache.Get("weatherold"));
+                if (weatherold > weather && (weatherold - weather) > 5)
+                    weather = weatherold;
+                else
+                    weatherold = weather;
                 MangaCache.Add("weather", weather, 120);
+                MangaCache.Max("weatherold", weatherold);
             }
             catch { }
         }

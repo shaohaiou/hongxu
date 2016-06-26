@@ -1360,7 +1360,7 @@
                                 本月机油套餐使用金额：
                             </td>
                             <td>
-                                <asp:TextBox runat="server" ID="txtNXCPbyjytcsyje" CssClass="srk6 tr number"></asp:TextBox><span class="gray pl10">当月来厂车辆中来使用此产品与售后结算（合同价）金额（万元）</span>
+                                <asp:TextBox runat="server" ID="txtNXCPbyjytcsyje" CssClass="srk6 tr number"></asp:TextBox><span class="gray pl10">当月来厂车辆中来使用此产品与售后结算（合同价）金额（元）</span>
                             </td>
                         </tr>
                         <tr>
@@ -1376,7 +1376,7 @@
                                 本月划痕无忧服务到期金额：
                             </td>
                             <td>
-                                <asp:TextBox runat="server" ID="txtNXCPbyhhwyfwdqje" CssClass="srk6 tr number"></asp:TextBox><span class="gray pl10">当月购买此产品到期的金额（万元）</span>
+                                <asp:TextBox runat="server" ID="txtNXCPbyhhwyfwdqje" CssClass="srk6 tr number"></asp:TextBox><span class="gray pl10">当月购买此产品到期的金额（元）</span>
                             </td>
                         </tr>
                         <tr>
@@ -1392,7 +1392,7 @@
                                 本月划痕无忧服务到期内赔付金额：
                             </td>
                             <td>
-                                <asp:TextBox runat="server" ID="txtNXCPbyhhwyfwdqnpfje" CssClass="srk6 tr number"></asp:TextBox><span class="gray pl10">当月到期购买此产品数量内赔付总金额（万元）</span>
+                                <asp:TextBox runat="server" ID="txtNXCPbyhhwyfwdqnpfje" CssClass="srk6 tr number"></asp:TextBox><span class="gray pl10">当月到期购买此产品数量内赔付总金额（元）</span>
                             </td>
                         </tr>
                         <tr>
@@ -1408,7 +1408,7 @@
                                 本月玻璃无忧服务到期金额：
                             </td>
                             <td>
-                                <asp:TextBox runat="server" ID="txtNXCPbyblwyfwdqje" CssClass="srk6 tr number"></asp:TextBox><span class="gray pl10">当月购买此产品到期的金额（万元）</span>
+                                <asp:TextBox runat="server" ID="txtNXCPbyblwyfwdqje" CssClass="srk6 tr number"></asp:TextBox><span class="gray pl10">当月购买此产品到期的金额（元）</span>
                             </td>
                         </tr>
                         <tr>
@@ -1424,7 +1424,7 @@
                                 本月玻璃无忧服务到期内赔付金额：
                             </td>
                             <td>
-                                <asp:TextBox runat="server" ID="txtNXCPbyblwyfwdqnpfje" CssClass="srk6 tr number"></asp:TextBox><span class="gray pl10">当月到期购买此产品数量内赔付总金额（万元）</span>
+                                <asp:TextBox runat="server" ID="txtNXCPbyblwyfwdqnpfje" CssClass="srk6 tr number"></asp:TextBox><span class="gray pl10">当月到期购买此产品数量内赔付总金额（元）</span>
                             </td>
                         </tr>
                         <tr>
@@ -1440,7 +1440,7 @@
                                 本月延保服务到期金额：
                             </td>
                             <td>
-                                <asp:TextBox runat="server" ID="txtNXCPbyybfwdqje" CssClass="srk6 tr number"></asp:TextBox><span class="gray pl10">当月购买此产品到期的金额（万元）</span>
+                                <asp:TextBox runat="server" ID="txtNXCPbyybfwdqje" CssClass="srk6 tr number"></asp:TextBox><span class="gray pl10">当月购买此产品到期的金额（元）</span>
                             </td>
                         </tr>
                         <tr>
@@ -1456,7 +1456,7 @@
                                 本月延保服务到期内赔付金额：
                             </td>
                             <td>
-                                <asp:TextBox runat="server" ID="txtNXCPbyybfwdqnpfje" CssClass="srk6 tr number"></asp:TextBox><span class="gray pl10">当月到期购买此产品数量内赔付总金额（万元）</span>
+                                <asp:TextBox runat="server" ID="txtNXCPbyybfwdqnpfje" CssClass="srk6 tr number"></asp:TextBox><span class="gray pl10">当月到期购买此产品数量内赔付总金额（元）</span>
                             </td>
                         </tr>
                         <%} %>

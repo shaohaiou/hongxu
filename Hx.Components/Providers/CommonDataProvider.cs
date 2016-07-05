@@ -966,6 +966,8 @@ namespace Hx.Components.Providers
 
         public abstract bool AddVoteRecordInfo(VoteRecordInfo entity);
 
+        public abstract void ClearVoteRecord(int sid);
+
         protected VoteRecordInfo PopulateVoteRecord(IDataReader reader)
         {
             VoteRecordInfo entity = new VoteRecordInfo

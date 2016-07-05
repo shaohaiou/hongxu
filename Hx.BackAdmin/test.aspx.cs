@@ -21,6 +21,7 @@ namespace Hx.BackAdmin
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            WeixinActs.Instance.GetVoteRecordList(1);
             //List<CardpackInfo> cardlist = WeixinActs.Instance.GetCardlist(3);
             if (Request.QueryString["t"] == "1")
             {

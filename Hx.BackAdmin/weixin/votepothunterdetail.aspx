@@ -15,6 +15,8 @@
     <script src="/js/jweixin-1.0.0.js" type="text/javascript"></script>
 </head>
 <body>
+    <%if (NeedAttention && CurrentSetting.ShowAppImg == 1)
+      { %>
     <div class="m-flay" id="attention" style="position: relative;">
         <div class="attention">
             <div class="attention-content">
@@ -25,6 +27,7 @@
             </div>
         </div>
     </div>
+    <%} %>
     <div class="dwrap">
         <%if (!string.IsNullOrEmpty(CurrentSetting.AD1Path))
           { %>
@@ -209,7 +212,7 @@
     var commentpagecount = <%=CommentPageCount %>;
 
     <%if(NeedAttention){ %>
-    if("<%=CurrentSetting.AttentionUrl %>" != ""){
+    if("<%=CurrentSetting.AttentionUrl %>" != "" && "<%=CurrentSetting.MustAttention %>" == 1){
         location.href = "<%=CurrentSetting.AttentionUrl %>";
     }else{
         $("#attention").show();
@@ -289,7 +292,7 @@
             var wxData = {
                 "imgUrl": '<%= ImgServer %><%=CurrentSetting == null ? string.Empty : CurrentSetting.ShareImgUrl %>',
                 "link": "<%=CurrentSetting == null ? string.Empty : CurrentSetting.ShareLinkUrl %>",
-                "desc": '<%=CurrentSetting == null ? string.Empty : CurrentSetting.ShareDesc %>',
+                "desc": '<%=CurrentSetting == null ? string.Empty : CurrentSetting.ShareDesc.Replace("\r\n",string.Empty) %>',
                 "title": "<%=CurrentSetting == null ? string.Empty : CurrentSetting.ShareTitle %>"
             };
 

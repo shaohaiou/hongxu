@@ -1717,29 +1717,21 @@ namespace Hx.Components
         /// 获取投票信息
         /// </summary>
         /// <returns></returns>
-        public Dictionary<string, DateTime> GetVoteRecordList(int sid)
+        public List<VoteRecordInfo> GetVoteRecordList(int sid)
         {
             string key = GlobalKey.VOTERECORDLIST + "_" + sid;
-            Dictionary<string, DateTime> result = MangaCache.Get(key) as Dictionary<string, DateTime>;
+            List<VoteRecordInfo> result = MangaCache.Get(key) as List<VoteRecordInfo>;
             if (result == null)
             {
                 lock (sync_votecache)
                 {
-                    result = MangaCache.Get(key) as Dictionary<string, DateTime>;
+                    result = MangaCache.Get(key) as List<VoteRecordInfo>;
                     if (result == null)
                     {
                         VoteRecordQuery query = new VoteRecordQuery();
                         query.SID = sid;
                         int recordcount = 0;
-                        List<VoteRecordInfo> blist = GetVoteRecordList(1, int.MaxValue, query, ref recordcount);
-                        result = new Dictionary<string, DateTime>();
-                        foreach (VoteRecordInfo v in blist)
-                        {
-                            if (!result.Keys.Contains(v.AthleteID + "_" + v.Openid))
-                                result.Add(v.AthleteID + "_" + v.Openid, v.AddTime);
-                            else if (v.AddTime > result[v.AthleteID + "_" + v.Openid])
-                                result[v.AthleteID + "_" + v.Openid] = v.AddTime;
-                        }
+                        result = GetVoteRecordList(1, int.MaxValue, query, ref recordcount);
                         MangaCache.Max(key, result);
                     }
                 }
@@ -1750,7 +1742,7 @@ namespace Hx.Components
 
         public void ReloadVoteRecordList(int sid)
         {
-            string key = GlobalKey.VOTERECORDLIST;
+            string key = GlobalKey.VOTERECORDLIST + "_" + sid;
             MangaCache.Remove(key);
             GetVoteRecordList(sid);
         }
@@ -1781,11 +1773,8 @@ namespace Hx.Components
             {
                 lock (sync_vote)
                 {
-                    Dictionary<string, DateTime> VoteRecords = GetVoteRecordList(vote.SID);
-                    if (VoteRecords.Keys.Contains(vote.AthleteID + "_" + vote.Openid))
-                        VoteRecords[vote.AthleteID + "_" + vote.Openid] = vote.AddTime;
-                    else
-                        VoteRecords.Add(vote.AthleteID + "_" + vote.Openid, vote.AddTime);
+                    List<VoteRecordInfo> VoteRecords = GetVoteRecordList(vote.SID);
+                    VoteRecords.Add(vote);
                     List<VoteRecordInfo> VoteRecordsCache = GetVoteRecordsCache(vote.SID);
                     VoteRecordsCache.Add(vote);
                 }
@@ -1809,22 +1798,22 @@ namespace Hx.Components
 
             lock (sync_vote)
             {
-                Dictionary<string, DateTime> VoteRecordList = GetVoteRecordList(sid);
+                List<VoteRecordInfo> VoteRecordList = GetVoteRecordList(sid);
                 if (VoteRecordList != null)
                 {
-                    List<KeyValuePair<string, DateTime>> votes = VoteRecordList.Where(b => b.Key.EndsWith("_" + openid) && b.Value > DateTime.Today).ToList();
-                    List<KeyValuePair<string, DateTime>> votesall = VoteRecordList.Where(b => b.Key.EndsWith("_" + openid)).ToList();
+                    List<VoteRecordInfo> votes = VoteRecordList.Where(b => b.Openid == openid && b.AddTime > DateTime.Today).ToList();
+                    List<VoteRecordInfo> votesall = VoteRecordList.Where(b => b.Openid == openid).ToList();
                     if (votes.Count > 0)
                     {
-                        if (votes.Exists(v => v.Key == (id + "_" + openid)) && setting.IsrepeatOnday == 0)
+                        if (votes.Exists(v => v.Openid == openid) && setting.IsrepeatOnday == 0)
                         {
                             return "您今日已经为他/她投过票了。";
                         }
-                        if (votesall.Exists(v => v.Key == (id + "_" + openid)) && setting.Isrepeat == 0)
+                        if (votesall.Exists(v => v.Openid == openid) && setting.Isrepeat == 0)
                         {
                             return "您已经为他/她投过票了。";
                         }
-                        DateTime ftime = votes.Min(b => b.Value);
+                        DateTime ftime = votes.Min(b => b.AddTime);
                         int minutes = setting == null ? 30 : setting.OverdueMinutes;
                         if (minutes > 0 && DateTime.Now.AddMinutes(-1 * minutes) > ftime)
                         {
@@ -1870,6 +1859,11 @@ namespace Hx.Components
             {
                 AddVoteRecordInfo(vote);
             }
+        }
+
+        public void ClearVoteRecord(int sid)
+        {
+            CommonDataProvider.Instance().ClearVoteRecord(sid);
         }
 
         #endregion

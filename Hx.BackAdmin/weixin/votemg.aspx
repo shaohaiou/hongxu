@@ -164,6 +164,14 @@
                 </tr>
                 <tr>
                     <td class="bg1">
+                        必须关注：
+                    </td>
+                    <td>
+                        <asp:CheckBox runat="server" ID="cbxMustAttention" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bg1">
                         关注引导页面：
                     </td>
                     <td>
@@ -172,7 +180,15 @@
                 </tr>
                 <tr>
                     <td class="bg1">
-                        公众号二维码图片：
+                        显示二维码：
+                    </td>
+                    <td>
+                        <asp:CheckBox runat="server" ID="cbxShowAppImg" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bg1 vt">
+                        公众号二维码：
                     </td>
                     <td>
                         <input id="hdnAppImg" runat="server" type="hidden" />
@@ -182,7 +198,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="bg1">
+                    <td class="bg1 vt">
                         宣传图：
                     </td>
                     <td>
@@ -290,7 +306,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="bg1">
+                    <td class="bg1 vt">
                         分享图片：
                     </td>
                     <td>
@@ -330,7 +346,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="bg1">
+                    <td class="bg1 vt">
                         广告位1图片：
                         <br />
                         <span style="color: Gray;">（内页上面1）</span>
@@ -351,7 +367,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="bg1">
+                    <td class="bg1 vt">
                         广告位2图片：
                         <br />
                         <span style="color: Gray;">（内页上面2）</span>
@@ -372,7 +388,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="bg1">
+                    <td class="bg1 vt">
                         广告位3图片：
                         <br />
                         <span style="color: Gray;">（首页底部位置）</span>
@@ -393,7 +409,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="bg1">
+                    <td class="bg1 vt">
                         广告位4图片：
                         <br />
                         <span style="color: Gray;">（内页中间位置）</span>
@@ -414,7 +430,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="bg1">
+                    <td class="bg1 vt">
                         广告位5图片：
                         <br />
                         <span style="color: Gray;">（内页上面3）</span>

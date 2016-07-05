@@ -77,7 +77,9 @@ namespace Hx.BackAdmin.weixin
                 txtAppSecret.Text = CurrentSetting.AppSecret;
                 txtAppNumber.Text = CurrentSetting.AppNumber;
                 txtAppName.Text = CurrentSetting.AppName;
+                cbxMustAttention.Checked = CurrentSetting.MustAttention == 1;
                 txtAttentionUrl.Text = CurrentSetting.AttentionUrl;
+                cbxShowAppImg.Checked = CurrentSetting.ShowAppImg == 1;
                 if (!string.IsNullOrEmpty(CurrentSetting.AppImgUrl))
                     imgAppImg.Src = ImgServer + CurrentSetting.AppImgUrl;
                 hdnAppImg.Value = CurrentSetting.AppImgUrl;
@@ -138,7 +140,9 @@ namespace Hx.BackAdmin.weixin
             entity.AppSecret = txtAppSecret.Text;
             entity.AppNumber = txtAppNumber.Text;
             entity.AppName = txtAppName.Text;
+            entity.MustAttention = cbxMustAttention.Checked ? 1 : 0;
             entity.AttentionUrl = txtAttentionUrl.Text;
+            entity.ShowAppImg = cbxShowAppImg.Checked ? 1 : 0;
             entity.AppImgUrl = hdnAppImg.Value;
             entity.PageHeadImg = hdnPageHeadImg.Value;
             entity.MustKnow = txtMustKnow.Text;

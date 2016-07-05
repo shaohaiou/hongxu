@@ -99,7 +99,7 @@ namespace Hx.BackAdmin.HttpHandler
             }
             else
             {
-                result = string.Format(result, "fail", "非法操作");
+                result = string.Format(result, "failed", "非法操作");
             }
 
             Response.Clear();
@@ -135,22 +135,22 @@ namespace Hx.BackAdmin.HttpHandler
                             if (WeixinActs.Instance.Add(entity))
                                 result = string.Format(result, "success", "");
                             else
-                                result = string.Format(result, "fail", "数据添加失败");
+                                result = string.Format(result, "failed", "数据添加失败");
                         }
                         else
                         {
-                            result = string.Format(result, "fail", "用户信息获取失败");
+                            result = string.Format(result, "failed", "用户信息获取失败");
                         }
                     }
                     else
-                        result = string.Format(result, "fail", "access_token获取失败");
+                        result = string.Format(result, "failed", "access_token获取失败");
                 }
                 else
                 {
-                    result = string.Format(result, "fail", "openid为空");
+                    result = string.Format(result, "failed", "openid为空");
                 }
             }
-            catch { result = string.Format(result, "fail", "执行失败"); }
+            catch { result = string.Format(result, "failed", "执行失败"); }
         }
 
         private void Doweixindianzan()
@@ -184,15 +184,15 @@ namespace Hx.BackAdmin.HttpHandler
                                 break;
                         }
 
-                        result = string.Format(result, "fail", msg);
+                        result = string.Format(result, "failed", msg);
                     }
                 }
                 else
                 {
-                    result = string.Format(result, "fail", "openid,vopenid为空");
+                    result = string.Format(result, "failed", "openid,vopenid为空");
                 }
             }
-            catch { result = string.Format(result, "fail", "执行失败"); }
+            catch { result = string.Format(result, "failed", "执行失败"); }
         }
 
         #endregion
@@ -211,7 +211,7 @@ namespace Hx.BackAdmin.HttpHandler
                     string votecheckresult = WeixinActs.Instance.CheckVote(openid, id);
                     if (!string.IsNullOrEmpty(votecheckresult))
                     {
-                        result = string.Format(result, "fail", votecheckresult);
+                        result = string.Format(result, "failed", votecheckresult);
                         return;
                     }
 
@@ -225,7 +225,7 @@ namespace Hx.BackAdmin.HttpHandler
                             int pid = DataConvert.SafeInt(id);
                             BenzvotePothunterInfo pinfo = WeixinActs.Instance.GetBenzvotePothunterInfo(pid, true);
                             if (pinfo == null)
-                                result = string.Format(result, "fail", "不存在此选手");
+                                result = string.Format(result, "failed", "不存在此选手");
                             else
                             {
                                 BenzvoteInfo entity = new BenzvoteInfo();
@@ -249,26 +249,26 @@ namespace Hx.BackAdmin.HttpHandler
                                 if (string.IsNullOrEmpty(dianzancode))
                                     result = string.Format(result, "success", "");
                                 else
-                                    result = string.Format(result, "fail", dianzancode);
+                                    result = string.Format(result, "failed", dianzancode);
                             }
                         }
                         else
                         {
-                            result = string.Format(result, "fail", "用户信息获取失败");
+                            result = string.Format(result, "failed", "用户信息获取失败");
                         }
                     }
                     else
-                        result = string.Format(result, "fail", "access_token获取失败");
+                        result = string.Format(result, "failed", "access_token获取失败");
                 }
                 else
                 {
-                    result = string.Format(result, "fail", "openid,vopenid为空");
+                    result = string.Format(result, "failed", "openid,vopenid为空");
                 }
             }
             catch (Exception ex)
             {
                 ExpLog.Write(ex);
-                result = string.Format(result, "fail", "执行失败");
+                result = string.Format(result, "failed", "执行失败");
             }
         }
 
@@ -288,7 +288,7 @@ namespace Hx.BackAdmin.HttpHandler
                     string votecheckresult = WeixinActs.Instance.CheckJituanVote(openid, id);
                     if (!string.IsNullOrEmpty(votecheckresult))
                     {
-                        result = string.Format(result, "fail", votecheckresult);
+                        result = string.Format(result, "failed", votecheckresult);
                         return;
                     }
 
@@ -302,7 +302,7 @@ namespace Hx.BackAdmin.HttpHandler
                             int pid = DataConvert.SafeInt(id);
                             JituanvotePothunterInfo pinfo = WeixinActs.Instance.GetJituanvotePothunterInfo(pid, true);
                             if (pinfo == null)
-                                result = string.Format(result, "fail", "不存在此选手");
+                                result = string.Format(result, "failed", "不存在此选手");
                             else
                             {
                                 JituanvoteInfo entity = new JituanvoteInfo();
@@ -326,26 +326,26 @@ namespace Hx.BackAdmin.HttpHandler
                                 if (string.IsNullOrEmpty(dianzancode))
                                     result = string.Format(result, "success", "");
                                 else
-                                    result = string.Format(result, "fail", dianzancode);
+                                    result = string.Format(result, "failed", dianzancode);
                             }
                         }
                         else
                         {
-                            result = string.Format(result, "fail", "用户信息获取失败");
+                            result = string.Format(result, "failed", "用户信息获取失败");
                         }
                     }
                     else
-                        result = string.Format(result, "fail", "access_token获取失败");
+                        result = string.Format(result, "failed", "access_token获取失败");
                 }
                 else
                 {
-                    result = string.Format(result, "fail", "openid,vopenid为空");
+                    result = string.Format(result, "failed", "openid,vopenid为空");
                 }
             }
             catch (Exception ex)
             {
                 ExpLog.Write(ex);
-                result = string.Format(result, "fail", "执行失败");
+                result = string.Format(result, "failed", "执行失败");
             }
         }
 
@@ -357,7 +357,7 @@ namespace Hx.BackAdmin.HttpHandler
         {
             try
             {
-                result = string.Format(result, "fail", "为减轻服务器压力，评论功能已被关闭");
+                result = string.Format(result, "failed", "为减轻服务器压力，评论功能已被关闭");
                 return;
                 string openid = WebHelper.GetString("openid");
                 string id = WebHelper.GetString("id");
@@ -369,7 +369,7 @@ namespace Hx.BackAdmin.HttpHandler
                     string votecheckresult = WeixinActs.Instance.CheckVoteComment((WeixinActType)acttype);
                     if (!string.IsNullOrEmpty(votecheckresult))
                     {
-                        result = string.Format(result, "fail", votecheckresult);
+                        result = string.Format(result, "failed", votecheckresult);
                         return;
                     }
 
@@ -392,7 +392,7 @@ namespace Hx.BackAdmin.HttpHandler
                             int pid = DataConvert.SafeInt(id);
                             JituanvotePothunterInfo pinfo = WeixinActs.Instance.GetJituanvotePothunterInfo(pid, true);
                             if (pinfo == null)
-                                result = string.Format(result, "fail", "不存在此选手");
+                                result = string.Format(result, "failed", "不存在此选手");
                             else
                             {
                                 string commenter = dic_openinfo.ContainsKey("nickname") ? dic_openinfo["nickname"] : string.Empty;
@@ -415,26 +415,26 @@ namespace Hx.BackAdmin.HttpHandler
                                 if (string.IsNullOrEmpty(rcode))
                                     result = string.Format(result, "success", entity.ID + "," + (string.IsNullOrEmpty(commenter) ? "匿名" : commenter));
                                 else
-                                    result = string.Format(result, "fail", rcode);
+                                    result = string.Format(result, "failed", rcode);
                             }
                         }
                         else
                         {
-                            result = string.Format(result, "fail", "用户信息获取失败");
+                            result = string.Format(result, "failed", "用户信息获取失败");
                         }
                     }
                     else
-                        result = string.Format(result, "fail", "access_token获取失败");
+                        result = string.Format(result, "failed", "access_token获取失败");
                 }
                 else
                 {
-                    result = string.Format(result, "fail", "openid,vopenid,chat为空");
+                    result = string.Format(result, "failed", "openid,vopenid,chat为空");
                 }
             }
             catch (Exception ex)
             {
                 ExpLog.Write(ex);
-                result = string.Format(result, "fail", "执行失败");
+                result = string.Format(result, "failed", "执行失败");
             }
 
         }
@@ -452,7 +452,7 @@ namespace Hx.BackAdmin.HttpHandler
                     string votecheckresult = WeixinActs.Instance.CheckVoteComment((WeixinActType)acttype);
                     if (!string.IsNullOrEmpty(votecheckresult))
                     {
-                        result = string.Format(result, "fail", votecheckresult);
+                        result = string.Format(result, "failed", votecheckresult);
                         return;
                     }
 
@@ -464,13 +464,13 @@ namespace Hx.BackAdmin.HttpHandler
                     if (string.IsNullOrEmpty(rcode))
                         result = string.Format(result, "success", string.Empty);
                     else
-                        result = string.Format(result, "fail", rcode);
+                        result = string.Format(result, "failed", rcode);
                 }
             }
             catch (Exception ex)
             {
                 ExpLog.Write(ex);
-                result = string.Format(result, "fail", "执行失败");
+                result = string.Format(result, "failed", "执行失败");
             }
         }
 
@@ -487,7 +487,7 @@ namespace Hx.BackAdmin.HttpHandler
                     string votecheckresult = WeixinActs.Instance.CheckVoteComment((WeixinActType)acttype);
                     if (!string.IsNullOrEmpty(votecheckresult))
                     {
-                        result = string.Format(result, "fail", votecheckresult);
+                        result = string.Format(result, "failed", votecheckresult);
                         return;
                     }
 
@@ -499,13 +499,13 @@ namespace Hx.BackAdmin.HttpHandler
                     if (string.IsNullOrEmpty(rcode))
                         result = string.Format(result, "success", string.Empty);
                     else
-                        result = string.Format(result, "fail", rcode);
+                        result = string.Format(result, "failed", rcode);
                 }
             }
             catch (Exception ex)
             {
                 ExpLog.Write(ex);
-                result = string.Format(result, "fail", "执行失败");
+                result = string.Format(result, "failed", "执行失败");
             }
         }
 
@@ -523,7 +523,7 @@ namespace Hx.BackAdmin.HttpHandler
                     string votecheckresult = WeixinActs.Instance.CheckVoteComment((WeixinActType)acttype);
                     if (!string.IsNullOrEmpty(votecheckresult))
                     {
-                        result = string.Format(result, "fail", votecheckresult);
+                        result = string.Format(result, "failed", votecheckresult);
                         return;
                     }
 
@@ -560,13 +560,13 @@ namespace Hx.BackAdmin.HttpHandler
                     if (string.IsNullOrEmpty(rcode))
                         result = string.Format(result, "success", htmlstr.ToString());
                     else
-                        result = string.Format(result, "fail", rcode);
+                        result = string.Format(result, "failed", rcode);
                 }
             }
             catch (Exception ex)
             {
                 ExpLog.Write(ex);
-                result = string.Format(result, "fail", "执行失败");
+                result = string.Format(result, "failed", "执行失败");
             }
         }
 
@@ -600,7 +600,7 @@ namespace Hx.BackAdmin.HttpHandler
                         List<CardPullRecordInfo> listrecord = WeixinActs.Instance.GetCardPullRecordList(sid,true);
                         if (listrecord.Exists(l => l.Openid == openid && (l.PullResult == "2" || l.PullResult == "0")))
                         {
-                            result = string.Format(result, "fail", "每个微信号只能参与一次抽奖！");
+                            result = string.Format(result, "failed", "每个微信号只能参与一次抽奖！");
                             return;
                         }
                         lock (sync_card)
@@ -715,17 +715,17 @@ namespace Hx.BackAdmin.HttpHandler
                         }
                     }
                     else
-                        result = string.Format(result, "fail", "该活动未开始,敬请期待。");
+                        result = string.Format(result, "failed", "该活动未开始,敬请期待。");
                 }
                 else
                 {
-                    result = string.Format(result, "fail", "openid为空");
+                    result = string.Format(result, "failed", "openid为空");
                 }
             }
             catch (Exception ex)
             {
                 ExpLog.Write(ex);
-                result = string.Format(result, "fail", "执行失败");
+                result = string.Format(result, "failed", "执行失败");
             }
         }
 
@@ -753,17 +753,17 @@ namespace Hx.BackAdmin.HttpHandler
                         }
                     }
                     else
-                        result = string.Format(result, "fail", "该活动未开始,敬请期待。");
+                        result = string.Format(result, "failed", "该活动未开始,敬请期待。");
                 }
                 else
                 {
-                    result = string.Format(result, "fail", "openid为空");
+                    result = string.Format(result, "failed", "openid为空");
                 }
             }
             catch (Exception ex)
             {
                 ExpLog.Write(ex);
-                result = string.Format(result, "fail", "执行失败");
+                result = string.Format(result, "failed", "执行失败");
             }
         }
 
@@ -785,11 +785,21 @@ namespace Hx.BackAdmin.HttpHandler
                     string votecheckresult = WeixinActs.Instance.CheckVote(sid,openid, id);
                     if (!string.IsNullOrEmpty(votecheckresult))
                     {
-                        result = string.Format(result, "fail", votecheckresult);
+                        result = string.Format(result, "failed", votecheckresult);
                         return;
                     }
 
                     string access_token = WeixinActs.Instance.GetAccessToken(setting.AppID, setting.AppSecret);
+
+                    if (setting.MustAttention == 1)
+                    {
+                        Dictionary<string, object> openinfo = WeixinActs.Instance.GetOpeninfo(access_token, openid);
+                        if (!openinfo.Keys.Contains("subscribe") || openinfo["subscribe"].ToString() == "0")
+                        {
+                            result = string.Format(result, "failed", "请先关注");
+                            return;
+                        }
+                    }
 
                     if (!string.IsNullOrEmpty(access_token))
                     {
@@ -799,7 +809,7 @@ namespace Hx.BackAdmin.HttpHandler
                             int pid = DataConvert.SafeInt(id);
                             VotePothunterInfo pinfo = WeixinActs.Instance.GetVotePothunterInfo(pid, true);
                             if (pinfo == null)
-                                result = string.Format(result, "fail", "不存在此选手");
+                                result = string.Format(result, "failed", "不存在此选手");
                             else
                             {
                                 VoteRecordInfo entity = new VoteRecordInfo();
@@ -824,26 +834,26 @@ namespace Hx.BackAdmin.HttpHandler
                                 if (string.IsNullOrEmpty(dianzancode))
                                     result = string.Format(result, "success", "");
                                 else
-                                    result = string.Format(result, "fail", dianzancode);
+                                    result = string.Format(result, "failed", dianzancode);
                             }
                         }
                         else
                         {
-                            result = string.Format(result, "fail", "用户信息获取失败");
+                            result = string.Format(result, "failed", "用户信息获取失败");
                         }
                     }
                     else
-                        result = string.Format(result, "fail", "access_token获取失败");
+                        result = string.Format(result, "failed", "access_token获取失败");
                 }
                 else
                 {
-                    result = string.Format(result, "fail", "openid,vopenid为空");
+                    result = string.Format(result, "failed", "openid,vopenid为空");
                 }
             }
             catch (Exception ex)
             {
                 ExpLog.Write(ex);
-                result = string.Format(result, "fail", "执行失败");
+                result = string.Format(result, "failed", "执行失败");
             }
         }
 
@@ -863,12 +873,21 @@ namespace Hx.BackAdmin.HttpHandler
                     string votecheckresult = WeixinActs.Instance.CheckVoteComment(sid);
                     if (!string.IsNullOrEmpty(votecheckresult))
                     {
-                        result = string.Format(result, "fail", votecheckresult);
+                        result = string.Format(result, "failed", votecheckresult);
                         return;
                     }
 
                     VoteSettingInfo setting = WeixinActs.Instance.GetVoteSetting(sid, true);
-                    string access_token = WeixinActs.Instance.GetAccessToken(setting.AppID,setting.AppSecret);
+                    string access_token = WeixinActs.Instance.GetAccessToken(setting.AppID, setting.AppSecret);
+                    if (setting.MustAttention == 1)
+                    {
+                        Dictionary<string, object> openinfo = WeixinActs.Instance.GetOpeninfo(access_token, openid);
+                        if (!openinfo.Keys.Contains("subscribe") || openinfo["subscribe"].ToString() == "0")
+                        {
+                            result = string.Format(result, "failed", "请先关注");
+                            return;
+                        }
+                    }
 
                     if (!string.IsNullOrEmpty(access_token))
                     {
@@ -878,7 +897,7 @@ namespace Hx.BackAdmin.HttpHandler
                             int pid = DataConvert.SafeInt(id);
                             VotePothunterInfo pinfo = WeixinActs.Instance.GetVotePothunterInfo(pid, true);
                             if (pinfo == null)
-                                result = string.Format(result, "fail", "不存在此选手");
+                                result = string.Format(result, "failed", "不存在此选手");
                             else
                             {
                                 string commenter = dic_openinfo.ContainsKey("nickname") ? (dic_openinfo["nickname"].ToString()) : string.Empty;
@@ -901,26 +920,26 @@ namespace Hx.BackAdmin.HttpHandler
                                 if (string.IsNullOrEmpty(rcode))
                                     result = string.Format(result, "success", entity.ID + "," + (string.IsNullOrEmpty(commenter) ? "匿名" : commenter));
                                 else
-                                    result = string.Format(result, "fail", rcode);
+                                    result = string.Format(result, "failed", rcode);
                             }
                         }
                         else
                         {
-                            result = string.Format(result, "fail", "用户信息获取失败");
+                            result = string.Format(result, "failed", "用户信息获取失败");
                         }
                     }
                     else
-                        result = string.Format(result, "fail", "access_token获取失败");
+                        result = string.Format(result, "failed", "access_token获取失败");
                 }
                 else
                 {
-                    result = string.Format(result, "fail", "openid,vopenid,chat为空");
+                    result = string.Format(result, "failed", "openid,vopenid,chat为空");
                 }
             }
             catch (Exception ex)
             {
                 ExpLog.Write(ex);
-                result = string.Format(result, "fail", "执行失败");
+                result = string.Format(result, "failed", "执行失败");
             }
 
         }
@@ -938,7 +957,7 @@ namespace Hx.BackAdmin.HttpHandler
                     string votecheckresult = WeixinActs.Instance.CheckVoteComment(sid);
                     if (!string.IsNullOrEmpty(votecheckresult))
                     {
-                        result = string.Format(result, "fail", votecheckresult);
+                        result = string.Format(result, "failed", votecheckresult);
                         return;
                     }
 
@@ -950,13 +969,13 @@ namespace Hx.BackAdmin.HttpHandler
                     if (string.IsNullOrEmpty(rcode))
                         result = string.Format(result, "success", string.Empty);
                     else
-                        result = string.Format(result, "fail", rcode);
+                        result = string.Format(result, "failed", rcode);
                 }
             }
             catch (Exception ex)
             {
                 ExpLog.Write(ex);
-                result = string.Format(result, "fail", "执行失败");
+                result = string.Format(result, "failed", "执行失败");
             }
         }
 
@@ -973,7 +992,7 @@ namespace Hx.BackAdmin.HttpHandler
                     string votecheckresult = WeixinActs.Instance.CheckVoteComment(sid);
                     if (!string.IsNullOrEmpty(votecheckresult))
                     {
-                        result = string.Format(result, "fail", votecheckresult);
+                        result = string.Format(result, "failed", votecheckresult);
                         return;
                     }
 
@@ -985,13 +1004,13 @@ namespace Hx.BackAdmin.HttpHandler
                     if (string.IsNullOrEmpty(rcode))
                         result = string.Format(result, "success", string.Empty);
                     else
-                        result = string.Format(result, "fail", rcode);
+                        result = string.Format(result, "failed", rcode);
                 }
             }
             catch (Exception ex)
             {
                 ExpLog.Write(ex);
-                result = string.Format(result, "fail", "执行失败");
+                result = string.Format(result, "failed", "执行失败");
             }
         }
 
@@ -1009,7 +1028,7 @@ namespace Hx.BackAdmin.HttpHandler
                     string votecheckresult = WeixinActs.Instance.CheckVoteComment(sid);
                     if (!string.IsNullOrEmpty(votecheckresult))
                     {
-                        result = string.Format(result, "fail", votecheckresult);
+                        result = string.Format(result, "failed", votecheckresult);
                         return;
                     }
 
@@ -1046,13 +1065,13 @@ namespace Hx.BackAdmin.HttpHandler
                     if (string.IsNullOrEmpty(rcode))
                         result = string.Format(result, "success", htmlstr.ToString());
                     else
-                        result = string.Format(result, "fail", rcode);
+                        result = string.Format(result, "failed", rcode);
                 }
             }
             catch (Exception ex)
             {
                 ExpLog.Write(ex);
-                result = string.Format(result, "fail", "执行失败");
+                result = string.Format(result, "failed", "执行失败");
             }
         }
 
@@ -1084,13 +1103,13 @@ namespace Hx.BackAdmin.HttpHandler
                 }
                 else
                 {
-                    result = string.Format(result, "fail", "cname,phone,spec_name为空");
+                    result = string.Format(result, "failed", "cname,phone,spec_name为空");
                 }
             }
             catch (Exception ex)
             {
                 ExpLog.Write(ex);
-                result = string.Format(result, "fail", "执行失败");
+                result = string.Format(result, "failed", "执行失败");
             }
         }
 

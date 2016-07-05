@@ -92,12 +92,17 @@ namespace Hx.BackAdmin.weixin
                         Session[GlobalKey.VOTEOPENID] = Openid;
                     }
                 }
+                hdnOpenid.Value = Openid;
                 if (!string.IsNullOrEmpty(Openid))
                 {
                     string accesstoken = WeixinActs.Instance.GetAccessToken(CurrentSetting.AppID, CurrentSetting.AppSecret);
+                    hdnaccess_token.Value = accesstoken;
                     Dictionary<string, object> openinfo = WeixinActs.Instance.GetOpeninfo(accesstoken, Openid);
                     if (!openinfo.Keys.Contains("subscribe") || openinfo["subscribe"].ToString() == "0")
+                    {
                         NeedAttention = true;
+                        hdntest.Value = string.Join("\r", openinfo.Select(c => c.Key + ":" + c.Value));
+                    }
                 }
                 LoadData();
             }

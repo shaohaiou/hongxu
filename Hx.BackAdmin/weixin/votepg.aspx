@@ -37,7 +37,9 @@
     <%} %>
 </head>
 <body>
-    <div class="m-flay" id="attention" style="position: relative;">
+    <%if (NeedAttention && CurrentSetting.ShowAppImg == 1)
+      { %>
+    <div class="m-flay" id="attention">
         <div class="attention">
             <div class="attention-content">
                 <div class="attention-msg" id="attention-msg">
@@ -47,8 +49,11 @@
             </div>
         </div>
     </div>
+    <%} %>
     <form id="form1" runat="server">
     <input type="hidden" runat="server" id="hdntest" />
+    <input type="hidden" runat="server" id="hdnOpenid" />
+    <input type="hidden" runat="server" id="hdnaccess_token" />
     <div class="wrap">
         <div class="dad">
             <%if (CurrentSetting != null && !string.IsNullOrEmpty(CurrentSetting.PageHeadImg))
@@ -162,12 +167,12 @@
 </body>
 <script type="text/javascript">
     var sid = <%= SID %>;
-    var code = "<%= Code%>";
+    var code = "<%= Code %>";
     var openid = "<%= Openid %>";
     var animatetimer = null;
 
     <%if(NeedAttention){ %>
-    if("<%=CurrentSetting.AttentionUrl %>" != ""){
+    if("<%=CurrentSetting.AttentionUrl %>" != "" && "<%=CurrentSetting.MustAttention %>" == 1){
         location.href = "<%=CurrentSetting.AttentionUrl %>";
     }else{
         $("#attention").show();

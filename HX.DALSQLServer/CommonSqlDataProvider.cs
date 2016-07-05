@@ -2142,6 +2142,16 @@ namespace HX.DALSQLServer
             return false;
         }
 
+        public override void ClearVoteRecord(int sid)
+        {
+            string sql = "DELETE FROM HX_VoteRecord WHERE [SID] = @SID";
+            SqlParameter[] p = 
+            {
+                new SqlParameter("@SID",sid),
+            };
+            SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql, p);
+        }
+
         #endregion
 
         #region 评论管理

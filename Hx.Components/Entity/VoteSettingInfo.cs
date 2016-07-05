@@ -73,6 +73,24 @@ namespace Hx.Components.Entity
             get { return GetString("AppName", ""); }
             set { SetExtendedAttribute("AppName", value); }
         }
+        /// <summary>
+        /// 必须关注
+        /// </summary>
+        [JsonIgnore]
+        public int MustAttention
+        {
+            get { return GetInt("MustAttention", 0); }
+            set { SetExtendedAttribute("MustAttention", value.ToString()); }
+        }
+        /// <summary>
+        /// 显示二维码
+        /// </summary>
+        [JsonIgnore]
+        public int ShowAppImg
+        {
+            get { return GetInt("ShowAppImg", 0); }
+            set { SetExtendedAttribute("ShowAppImg", value.ToString()); }
+        }
 
         /// <summary>
         /// 公众号二维码图片

@@ -50,6 +50,19 @@ namespace Hx.BackAdmin.weixin
                 WeixinActs.Instance.DelVotePothunterInfo(GetInt("sid"),WebHelper.GetString("id"));
                 ResponseRedirect(FromUrl);
             }
+            else if (WebHelper.GetString("action") == "clear")
+            {
+                List<VotePothunterInfo> list = WeixinActs.Instance.GetVotePothunterList(GetInt("sid"));
+                foreach (VotePothunterInfo p in list)
+                {
+                    p.Ballot = 0;
+                    WeixinActs.Instance.AddVotePothunterInfo(p);
+                }
+                WeixinActs.Instance.ReloadVotePothunterList(GetInt("sid"));
+                WeixinActs.Instance.ClearVoteRecord(GetInt("sid"));
+                WeixinActs.Instance.ReloadVoteRecordList(GetInt("sid"));
+                ResponseRedirect(FromUrl);
+            }
             else
             {
                 LoadData();

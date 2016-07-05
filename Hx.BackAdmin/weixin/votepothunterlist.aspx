@@ -13,6 +13,9 @@
             $(".btnDel").click(function () {
                 return confirm("确定要删除此记录吗？");
             });
+            $("#btnClear").click(function () {
+                return confirm("确定要清零票数吗？");
+            });
         })
     </script>
 </head>
@@ -35,6 +38,10 @@
                     href="voterecordlist.aspx?sid=<%= GetInt("sid")%>">投票记录</a></span> <span><a href="votecommentmg.aspx?sid=<%= GetInt("sid")%>">
                         评论管理</a></span><%if(Admin.Administrator){ %><span><a
                     href="voterecordcachelist.aspx?sid=<%= GetInt("sid")%>">投票队列</a></span><%} %>
+        </div>
+        <div class="lan5x" style="padding-top: 10px;">
+            <a id="btnClear" href="?sid=<%=GetString("sid") %>&action=clear&from=<%=CurrentUrl %>"
+                class="an4">票数清零</a>
         </div>
         <table border="0" cellspacing="0" cellpadding="0" class="biaoge2">
             <asp:Repeater ID="rptdata" runat="server">

@@ -85,6 +85,15 @@ namespace Hx.BackAdmin.weixin {
         protected global::System.Web.UI.WebControls.TextBox txtAppName;
         
         /// <summary>
+        /// cbxMustAttention 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox cbxMustAttention;
+        
+        /// <summary>
         /// txtAttentionUrl 控件。
         /// </summary>
         /// <remarks>
@@ -92,6 +101,15 @@ namespace Hx.BackAdmin.weixin {
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtAttentionUrl;
+        
+        /// <summary>
+        /// cbxShowAppImg 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox cbxShowAppImg;
         
         /// <summary>
         /// hdnAppImg 控件。

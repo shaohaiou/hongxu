@@ -71,6 +71,7 @@ namespace Hx.BackAdmin.weixin
             if (CurrentSetting != null)
             {
                 cbxSwitch.Checked = CurrentSetting.Switch == 1;
+                txtEndTime.Text = CurrentSetting.EndTime;
                 cbxIsRepeatOneday.Checked = CurrentSetting.IsrepeatOnday == 1;
                 cbxIsRepeat.Checked = CurrentSetting.Isrepeat == 1;
                 txtAppID.Text = CurrentSetting.AppID;
@@ -134,6 +135,7 @@ namespace Hx.BackAdmin.weixin
         {
             entity.ID = GetInt("sid");
             entity.Switch = cbxSwitch.Checked ? 1 : 0;
+            entity.EndTime = txtEndTime.Text;
             entity.IsrepeatOnday = cbxIsRepeatOneday.Checked ? 1 : 0;
             entity.Isrepeat = cbxIsRepeat.Checked ? 1 : 0;
             entity.AppID = txtAppID.Text;

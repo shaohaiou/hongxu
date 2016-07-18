@@ -1795,6 +1795,10 @@ namespace Hx.Components
             {
                 return "该活动已结束";
             }
+            if (setting != null && !string.IsNullOrEmpty(setting.EndTime) && DateTime.Now > DateTime.Parse(setting.EndTime))
+            {
+                return "该活动已结束";
+            }
 
             lock (sync_vote)
             {

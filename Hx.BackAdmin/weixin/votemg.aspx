@@ -9,6 +9,7 @@
     <script src=<%=ResourceServer%>/js/jquery-1.9.1.js type="text/javascript"></script>
     <script src=<%=ResourceServer%>/js/spectrum.js type="text/javascript"></script>
     <script src=<%=ResourceServer%>/js/ajaxupload.js type="text/javascript"></script>
+    <script src="../js/WdatePicker.js" type="text/javascript"></script>
     <script type="text/javascript">
         $(function () {
             $(".uploadbtpic").each(function () {
@@ -65,6 +66,10 @@
                     $("#txtColorMustKnow").val(color.toHexString());
                 }
             });
+
+            $("#txtEndTime").click(function () {
+                WdatePicker({ 'readOnly': 'true',dateFmt: 'yyyy-MM-dd HH:mm:ss',});
+            });
         })
 
         function setpoweruser() {
@@ -112,6 +117,14 @@
                     </td>
                     <td>
                         <asp:CheckBox runat="server" ID="cbxSwitch" Text="开启" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bg1">
+                        活动结束时间：
+                    </td>
+                    <td>
+                        <asp:TextBox runat="server" ID="txtEndTime"></asp:TextBox>
                     </td>
                 </tr>
                 <tr>

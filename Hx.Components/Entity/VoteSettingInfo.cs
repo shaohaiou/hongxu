@@ -35,6 +35,16 @@ namespace Hx.Components.Entity
         }
 
         /// <summary>
+        /// EndTime
+        /// </summary>
+        [JsonIgnore]
+        public string EndTime
+        {
+            get { return GetString("EndTime", ""); }
+            set { SetExtendedAttribute("EndTime", value); }
+        }
+
+        /// <summary>
         /// AppID
         /// </summary>
         [JsonIgnore]

@@ -27,6 +27,16 @@
                 else
                     location.href = '?action=check&sid=<%= GetInt("sid")%>&ids=' + ids + '&from=<%= CurrentUrl%>';
             });
+
+            $("#btnDel").click(function () {
+                var ids = $(".cbxSub:checked").map(function () {
+                    return $(this).val();
+                }).get().join(",");
+                if (ids == "")
+                    alert("请至少选择一条记录");
+                else
+                    location.href = '?action=del&sid=<%= GetInt("sid")%>&aid=<%= GetInt("aid")%>&ids=' + ids + '&from=<%= CurrentUrl%>';
+            });
         })
     </script>
 </head>
@@ -122,7 +132,7 @@
                         </td>
                         <td>
                             <a href="?action=check&sid=<%=GetInt("sid") %>&ids=<%#Eval("ID") %>|<%#Eval("AthleteID") %>&from=<%= CurrentUrl%>" class="pl10">
-                                审核通过</a> <a href="?action=del&sid=<%= GetInt("sid")%>&id=<%#Eval("ID") %>&aid=<%#Eval("AthleteID") %>&from=<%= CurrentUrl%>"
+                                审核通过</a> <a href="?action=del&sid=<%= GetInt("sid")%>&ids=<%#Eval("ID") %>&aid=<%#Eval("AthleteID") %>&from=<%= CurrentUrl%>"
                                     class="btnDel pl10">删除</a>
                         </td>
                     </tr>
@@ -136,6 +146,9 @@
         </webdiyer:AspNetPager>
         <div class="lan5x" style="padding-top: 10px;">
             <input type="button" id="btnCheck" class="an1" value="审核通过" />
+            <%if(GetInt("aid") > 0){ %>
+            <input type="button" id="btnDel" class="an1" value="删除" />
+            <%} %>
         </div>
     </div>
     </form>

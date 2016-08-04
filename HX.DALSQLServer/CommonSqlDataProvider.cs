@@ -2207,6 +2207,12 @@ namespace HX.DALSQLServer
             SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql, new SqlParameter("@ID", id));
         }
 
+        public override void DelVoteCommentInfo(string ids)
+        {
+            string sql = "DELETE FROM HX_VoteComments WHERE [ID] IN (" + ids + ")";
+            SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql);
+        }
+
         public override void CheckVoteCommentStatus(string ids)
         {
             string sql = "UPDATE HX_VoteComments SET [CheckStatus] = 1 WHERE [ID] IN(" + ids + ")";

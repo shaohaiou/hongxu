@@ -57,7 +57,7 @@ namespace Hx.BackAdmin.weixin
         {
             if (GetString("action") == "del")
             {
-                WeixinActs.Instance.DelVoteCommentInfo(GetInt("id"));
+                WeixinActs.Instance.DelVoteCommentInfo(GetString("ids"));
                 WeixinActs.Instance.ReloadVoteCommentsCache(GetInt("aid"));
                 ResponseRedirect(FromUrl);
             }

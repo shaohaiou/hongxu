@@ -1886,6 +1886,11 @@ namespace Hx.Components
             CommonDataProvider.Instance().DelVoteCommentInfo(id);
         }
 
+        public void DelVoteCommentInfo(string ids)
+        {
+            CommonDataProvider.Instance().DelVoteCommentInfo(ids);
+        }
+
         public void CheckVoteCommentStatus(string ids)
         {
             CommonDataProvider.Instance().CheckVoteCommentStatus(ids);

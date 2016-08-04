@@ -83,13 +83,14 @@ namespace Hx.BackAdmin.weixin
                 NeedAttention = false;
                 Code = GetString("code");
                 SID = GetInt("sid", 1);
-                Openid = Session[GlobalKey.VOTEOPENID] as string;
+                string key = GlobalKey.VOTEOPENID + "_" + SID;
+                Openid = Session[key] as string;
                 if (string.IsNullOrEmpty(Openid) && !string.IsNullOrEmpty(Code))
                 {
                     Openid = WeixinActs.Instance.GetOpenid(CurrentSetting.AppID, CurrentSetting.AppSecret, Code);
                     if (!string.IsNullOrEmpty(Openid))
                     {
-                        Session[GlobalKey.VOTEOPENID] = Openid;
+                        Session[key] = Openid;
                     }
                 }
                 hdnOpenid.Value = Openid;

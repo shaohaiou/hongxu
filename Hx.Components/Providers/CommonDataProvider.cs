@@ -883,6 +883,8 @@ namespace Hx.Components.Providers
 
         public abstract void DelVoteCommentInfo(int id);
 
+        public abstract void DelVoteCommentInfo(string ids);
+
         public abstract void CheckVoteCommentStatus(string ids);
 
         public abstract List<VoteCommentInfo> GetVoteComments(int aid);

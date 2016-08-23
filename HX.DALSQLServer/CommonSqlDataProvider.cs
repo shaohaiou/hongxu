@@ -239,7 +239,7 @@ namespace HX.DALSQLServer
         public override List<AdminInfo> GetUsers(UserRoleType role)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select * from HX_AdminUser WHERE [UserRole] = " + (int)role);
+            strSql.Append("select * from HX_AdminUser WHERE [UserRole] & " + (int)role + " > 0");
 
 
             List<AdminInfo> admins = new List<AdminInfo>();
@@ -2880,6 +2880,68 @@ namespace HX.DALSQLServer
             }
 
             return list;
+        }
+
+        #endregion
+
+        #region 扫描文件
+
+        public override List<ScanTypeInfo> GetScanTypeList()
+        {
+            List<ScanTypeInfo> list = new List<ScanTypeInfo>();
+            string sql = "SELECT * FROM HX_ScanType";
+            using (IDataReader reader = SqlHelper.ExecuteReader(_con, CommandType.Text, sql))
+            {
+                while (reader.Read())
+                {
+                    list.Add(PopulateScanType(reader));
+                }
+            }
+
+            return list;
+        }
+
+        public override void AddScanType(ScanTypeInfo entity)
+        {
+            string sql = @"INSERT INTO HX_ScanType(
+            [Name]
+            )VALUES(
+            @Name
+            )";
+            SqlParameter[] p = 
+            {
+                new SqlParameter("@Name",entity.Name)
+            };
+            SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql, p);
+        }
+
+        public override void UpdateScanType(ScanTypeInfo entity)
+        {
+            string sql = @"UPDATE HX_ScanType SET 
+            [Name] = @Name 
+            ,[ValidAreaXTop] = @ValidAreaXTop 
+            ,[ValidAreaYTop] = @ValidAreaYTop 
+            ,[ValidAreaXBottom] = @ValidAreaXBottom 
+            ,[ValidAreaYBottom] = @ValidAreaYBottom 
+            ,[CorpPower] = @CorpPower 
+            WHERE [ID] = @ID";
+            SqlParameter[] p = 
+            {
+                new SqlParameter("@ID",entity.ID),
+                new SqlParameter("@Name",entity.Name),
+                new SqlParameter("@ValidAreaXTop",entity.ValidAreaXTop),
+                new SqlParameter("@ValidAreaYTop",entity.ValidAreaYTop),
+                new SqlParameter("@ValidAreaXBottom",entity.ValidAreaXBottom),
+                new SqlParameter("@ValidAreaYBottom",entity.ValidAreaYBottom),
+                new SqlParameter("@CorpPower",entity.CorpPower)
+            };
+            SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql, p);
+        }
+
+        public override void DeleteScanType(string ids)
+        {
+            string sql = "DELETE FROM HX_ScanType WHERE ID IN (" + ids + ")";
+            SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql);
         }
 
         #endregion

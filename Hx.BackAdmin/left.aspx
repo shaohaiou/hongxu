@@ -32,6 +32,7 @@ body{background:url(images/ldi.gif) repeat-y;}
 	<a href="dayreport/main.aspx" target="mainFrame"  runat="server" id="dayreport_page">日报管理</a>
 	<a href="weixin/main.aspx" target="mainFrame"  runat="server" id="weixin_page">微信活动</a>
 	<a href="biz/main.aspx" target="mainFrame"  runat="server" id="zhaopin_page">oa行政</a>
+	<a href="scan/main.aspx" target="mainFrame"  runat="server" id="scan_page">文件扫描</a>
 </div>
 </body>
 </html>

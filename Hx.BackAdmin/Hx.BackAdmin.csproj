@@ -453,8 +453,14 @@
     <Content Include="message\showmessage.aspx" />
     <Content Include="main_s.aspx" />
     <Content Include="navigation.aspx" />
+    <Content Include="scan\main.aspx" />
+    <Content Include="scan\main_s.aspx" />
+    <Content Include="scan\scanfile.aspx" />
+    <Content Include="scan\scantypemg.aspx" />
+    <Content Include="scan\scantypesetting.aspx" />
     <Content Include="test.aspx" />
     <Content Include="top.aspx" />
+    <Content Include="url.html" />
     <Content Include="user\adminedit.aspx" />
     <Content Include="user\adminlist.aspx" />
     <Content Include="user\admins.aspx" />
@@ -974,6 +980,41 @@
       <DependentUpon>navigation.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="scan\main.aspx.cs">
+      <DependentUpon>main.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="scan\main.aspx.designer.cs">
+      <DependentUpon>main.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="scan\main_s.aspx.cs">
+      <DependentUpon>main_s.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="scan\main_s.aspx.designer.cs">
+      <DependentUpon>main_s.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="scan\scanfile.aspx.cs">
+      <DependentUpon>scanfile.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="scan\scanfile.aspx.designer.cs">
+      <DependentUpon>scanfile.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="scan\scantypemg.aspx.cs">
+      <DependentUpon>scantypemg.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="scan\scantypemg.aspx.designer.cs">
+      <DependentUpon>scantypemg.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="scan\scantypesetting.aspx.cs">
+      <DependentUpon>scantypesetting.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="scan\scantypesetting.aspx.designer.cs">
+      <DependentUpon>scantypesetting.aspx</DependentUpon>
+    </Compile>
     <Compile Include="test.aspx.cs">
       <DependentUpon>test.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

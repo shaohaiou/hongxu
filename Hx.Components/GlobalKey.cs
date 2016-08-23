@@ -28,6 +28,7 @@ namespace Hx.Components
         public static readonly string CUSTOMERQUOTATIONID_KEY = "cache-customerquotationid"; //客户报价单id缓存键值
         public static readonly string SYBX_LIST = "cache-sybx-list"; //商业保险列表缓存键值
         public static readonly string BANK_LIST = "cache-bank-list"; //银行列表缓存键值
+        public static readonly string SCANTYPE_LIST = "cache-scantype-list"; //扫描类型列表缓存键值
         public static readonly string CHOICESTGOODS_LIST = "cache-choicestgoods-list"; //精品用品缓存键值
         public static readonly string CORPORATION_LIST = "cache-corporation-list"; //公司列表缓存键值
         public static readonly string DAYREPORTUSER_LIST = "cache-dayreportuser-list"; //日报用户列表缓存键值

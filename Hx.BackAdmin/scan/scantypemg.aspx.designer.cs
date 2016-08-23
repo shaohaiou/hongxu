@@ -7,81 +7,63 @@
 // </自动生成>
 //------------------------------------------------------------------------------
 
-namespace Hx.BackAdmin {
+namespace Hx.BackAdmin.scan {
     
     
-    public partial class left {
+    public partial class scantypemg {
         
         /// <summary>
-        /// index_page 控件。
+        /// Head1 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor index_page;
+        protected global::System.Web.UI.HtmlControls.HtmlHead Head1;
         
         /// <summary>
-        /// carquotationindex_page 控件。
+        /// form1 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor carquotationindex_page;
+        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
         
         /// <summary>
-        /// globalindex_page 控件。
+        /// rptData 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor globalindex_page;
+        protected global::System.Web.UI.WebControls.Repeater rptData;
         
         /// <summary>
-        /// userindex_page 控件。
+        /// hdnAddCount 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor userindex_page;
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hdnAddCount;
         
         /// <summary>
-        /// dayreport_page 控件。
+        /// hdnDelIds 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor dayreport_page;
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hdnDelIds;
         
         /// <summary>
-        /// weixin_page 控件。
+        /// btnSubmit 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor weixin_page;
-        
-        /// <summary>
-        /// zhaopin_page 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor zhaopin_page;
-        
-        /// <summary>
-        /// scan_page 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor scan_page;
+        protected global::System.Web.UI.WebControls.Button btnSubmit;
     }
 }

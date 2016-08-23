@@ -113,6 +113,7 @@
     <Compile Include="Entity\QuestionInfo.cs" />
     <Compile Include="Entity\QuestionRecordInfo.cs" />
     <Compile Include="Entity\QuestionScoreInfo.cs" />
+    <Compile Include="Entity\ScanTypeInfo.cs" />
     <Compile Include="Entity\ScenecodeInfo.cs" />
     <Compile Include="Entity\ScenecodeSettingInfo.cs" />
     <Compile Include="Entity\ShowUrl.cs" />
@@ -170,6 +171,7 @@
     <Compile Include="Query\VoteRecordQuery.cs" />
     <Compile Include="Query\WeixinActQuery.cs" />
     <Compile Include="Query\JituanvoteQuery.cs" />
+    <Compile Include="ScanTypes.cs" />
     <Compile Include="Web\HXContext.cs" />
     <Compile Include="Web\JCBContext.cs" />
     <Compile Include="WeixinActs.cs" />

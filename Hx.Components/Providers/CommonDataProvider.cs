@@ -1288,5 +1288,33 @@ namespace Hx.Components.Providers
         }
 
         #endregion
+
+        #region 扫描文件
+
+        public abstract List<ScanTypeInfo> GetScanTypeList();
+
+        public abstract void AddScanType(ScanTypeInfo entity);
+
+        public abstract void UpdateScanType(ScanTypeInfo entity);
+
+        public abstract void DeleteScanType(string ids);
+
+        protected ScanTypeInfo PopulateScanType(IDataReader reader)
+        {
+            ScanTypeInfo entity = new ScanTypeInfo
+            {
+                ID = DataConvert.SafeInt(reader["ID"]),
+                Name = reader["Name"] as string,
+                ValidAreaXTop = DataConvert.SafeInt(reader["ValidAreaXTop"]),
+                ValidAreaYTop = DataConvert.SafeInt(reader["ValidAreaYTop"]),
+                ValidAreaXBottom = DataConvert.SafeInt(reader["ValidAreaXBottom"]),
+                ValidAreaYBottom = DataConvert.SafeInt(reader["ValidAreaYBottom"]),
+                CorpPower = reader["CorpPower"] as string
+            };
+
+            return entity;
+        }
+
+        #endregion
     }
 }

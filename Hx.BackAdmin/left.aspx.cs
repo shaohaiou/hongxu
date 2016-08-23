@@ -16,6 +16,7 @@ namespace Hx.BackAdmin
         protected void Page_Load(object sender, EventArgs e)
         {
             AdminInfo admin = HXContext.Current.AdminUser;
+            scan_page.Visible = false;
             if (!admin.Administrator)
             {
                 globalindex_page.Visible = false;
@@ -24,6 +25,7 @@ namespace Hx.BackAdmin
                 weixin_page.Visible = false;
                 zhaopin_page.Visible = false;
                 carquotationindex_page.Visible = false;
+                //scan_page.Visible = false;
                 if (((int)Admin.UserRole & (int)UserRoleType.销售经理) > 0 || ((int)Admin.UserRole & (int)UserRoleType.总经理) > 0)
                 {
                     userindex_page.Visible = true;
@@ -33,6 +35,10 @@ namespace Hx.BackAdmin
                 {
                     zhaopin_page.Visible = true;
                 }
+                //if (((int)Admin.UserRole & (int)UserRoleType.文件扫描) > 0)
+                //{
+                //    scan_page.Visible = true;
+                //}
                 if (((int)Admin.UserRole & (int)UserRoleType.微信活动管理员) > 0 
                     || ((int)Admin.UserRole & (int)UserRoleType.二手车估价器管理员) > 0
                     || ((int)Admin.UserRole & (int)UserRoleType.卡券活动管理员) > 0

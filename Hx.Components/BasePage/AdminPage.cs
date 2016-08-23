@@ -105,5 +105,12 @@ namespace Hx.Components.BasePage
                 return string.Empty;
             }
         }
+
+        protected bool CheckPower(UserRoleType role)
+        {
+            if (HXContext.Current.AdminUser.Administrator) return true;
+            if (((int)HXContext.Current.AdminUser.UserRole & (int)role) > 0) return true;
+            return false;
+        }
     }
 }

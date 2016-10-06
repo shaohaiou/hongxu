@@ -755,6 +755,108 @@ namespace Hx.Components.Entity
 
         #region 客服部月度目标
 
+        /// <summary>
+        /// 基盘保有客户量1年内
+        /// </summary>
+        [JsonIgnore]
+        public string KFjpbylhl1year
+        {
+            get { return GetString("KFjpbylhl1year", ""); }
+            set { SetExtendedAttribute("KFjpbylhl1year", value); }
+        }
+
+        /// <summary>
+        /// 基盘保有客户量2年内
+        /// </summary>
+        [JsonIgnore]
+        public string KFjpbylhl2year
+        {
+            get { return GetString("KFjpbylhl2year", ""); }
+            set { SetExtendedAttribute("KFjpbylhl2year", value); }
+        }
+
+        /// <summary>
+        /// 基盘保有客户量3年内
+        /// </summary>
+        [JsonIgnore]
+        public string KFjpbylhl3year
+        {
+            get { return GetString("KFjpbylhl3year", ""); }
+            set { SetExtendedAttribute("KFjpbylhl3year", value); }
+        }
+
+        /// <summary>
+        /// 基盘保有客户量3-5年内
+        /// </summary>
+        [JsonIgnore]
+        public string KFjpbylhl3_5year
+        {
+            get { return GetString("KFjpbylhl3_5year", ""); }
+            set { SetExtendedAttribute("KFjpbylhl3_5year", value); }
+        }
+
+        /// <summary>
+        /// 基盘保有客户量5年以上
+        /// </summary>
+        [JsonIgnore]
+        public string KFjpbylhl5year
+        {
+            get { return GetString("KFjpbylhl5year", ""); }
+            set { SetExtendedAttribute("KFjpbylhl5year", value); }
+        }
+
+        /// <summary>
+        /// 有效管理内客户量1年内
+        /// </summary>
+        [JsonIgnore]
+        public string KFyxglnkhl1year
+        {
+            get { return GetString("KFyxglnkhl1year", ""); }
+            set { SetExtendedAttribute("KFyxglnkhl1year", value); }
+        }
+
+        /// <summary>
+        /// 有效管理内客户量2年内
+        /// </summary>
+        [JsonIgnore]
+        public string KFyxglnkhl2year
+        {
+            get { return GetString("KFyxglnkhl2year", ""); }
+            set { SetExtendedAttribute("KFyxglnkhl2year", value); }
+        }
+
+        /// <summary>
+        /// 有效管理内客户量3年内
+        /// </summary>
+        [JsonIgnore]
+        public string KFyxglnkhl3year
+        {
+            get { return GetString("KFyxglnkhl3year", ""); }
+            set { SetExtendedAttribute("KFyxglnkhl3year", value); }
+        }
+
+        /// <summary>
+        /// 有效管理内客户量3-5年内
+        /// </summary>
+        [JsonIgnore]
+        public string KFyxglnkhl3_5year
+        {
+            get { return GetString("KFyxglnkhl3_5year", ""); }
+            set { SetExtendedAttribute("KFyxglnkhl3_5year", value); }
+        }
+
+        /// <summary>
+        /// 有效管理内客户量5年以上
+        /// </summary>
+        [JsonIgnore]
+        public string KFyxglnkhl5year
+        {
+            get { return GetString("KFyxglnkhl5year", ""); }
+            set { SetExtendedAttribute("KFyxglnkhl5year", value); }
+        }
+
+
+
         #endregion
 
         #region 市场部月度目标

@@ -74,6 +74,9 @@ namespace Hx.BackAdmin.weixin
                 txtEndTime.Text = CurrentSetting.EndTime;
                 cbxIsRepeatOneday.Checked = CurrentSetting.IsrepeatOnday == 1;
                 cbxIsRepeat.Checked = CurrentSetting.Isrepeat == 1;
+                cbxIsMulselect.Checked = CurrentSetting.IsMulselect == 1;
+                txtMulselectNumber.Text = CurrentSetting.MulselectNumber;
+                cbxIstransverse.Checked = CurrentSetting.IsTransverse == 1;
                 txtAppID.Text = CurrentSetting.AppID;
                 txtAppSecret.Text = CurrentSetting.AppSecret;
                 txtAppNumber.Text = CurrentSetting.AppNumber;
@@ -152,6 +155,9 @@ namespace Hx.BackAdmin.weixin
             entity.OverdueMinutes = DataConvert.SafeInt(txtOverdueMinutes.Text);
             entity.VoteTimes = DataConvert.SafeInt(txtVoteTimes.Text);
             entity.VoteTimesMax = DataConvert.SafeInt(txtVoteTimesMax.Text);
+            entity.IsMulselect = cbxIsMulselect.Checked ? 1 : 0;
+            entity.MulselectNumber = txtMulselectNumber.Text;
+            entity.IsTransverse = cbxIstransverse.Checked ? 1 : 0;
 
             entity.ShareImgUrl = hdimage_pic.Value;
             entity.ShareLinkUrl = txtShareLinkUrl.Text;

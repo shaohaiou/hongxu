@@ -205,6 +205,36 @@ namespace Hx.Components.Entity
         }
 
         /// <summary>
+        /// 多项选择投票模式
+        /// </summary>
+        [JsonIgnore]
+        public int IsMulselect
+        {
+            get { return GetInt("IsMulselect", 0); }
+            set { SetExtendedAttribute("IsMulselect", value.ToString()); }
+        }
+
+        /// <summary>
+        /// 多项选择数量
+        /// </summary>
+        [JsonIgnore]
+        public string MulselectNumber
+        {
+            get { return GetString("MulselectNumber", ""); }
+            set { SetExtendedAttribute("MulselectNumber", value); }
+        }
+
+        /// <summary>
+        /// 横向图片显示
+        /// </summary>
+        [JsonIgnore]
+        public int IsTransverse
+        {
+            get { return GetInt("IsTransverse", 0); }
+            set { SetExtendedAttribute("IsTransverse", value.ToString()); }
+        }
+
+        /// <summary>
         /// 分享图片Url
         /// </summary>
         [JsonIgnore]

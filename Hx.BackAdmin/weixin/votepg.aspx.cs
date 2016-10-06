@@ -94,6 +94,7 @@ namespace Hx.BackAdmin.weixin
                     }
                 }
                 hdnOpenid.Value = Openid;
+                if (Openid.ToLower().Contains("errcode")) Openid = string.Empty;
                 if (!string.IsNullOrEmpty(Openid))
                 {
                     string accesstoken = WeixinActs.Instance.GetAccessToken(CurrentSetting.AppID, CurrentSetting.AppSecret);
@@ -104,8 +105,10 @@ namespace Hx.BackAdmin.weixin
                         NeedAttention = true;
                         hdntest.Value = string.Join("\r", openinfo.Select(c => c.Key + ":" + c.Value));
                     }
+                    LoadData();
                 }
-                LoadData();
+                else
+                    Response.Redirect("https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + CurrentSetting.AppID + "&redirect_uri=http%3A%2F%2Frb.hongxucar.com%2Fweixin%2Fvotepg.aspx%3Fsid=" + CurrentSetting.ID + "&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect");
             }
         }
 

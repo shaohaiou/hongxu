@@ -7,11 +7,16 @@ using System.Web.UI.WebControls;
 using Hx.Components.Entity;
 using Hx.Components;
 using Hx.Tools.Web;
+using Hx.Components.BasePage;
 
 namespace Hx.BackAdmin.biz
 {
-    public partial class corpmienview : System.Web.UI.Page
+    public partial class corpmienview : AdminBase
     {
+        protected override void Check()
+        {
+
+        }
         private CorpMienInfo _currentCorpMien;
         protected CorpMienInfo CurrentCorpMien
         {

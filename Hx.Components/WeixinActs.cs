@@ -143,6 +143,8 @@ namespace Hx.Components
             {
                 openid = dic_openid["openid"];
             }
+            else
+                openid = str_openid;
 
             return openid;
         }
@@ -1809,11 +1811,11 @@ namespace Hx.Components
                     List<VoteRecordInfo> votesall = VoteRecordList.Where(b => b.Openid == openid).ToList();
                     if (votes.Count > 0)
                     {
-                        if (votes.Exists(v => v.Openid == openid) && setting.IsrepeatOnday == 0)
+                        if (votes.Exists(v => v.Openid == openid && v.AthleteID.ToString() == id) && setting.IsrepeatOnday == 0)
                         {
                             return "您今日已经为他/她投过票了。";
                         }
-                        if (votesall.Exists(v => v.Openid == openid) && setting.Isrepeat == 0)
+                        if (votesall.Exists(v => v.Openid == openid && v.AthleteID.ToString() == id) && setting.Isrepeat == 0)
                         {
                             return "您已经为他/她投过票了。";
                         }

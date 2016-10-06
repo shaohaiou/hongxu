@@ -280,6 +280,30 @@
                         <asp:CheckBox runat="server" ID="cbxIsRepeat" />
                     </td>
                 </tr>
+                <tr>
+                    <td class="bg1">
+                        多项投票模式：
+                    </td>
+                    <td>
+                        <asp:CheckBox runat="server" ID="cbxIsMulselect" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bg1">
+                        多项选择数量：
+                    </td>
+                    <td>
+                        <asp:TextBox runat="server" ID="txtMulselectNumber" CssClass="srk4"></asp:TextBox>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="bg1">
+                        横向显示图片：
+                    </td>
+                    <td>
+                        <asp:CheckBox runat="server" ID="cbxIstransverse" />
+                    </td>
+                </tr>
                 <%if (Hx.Components.Web.HXContext.Current.AdminUser.Administrator)
                   { %>
                 <tr>

@@ -1459,6 +1459,76 @@
                                 <asp:TextBox runat="server" ID="txtNXCPbyybfwdqnpfje" CssClass="srk6 tr number"></asp:TextBox><span class="gray pl10">当月到期购买此产品数量内赔付总金额（元）</span>
                             </td>
                         </tr>
+                        <%}else if(CurrentDep == DayReportDep.客服部 && HasMonthlyTargetPower()){ %>
+                        <tr>
+                            <td class="bg3 tr">
+                                每月月底填写：
+                            </td>
+                            <td>
+                                <table border="0" cellspacing="0" cellpadding="0" class="datatable">
+                                    <tr class="tc bold" style="background-color: Orange;">
+                                        <td class="w120">
+                                            类型
+                                        </td>
+                                        <td class="w60">
+                                            1年内
+                                        </td>
+                                        <td class="w60">
+                                            2年内
+                                        </td>
+                                        <td class="w60">
+                                            3年内
+                                        </td>
+                                        <td class="w60">
+                                            3-5年内
+                                        </td>
+                                        <td class="w60">
+                                            5年以上
+                                        </td>
+                                    </tr>
+                                    <tr style="background-color: Yellow;">
+                                        <td class="tc bold" style="background-color: Orange;">
+                                            基盘保有客户量
+                                        </td>
+                                        <td>
+                                            <asp:TextBox runat="server" ID="txtKFjpbylhl1year" CssClass="srk7 number"></asp:TextBox>
+                                        </td>
+                                        <td>
+                                            <asp:TextBox runat="server" ID="txtKFjpbylhl2year" CssClass="srk7 number"></asp:TextBox>
+                                        </td>
+                                        <td>
+                                            <asp:TextBox runat="server" ID="txtKFjpbylhl3year" CssClass="srk7 number"></asp:TextBox>
+                                        </td>
+                                        <td>
+                                            <asp:TextBox runat="server" ID="txtKFjpbylhl3_5year" CssClass="srk7 number"></asp:TextBox>
+                                        </td>
+                                        <td>
+                                            <asp:TextBox runat="server" ID="txtKFjpbylhl5year" CssClass="srk7 number"></asp:TextBox>
+                                        </td>
+                                    </tr>
+                                    <tr style="background-color: Yellow;">
+                                        <td class="tc bold" style="background-color: Orange;">
+                                            有效管理内客户量
+                                        </td>
+                                        <td>
+                                            <asp:TextBox runat="server" ID="txtKFyxglnkhl1year" CssClass="srk7 number"></asp:TextBox>
+                                        </td>
+                                        <td>
+                                            <asp:TextBox runat="server" ID="txtKFyxglnkhl2year" CssClass="srk7 number"></asp:TextBox>
+                                        </td>
+                                        <td>
+                                            <asp:TextBox runat="server" ID="txtKFyxglnkhl3year" CssClass="srk7 number"></asp:TextBox>
+                                        </td>
+                                        <td>
+                                            <asp:TextBox runat="server" ID="txtKFyxglnkhl3_5year" CssClass="srk7 number"></asp:TextBox>
+                                        </td>
+                                        <td>
+                                            <asp:TextBox runat="server" ID="txtKFyxglnkhl5year" CssClass="srk7 number"></asp:TextBox>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
                         <%} %>
                         <%=GetTableStr()%>
                     </tbody>

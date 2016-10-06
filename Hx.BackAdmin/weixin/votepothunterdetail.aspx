@@ -70,8 +70,9 @@
                     <span class="ballot green">票数:<%= CurrentPothunterInfo.Ballot%></span> <span class="paiming green">
                         排名:<%= CurrentPothunterInfo.Order%></span>
                     <div class="opt">
-                        <a href="javascript:void(0);" class="btnComment">马上留言</a> <a href="javascript:toupiao(<%= CurrentPothunterInfo.ID %>);"
-                            class="btnVote hide">投票</a></div>
+                        <a href="javascript:void(0);" class="btnComment">马上留言</a><%if (CurrentSetting.IsMulselect == 0)
+                                                                                   { %> <a href="javascript:toupiao(<%= CurrentPothunterInfo.ID %>);"
+                            class="btnVote hide">投票</a><%} %></div>
                 </div>
             </div>
             <div class="cintro">

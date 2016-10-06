@@ -601,6 +601,33 @@ namespace Hx.BackAdmin.dayreport
 
             #endregion
 
+            #region 客服部特殊处理
+
+            if (CurrentDep == DayReportDep.客服部 && HasMonthlyTargetPower())
+            {
+                MonthlyTargetInfo target = null;
+                DateTime daytarget = DateTime.Today;
+                if (DateTime.TryParse(txtDate.Text, out daytarget))
+                {
+                    target = MonthlyTargets.Instance.GetModel(DataConvert.SafeInt(ddlCorp.SelectedValue), CurrentDep, daytarget, true);
+                }
+                if (target != null)
+                {
+                    txtKFjpbylhl1year.Text = target.KFjpbylhl1year;
+                    txtKFjpbylhl2year.Text = target.KFjpbylhl2year;
+                    txtKFjpbylhl3year.Text = target.KFjpbylhl3year;
+                    txtKFjpbylhl3_5year.Text = target.KFjpbylhl3_5year;
+                    txtKFjpbylhl5year.Text = target.KFjpbylhl5year;
+                    txtKFyxglnkhl1year.Text = target.KFyxglnkhl1year;
+                    txtKFyxglnkhl2year.Text = target.KFyxglnkhl2year;
+                    txtKFyxglnkhl3year.Text = target.KFyxglnkhl3year;
+                    txtKFyxglnkhl3_5year.Text = target.KFyxglnkhl3_5year;
+                    txtKFyxglnkhl5year.Text = target.KFyxglnkhl5year;
+                }
+            }
+
+            #endregion
+
         }
 
         private void FillData(DailyReportInfo report)
@@ -998,6 +1025,42 @@ namespace Hx.BackAdmin.dayreport
                         target.NXCPbyybfwdqnpfgs = txtNXCPbyybfwdqnpfgs.Text;
                         target.NXCPbyybfwdqnpfje = txtNXCPbyybfwdqnpfje.Text;
 
+                        MonthlyTargets.Instance.CreateAndUpdate(target);
+                    }
+
+                    #endregion
+
+                    #region 客服部特殊处理
+
+                    if (CurrentDep == DayReportDep.客服部 && HasMonthlyTargetPower())
+                    {
+                        MonthlyTargetInfo target = null;
+                        target = MonthlyTargets.Instance.GetModel(DataConvert.SafeInt(ddlCorp.SelectedValue), CurrentDep, day, true);
+                        if (target == null)
+                        {
+                            target = new MonthlyTargetInfo()
+                            {
+                                CorporationID = DataConvert.SafeInt(ddlCorp.SelectedValue),
+                                Department = CurrentDep,
+                                MonthUnique = day.ToString("yyyyMM"),
+                                Creator = CurrentUser.UserName,
+                                LastUpdateUser = CurrentUser.UserName
+                            };
+                        }
+                        else
+                        {
+                            target.LastUpdateUser = CurrentUser.UserName;
+                        }
+                        target.KFjpbylhl1year = txtKFjpbylhl1year.Text;
+                        target.KFjpbylhl2year = txtKFjpbylhl2year.Text;
+                        target.KFjpbylhl3year = txtKFjpbylhl3year.Text;
+                        target.KFjpbylhl3_5year = txtKFjpbylhl3_5year.Text;
+                        target.KFjpbylhl5year = txtKFjpbylhl5year.Text;
+                        target.KFyxglnkhl1year = txtKFyxglnkhl1year.Text;
+                        target.KFyxglnkhl2year = txtKFyxglnkhl2year.Text;
+                        target.KFyxglnkhl3year = txtKFyxglnkhl3year.Text;
+                        target.KFyxglnkhl3_5year = txtKFyxglnkhl3_5year.Text;
+                        target.KFyxglnkhl5year = txtKFyxglnkhl5year.Text;
                         MonthlyTargets.Instance.CreateAndUpdate(target);
                     }
 

@@ -776,17 +776,20 @@ namespace Hx.BackAdmin.HttpHandler
             try
             {
                 string openid = WebHelper.GetString("openid");
-                string id = WebHelper.GetString("id");
+                string ids = WebHelper.GetString("id");
                 int sid = WebHelper.GetInt("sid");
 
-                if (!string.IsNullOrEmpty(openid) && !string.IsNullOrEmpty(id))
+                if (!string.IsNullOrEmpty(openid) && !string.IsNullOrEmpty(ids))
                 {
                     VoteSettingInfo setting = WeixinActs.Instance.GetVoteSetting(sid, true);
-                    string votecheckresult = WeixinActs.Instance.CheckVote(sid,openid, id);
-                    if (!string.IsNullOrEmpty(votecheckresult))
+                    foreach (string id in ids.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries))
                     {
-                        result = string.Format(result, "failed", votecheckresult);
-                        return;
+                        string votecheckresult = WeixinActs.Instance.CheckVote(sid, openid, id);
+                        if (!string.IsNullOrEmpty(votecheckresult))
+                        {
+                            result = string.Format(result, "failed", votecheckresult);
+                            return;
+                        }
                     }
 
                     string access_token = WeixinActs.Instance.GetAccessToken(setting.AppID, setting.AppSecret);
@@ -806,36 +809,38 @@ namespace Hx.BackAdmin.HttpHandler
                         Dictionary<string, object> dic_openinfo = WeixinActs.Instance.GetOpeninfo(access_token, openid);
                         if (!dic_openinfo.ContainsKey("errcode"))
                         {
-                            int pid = DataConvert.SafeInt(id);
-                            VotePothunterInfo pinfo = WeixinActs.Instance.GetVotePothunterInfo(pid, true);
-                            if (pinfo == null)
-                                result = string.Format(result, "failed", "不存在此选手");
-                            else
+                            foreach (string id in ids.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries))
                             {
-                                VoteRecordInfo entity = new VoteRecordInfo();
-                                entity.SID = sid;
-                                entity.AthleteID = pid;
-                                entity.AthleteName = pinfo.Name;
-                                entity.SerialNumber = pinfo.SerialNumber;
-                                entity.Voter = dic_openinfo.ContainsKey("nickname") ? (dic_openinfo["nickname"].ToString()) : string.Empty;
-                                entity.AddTime = DateTime.Now;
-                                entity.Openid = openid;
-                                entity.Nickname = entity.Voter;
-                                entity.Sex = dic_openinfo.ContainsKey("sex") ? DataConvert.SafeInt(dic_openinfo["sex"]) : 0;
-                                entity.City = dic_openinfo.ContainsKey("city") ? (dic_openinfo["city"].ToString()) : string.Empty;
-                                entity.Country = dic_openinfo.ContainsKey("country") ? (dic_openinfo["country"].ToString()) : string.Empty;
-                                entity.Province = dic_openinfo.ContainsKey("province") ? (dic_openinfo["province"].ToString()) : string.Empty;
-
-                                string dianzancode = string.Empty;
-                                lock (sync_helper)
-                                {
-                                    dianzancode = WeixinActs.Instance.Vote(entity);
-                                }
-                                if (string.IsNullOrEmpty(dianzancode))
-                                    result = string.Format(result, "success", "");
+                                int pid = DataConvert.SafeInt(id);
+                                VotePothunterInfo pinfo = WeixinActs.Instance.GetVotePothunterInfo(pid, true);
+                                if (pinfo == null)
+                                    result = string.Format(result, "failed", "不存在此选手");
                                 else
-                                    result = string.Format(result, "failed", dianzancode);
+                                {
+                                    VoteRecordInfo entity = new VoteRecordInfo();
+                                    entity.SID = sid;
+                                    entity.AthleteID = pid;
+                                    entity.AthleteName = pinfo.Name;
+                                    entity.SerialNumber = pinfo.SerialNumber;
+                                    entity.Voter = dic_openinfo.ContainsKey("nickname") ? (dic_openinfo["nickname"].ToString()) : string.Empty;
+                                    entity.AddTime = DateTime.Now;
+                                    entity.Openid = openid;
+                                    entity.Nickname = entity.Voter;
+                                    entity.Sex = dic_openinfo.ContainsKey("sex") ? DataConvert.SafeInt(dic_openinfo["sex"]) : 0;
+                                    entity.City = dic_openinfo.ContainsKey("city") ? (dic_openinfo["city"].ToString()) : string.Empty;
+                                    entity.Country = dic_openinfo.ContainsKey("country") ? (dic_openinfo["country"].ToString()) : string.Empty;
+                                    entity.Province = dic_openinfo.ContainsKey("province") ? (dic_openinfo["province"].ToString()) : string.Empty;
+
+                                    string dianzancode = string.Empty;
+                                    lock (sync_helper)
+                                    {
+                                        dianzancode = WeixinActs.Instance.Vote(entity);
+                                    }
+                                    if (!string.IsNullOrEmpty(dianzancode))
+                                        result = string.Format(result, "failed", dianzancode);
+                                }
                             }
+                            result = string.Format(result, "success", "");
                         }
                         else
                         {

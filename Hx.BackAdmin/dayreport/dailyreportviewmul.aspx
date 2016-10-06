@@ -7,8 +7,8 @@
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="pragma" content="no-cache" />
-    <meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate" />
-    <meta HTTP-EQUIV="expires" CONTENT="0" />
+    <meta http-equiv="Cache-Control" content="no-cache, must-revalidate" />
+    <meta http-equiv="expires" content="0" />
     <title>月报汇总</title>
     <link href=<%=ResourceServer%>/css/admin.css rel="stylesheet" type="text/css" />
     <script src=<%=ResourceServer%>/js/jquery-1.3.2.min.js type="text/javascript"></script>

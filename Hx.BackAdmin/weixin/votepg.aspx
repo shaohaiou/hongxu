@@ -54,6 +54,7 @@
     <input type="hidden" runat="server" id="hdntest" />
     <input type="hidden" runat="server" id="hdnOpenid" />
     <input type="hidden" runat="server" id="hdnaccess_token" />
+    <div style="display:none;"><%=CurrentSetting.AppSecret%></div>
     <div class="wrap">
         <div class="dad">
             <%if (CurrentSetting != null && !string.IsNullOrEmpty(CurrentSetting.PageHeadImg))
@@ -78,12 +79,19 @@
                 </HeaderTemplate>
                 <ItemTemplate>
                     <li>
-                        <div class="d-pic">
+                        <div class="<%if(CurrentSetting.IsTransverse == 0){ %>d-pic<%}else{ %>dt-pic<%} %>">
+                            <%if(CurrentSetting.IsMulselect == 0){ %>
                             <img src="<%=ImgServer %><%# Eval("PicPath") %>" alt="<%#Eval("Name") %>" />
+                            <%}else{ %>
+                            <label>
+                                <input type="checkbox" class="cbxSelect" value="<%# Eval("ID") %>" style="position: absolute;">
+                                <img src="<%=ImgServer %><%# Eval("PicPath") %>" alt="<%#Eval("Name") %>" />
+                            </label>
+                            <%} %>
                             <div class="flay">
                                 <img src="../images/benzvote/flay.png" /></div>
                         </div>
-                        <div class="d-info">
+                        <div class="<%if(CurrentSetting.IsTransverse == 0){ %>d-info<%}else{ %>dt-info<%} %>">
                             <span class="name green">
                                 <%#Eval("Name") %></span><br />
                             <%# string.IsNullOrEmpty(Eval("SerialNumberDetail").ToString()) ? string.Empty : string.Format("<span class=\"sn\"><span class=\"green\">{0}</span></span><br />",Eval("SerialNumberDetail").ToString())%>
@@ -91,9 +99,10 @@
                             <span class="paiming green">排名:<span class="fense"><%#Eval("Order")%></span></span>
                             <div class="opt">
                                 <span class="xiangqing"><a href="votepothunterdetail.aspx?sid=<%=SID %>&id=<%# Eval("ID") %>&code=<%=Code %>&from=<%=CurrentUrl %>">
-                                    <img src="../images/benzvote/xiangqing.png" alt="详情" /></a></span><span class="toupiao"><a
+                                    <img src="../images/benzvote/xiangqing.png" alt="详情" /></a></span><%if (CurrentSetting.IsMulselect == 0)
+                                                                                                        { %><span class="toupiao"><a
                                         href="javascript:void(0);" onclick="javascript:toupiao(<%# Eval("ID") %>,this);"><img
-                                            src="../images/benzvote/toupiao.png" alt="投票" /></a></span><a href="javascript:void(0);"
+                                            src="../images/benzvote/toupiao.png" alt="投票" /></a></span><%} %><br /><a href="javascript:void(0);"
                                                 class="btnComment hide" val="<%#Eval("ID") %>"> 留言</a> <a href="javascript:void(0);"
                                                     class="btnCommentMore" val="<%#Eval("ID") %>">更多留言 </a>
                             </div>
@@ -128,6 +137,11 @@
                     </ul></FooterTemplate>
             </asp:Repeater>
         </div>
+        <%if(CurrentSetting.IsMulselect == 1){ %>
+        <div style="text-align: center;margin-top: 20px;">
+            <input type="button" id="btnSubmit" value="提交投票" style="width: 40%;padding: 10px 0;font-weight: bold;color: #0B454A;font-size: 1.5em;">
+        </div>
+        <%} %>
         <%if (PageCount > 1)
           { %>
         <table style="width: 38%; margin: 0 auto;" border="0" cellspacing="0" cellpadding="0">
@@ -166,9 +180,10 @@
     </form>
 </body>
 <script type="text/javascript">
+    var mulselectnumber = '<%= CurrentSetting.MulselectNumber %>';
     var sid = <%= SID %>;
-    var code = "<%= Code %>";
-    var openid = "<%= Openid %>";
+    var code = '<%= Code %>';
+    var openid = '<%= Openid %>';
     var animatetimer = null;
 
     <%if(NeedAttention){ %>
@@ -198,9 +213,18 @@
             },
             success: function (data) {
                 if (data.Value == "success") {
-                    var t = $(o).parent().parent().parent().find(".txtBallot");
-                    if (t && t.length > 0)
-                        t.text(parseInt(t.text()) + 1);
+                    if(o != null){
+                        var t = $(o).parent().parent().parent().find(".txtBallot");
+                        if (t && t.length > 0)
+                            t.text(parseInt(t.text()) + 1);
+                    }else{
+                        $(".cbxSelect:checked").each(function(){
+                            $(this).attr("checked",false);
+                            var t = $(this).parent().parent().parent().find(".txtBallot");
+                            if (t && t.length > 0)
+                            t.text(parseInt(t.text()) + 1);
+                        });
+                    }
                     alert("投票成功，感谢您的参与。");
                 }
                 else if(data.Msg == "openid,vopenid为空")
@@ -371,6 +395,25 @@
         $(".btnBelittle").click(function () {
             var id = $(this).attr("val");
             CommentBelittle(id);
+        });
+        $(".cbxSelect").click(function(){
+            if($(".cbxSelect:checked").length > parseInt(mulselectnumber)){
+                alert("最多只能选择" + mulselectnumber + "项");
+                $(this).attr("checked",false);
+                return;
+            }
+        });
+        $("#btnSubmit").click(function(){
+            if($(".cbxSelect:checked").length != parseInt(mulselectnumber)){
+                alert("请选择" + mulselectnumber + "项后再提交");
+                return false;
+            }
+            if(parseInt(mulselectnumber) > 0){
+                var ids = $(".cbxSelect:checked").map(function(){
+                    return $(this).val()
+                }).get().join("|");
+                toupiao(ids,null);
+            }
         });
     })
     function CommentPraise(id) {

@@ -1786,6 +1786,96 @@ namespace Hx.BackAdmin.dayreport {
         protected global::System.Web.UI.WebControls.TextBox txtNXCPbyybfwdqnpfje;
         
         /// <summary>
+        /// txtKFjpbylhl1year 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtKFjpbylhl1year;
+        
+        /// <summary>
+        /// txtKFjpbylhl2year 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtKFjpbylhl2year;
+        
+        /// <summary>
+        /// txtKFjpbylhl3year 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtKFjpbylhl3year;
+        
+        /// <summary>
+        /// txtKFjpbylhl3_5year 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtKFjpbylhl3_5year;
+        
+        /// <summary>
+        /// txtKFjpbylhl5year 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtKFjpbylhl5year;
+        
+        /// <summary>
+        /// txtKFyxglnkhl1year 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtKFyxglnkhl1year;
+        
+        /// <summary>
+        /// txtKFyxglnkhl2year 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtKFyxglnkhl2year;
+        
+        /// <summary>
+        /// txtKFyxglnkhl3year 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtKFyxglnkhl3year;
+        
+        /// <summary>
+        /// txtKFyxglnkhl3_5year 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtKFyxglnkhl3_5year;
+        
+        /// <summary>
+        /// txtKFyxglnkhl5year 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtKFyxglnkhl5year;
+        
+        /// <summary>
         /// btnSubmit 控件。
         /// </summary>
         /// <remarks>

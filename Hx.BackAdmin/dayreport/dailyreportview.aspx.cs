@@ -2546,7 +2546,7 @@ namespace Hx.BackAdmin.dayreport
                         m = rlist.Find(l => l.Name == "活动招揽电话量");
                         decimal hjhdzl = DataConvert.SafeDecimal(!m.Iscount ? string.Empty : Math.Round(data.Sum(d => d.ContainsKey(m.ID.ToString()) ? DataConvert.SafeDecimal(d[m.ID.ToString()]) : 0), 0).ToString());
                         decimal mbhdzl = DataConvert.SafeDecimal(targetdata.ContainsKey(m.ID.ToString()) ? targetdata[m.ID.ToString()] : string.Empty);
-                        m = rlist.Find(l => l.Name == "流失客户招徕电话量");
+                        m = rlist.Find(l => l.Name == "流失客户招揽电话量");
                         decimal hjlszl = DataConvert.SafeDecimal(!m.Iscount ? string.Empty : Math.Round(data.Sum(d => d.ContainsKey(m.ID.ToString()) ? DataConvert.SafeDecimal(d[m.ID.ToString()]) : 0), 0).ToString());
                         decimal mblszl = DataConvert.SafeDecimal(targetdata.ContainsKey(m.ID.ToString()) ? targetdata[m.ID.ToString()] : string.Empty);
                         m = rlist.Find(l => l.Name == "事故信息回访量");
@@ -2649,7 +2649,7 @@ namespace Hx.BackAdmin.dayreport
                                     decimal dbyy = DataConvert.SafeDecimal(reportdate.ContainsKey(m.ID.ToString()) ? reportdate[m.ID.ToString()] : string.Empty);
                                     m = rlist.Find(l => l.Name == "活动招揽电话量");
                                     decimal hdzl = DataConvert.SafeDecimal(reportdate.ContainsKey(m.ID.ToString()) ? reportdate[m.ID.ToString()] : string.Empty);
-                                    m = rlist.Find(l => l.Name == "流失客户招徕电话量");
+                                    m = rlist.Find(l => l.Name == "流失客户招揽电话量");
                                     decimal lszl = DataConvert.SafeDecimal(reportdate.ContainsKey(m.ID.ToString()) ? reportdate[m.ID.ToString()] : string.Empty);
                                     m = rlist.Find(l => l.Name == "事故信息回访量");
                                     decimal sghf = DataConvert.SafeDecimal(reportdate.ContainsKey(m.ID.ToString()) ? reportdate[m.ID.ToString()] : string.Empty);
@@ -5395,7 +5395,7 @@ namespace Hx.BackAdmin.dayreport
                 data.DefaultView.RowFilter = "项目='流失客户来店数'";
                 decimal hjlskhlds = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
                 decimal mblskhlds = DataConvert.SafeDecimal(data.DefaultView[0]["目标值"]);
-                data.DefaultView.RowFilter = "项目='流失招徕数'";
+                data.DefaultView.RowFilter = "项目='流失招揽数'";
                 decimal hjlszls = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
                 decimal mblszls = DataConvert.SafeDecimal(data.DefaultView[0]["目标值"]);
                 data.DefaultView.RowFilter = "项目='服务态度'";

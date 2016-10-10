@@ -1491,7 +1491,7 @@ namespace Hx.BackAdmin.dayreport
 
                 #region 表数据
 
-                DataRow[] rows = new DataRow[rlist.Count + 4];
+                DataRow[] rows = new DataRow[rlist.Count + 5];
 
                 #region 项目、合计、目标
 
@@ -1535,7 +1535,7 @@ namespace Hx.BackAdmin.dayreport
                         }
                         otherrowcount++;
                     }
-                    if (rlist[i].Name == "事故信息数")
+                    if (rlist[i].Name == "事故信息回访量")
                     {
                         rows[i + otherrowcount] = tbl.NewRow();
                         rows[i + otherrowcount]["项目"] = "电话呼出总量";
@@ -1566,6 +1566,16 @@ namespace Hx.BackAdmin.dayreport
                         rows[i + otherrowcount]["合计"] = hjxshf + hjqkhf + hjsbtx + hjdbyy + hjhdzl + hjlszl + hjsghf + hjqxhf;
                         rows[i + otherrowcount]["目标值"] = mbxshf + mbqkhf + mbsbtx + mbdbyy + mbhdzl + mblszl + mbsghf + mbqxhf;
 
+                        otherrowcount++;
+
+                        if (rlist_sh.Exists(l => l.Name == "收到信息数"))
+                        {
+                            m = rlist_sh.Find(l => l.Name == "收到信息数");
+                            rows[i + otherrowcount] = tbl.NewRow();
+                            rows[i + otherrowcount]["项目"] = "事故信息数";
+                            rows[i + otherrowcount]["合计"] = !m.Iscount ? string.Empty : Math.Round(data_sh.Sum(d => d.ContainsKey(m.ID.ToString()) ? DataConvert.SafeDecimal(d[m.ID.ToString()]) : 0), 0).ToString();
+                            rows[i + otherrowcount]["目标值"] = targetdata_sh.ContainsKey(m.ID.ToString()) ? targetdata_sh[m.ID.ToString()] : string.Empty;
+                        }
                         otherrowcount++;
                     }
 

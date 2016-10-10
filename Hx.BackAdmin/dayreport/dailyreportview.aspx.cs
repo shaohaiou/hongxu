@@ -2483,7 +2483,7 @@ namespace Hx.BackAdmin.dayreport
 
                 #region 表数据
 
-                DataRow[] rows = new DataRow[rlist.Count + 4];
+                DataRow[] rows = new DataRow[rlist.Count + 5];
 
                 #region 项目、合计、目标
 
@@ -2527,7 +2527,8 @@ namespace Hx.BackAdmin.dayreport
                         }
                         otherrowcount++;
                     }
-                    if (rlist[i].Name == "事故信息数")
+
+                    if (rlist[i].Name == "事故信息回访量")
                     {
                         rows[i + otherrowcount] = tbl.NewRow();
                         rows[i + otherrowcount]["项目"] = "电话呼出总量";
@@ -2558,6 +2559,16 @@ namespace Hx.BackAdmin.dayreport
                         rows[i + otherrowcount]["合计"] = hjxshf + hjqkhf+ hjsbtx+ hjdbyy+hjhdzl+hjlszl + hjsghf + hjqxhf;
                         rows[i + otherrowcount]["目标值"] = mbxshf + mbqkhf + mbsbtx + mbdbyy + mbhdzl + mblszl + mbsghf + mbqxhf;
 
+                        otherrowcount++;
+
+                        if (rlist_sh.Exists(l => l.Name == "收到信息数"))
+                        {
+                            m = rlist_sh.Find(l => l.Name == "收到信息数");
+                            rows[i + otherrowcount] = tbl.NewRow();
+                            rows[i + otherrowcount]["项目"] = "事故信息数";
+                            rows[i + otherrowcount]["合计"] = !m.Iscount ? string.Empty : Math.Round(data_sh.Sum(d => d.ContainsKey(m.ID.ToString()) ? DataConvert.SafeDecimal(d[m.ID.ToString()]) : 0), 0).ToString();
+                            rows[i + otherrowcount]["目标值"] = targetdata_sh.ContainsKey(m.ID.ToString()) ? targetdata_sh[m.ID.ToString()] : string.Empty;
+                        }
                         otherrowcount++;
                     }
 
@@ -2631,7 +2642,7 @@ namespace Hx.BackAdmin.dayreport
                             }
                             otherrowcount++;
                         }
-                        if (rlist[j].Name == "事故信息数")
+                        if (rlist[j].Name == "事故信息回访量")
                         {
                             if (DateTime.TryParse(txtDate.Text + "-" + i.ToString("00"), out day) && list.Exists(l => l.DayUnique == day.ToString("yyyyMMdd")))
                             {
@@ -2658,7 +2669,18 @@ namespace Hx.BackAdmin.dayreport
                                     rows[j + otherrowcount][i] = xshf + qkhf + sbtx + dbyy + hdzl + lszl + sghf + qxhf;
                                 }
                             }
+                            otherrowcount++;
 
+                            if (DateTime.TryParse(txtDate.Text + "-" + i.ToString("00"), out day) && list_sh.Exists(l => l.DayUnique == day.ToString("yyyyMMdd")))
+                            {
+                                DailyReportModuleInfo m = rlist_sh.Find(l => l.Name == "收到信息数");
+                                DailyReportInfo r = list_sh.Find(l => l.DayUnique == day.ToString("yyyyMMdd"));
+                                if (!string.IsNullOrEmpty(r.SCReport))
+                                {
+                                    Dictionary<string, string> reportdate = json.Deserialize<Dictionary<string, string>>(r.SCReport);
+                                    rows[j + otherrowcount][i] = reportdate.ContainsKey(m.ID.ToString()) ? reportdate[m.ID.ToString()] : string.Empty;
+                                }
+                            }
                             otherrowcount++;
                         }
                         if (DateTime.TryParse(txtDate.Text + "-" + i.ToString("00"), out day) && list.Exists(l => l.DayUnique == day.ToString("yyyyMMdd")))

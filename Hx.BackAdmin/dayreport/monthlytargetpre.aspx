@@ -1,12 +1,11 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="monthlytarget.aspx.cs"
-    Inherits="Hx.BackAdmin.dayreport.monthlytarget" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="monthlytargetpre.aspx.cs" Inherits="Hx.BackAdmin.dayreport.monthlytargetpre" %>
 
 <%@ Import Namespace="Hx.Components.Enumerations" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
+<head id="Head1" runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title><%=GetInt("pre") == 0 ? "月度目标" : "预算目标" %></title>
+    <title>预算目标</title>
     <link href=<%=ResourceServer%>/css/admin.css rel="stylesheet" type="text/css" />
     <script src=<%=ResourceServer%>/js/jquery-1.3.2.min.js type="text/javascript"></script>
     <script src="/js/WdatePicker.js" type="text/javascript"></script>
@@ -143,7 +142,7 @@
             <ContentTemplate>
                 <table width="100%" border="0" cellspacing="0" cellpadding="0" class="biaoge3">
                     <caption class="bt2">
-                        <%=GetInt("pre") == 0 ? "月度目标" : "预算目标" %></caption>
+                        预算目标</caption>
                     <tbody>
                         <tr>
                             <td class="bg1">
@@ -165,7 +164,6 @@
                                 <asp:Label runat="server" ID="lblMsg" Text="" CssClass="red"></asp:Label>
                             </td>
                         </tr>
-                        <%if(GetInt("pre") == 0){ %>
                         <tr>
                             <td class="gray bg1">
                                 温馨提示：
@@ -174,7 +172,6 @@
                                 请在每月7号之前（含每月7号）设置好月度目标，7号之后将不能设置、修改月度目标。
                             </td>
                         </tr>
-                        <%} %>
                         <%if (CurrentDep == DayReportDep.市场部)
                           {%>
                         <tr>

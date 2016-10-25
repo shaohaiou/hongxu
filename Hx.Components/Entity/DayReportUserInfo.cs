@@ -178,6 +178,16 @@ namespace Hx.Components.Entity
         }
 
         /// <summary>
+        /// 月度预算权限设置
+        /// </summary>
+        [JsonIgnore]
+        public string DayReportMonthTargetPrePowerSetting
+        {
+            get { return GetString("DayReportMonthTargetPrePowerSetting", ""); }
+            set { SetExtendedAttribute("DayReportMonthTargetPrePowerSetting", value); }
+        }
+
+        /// <summary>
         /// CRM报表导出权限设置
         /// </summary>
         [JsonIgnore]

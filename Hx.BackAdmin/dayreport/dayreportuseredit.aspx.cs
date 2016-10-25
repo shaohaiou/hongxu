@@ -98,6 +98,7 @@ namespace Hx.BackAdmin.dayreport
                 hdnDayReportCorp.Value = CurrentUser.DayReportCorpPowerSetting;
                 cbxCRMReportExport.Checked = CurrentUser.CRMReportExportPowerSetting == "1";
                 hdnCRMReportInput.Value = CurrentUser.CRMReportInputPowerSetting;
+                cbxDayReportMonthTargetPrePower.Checked = CurrentUser.DayReportMonthTargetPrePowerSetting == "1";
             }
             else
             {
@@ -278,6 +279,7 @@ namespace Hx.BackAdmin.dayreport
             user.DayReportCorpPowerSetting = hdnDayReportCorp.Value;
             user.CRMReportExportPowerSetting = cbxCRMReportExport.Checked ? "1" : "0";
             user.CRMReportInputPowerSetting = hdnCRMReportInput.Value;
+            user.DayReportMonthTargetPrePowerSetting = cbxDayReportMonthTargetPrePower.Checked ? "1" : "0";
 
             DayReportUsers.Instance.Update(user);
 

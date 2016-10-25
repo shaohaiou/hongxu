@@ -1189,6 +1189,80 @@ namespace HX.DALSQLServer
 
         #endregion
 
+        #region 预算目标
+
+        public override List<MonthlyTargetInfo> GetMonthTargetPreList(MonthTargetPreQuery query)
+        {
+            List<MonthlyTargetInfo> list = new List<MonthlyTargetInfo>();
+            SqlParameter p;
+            using (IDataReader reader = CommonPageSql.GetDataReaderByPager(_con, 1, int.MaxValue, query, out p))
+            {
+                while (reader.Read())
+                {
+                    list.Add(PopulateMonthTarget(reader));
+                }
+            }
+
+            return list;
+        }
+
+        public override void CreateAndUpdateMonthlyTargetPre(MonthlyTargetInfo entity)
+        {
+            string sql = string.Format(@"
+            IF NOT EXISTS(SELECT * FROM {0} WHERE [MonthUnique] = @MonthUnique AND [CorporationID] = @CorporationID AND [Department]=@Department)
+            BEGIN
+                INSERT INTO {0}(
+                    [PropertyNames]
+                    ,[PropertyValues]
+                    ,[MonthUnique]
+                    ,[CorporationID]
+                    ,[Department]
+                    ,[Creator]
+                    ,[CreateTime]
+                    ,[LastUpdateUser]
+                    ,[LastUpdateTime]
+                )VALUES(
+                    @PropertyNames
+                    ,@PropertyValues
+                    ,@MonthUnique
+                    ,@CorporationID
+                    ,@Department
+                    ,@Creator
+                    ,GETDATE()
+                    ,@LastUpdateUser
+                    ,GETDATE()
+                )
+            END
+            ELSE 
+            BEGIN
+                UPDATE {0} SET
+                    [PropertyNames] = @PropertyNames
+                    ,[PropertyValues] = @PropertyValues
+                    ,[LastUpdateUser] = @LastUpdateUser
+                    ,[LastUpdateTime] = GETDATE()
+                WHERE [MonthUnique] = @MonthUnique AND [CorporationID] = @CorporationID AND [Department]=@Department
+            END
+            ", "HX_MonthlyTargetPre");
+            SerializerData data = entity.GetSerializerData();
+            SqlParameter[] p = 
+            { 
+                new SqlParameter("@CorporationID",entity.CorporationID),
+                new SqlParameter("@Department",entity.Department),
+                new SqlParameter("@Creator",entity.Creator),
+                new SqlParameter("@MonthUnique",entity.MonthUnique),
+                new SqlParameter("@LastUpdateUser",entity.LastUpdateUser),
+                new SqlParameter("@PropertyNames", data.Keys),
+				new SqlParameter("@PropertyValues", data.Values)
+            };
+
+            lock (sync_helper)
+            {
+                SqlHelper.ExecuteNonQuery(_con, CommandType.Text, sql, p);
+            }
+        }
+
+        #endregion
+
         #region 微信活动
 
         #region 测试活动

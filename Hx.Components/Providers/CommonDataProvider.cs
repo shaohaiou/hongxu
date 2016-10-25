@@ -563,6 +563,14 @@ namespace Hx.Components.Providers
 
         #endregion
 
+        #region 预算目标
+
+        public abstract List<MonthlyTargetInfo> GetMonthTargetPreList(MonthTargetPreQuery query);
+
+        public abstract void CreateAndUpdateMonthlyTargetPre(MonthlyTargetInfo entity);
+
+        #endregion
+
         #region 微信活动
 
         #region 测试活动

@@ -440,6 +440,16 @@ namespace Hx.Components.Entity
         }
 
         /// <summary>
+        /// 试乘试驾率
+        /// </summary>
+        [JsonIgnore]
+        public string XSscsjl
+        {
+            get { return GetString("XSscsjl", ""); }
+            set { SetExtendedAttribute("XSscsjl", value); }
+        }
+
+        /// <summary>
         /// 他品牌销售台次
         /// </summary>
         [JsonIgnore]

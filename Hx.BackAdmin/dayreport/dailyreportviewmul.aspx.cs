@@ -1817,7 +1817,7 @@ namespace Hx.BackAdmin.dayreport
 
                 #region 表数据
 
-                DataRow[] rows = new DataRow[40];
+                DataRow[] rows = new DataRow[41];
 
                 data.DefaultView.RowFilter = "项目='展厅首次来客批次'";
                 decimal hjztsclkpc = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
@@ -1828,6 +1828,9 @@ namespace Hx.BackAdmin.dayreport
                 data.DefaultView.RowFilter = "项目='展厅订单台数'";
                 decimal hjztddts = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
                 decimal mbztddts = DataConvert.SafeDecimal(data.DefaultView[0]["目标值"]);
+                data.DefaultView.RowFilter = "项目='试乘试驾次数'";
+                decimal hjscsjs = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
+                decimal mbscsjs = DataConvert.SafeDecimal(data.DefaultView[0]["目标值"]);
                 data.DefaultView.RowFilter = "项目='展厅交车台数'";
                 decimal hjztjcts = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
                 decimal mbztjcts = DataConvert.SafeDecimal(data.DefaultView[0]["目标值"]);
@@ -2066,60 +2069,65 @@ namespace Hx.BackAdmin.dayreport
                 rows[26]["实际"] = hjbxtc == 0 ? string.Empty : Math.Round(hjhhwyfwgmgs * 100 / hjbxtc, 0).ToString();
 
                 rows[27] = tbl.NewRow();
-                rows[27]["关键指标"] = "在库平均单台成本价";
-                rows[27]["实际"] = monthtarget == null ? string.Empty : monthtarget.XSclpjdj;
+                rows[27]["关键指标"] = "试乘试驾率";
+                rows[27]["目标"] = (monthtarget != null && !string.IsNullOrEmpty(monthtarget.XSscsjl)) ? monthtarget.XSzjsl : ((mbztddts - ld) == 0 ? string.Empty : Math.Round(mbscsjs * 100 / (mbztddts - ld), 0).ToString());
+                rows[27]["实际"] = (hjztddts - ld) == 0 ? string.Empty : Math.Round(hjscsjs * 100 / hjztddts - ld, 0).ToString();
 
                 rows[28] = tbl.NewRow();
-                rows[28]["关键指标"] = "在库库存";
-                rows[28]["实际"] = hjrktc - hjztjcts - hjewxstc - hjwlxstc;
+                rows[28]["关键指标"] = "在库平均单台成本价";
+                rows[28]["实际"] = monthtarget == null ? string.Empty : monthtarget.XSclpjdj;
 
                 rows[29] = tbl.NewRow();
-                rows[29]["关键指标"] = "在库超3个月";
-                rows[29]["实际"] = monthtarget == null ? string.Empty : monthtarget.XSzkcsgytc;
+                rows[29]["关键指标"] = "在库库存";
+                rows[29]["实际"] = hjrktc - hjztjcts - hjewxstc - hjwlxstc;
 
                 rows[30] = tbl.NewRow();
-                rows[30]["关键指标"] = "在途";
-                rows[30]["实际"] = monthtarget == null ? string.Empty : monthtarget.XSztcl;
+                rows[30]["关键指标"] = "在库超3个月";
+                rows[30]["实际"] = monthtarget == null ? string.Empty : monthtarget.XSzkcsgytc;
 
                 rows[31] = tbl.NewRow();
-                rows[31]["关键指标"] = "总库存";
-                rows[31]["实际"] = hjrktc - hjztjcts - hjewxstc - hjwlxstc + DataConvert.SafeInt(monthtarget == null ? string.Empty : monthtarget.XSztcl);
+                rows[31]["关键指标"] = "在途";
+                rows[31]["实际"] = monthtarget == null ? string.Empty : monthtarget.XSztcl;
 
                 rows[32] = tbl.NewRow();
-                rows[32]["关键指标"] = "上月留单";
-                rows[32]["实际"] = ld.ToString();
+                rows[32]["关键指标"] = "总库存";
+                rows[32]["实际"] = hjrktc - hjztjcts - hjewxstc - hjwlxstc + DataConvert.SafeInt(monthtarget == null ? string.Empty : monthtarget.XSztcl);
 
                 rows[33] = tbl.NewRow();
-                rows[33]["关键指标"] = "本月留单";
-                rows[33]["实际"] = hjztddts - hjztjcts;
+                rows[33]["关键指标"] = "上月留单";
+                rows[33]["实际"] = ld.ToString();
 
                 rows[34] = tbl.NewRow();
-                rows[34]["关键指标"] = "厂家虚出";
-                rows[34]["实际"] = monthtarget == null ? string.Empty : monthtarget.XScjxctc;
+                rows[34]["关键指标"] = "本月留单";
+                rows[34]["实际"] = hjztddts - hjztjcts;
 
                 rows[35] = tbl.NewRow();
-                rows[35]["关键指标"] = "他品牌留单";
-                rows[35]["实际"] = hjqztppxzddtc - hjtppjctc;
+                rows[35]["关键指标"] = "厂家虚出";
+                rows[35]["实际"] = monthtarget == null ? string.Empty : monthtarget.XScjxctc;
 
                 rows[36] = tbl.NewRow();
-                rows[36]["关键指标"] = "他品牌销售台次";
-                rows[36]["目标"] = (monthtarget != null && !string.IsNullOrEmpty(monthtarget.XStppxstc)) ? monthtarget.XStppxstc : mbtppjctc.ToString();
-                rows[36]["实际"] = hjtppjctc;
+                rows[36]["关键指标"] = "他品牌留单";
+                rows[36]["实际"] = hjqztppxzddtc - hjtppjctc;
 
                 rows[37] = tbl.NewRow();
-                rows[37]["关键指标"] = "他品牌单车毛利";
-                rows[37]["目标"] = (monthtarget != null && !string.IsNullOrEmpty(monthtarget.XStppdcml)) ? monthtarget.XStppdcml : mbtppdcml.ToString();
-                rows[37]["实际"] = hjtppdcml;
+                rows[37]["关键指标"] = "他品牌销售台次";
+                rows[37]["目标"] = (monthtarget != null && !string.IsNullOrEmpty(monthtarget.XStppxstc)) ? monthtarget.XStppxstc : mbtppjctc.ToString();
+                rows[37]["实际"] = hjtppjctc;
 
                 rows[38] = tbl.NewRow();
-                rows[38]["关键指标"] = "他品牌综合毛利";
-                rows[38]["目标"] = (monthtarget != null && !string.IsNullOrEmpty(monthtarget.XStppzhml)) ? monthtarget.XStppzhml : mbtppzhml.ToString();
-                rows[38]["实际"] = hjtppzhml;
+                rows[38]["关键指标"] = "他品牌单车毛利";
+                rows[38]["目标"] = (monthtarget != null && !string.IsNullOrEmpty(monthtarget.XStppdcml)) ? monthtarget.XStppdcml : mbtppdcml.ToString();
+                rows[38]["实际"] = hjtppdcml;
 
                 rows[39] = tbl.NewRow();
-                rows[39]["关键指标"] = "他品牌平均单台";
-                rows[39]["目标"] = (monthtarget != null && !string.IsNullOrEmpty(monthtarget.XStpppjdt)) ? monthtarget.XStpppjdt : (mbtppjctc == 0 ? string.Empty : Math.Round((mbtppdcml + mbtppzhml) / mbtppjctc, 0).ToString());
-                rows[39]["实际"] = hjtppjctc == 0 ? string.Empty : Math.Round((hjtppdcml + hjtppzhml) / hjtppjctc, 0).ToString();
+                rows[39]["关键指标"] = "他品牌综合毛利";
+                rows[39]["目标"] = (monthtarget != null && !string.IsNullOrEmpty(monthtarget.XStppzhml)) ? monthtarget.XStppzhml : mbtppzhml.ToString();
+                rows[39]["实际"] = hjtppzhml;
+
+                rows[40] = tbl.NewRow();
+                rows[40]["关键指标"] = "他品牌平均单台";
+                rows[40]["目标"] = (monthtarget != null && !string.IsNullOrEmpty(monthtarget.XStpppjdt)) ? monthtarget.XStpppjdt : (mbtppjctc == 0 ? string.Empty : Math.Round((mbtppdcml + mbtppzhml) / mbtppjctc, 0).ToString());
+                rows[40]["实际"] = hjtppjctc == 0 ? string.Empty : Math.Round((hjtppdcml + hjtppzhml) / hjtppjctc, 0).ToString();
 
                 #endregion
 
@@ -5519,6 +5527,11 @@ namespace Hx.BackAdmin.dayreport
             }
         }
 
+        /// <summary>
+        /// 销售日报汇总
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void btnXSDayGather_Click(object sender, EventArgs e)
         {
             DateTime day = DateTime.Today;
@@ -5618,6 +5631,24 @@ namespace Hx.BackAdmin.dayreport
                 tblresult.Columns.Add("附加值合计月目标");
                 tblresult.Columns.Add("附加值合计实际");
                 tblresult.Columns.Add("附加值合计完成率");
+                tblresult.Columns.Add("转介绍率月目标");
+                tblresult.Columns.Add("转介绍率实际");
+                tblresult.Columns.Add("转介绍率完成率");
+                tblresult.Columns.Add("展厅新增订单月目标");
+                tblresult.Columns.Add("展厅新增订单合计");
+                tblresult.Columns.Add("展厅新增订单完成率");
+                tblresult.Columns.Add("无忧玻璃渗透率月目标");
+                tblresult.Columns.Add("无忧玻璃渗透率实际");
+                tblresult.Columns.Add("无忧玻璃渗透率完成率");
+                tblresult.Columns.Add("无忧延保渗透率月目标");
+                tblresult.Columns.Add("无忧延保渗透率实际");
+                tblresult.Columns.Add("无忧延保渗透率完成率");
+                tblresult.Columns.Add("机油套餐渗透率月目标");
+                tblresult.Columns.Add("机油套餐渗透率实际");
+                tblresult.Columns.Add("机油套餐渗透率完成率");
+                tblresult.Columns.Add("无忧划痕渗透率月目标");
+                tblresult.Columns.Add("无忧划痕渗透率实际");
+                tblresult.Columns.Add("无忧划痕渗透率完成率");
                 tblresult.Columns.Add("大客户拜访数月目标值");
                 tblresult.Columns.Add("大客户拜访数合计");
                 tblresult.Columns.Add("大客户拜访数完成率");
@@ -5780,6 +5811,30 @@ namespace Hx.BackAdmin.dayreport
                     row["附加值合计月目标"] = tblKey.DefaultView[0]["目标"];
                     row["附加值合计实际"] = tblKey.DefaultView[0]["实际"];
                     row["附加值合计完成率"] = Math.Round(DataConvert.SafeDouble(tblKey.DefaultView[0]["完成率"]) / bl, 0);
+                    tblKey.DefaultView.RowFilter = "关键指标='转介绍率'";
+                    row["转介绍率月目标"] = tblKey.DefaultView[0]["目标"];
+                    row["转介绍率实际"] = tblKey.DefaultView[0]["实际"];
+                    row["转介绍率完成率"] = tblKey.DefaultView[0]["完成率"];
+                    tblKey.DefaultView.RowFilter = "关键指标='展厅新增订单'";
+                    row["展厅新增订单月目标"] = tblKey.DefaultView[0]["目标"];
+                    row["展厅新增订单合计"] = tblKey.DefaultView[0]["实际"];
+                    row["展厅新增订单完成率"] = Math.Round(DataConvert.SafeDouble(tblKey.DefaultView[0]["完成率"]) / bl, 0);
+                    tblKey.DefaultView.RowFilter = "关键指标='无忧玻璃渗透率'";
+                    row["无忧玻璃渗透率月目标"] = tblKey.DefaultView[0]["目标"];
+                    row["无忧玻璃渗透率实际"] = tblKey.DefaultView[0]["实际"];
+                    row["无忧玻璃渗透率完成率"] = tblKey.DefaultView[0]["完成率"];
+                    tblKey.DefaultView.RowFilter = "关键指标='无忧延保渗透率'";
+                    row["无忧延保渗透率月目标"] = tblKey.DefaultView[0]["目标"];
+                    row["无忧延保渗透率实际"] = tblKey.DefaultView[0]["实际"];
+                    row["无忧延保渗透率完成率"] = tblKey.DefaultView[0]["完成率"];
+                    tblKey.DefaultView.RowFilter = "关键指标='机油套餐渗透率'";
+                    row["机油套餐渗透率月目标"] = tblKey.DefaultView[0]["目标"];
+                    row["机油套餐渗透率实际"] = tblKey.DefaultView[0]["实际"];
+                    row["机油套餐渗透率完成率"] = tblKey.DefaultView[0]["完成率"];
+                    tblKey.DefaultView.RowFilter = "关键指标='无忧划痕渗透率'";
+                    row["无忧划痕渗透率月目标"] = tblKey.DefaultView[0]["目标"];
+                    row["无忧划痕渗透率实际"] = tblKey.DefaultView[0]["实际"];
+                    row["无忧划痕渗透率完成率"] = tblKey.DefaultView[0]["完成率"];
                     tblDay.DefaultView.RowFilter = "项目='大客户拜访数'";
                     row["大客户拜访数月目标值"] = tblDay.DefaultView[0]["目标值"];
                     row["大客户拜访数合计"] = tblDay.DefaultView[0]["合计"];
@@ -5951,23 +6006,41 @@ namespace Hx.BackAdmin.dayreport
                     row.CreateCell(87).SetCellValue(GetCellValue(drow["附加值合计月目标"].ToString(), false));
                     row.CreateCell(88).SetCellValue(GetCellValue(drow["附加值合计实际"].ToString(), false));
                     row.CreateCell(89).SetCellValue(GetCellValue(drow["附加值合计完成率"].ToString(), true));
-                    row.CreateCell(90).SetCellValue(GetCellValue(drow["大客户拜访数月目标值"].ToString(), false));
-                    row.CreateCell(91).SetCellValue(GetCellValue(drow["大客户拜访数合计"].ToString(), false));
-                    row.CreateCell(92).SetCellValue(GetCellValue(drow["大客户拜访数完成率"].ToString(), true));
-                    row.CreateCell(93).SetCellValue(GetCellValue(drow["忠诚客户数月目标值"].ToString(), false));
-                    row.CreateCell(94).SetCellValue(GetCellValue(drow["忠诚客户数合计"].ToString(), false));
-                    row.CreateCell(95).SetCellValue(GetCellValue(drow["忠诚客户数完成率"].ToString(), true));
-                    row.CreateCell(96).SetCellValue(GetCellValue(drow["大用户数月目标值"].ToString(), false));
-                    row.CreateCell(97).SetCellValue(GetCellValue(drow["大用户数合计"].ToString(), false));
-                    row.CreateCell(98).SetCellValue(GetCellValue(drow["大用户数完成率"].ToString(), true));
-                    row.CreateCell(99).SetCellValue(GetCellValue(drow["入库台次月目标值"].ToString(), false));
-                    row.CreateCell(100).SetCellValue(GetCellValue(drow["入库台次合计"].ToString(), false));
+                    row.CreateCell(90).SetCellValue(GetCellValue(drow["转介绍率月目标"].ToString(), true));
+                    row.CreateCell(91).SetCellValue(GetCellValue(drow["转介绍率实际"].ToString(), true));
+                    row.CreateCell(92).SetCellValue(GetCellValue(drow["转介绍率完成率"].ToString(), true));
+                    row.CreateCell(93).SetCellValue(GetCellValue(drow["展厅新增订单月目标"].ToString(), false));
+                    row.CreateCell(94).SetCellValue(GetCellValue(drow["展厅新增订单合计"].ToString(), false));
+                    row.CreateCell(95).SetCellValue(GetCellValue(drow["展厅新增订单完成率"].ToString(), true));
+                    row.CreateCell(96).SetCellValue(GetCellValue(drow["无忧玻璃渗透率月目标"].ToString(), true));
+                    row.CreateCell(97).SetCellValue(GetCellValue(drow["无忧玻璃渗透率实际"].ToString(), true));
+                    row.CreateCell(98).SetCellValue(GetCellValue(drow["无忧玻璃渗透率完成率"].ToString(), true));
+                    row.CreateCell(99).SetCellValue(GetCellValue(drow["无忧延保渗透率月目标"].ToString(), true));
+                    row.CreateCell(100).SetCellValue(GetCellValue(drow["无忧延保渗透率实际"].ToString(), true));
+                    row.CreateCell(101).SetCellValue(GetCellValue(drow["无忧延保渗透率完成率"].ToString(), true));
+                    row.CreateCell(102).SetCellValue(GetCellValue(drow["机油套餐渗透率月目标"].ToString(), true));
+                    row.CreateCell(103).SetCellValue(GetCellValue(drow["机油套餐渗透率实际"].ToString(), true));
+                    row.CreateCell(104).SetCellValue(GetCellValue(drow["机油套餐渗透率完成率"].ToString(), true));
+                    row.CreateCell(105).SetCellValue(GetCellValue(drow["无忧划痕渗透率月目标"].ToString(), true));
+                    row.CreateCell(106).SetCellValue(GetCellValue(drow["无忧划痕渗透率实际"].ToString(), true));
+                    row.CreateCell(107).SetCellValue(GetCellValue(drow["无忧划痕渗透率完成率"].ToString(), true));
+                    row.CreateCell(108).SetCellValue(GetCellValue(drow["大客户拜访数月目标值"].ToString(), false));
+                    row.CreateCell(109).SetCellValue(GetCellValue(drow["大客户拜访数合计"].ToString(), false));
+                    row.CreateCell(110).SetCellValue(GetCellValue(drow["大客户拜访数完成率"].ToString(), true));
+                    row.CreateCell(111).SetCellValue(GetCellValue(drow["忠诚客户数月目标值"].ToString(), false));
+                    row.CreateCell(112).SetCellValue(GetCellValue(drow["忠诚客户数合计"].ToString(), false));
+                    row.CreateCell(113).SetCellValue(GetCellValue(drow["忠诚客户数完成率"].ToString(), true));
+                    row.CreateCell(114).SetCellValue(GetCellValue(drow["大用户数月目标值"].ToString(), false));
+                    row.CreateCell(115).SetCellValue(GetCellValue(drow["大用户数合计"].ToString(), false));
+                    row.CreateCell(116).SetCellValue(GetCellValue(drow["大用户数完成率"].ToString(), true));
+                    row.CreateCell(117).SetCellValue(GetCellValue(drow["入库台次月目标值"].ToString(), false));
+                    row.CreateCell(118).SetCellValue(GetCellValue(drow["入库台次合计"].ToString(), false));
 
-                    for (int i = 0; i <= 100; i++)
+                    for (int i = 0; i <= 118; i++)
                     {
                         if (tblresult.Columns[i].ColumnName.IndexOf("完成率") >= 0 && DataConvert.SafeDouble(drow[tblresult.Columns[i].ColumnName]) >= 80)
                             sheet.GetRow(index).Cells[i].CellStyle = cellStyleGreen;
-                        else if (tblresult.Columns[i].ColumnName.IndexOf("完成率") >= 0 && DataConvert.SafeDouble(drow[tblresult.Columns[i].ColumnName]) > 0 && DataConvert.SafeDouble(drow[tblresult.Columns[i].ColumnName]) <= 40)
+                        else if (tblresult.Columns[i].ColumnName.IndexOf("完成率") >= 0 && DataConvert.SafeDouble(drow[tblresult.Columns[i].ColumnName]) >= 0 && DataConvert.SafeDouble(drow[tblresult.Columns[i].ColumnName]) <= 40)
                             sheet.GetRow(index).Cells[i].CellStyle = cellStyleYellow;
                         else
                             sheet.GetRow(index).Cells[i].CellStyle = cellStyleBlack;

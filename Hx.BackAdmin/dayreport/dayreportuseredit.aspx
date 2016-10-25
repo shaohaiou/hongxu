@@ -246,6 +246,14 @@
                     </td>
                 </tr>
                 <tr>
+                    <td class="tr">
+                        预算目标设置权限：
+                    </td>
+                    <td>
+                        <asp:CheckBox runat="server" ID="cbxDayReportMonthTargetPrePower" Checked="false" />
+                    </td>
+                </tr>
+                <tr>
                     <td class="vt tr">
                         录入栏目权限：
                     </td>

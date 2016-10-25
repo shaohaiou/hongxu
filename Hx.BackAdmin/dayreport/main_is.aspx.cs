@@ -96,6 +96,7 @@ namespace Hx.BackAdmin.dayreport
         {
             dailyreport.Attributes["href"] = string.Format("dailyreport.aspx?Nm={0}&Id={1}&Mm={2}", Nm,Id,Mm);
             monthlytarget.Attributes["href"] = string.Format("monthlytarget.aspx?Nm={0}&Id={1}&Mm={2}", Nm,Id,Mm);
+            monthlytargetpre.Attributes["href"] = string.Format("monthlytarget.aspx?Nm={0}&Id={1}&Mm={2}&pre=1", Nm, Id, Mm);
             dailyreportview.Attributes["href"] = string.Format("dailyreportview.aspx?Nm={0}&Id={1}&Mm={2}", Nm,Id,Mm);
             dailyreportviewmul.Attributes["href"] = string.Format("dailyreportviewmul.aspx?Nm={0}&Id={1}&Mm={2}", Nm,Id,Mm);
             dailyreportcheck.Attributes["href"] = string.Format("dailyreportcheck.aspx?Nm={0}&Id={1}&Mm={2}", Nm, Id, Mm);
@@ -126,6 +127,8 @@ namespace Hx.BackAdmin.dayreport
                 monthlytarget.Visible = false;
             if (string.IsNullOrEmpty(CurrentUser.DayReportCheckDepPowerSetting))
                 dailyreportcheck.Visible = false;
+            if (string.IsNullOrEmpty(CurrentUser.DayReportMonthTargetPrePowerSetting))
+                monthlytargetpre.Visible = false;
             if (string.IsNullOrEmpty(CurrentUser.CRMReportInputPowerSetting) && CurrentUser.CRMReportExportPowerSetting == "0")
                 crmreportcustomerflow.Visible = false;
         }

@@ -15,7 +15,7 @@ using System.Text;
 
 namespace Hx.BackAdmin.dayreport
 {
-    public partial class monthlytarget : AdminBase
+    public partial class monthlytargetpre : AdminBase
     {
         protected override void Check()
         {
@@ -131,40 +131,20 @@ namespace Hx.BackAdmin.dayreport
         {
             MonthlyTargetInfo target = null;
             DateTime day = DateTime.Today;
-            int pre = GetInt("pre");
             if (ddlCorp.SelectedIndex > 0 && DateTime.TryParse(txtDate.Text + "-01", out day))
             {
-                if (pre == 0)
+                target = MonthlyTargetPres.Instance.GetModel(DataConvert.SafeInt(ddlCorp.SelectedValue), CurrentDep, day, true);
+                if (target == null)
                 {
-                    target = MonthlyTargets.Instance.GetModel(DataConvert.SafeInt(ddlCorp.SelectedValue), CurrentDep, day, true);
-                    if (target == null)
+                    target = MonthlyTargetPres.Instance.GetModel(DataConvert.SafeInt(ddlCorp.SelectedValue), CurrentDep, day.AddMonths(-1), true);
+                    if (target != null)
                     {
-                        target = MonthlyTargets.Instance.GetModel(DataConvert.SafeInt(ddlCorp.SelectedValue), CurrentDep, day.AddMonths(-1), true);
-                        if (target != null)
-                        {
-                            lblMsg.Text = string.Format("（本月未设置月度目标，以下是{0}的数据）", day.AddMonths(-1).ToString("yyyy年MM月份"));
-                        }
-                    }
-                    else
-                    {
-                        lblMsg.Text = string.Empty;
+                        lblMsg.Text = string.Format("（本月未设置预算目标，以下是{0}的数据）", day.AddMonths(-1).ToString("yyyy年MM月份"));
                     }
                 }
                 else
                 {
-                    target = MonthlyTargetPres.Instance.GetModel(DataConvert.SafeInt(ddlCorp.SelectedValue), CurrentDep, day, true);
-                    if (target == null)
-                    {
-                        target = MonthlyTargetPres.Instance.GetModel(DataConvert.SafeInt(ddlCorp.SelectedValue), CurrentDep, day.AddMonths(-1), true);
-                        if (target != null)
-                        {
-                            lblMsg.Text = string.Format("（本月未设置预算目标，以下是{0}的数据）", day.AddMonths(-1).ToString("yyyy年MM月份"));
-                        }
-                    }
-                    else
-                    {
-                        lblMsg.Text = string.Empty;
-                    }
+                    lblMsg.Text = string.Empty;
                 }
             }
             bool allowmodify = true;
@@ -394,71 +374,43 @@ namespace Hx.BackAdmin.dayreport
                 return;
             }
 
-            int pre = GetInt("pre");
             DateTime day = DateTime.Today;
             if (ddlCorp.SelectedIndex > 0 && DateTime.TryParse(txtDate.Text + "-01", out day))
             {
                 MonthlyTargetInfo target = null;
-                if (pre == 0)
+                target = MonthlyTargets.Instance.GetModel(DataConvert.SafeInt(ddlCorp.SelectedValue), CurrentDep, day, true);
+                if (target == null)
                 {
-                    target = MonthlyTargets.Instance.GetModel(DataConvert.SafeInt(ddlCorp.SelectedValue), CurrentDep, day, true);
-                    if (target == null)
+                    target = new MonthlyTargetInfo()
                     {
-                        target = new MonthlyTargetInfo()
-                        {
-                            CorporationID = DataConvert.SafeInt(ddlCorp.SelectedValue),
-                            Department = CurrentDep,
-                            MonthUnique = day.ToString("yyyyMM"),
-                            Creator = CurrentUser.UserName,
-                            LastUpdateUser = CurrentUser.UserName
-                        };
-                    }
-                    else
-                    {
-                        target.LastUpdateUser = CurrentUser.UserName;
-                    }
+                        CorporationID = DataConvert.SafeInt(ddlCorp.SelectedValue),
+                        Department = CurrentDep,
+                        MonthUnique = day.ToString("yyyyMM"),
+                        Creator = CurrentUser.UserName,
+                        LastUpdateUser = CurrentUser.UserName
+                    };
                 }
                 else
                 {
-                    target = MonthlyTargetPres.Instance.GetModel(DataConvert.SafeInt(ddlCorp.SelectedValue), CurrentDep, day, true);
-                    if (target == null)
-                    {
-                        target = new MonthlyTargetInfo()
-                        {
-                            CorporationID = DataConvert.SafeInt(ddlCorp.SelectedValue),
-                            Department = CurrentDep,
-                            MonthUnique = day.ToString("yyyyMM"),
-                            Creator = CurrentUser.UserName,
-                            LastUpdateUser = CurrentUser.UserName
-                        };
-                    }
-                    else
-                    {
-                        target.LastUpdateUser = CurrentUser.UserName;
-                    }
+                    target.LastUpdateUser = CurrentUser.UserName;
                 }
 
                 FillData(target);
 
-                if (pre == 0)
-                {
-                    MonthlyTargets.Instance.CreateAndUpdate(target);
+                MonthlyTargets.Instance.CreateAndUpdate(target);
 
-                    MonthlyTargetInfo monthlytargetmodify = new MonthlyTargetInfo();
-                    FillData(monthlytargetmodify);
-                    MonthlyTargetHistoryInfo targethistory = new MonthlyTargetHistoryInfo();
-                    targethistory.MonthUnique = target.MonthUnique;
-                    targethistory.Modify = monthlytargetmodify;
-                    targethistory.Creator = CurrentUser.UserName;
-                    targethistory.CreatorCorporationID = CurrentUser.CorporationID;
-                    targethistory.CreatorCorporationName = CurrentUser.CorporationName;
-                    targethistory.CreatorDepartment = CurrentUser.DayReportDep;
-                    targethistory.ReportDepartment = CurrentDep;
-                    targethistory.ReportCorporationID = DataConvert.SafeInt(ddlCorp.SelectedValue);
-                    MonthlyTargets.Instance.CreateHistory(targethistory);
-                }
-                else
-                    MonthlyTargetPres.Instance.CreateAndUpdate(target);
+                MonthlyTargetInfo monthlytargetmodify = new MonthlyTargetInfo();
+                FillData(monthlytargetmodify);
+                MonthlyTargetHistoryInfo targethistory = new MonthlyTargetHistoryInfo();
+                targethistory.MonthUnique = target.MonthUnique;
+                targethistory.Modify = monthlytargetmodify;
+                targethistory.Creator = CurrentUser.UserName;
+                targethistory.CreatorCorporationID = CurrentUser.CorporationID;
+                targethistory.CreatorCorporationName = CurrentUser.CorporationName;
+                targethistory.CreatorDepartment = CurrentUser.DayReportDep;
+                targethistory.ReportDepartment = CurrentDep;
+                targethistory.ReportCorporationID = DataConvert.SafeInt(ddlCorp.SelectedValue);
+                MonthlyTargets.Instance.CreateHistory(targethistory);
 
                 WriteSuccessMessage("保存成功！", "数据已经成功保存！", string.IsNullOrEmpty(FromUrl) ? UrlDecode(CurrentUrl) : FromUrl);
             }
@@ -493,30 +445,17 @@ namespace Hx.BackAdmin.dayreport
             MonthlyTargetInfo target = null;
             bool allowmodify = true;
             DateTime day = DateTime.Today;
-            int pre = GetInt("pre");
             if (ddlCorp.SelectedIndex > 0 && DateTime.TryParse(txtDate.Text + "-01", out day))
             {
-                if (pre == 0)
-                {
-                    target = MonthlyTargets.Instance.GetModel(DataConvert.SafeInt(ddlCorp.SelectedValue), CurrentDep, day, true);
-                    if (target == null)
-                        target = MonthlyTargets.Instance.GetModel(DataConvert.SafeInt(ddlCorp.SelectedValue), CurrentDep, day.AddMonths(-1), true);
-                }
-                else
-                {
-                    target = MonthlyTargetPres.Instance.GetModel(DataConvert.SafeInt(ddlCorp.SelectedValue), CurrentDep, day, true);
-                    if (target == null)
-                        target = MonthlyTargetPres.Instance.GetModel(DataConvert.SafeInt(ddlCorp.SelectedValue), CurrentDep, day.AddMonths(-1), true);
-                }
+                target = MonthlyTargets.Instance.GetModel(DataConvert.SafeInt(ddlCorp.SelectedValue), CurrentDep, day, true);
+                if (target == null)
+                    target = MonthlyTargets.Instance.GetModel(DataConvert.SafeInt(ddlCorp.SelectedValue), CurrentDep, day.AddMonths(-1), true);
             }
-            if (pre == 0)
+            if (ddlCorp.SelectedIndex > 0 && DateTime.TryParse(txtDate.Text + "-07", out day))
             {
-                if (ddlCorp.SelectedIndex > 0 && DateTime.TryParse(txtDate.Text + "-07", out day))
+                if (DateTime.Today > day && CurrentUser.AllowModify != "1" && DateTime.Today > DateTime.Parse("2014-10-11"))
                 {
-                    if (DateTime.Today > day && CurrentUser.AllowModify != "1" && DateTime.Today > DateTime.Parse("2014-10-11"))
-                    {
-                        allowmodify = false;
-                    }
+                    allowmodify = false;
                 }
             }
             Dictionary<string, string> kvp = new Dictionary<string, string>();

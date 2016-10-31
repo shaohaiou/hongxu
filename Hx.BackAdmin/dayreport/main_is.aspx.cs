@@ -127,7 +127,7 @@ namespace Hx.BackAdmin.dayreport
                 monthlytarget.Visible = false;
             if (string.IsNullOrEmpty(CurrentUser.DayReportCheckDepPowerSetting))
                 dailyreportcheck.Visible = false;
-            if (string.IsNullOrEmpty(CurrentUser.DayReportMonthTargetPrePowerSetting))
+            if (string.IsNullOrEmpty(CurrentUser.DayReportMonthTargetPrePowerSetting) || CurrentUser.DayReportMonthTargetPrePowerSetting == "0")
                 monthlytargetpre.Visible = false;
             if (string.IsNullOrEmpty(CurrentUser.CRMReportInputPowerSetting) && CurrentUser.CRMReportExportPowerSetting == "0")
                 crmreportcustomerflow.Visible = false;

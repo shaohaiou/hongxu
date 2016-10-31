@@ -4671,15 +4671,6 @@ namespace Hx.BackAdmin.dayreport
                 tblresult.Columns.Add("留档批次目标值");
                 tblresult.Columns.Add("留档批次合计");
                 tblresult.Columns.Add("留档批次完成率");
-                tblresult.Columns.Add("展厅首次到店记录数目标值");
-                tblresult.Columns.Add("展厅首次到店记录数合计");
-                tblresult.Columns.Add("展厅首次到店记录数完成率");
-                tblresult.Columns.Add("展厅首次到店建档数目标值");
-                tblresult.Columns.Add("展厅首次到店建档数合计");
-                tblresult.Columns.Add("展厅首次到店建档数完成率");
-                tblresult.Columns.Add("DCC邀约到店目标值");
-                tblresult.Columns.Add("DCC邀约到店合计");
-                tblresult.Columns.Add("DCC邀约到店完成率");
                 tblresult.Columns.Add("新增DCC线索总量目标值");
                 tblresult.Columns.Add("新增DCC线索总量合计");
                 tblresult.Columns.Add("新增DCC线索总量完成率");
@@ -4759,6 +4750,9 @@ namespace Hx.BackAdmin.dayreport
 
                     #endregion
 
+                    #region 已删除
+                    
+                    /*
                     #region 市场数据
 
                     dep = DayReportDep.市场部;
@@ -4787,6 +4781,10 @@ namespace Hx.BackAdmin.dayreport
                     row["DCC邀约到店目标值"] = tblDay.DefaultView[0]["目标值"];
                     row["DCC邀约到店合计"] = tblDay.DefaultView[0]["合计"];
                     row["DCC邀约到店完成率"] = tblDay.DefaultView[0]["完成率"];
+
+                    #endregion
+                        
+                     */
 
                     #endregion
 
@@ -4943,46 +4941,37 @@ namespace Hx.BackAdmin.dayreport
                     row.CreateCell(16).SetCellValue(drow["留档批次目标值"].ToString());
                     row.CreateCell(17).SetCellValue(drow["留档批次合计"].ToString());
                     row.CreateCell(18).SetCellValue(string.IsNullOrEmpty(drow["留档批次完成率"].ToString()) ? string.Empty : (drow["留档批次完成率"].ToString() + "%"));
-                    row.CreateCell(19).SetCellValue(drow["展厅首次到店记录数目标值"].ToString());
-                    row.CreateCell(20).SetCellValue(drow["展厅首次到店记录数合计"].ToString());
-                    row.CreateCell(21).SetCellValue(string.IsNullOrEmpty(drow["展厅首次到店记录数完成率"].ToString()) ? string.Empty : (drow["展厅首次到店记录数完成率"].ToString() + "%"));
-                    row.CreateCell(22).SetCellValue(drow["展厅首次到店建档数目标值"].ToString());
-                    row.CreateCell(23).SetCellValue(drow["展厅首次到店建档数合计"].ToString());
-                    row.CreateCell(24).SetCellValue(string.IsNullOrEmpty(drow["展厅首次到店建档数完成率"].ToString()) ? string.Empty : (drow["展厅首次到店建档数完成率"].ToString() + "%"));
-                    row.CreateCell(25).SetCellValue(drow["DCC邀约到店目标值"].ToString());
-                    row.CreateCell(26).SetCellValue(drow["DCC邀约到店合计"].ToString());
-                    row.CreateCell(27).SetCellValue(string.IsNullOrEmpty(drow["DCC邀约到店完成率"].ToString()) ? string.Empty : (drow["DCC邀约到店完成率"].ToString() + "%"));
-                    row.CreateCell(28).SetCellValue(drow["新增DCC线索总量目标值"].ToString());
-                    row.CreateCell(29).SetCellValue(drow["新增DCC线索总量合计"].ToString());
-                    row.CreateCell(30).SetCellValue(string.IsNullOrEmpty(drow["新增DCC线索总量完成率"].ToString()) ? string.Empty : (drow["新增DCC线索总量完成率"].ToString() + "%"));
-                    row.CreateCell(31).SetCellValue(drow["新增DCC线索建档量目标值"].ToString());
-                    row.CreateCell(32).SetCellValue(drow["新增DCC线索建档量合计"].ToString());
-                    row.CreateCell(33).SetCellValue(string.IsNullOrEmpty(drow["新增DCC线索建档量完成率"].ToString()) ? string.Empty : (drow["新增DCC线索建档量完成率"].ToString() + "%"));
-                    row.CreateCell(34).SetCellValue(drow["首次邀约到店客户总数目标值"].ToString());
-                    row.CreateCell(35).SetCellValue(drow["首次邀约到店客户总数合计"].ToString());
-                    row.CreateCell(36).SetCellValue(string.IsNullOrEmpty(drow["首次邀约到店客户总数完成率"].ToString()) ? string.Empty : (drow["首次邀约到店客户总数完成率"].ToString() + "%"));
-                    row.CreateCell(37).SetCellValue(drow["DCC订单数目标值"].ToString());
-                    row.CreateCell(38).SetCellValue(drow["DCC订单数合计"].ToString());
-                    row.CreateCell(39).SetCellValue(string.IsNullOrEmpty(drow["DCC订单数完成率"].ToString()) ? string.Empty : (drow["DCC订单数完成率"].ToString() + "%"));
-                    row.CreateCell(40).SetCellValue(drow["DCC成交总台数目标值"].ToString());
-                    row.CreateCell(41).SetCellValue(drow["DCC成交总台数合计"].ToString());
-                    row.CreateCell(42).SetCellValue(string.IsNullOrEmpty(drow["DCC成交总台数完成率"].ToString()) ? string.Empty : (drow["DCC成交总台数完成率"].ToString() + "%"));
-                    row.CreateCell(43).SetCellValue(string.IsNullOrEmpty(drow["DCC建档率目标值"].ToString()) ? string.Empty : (drow["DCC建档率目标值"].ToString() + "%"));
-                    row.CreateCell(44).SetCellValue(string.IsNullOrEmpty(drow["DCC建档率合计"].ToString()) ? string.Empty : (drow["DCC建档率合计"].ToString() + "%"));
-                    row.CreateCell(45).SetCellValue(string.IsNullOrEmpty(drow["DCC首次邀约到店率目标值"].ToString()) ? string.Empty : (drow["DCC首次邀约到店率目标值"].ToString() + "%"));
-                    row.CreateCell(46).SetCellValue(string.IsNullOrEmpty(drow["DCC首次邀约到店率合计"].ToString()) ? string.Empty : (drow["DCC首次邀约到店率合计"].ToString() + "%"));
-                    row.CreateCell(47).SetCellValue(string.IsNullOrEmpty(drow["成交率目标值"].ToString()) ? string.Empty : (drow["成交率目标值"].ToString() + "%"));
-                    row.CreateCell(48).SetCellValue(string.IsNullOrEmpty(drow["成交率合计"].ToString()) ? string.Empty : (drow["成交率合计"].ToString() + "%"));
-                    row.CreateCell(49).SetCellValue(string.IsNullOrEmpty(drow["订单转化率目标值"].ToString()) ? string.Empty : (drow["订单转化率目标值"].ToString() + "%"));
-                    row.CreateCell(50).SetCellValue(string.IsNullOrEmpty(drow["订单转化率合计"].ToString()) ? string.Empty : (drow["订单转化率合计"].ToString() + "%"));
-                    row.CreateCell(51).SetCellValue(string.IsNullOrEmpty(drow["成交转化率目标值"].ToString()) ? string.Empty : (drow["成交转化率目标值"].ToString() + "%"));
-                    row.CreateCell(52).SetCellValue(string.IsNullOrEmpty(drow["成交转化率合计"].ToString()) ? string.Empty : (drow["成交转化率合计"].ToString() + "%"));
+                    row.CreateCell(19).SetCellValue(drow["新增DCC线索总量目标值"].ToString());
+                    row.CreateCell(20).SetCellValue(drow["新增DCC线索总量合计"].ToString());
+                    row.CreateCell(21).SetCellValue(string.IsNullOrEmpty(drow["新增DCC线索总量完成率"].ToString()) ? string.Empty : (drow["新增DCC线索总量完成率"].ToString() + "%"));
+                    row.CreateCell(22).SetCellValue(drow["新增DCC线索建档量目标值"].ToString());
+                    row.CreateCell(23).SetCellValue(drow["新增DCC线索建档量合计"].ToString());
+                    row.CreateCell(24).SetCellValue(string.IsNullOrEmpty(drow["新增DCC线索建档量完成率"].ToString()) ? string.Empty : (drow["新增DCC线索建档量完成率"].ToString() + "%"));
+                    row.CreateCell(25).SetCellValue(drow["首次邀约到店客户总数目标值"].ToString());
+                    row.CreateCell(26).SetCellValue(drow["首次邀约到店客户总数合计"].ToString());
+                    row.CreateCell(27).SetCellValue(string.IsNullOrEmpty(drow["首次邀约到店客户总数完成率"].ToString()) ? string.Empty : (drow["首次邀约到店客户总数完成率"].ToString() + "%"));
+                    row.CreateCell(28).SetCellValue(drow["DCC订单数目标值"].ToString());
+                    row.CreateCell(29).SetCellValue(drow["DCC订单数合计"].ToString());
+                    row.CreateCell(30).SetCellValue(string.IsNullOrEmpty(drow["DCC订单数完成率"].ToString()) ? string.Empty : (drow["DCC订单数完成率"].ToString() + "%"));
+                    row.CreateCell(31).SetCellValue(drow["DCC成交总台数目标值"].ToString());
+                    row.CreateCell(32).SetCellValue(drow["DCC成交总台数合计"].ToString());
+                    row.CreateCell(33).SetCellValue(string.IsNullOrEmpty(drow["DCC成交总台数完成率"].ToString()) ? string.Empty : (drow["DCC成交总台数完成率"].ToString() + "%"));
+                    row.CreateCell(34).SetCellValue(string.IsNullOrEmpty(drow["DCC建档率目标值"].ToString()) ? string.Empty : (drow["DCC建档率目标值"].ToString() + "%"));
+                    row.CreateCell(35).SetCellValue(string.IsNullOrEmpty(drow["DCC建档率合计"].ToString()) ? string.Empty : (drow["DCC建档率合计"].ToString() + "%"));
+                    row.CreateCell(36).SetCellValue(string.IsNullOrEmpty(drow["DCC首次邀约到店率目标值"].ToString()) ? string.Empty : (drow["DCC首次邀约到店率目标值"].ToString() + "%"));
+                    row.CreateCell(37).SetCellValue(string.IsNullOrEmpty(drow["DCC首次邀约到店率合计"].ToString()) ? string.Empty : (drow["DCC首次邀约到店率合计"].ToString() + "%"));
+                    row.CreateCell(38).SetCellValue(string.IsNullOrEmpty(drow["成交率目标值"].ToString()) ? string.Empty : (drow["成交率目标值"].ToString() + "%"));
+                    row.CreateCell(39).SetCellValue(string.IsNullOrEmpty(drow["成交率合计"].ToString()) ? string.Empty : (drow["成交率合计"].ToString() + "%"));
+                    row.CreateCell(40).SetCellValue(string.IsNullOrEmpty(drow["订单转化率目标值"].ToString()) ? string.Empty : (drow["订单转化率目标值"].ToString() + "%"));
+                    row.CreateCell(41).SetCellValue(string.IsNullOrEmpty(drow["订单转化率合计"].ToString()) ? string.Empty : (drow["订单转化率合计"].ToString() + "%"));
+                    row.CreateCell(42).SetCellValue(string.IsNullOrEmpty(drow["成交转化率目标值"].ToString()) ? string.Empty : (drow["成交转化率目标值"].ToString() + "%"));
+                    row.CreateCell(43).SetCellValue(string.IsNullOrEmpty(drow["成交转化率合计"].ToString()) ? string.Empty : (drow["成交转化率合计"].ToString() + "%"));
 
                     for (int i = 0; i <= 1; i++)
                     {
                         sheet.GetRow(index).Cells[i].CellStyle = cellStyleBlack;
                     }
-                    for (int i = 1; i <= 51; i++)
+                    for (int i = 1; i <= 42; i++)
                     {
                         if (tblresult.Columns[i].ColumnName.IndexOf("完成率") >= 0 && DataConvert.SafeDouble(drow[tblresult.Columns[i].ColumnName]) >= degreeint)
                             sheet.GetRow(index).Cells[i + 1].CellStyle = cellStyleGreen;

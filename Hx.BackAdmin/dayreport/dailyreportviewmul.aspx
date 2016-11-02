@@ -217,6 +217,13 @@
                             Text="指标汇总" />
                         <asp:Button runat="server" ID="btnReportCount" CssClass="an1" OnClick="btnReportCount_Click"
                             Text="填报统计" />
+                        <input type="button" name="btnExportExcel" id="btnExportExcel" value="导出Excel" onclick="exportExcel()"
+                            class="an1" />
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td colspan="3">
                         <%if (CurrentDep == DayReportDep.DCC部)
                           { %>
                         <asp:Button runat="server" ID="btnDCCZhhz" CssClass="an1" OnClick="btnKeyTarget_Click"
@@ -245,6 +252,8 @@
                             <%if(CurrentUser.YearGather == "1") {%>
                         <asp:Button runat="server" ID="btnSHYearGather" CssClass="an1" OnClick="btnSHYearGather_Click"
                             Text="售后数据分析汇总" />
+                        <asp:Button runat="server" ID="btnSHzdcpstl" CssClass="an1" OnClick="btnSHzdcpstl_Click"
+                            Text="重点产品销售渗透率" />
                             <%} %>
                         <%}else if (CurrentDep == DayReportDep.精品部){ %>
                             <%if(CurrentUser.YearGather == "1") {%>
@@ -255,8 +264,6 @@
                         <asp:Button runat="server" ID="btnNXCPDataGather" CssClass="an1" OnClick="btnNXCPDataGather_Click"
                             Text="无忧产品数据分析汇总" />
                         <%} %>
-                        <input type="button" name="btnExportExcel" id="btnExportExcel" value="导出Excel" onclick="exportExcel()"
-                            class="an1" />
                     </td>
                 </tr>
                 <tr>

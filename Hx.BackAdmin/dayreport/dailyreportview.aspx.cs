@@ -3576,7 +3576,7 @@ namespace Hx.BackAdmin.dayreport
                 data.DefaultView.RowFilter = "项目='索赔批准台次'";
                 decimal hjsppztc = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
                 decimal mbsppztc = DataConvert.SafeDecimal(data.DefaultView[0]["目标值"]);
-                data.DefaultView.RowFilter = "项目='延保台次'";
+                data.DefaultView.RowFilter = "项目='延保无忧'";
                 decimal hjybtc = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
                 decimal mbybtc = DataConvert.SafeDecimal(data.DefaultView[0]["目标值"]);
                 data.DefaultView.RowFilter = "项目='机电内返台次'";
@@ -3603,7 +3603,7 @@ namespace Hx.BackAdmin.dayreport
                 data.DefaultView.RowFilter = "项目='保养产值'";
                 decimal hjbycz = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
                 decimal mbbycz = DataConvert.SafeDecimal(data.DefaultView[0]["目标值"]);
-                data.DefaultView.RowFilter = "项目='玻璃险'";
+                data.DefaultView.RowFilter = "项目='玻璃无忧'";
                 decimal hjblx = DataConvert.SafeDecimal(data.DefaultView[0]["合计"]);
                 decimal mbblx = DataConvert.SafeDecimal(data.DefaultView[0]["目标值"]);
                 data.DefaultView.RowFilter = "项目='微信客户数'";
@@ -3736,7 +3736,7 @@ namespace Hx.BackAdmin.dayreport
                 rows[16]["实际"] = hjsgzcz;
 
                 rows[17] = tbl.NewRow();
-                rows[17]["关键指标"] = "玻璃险";
+                rows[17]["关键指标"] = "玻璃无忧";
                 rows[17]["目标"] = mbblx;
                 rows[17]["实际"] = hjblx;
 
@@ -7371,7 +7371,7 @@ namespace Hx.BackAdmin.dayreport
                         row["他牌车维修毛利率"] = monthtarget == null ? "" : monthtarget.SHbytppwxmll;
 
                         //续保预算台次
-                        tblDay.DefaultView.RowFilter = "项目='延保台次'";
+                        tblDay.DefaultView.RowFilter = "项目='延保无忧'";
                         row["续保预算台次"] = tblDay.DefaultView[0]["目标值"];
                         row["续保实际台次"] = tblDay.DefaultView[0]["合计"];
 

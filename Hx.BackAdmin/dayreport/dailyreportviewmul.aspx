@@ -252,9 +252,9 @@
                             <%if(CurrentUser.YearGather == "1") {%>
                         <asp:Button runat="server" ID="btnSHYearGather" CssClass="an1" OnClick="btnSHYearGather_Click"
                             Text="售后数据分析汇总" />
+                            <%} %>
                         <asp:Button runat="server" ID="btnSHzdcpstl" CssClass="an1" OnClick="btnSHzdcpstl_Click"
                             Text="重点产品销售渗透率" />
-                            <%} %>
                         <%}else if (CurrentDep == DayReportDep.精品部){ %>
                             <%if(CurrentUser.YearGather == "1") {%>
                         <asp:Button runat="server" ID="btnJPYearGather" CssClass="an1" OnClick="btnJPYearGather_Click"
